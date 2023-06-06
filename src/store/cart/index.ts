@@ -1,19 +1,26 @@
 import { CartItemModel } from '@/store/cart/cart.type';
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    cartItems: [] as CartItemModel[]
+    cartItems: [] as CartItemModel[],
   },
   reducers: {
     setAddProductInCart: (state, { payload }) => {
-      const currentProduct = state.cartItems?.find((pr: CartItemModel) => pr.id === payload.id);
+      const currentProduct = state.cartItems?.find(
+        (pr: CartItemModel) => pr.productId === payload.productId
+      );
       if (currentProduct) {
         const quantity = currentProduct?.quantity || 0;
-        const removeCurrent = state.cartItems?.filter((pr: CartItemModel) => pr.id !== payload.id);
+        const removeCurrent = state.cartItems?.filter(
+          (pr: CartItemModel) => pr.productId !== payload.productId
+        );
         if (removeCurrent?.length > 0) {
-          state.cartItems = [...removeCurrent, { ...currentProduct, quantity: quantity + 1 }];
+          state.cartItems = [
+            ...removeCurrent,
+            { ...currentProduct, quantity: quantity + 1 },
+          ];
         } else {
           state.cartItems = [{ ...currentProduct, quantity: quantity + 1 }];
         }
@@ -22,19 +29,26 @@ const cartSlice = createSlice({
       }
     },
     setRemoveProductInCart: (state, { payload }) => {
-      const currentProduct = state.cartItems?.find((pr: CartItemModel) => pr.id === payload.id);
+      const currentProduct = state.cartItems?.find(
+        (pr: CartItemModel) => pr.productId === payload.productId
+      );
       if (currentProduct) {
         const quantity = currentProduct?.quantity || 0;
-        const removeCurrent = state.cartItems?.filter((pr: CartItemModel) => pr.id !== payload.id);
+        const removeCurrent = state.cartItems?.filter(
+          (pr: CartItemModel) => pr.productId !== payload.productId
+        );
         if (quantity > 1) {
-          state.cartItems = [...removeCurrent, { ...currentProduct, quantity: quantity - 1 }];
+          state.cartItems = [
+            ...removeCurrent,
+            { ...currentProduct, quantity: quantity - 1 },
+          ];
         } else {
-          state.cartItems = removeCurrent
+          state.cartItems = removeCurrent;
         }
       } else {
-        state.cartItems = payload
+        state.cartItems = payload;
       }
-    }
-  }
+    },
+  },
 });
 export default cartSlice;
