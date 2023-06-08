@@ -13,6 +13,7 @@ export const CartAsideContainer = styled.div<CartAsideProp>`
   height: 100%;
   background-color: white;
   box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);
+  z-index: 9;
   transition: transform 0.3s ease-in-out;
   transform: ${(props) =>
     props.isOpen ? "translateX(0)" : "translateX(100%)"};
