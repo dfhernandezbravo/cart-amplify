@@ -46,6 +46,15 @@ const cartSlice = createSlice({
         productInCart.quantity = quantity > 1 ? quantity - 1 : 1;
       }
     },
+    setUpdateProductQuantity: (state, { payload }) => {
+      const productInCart = state.cartItems?.find(
+        (item: CartItemModel) => item.productId === payload.item.productId
+      );
+
+      if (productInCart && productInCart.quantity !== payload.newQuantity) {
+        productInCart.quantity = payload.newQuantity;
+      }
+    },
   },
 });
 

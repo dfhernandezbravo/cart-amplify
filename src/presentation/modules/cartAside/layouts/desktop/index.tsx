@@ -1,7 +1,7 @@
 import Desktop from "@components/layouts/desktop";
 import CartContainer from "@modules/cartAside/components/organisms/CartContainer";
 
-const CartDesktop = () => {
+const CartAsideDesktop = () => {
   return (
     <Desktop>
       <CartContainer />
@@ -9,4 +9,4 @@ const CartDesktop = () => {
   );
 };
 
-export default CartDesktop;
+export default CartAsideDesktop;

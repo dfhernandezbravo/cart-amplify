@@ -36,6 +36,7 @@ const ProductCard = (props: ProductCardProps) => {
           }
         />
         <QuantitySelector
+          item={item}
           onIncrementQuantity={onIncrementQuantity}
           quantity={item?.quantity ?? 0}
           onDecrementQuantity={onDecrementQuantity}
