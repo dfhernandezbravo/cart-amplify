@@ -9,7 +9,7 @@ export const Title = styled.div`
   margin-top: 1rem;
   display: flex;
   justify-content: space-between;
-  border-bottom: 5px solid #ccc;
+  border-bottom: 5px solid #f1f1f1;
 
   .count {
     font-size: 1rem;

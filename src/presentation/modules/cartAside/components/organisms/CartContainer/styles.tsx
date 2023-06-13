@@ -9,7 +9,8 @@ export const CartAsideContainer = styled.div<CartAsideProp>`
   top: 0;
   right: 0;
   min-width: 280px;
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   height: 100%;
   background-color: white;
   box-shadow: -2px 0 4px rgba(0, 0, 0, 0.2);

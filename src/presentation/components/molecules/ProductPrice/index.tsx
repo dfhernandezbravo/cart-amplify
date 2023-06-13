@@ -1,3 +1,4 @@
+import { formattedCLP } from "../../../utils/helpers";
 import { ProductPriceProps } from "./types";
 import {
   Container,
@@ -16,9 +17,6 @@ const ProductPrice = (props: ProductPriceProps) => {
 
   // methods
   const methods = {
-    formatPrice: (num: number) => {
-      return (num / 1000).toFixed(3);
-    },
     calculateDiscount: () => {
       return (100 - (offerPrice * 100) / normalPrice).toFixed();
     },
@@ -27,13 +25,13 @@ const ProductPrice = (props: ProductPriceProps) => {
   return (
     <Container>
       <OfferPriceContainer>
-        <OfferPrice>${methods.formatPrice(offerPrice)}</OfferPrice>
+        <OfferPrice>{formattedCLP(offerPrice)}</OfferPrice>
         {hasDiscount && (
           <DiscountPercent>{methods.calculateDiscount()}%</DiscountPercent>
         )}
       </OfferPriceContainer>
       {hasDiscount && (
-        <NormalPrice>Normal: ${methods.formatPrice(normalPrice)}</NormalPrice>
+        <NormalPrice>Normal: {formattedCLP(normalPrice)}</NormalPrice>
       )}
     </Container>
   );

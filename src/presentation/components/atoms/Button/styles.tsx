@@ -56,4 +56,9 @@ export const ButtonContainer = styled.button`
     justify-content: center;
     width: 100%;
   }
+
+  &:disabled {
+    background-color: #f2f2f2;
+    color: #818180;
+  }
 `;

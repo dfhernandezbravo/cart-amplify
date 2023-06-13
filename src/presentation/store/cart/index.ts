@@ -1,3 +1,4 @@
+import { RootState } from "@hooks/storeHooks";
 import { createSlice } from "@reduxjs/toolkit";
 import { CartItemModel } from "@store/cart/types";
 
@@ -59,3 +60,10 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice;
+
+export const totalProductsInCart = (state: RootState) => {
+  return state.cart.cartItems?.reduce(
+    (acc: number, cur: CartItemModel) => acc + (cur?.quantity ?? 0) ?? 0,
+    0
+  );
+};

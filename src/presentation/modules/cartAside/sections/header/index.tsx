@@ -1,26 +1,20 @@
 import { GrClose } from "react-icons/gr";
 import { useAppSelector } from "@hooks/storeHooks";
-import { CartItemModel } from "@store/cart/types";
+import { totalProductsInCart } from "@store/cart";
 import { HeaderProps } from "./types";
 import { Title } from "./styles";
 
 const Header = (props: HeaderProps) => {
-  const { cartItems } = useAppSelector((state) => state.cart);
+  const totalProducts = useAppSelector(totalProductsInCart);
   const { setIsOpen } = props;
-
-  const totalProductsInCart = cartItems?.reduce(
-    (acc: number, cur: CartItemModel) => acc + (cur?.quantity ?? 0) ?? 0,
-    0
-  );
 
   return (
     <Title>
       <div>
         Mi carro
-        {totalProductsInCart > 0 && (
+        {totalProducts > 0 && (
           <span className="count">
-            ({totalProductsInCart}{" "}
-            {totalProductsInCart > 1 ? "productos" : "producto"})
+            ({totalProducts} {totalProducts > 1 ? "productos" : "producto"})
           </span>
         )}
       </div>

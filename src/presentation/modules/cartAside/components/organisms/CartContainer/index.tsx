@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
-import cartSlice from "@store/cart";
+import cartSlice, { totalProductsInCart } from "@store/cart";
 import useEventListener from "@hooks/eventListenerHooks";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import Header from "@modules/cartAside/sections/header";
@@ -8,10 +8,12 @@ import Body from "@modules/cartAside/sections/body";
 import Footer from "@modules/cartAside/sections/footer";
 
 import { CartAsideContainer } from "./styles";
+import EmptyBody from "@modules/cartAside/sections/emptyBody";
 
 const CartContainer = () => {
   // hooks
   const dispatch = useAppDispatch();
+  const totalProducts = useAppSelector(totalProductsInCart);
 
   // states
   const [isOpen, setIsOpen] = useState(false);
@@ -63,8 +65,14 @@ const CartContainer = () => {
   return (
     <CartAsideContainer isOpen={isOpen}>
       <Header setIsOpen={setIsOpen} />
-      <Body />
-      <Footer />
+      {totalProducts > 0 ? (
+        <>
+          <Body />
+          <Footer />
+        </>
+      ) : (
+        <EmptyBody />
+      )}
     </CartAsideContainer>
   );
 };

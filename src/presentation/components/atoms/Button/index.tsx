@@ -2,9 +2,13 @@ import { ButtonProps } from "./types";
 import { ButtonContainer } from "./styles";
 
 const Button = (props: ButtonProps) => {
-  const { children, className, onClick } = props;
+  const { children, className, onClick, disabled } = props;
   return (
-    <ButtonContainer className={className} onClick={onClick}>
+    <ButtonContainer
+      className={className}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </ButtonContainer>
   );

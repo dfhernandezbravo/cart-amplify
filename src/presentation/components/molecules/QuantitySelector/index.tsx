@@ -1,10 +1,10 @@
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import Button from "@components/atoms/Button";
-import { QuantitySelectorProps } from "./types";
-import { QuantitySelectorContainer } from "./styles";
-import { Textfield } from "@components/atoms/Textfield";
 import { useAppDispatch } from "@hooks/storeHooks";
 import cartSlice from "@store/cart";
+import Button from "@components/atoms/Button";
+import { Textfield } from "@components/atoms/Textfield";
+import { QuantitySelectorProps } from "./types";
+import { QuantitySelectorContainer } from "./styles";
 
 const QuantitySelector = (props: QuantitySelectorProps) => {
   // hooks
@@ -16,13 +16,16 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   // props
   const { item, quantity, onIncrementQuantity, onDecrementQuantity } = props;
 
-  const handleOnChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newQuantity = Number(e.target.value);
-    const numberRegex = /^\d+$/; // only integers
+  // methods
+  const methods = {
+    handleOnChangeQuantity: (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newQuantity = Number(e.target.value);
+      const numberRegex = /^\d+$/; // only integers
 
-    if (newQuantity > 0 && numberRegex.test(e.target.value)) {
-      dispatch(setUpdateProductQuantity({ item, newQuantity }));
-    }
+      if (newQuantity > 0 && numberRegex.test(e.target.value)) {
+        dispatch(setUpdateProductQuantity({ item, newQuantity }));
+      }
+    },
   };
 
   return (
@@ -30,6 +33,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
       <Button
         className="quantitySelectorBtn quantitySelectorBtn--minus"
         onClick={onDecrementQuantity}
+        disabled={quantity === 1}
       >
         <AiOutlineMinus />
       </Button>
@@ -37,7 +41,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
         type="number"
         name="quantityInput"
         min={1}
-        onChange={handleOnChangeQuantity}
+        onChange={methods.handleOnChangeQuantity}
         value={quantity}
         className="quantityInput"
       />

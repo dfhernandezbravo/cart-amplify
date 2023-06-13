@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const BodyContainer = styled.div`
-  height: 100%;
-  max-height: 63%;
+  height: calc(92vh - 195px);
   overflow-y: auto;
   background-color: white;
 `;
