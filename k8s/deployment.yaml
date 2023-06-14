@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${CI_PROJECT_NAME}
+  namespace: ${KUBE_NAMESPACE}
+  annotations:
+    deployer: "${GITLAB_USER_NAME} ${GITLAB_USER_EMAIL}"
+    project_url: "${CI_PROJECT_URL}"
+    description: "Deployment ${CI_PROJECT_NAME}"
+    changelog: "${CI_COMMIT_TITLE}"
+    app.gitlab.com/app: ${CI_PROJECT_PATH_SLUG}
+    app.gitlab.com/env: ${CI_ENVIRONMENT_SLUG}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ${CI_PROJECT_NAME}
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: ${CI_PROJECT_NAME}
+      annotations:
+        app.gitlab.com/app: ${CI_PROJECT_PATH_SLUG}
+        app.gitlab.com/env: ${CI_ENVIRONMENT_SLUG}
+    spec:
+      serviceAccountName: ${KUBE_NAMESPACE}
+      automountServiceAccountToken: true
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: topology.kubernetes.io/zone
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      nodeSelector:
+        ${SELECTOR_ROLE}
+      containers:
+        - name: ${CI_PROJECT_NAME}
+          image: ${CI_REGISTRY_IMAGE}:${CI_PIPELINE_IID}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+              name: http
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: secret-${CI_PROJECT_NAME}
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 8081
+            initialDelaySeconds: 100
+            timeoutSeconds: 30
+          resources:
+            requests:
+              memory: 350Mi
+              cpu: '1000m'
+            limits:
+              memory: 350Mi
+              cpu: '1000m'
+      imagePullSecrets:
+        - name: gitlab-registry-credentials

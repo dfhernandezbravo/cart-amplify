@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: ${INGRESS_CLASS}
+  labels:
+    app: ${CI_PROJECT_NAME}  
+  name: ${CI_PROJECT_NAME}-ingress
+  namespace: ${KUBE_NAMESPACE}
+spec:
+  rules:
+  - host: ${CI_PROJECT_NAME}.${ENDPOINT}
+    http:
+      paths:
+      - backend:
+          service:
+            name: ${CI_PROJECT_NAME}
+            port:
+              name: http
+        pathType: ImplementationSpecific
