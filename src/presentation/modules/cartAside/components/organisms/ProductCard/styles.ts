@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ProductCardContainer = styled.div`
   width: 100%;
@@ -33,34 +33,9 @@ export const ProductName = styled.div`
   font-weight: 400;
 `;
 
-export const Price = styled.div`
-  font-size: 20px;
-  font-weight: 700;
-  margin: 5px 0;
-`;
-
-export const AddToCartContainer = styled.div`
-  margin-top: 15px;
-  width: 100%;
-  align-items: center;
-`;
-
 export const ImageAndDeleteContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-export const DeleteItemContainer = styled.div`
-  cursor: pointer;
-`;
-
-export const DeleteBtn = styled.button`
-  background: none;
-  border: none;
-  color: #1a1a1a;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-decoration: underline;
 `;

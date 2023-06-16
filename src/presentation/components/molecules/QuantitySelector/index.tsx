@@ -1,6 +1,6 @@
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useAppDispatch } from "@hooks/storeHooks";
-import cartSlice from "@store/cart";
+import { updateProductQuantity } from "@store/cart";
 import Button from "@components/atoms/Button";
 import { Textfield } from "@components/atoms/Textfield";
 import { QuantitySelectorProps } from "./types";
@@ -9,9 +9,6 @@ import { QuantitySelectorContainer } from "./styles";
 const QuantitySelector = (props: QuantitySelectorProps) => {
   // hooks
   const dispatch = useAppDispatch();
-
-  // store actions
-  const { setUpdateProductQuantity } = cartSlice.actions;
 
   // props
   const { item, quantity, onIncrementQuantity, onDecrementQuantity } = props;
@@ -23,7 +20,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
       const numberRegex = /^\d+$/; // only integers
 
       if (newQuantity > 0 && numberRegex.test(e.target.value)) {
-        dispatch(setUpdateProductQuantity({ item, newQuantity }));
+        dispatch(updateProductQuantity({ item, newQuantity }));
       }
     },
   };

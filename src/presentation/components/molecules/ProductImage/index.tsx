@@ -3,16 +3,16 @@ import { ProductImageProps } from "./types";
 import { Container } from "./styles";
 
 const ProductImage = (props: ProductImageProps) => {
-  const { image } = props;
+  const {
+    src = "",
+    alt = "Imagen del producto",
+    width = 100,
+    height = 100,
+  } = props;
 
   return (
     <Container>
-      <Image
-        src={image.imageUrl ?? ""}
-        alt={image.imageText ?? "Imagen del producto"}
-        width={100}
-        height={100}
-      />
+      <Image src={src} alt={alt} width={width} height={height} />
     </Container>
   );
 };

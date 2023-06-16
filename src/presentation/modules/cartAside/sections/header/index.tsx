@@ -1,11 +1,11 @@
 import { GrClose } from "react-icons/gr";
 import { useAppSelector } from "@hooks/storeHooks";
-import { totalProductsInCart } from "@store/cart";
+import { selectTotalProductsInCart } from "@store/cart";
 import { HeaderProps } from "./types";
 import { Title } from "./styles";
 
 const Header = (props: HeaderProps) => {
-  const totalProducts = useAppSelector(totalProductsInCart);
+  const totalProducts = useAppSelector(selectTotalProductsInCart);
   const { setIsOpen } = props;
 
   return (

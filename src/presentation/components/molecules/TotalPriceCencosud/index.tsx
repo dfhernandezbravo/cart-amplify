@@ -1,3 +1,4 @@
+import { selectCart } from "@store/cart";
 import { CartItemModel } from "@store/cart/types";
 import { useAppSelector } from "@hooks/storeHooks";
 import { formattedCLP } from "../../../utils/helpers";
@@ -5,7 +6,7 @@ import { Container } from "./styles";
 
 const TotalPriceCencosud = () => {
   // hooks
-  const { cartItems } = useAppSelector((state) => state.cart);
+  const { cartItems } = useAppSelector(selectCart);
 
   // methods
   const methods = {
