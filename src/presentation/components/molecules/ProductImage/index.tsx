@@ -8,8 +8,8 @@ const ProductImage = (props: ProductImageProps) => {
   return (
     <Container>
       <Image
-        src={src || ""}
-        alt={alt || "Imagen del producto"}
+        src={src ?? ""}
+        alt={alt ?? "Imagen del producto"}
         width={width}
         height={height}
       />
