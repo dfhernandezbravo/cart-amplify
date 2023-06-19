@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import { addProductInCart, selectTotalProductsInCart } from "@store/cart";
 import useEventListener from "@hooks/eventListenerHooks";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
@@ -7,7 +7,7 @@ import Header from "@modules/cartAside/sections/header";
 import Body from "@modules/cartAside/sections/body";
 import Footer from "@modules/cartAside/sections/footer";
 
-import { CartAsideContainer } from "./styles";
+import { CartAsideContainer, Overlay } from "./styles";
 import EmptyBody from "@modules/cartAside/sections/emptyBody";
 
 const CartContainer = () => {
@@ -56,21 +56,29 @@ const CartContainer = () => {
     //   dispatch(removeProductInCart(customEvent.detail));
     //   setIsOpen(true);
     // },
+    handleCloseOverlay: (event: MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
+        setIsOpen(false);
+      }
+    },
   };
   methods.initialize();
 
   return (
-    <CartAsideContainer isOpen={isOpen}>
-      <Header setIsOpen={setIsOpen} />
-      {totalProducts > 0 ? (
-        <>
-          <Body />
-          <Footer />
-        </>
-      ) : (
-        <EmptyBody />
-      )}
-    </CartAsideContainer>
+    <Overlay isOpen={isOpen} onClick={methods.handleCloseOverlay}>
+      <CartAsideContainer isOpen={isOpen}>
+        <Header setIsOpen={setIsOpen} />
+        {totalProducts > 0 ? (
+          <>
+            <Body />
+            <Footer />
+          </>
+        ) : (
+          <EmptyBody />
+        )}
+      </CartAsideContainer>
+    </Overlay>
   );
 };
 export default CartContainer;
