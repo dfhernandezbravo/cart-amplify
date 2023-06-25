@@ -1,25 +1,22 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from "react";
-import cartSlice, { totalProductsInCart } from "@store/cart";
+import { MouseEvent, useState } from "react";
+import { addProductInCart, selectTotalProductsInCart } from "@store/cart";
 import useEventListener from "@hooks/eventListenerHooks";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import Header from "@modules/cartAside/sections/header";
 import Body from "@modules/cartAside/sections/body";
 import Footer from "@modules/cartAside/sections/footer";
 
-import { CartAsideContainer } from "./styles";
+import { CartAsideContainer, Overlay } from "./styles";
 import EmptyBody from "@modules/cartAside/sections/emptyBody";
 
 const CartContainer = () => {
   // hooks
   const dispatch = useAppDispatch();
-  const totalProducts = useAppSelector(totalProductsInCart);
+  const totalProducts = useAppSelector(selectTotalProductsInCart);
 
   // states
   const [isOpen, setIsOpen] = useState(false);
-
-  // store actions
-  const { setAddProductInCart } = cartSlice.actions;
 
   // methods
   const methods = {
@@ -50,30 +47,38 @@ const CartContainer = () => {
     handleAddProductEvent: (event: Event) => {
       event.preventDefault();
       const customEvent = event as CustomEvent;
-      dispatch(setAddProductInCart(customEvent.detail));
+      dispatch(addProductInCart(customEvent.detail));
       setIsOpen(true);
     },
     // handleRemoveProductEvent: (event: Event) => {
     //   event.preventDefault();
     //   const customEvent = event as CustomEvent;
-    //   dispatch(setRemoveProductInCart(customEvent.detail));
+    //   dispatch(removeProductInCart(customEvent.detail));
     //   setIsOpen(true);
     // },
+    handleCloseOverlay: (event: MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      if (event.target === event.currentTarget) {
+        setIsOpen(false);
+      }
+    },
   };
   methods.initialize();
 
   return (
-    <CartAsideContainer isOpen={isOpen}>
-      <Header setIsOpen={setIsOpen} />
-      {totalProducts > 0 ? (
-        <>
-          <Body />
-          <Footer />
-        </>
-      ) : (
-        <EmptyBody />
-      )}
-    </CartAsideContainer>
+    <Overlay isOpen={isOpen} onClick={methods.handleCloseOverlay}>
+      <CartAsideContainer isOpen={isOpen}>
+        <Header setIsOpen={setIsOpen} />
+        {totalProducts > 0 ? (
+          <>
+            <Body />
+            <Footer />
+          </>
+        ) : (
+          <EmptyBody />
+        )}
+      </CartAsideContainer>
+    </Overlay>
   );
 };
 export default CartContainer;

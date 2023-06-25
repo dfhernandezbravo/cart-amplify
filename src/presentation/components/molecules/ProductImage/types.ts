@@ -1,5 +1,6 @@
-import { ImagesEntity } from "@store/cart/types";
-
 export type ProductImageProps = {
-  image: ImagesEntity;
+  src: string | undefined;
+  alt: string | undefined;
+  width?: number;
+  height?: number;
 };

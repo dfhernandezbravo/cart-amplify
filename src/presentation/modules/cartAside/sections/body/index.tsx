@@ -1,4 +1,9 @@
-import cartSlice from "@store/cart";
+import {
+  selectCart,
+  removeProductInCart,
+  incrementProductQuantity,
+  decrementProductQuantity,
+} from "@store/cart";
 import { CartItemModel } from "@store/cart/types";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import ProductCard from "@modules/cartAside/components/organisms/ProductCard";
@@ -6,26 +11,19 @@ import { BodyContainer } from "./styles";
 
 const Body = () => {
   // hooks
-  const { cartItems } = useAppSelector((state) => state.cart);
+  const { cartItems } = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
-
-  // store actions
-  const {
-    setIncrementProductQuantity,
-    setDecrementProductQuantity,
-    setRemoveProductInCart,
-  } = cartSlice.actions;
 
   // methods
   const methods = {
     handleIncrementQuantity: (item: CartItemModel) => {
-      dispatch(setIncrementProductQuantity(item));
+      dispatch(incrementProductQuantity(item));
     },
     handleDecrementQuantity: (item: CartItemModel) => {
-      dispatch(setDecrementProductQuantity(item));
+      dispatch(decrementProductQuantity(item));
     },
     handleRemoveFromCart: (item: CartItemModel) => {
-      dispatch(setRemoveProductInCart(item));
+      dispatch(removeProductInCart(item));
     },
   };
 

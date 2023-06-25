@@ -1,11 +1,12 @@
 import { useAppSelector } from "@hooks/storeHooks";
+import { selectCart } from "@store/cart";
 import { CartItemModel } from "@store/cart/types";
 import { formattedCLP } from "../../../utils/helpers";
 import { Container } from "./styles";
 
 const TotalPrice = () => {
   // hooks
-  const { cartItems } = useAppSelector((state) => state.cart);
+  const { cartItems } = useAppSelector(selectCart);
 
   // methods
   const methods = {

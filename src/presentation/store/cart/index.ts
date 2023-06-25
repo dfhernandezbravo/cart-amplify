@@ -8,7 +8,7 @@ const cartSlice = createSlice({
     cartItems: [] as CartItemModel[],
   },
   reducers: {
-    setAddProductInCart: (state, { payload }) => {
+    addProductInCart: (state, { payload }) => {
       const productInCart = state.cartItems?.find(
         (item: CartItemModel) => item.productId === payload.productId
       );
@@ -20,14 +20,14 @@ const cartSlice = createSlice({
         state.cartItems.push({ ...payload, quantity: 1 });
       }
     },
-    setRemoveProductInCart: (state, { payload }) => {
+    removeProductInCart: (state, { payload }) => {
       const removeItem = state.cartItems.filter(
         (item: CartItemModel) => item.productId !== payload.productId
       );
 
       state.cartItems = removeItem;
     },
-    setIncrementProductQuantity: (state, { payload }) => {
+    incrementProductQuantity: (state, { payload }) => {
       const productInCart = state.cartItems?.find(
         (item: CartItemModel) => item.productId === payload.productId
       );
@@ -37,7 +37,7 @@ const cartSlice = createSlice({
         productInCart.quantity = quantity + 1;
       }
     },
-    setDecrementProductQuantity: (state, { payload }) => {
+    decrementProductQuantity: (state, { payload }) => {
       const productInCart = state.cartItems?.find(
         (item: CartItemModel) => item.productId === payload.productId
       );
@@ -47,7 +47,7 @@ const cartSlice = createSlice({
         productInCart.quantity = quantity > 1 ? quantity - 1 : 1;
       }
     },
-    setUpdateProductQuantity: (state, { payload }) => {
+    updateProductQuantity: (state, { payload }) => {
       const productInCart = state.cartItems?.find(
         (item: CartItemModel) => item.productId === payload.item.productId
       );
@@ -61,7 +61,19 @@ const cartSlice = createSlice({
 
 export default cartSlice;
 
-export const totalProductsInCart = (state: RootState) => {
+// actions
+export const {
+  addProductInCart,
+  removeProductInCart,
+  incrementProductQuantity,
+  decrementProductQuantity,
+  updateProductQuantity,
+} = cartSlice.actions;
+
+// selectors
+export const selectCart = (state: RootState) => state.cart;
+
+export const selectTotalProductsInCart = (state: RootState) => {
   return state.cart.cartItems?.reduce(
     (acc: number, cur: CartItemModel) => acc + (cur?.quantity ?? 0) ?? 0,
     0

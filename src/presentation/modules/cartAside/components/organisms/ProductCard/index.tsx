@@ -1,4 +1,4 @@
-import Button from "@components/atoms/Button";
+import DeleteButton from "@components/molecules/DeleteButton";
 import QuantitySelector from "@components/molecules/QuantitySelector";
 import ProductImage from "@components/molecules/ProductImage";
 import ProductPrice from "@components/molecules//ProductPrice";
@@ -18,12 +18,11 @@ const ProductCard = (props: ProductCardProps) => {
   return (
     <ProductCardContainer>
       <ImageAndDeleteContainer>
-        {item?.items?.[0].images?.[0].imageUrl && (
-          <ProductImage image={item?.items?.[0].images?.[0]} />
-        )}
-        <Button className="linkBtn" onClick={onRemoveFromCart}>
-          Eliminar
-        </Button>
+        <ProductImage
+          src={item?.items?.[0].images?.[0]?.imageUrl}
+          alt={item?.items?.[0].images?.[0]?.imageText}
+        />
+        <DeleteButton onRemoveFromCart={onRemoveFromCart} />
       </ImageAndDeleteContainer>
 
       <ProductInfoContainer>

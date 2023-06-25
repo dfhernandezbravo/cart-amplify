@@ -1,16 +1,3 @@
-// type RatingModel = { rate: number; count: number };
-
-// export interface CartItemModel {
-//   category: string;
-//   description: string;
-//   id: number;
-//   image: string;
-//   price: number;
-//   rating: RatingModel;
-//   brand: string;
-//   quantity?: number;
-// }
-
 export interface CartItemModel {
   productId: string;
   quantity?: number;
