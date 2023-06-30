@@ -37,6 +37,7 @@ export const ButtonContainer = styled.button`
 
   &.buyBtn {
     background-color: #cc1515;
+    border: 1px solid #cc1515;
     color: #fff;
     font-size: 1rem;
     width: 100%;

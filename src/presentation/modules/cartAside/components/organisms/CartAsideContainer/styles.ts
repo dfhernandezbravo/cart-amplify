@@ -4,7 +4,7 @@ type CartAsideProp = {
   isOpen: boolean;
 };
 
-export const CartAsideContainer = styled.div<CartAsideProp>`
+export const Container = styled.div<CartAsideProp>`
   position: fixed;
   top: 0;
   right: 0;

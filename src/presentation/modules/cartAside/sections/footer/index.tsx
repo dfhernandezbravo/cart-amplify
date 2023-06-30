@@ -7,9 +7,9 @@ import { FooterContainer } from "./styles";
 const Footer = () => {
   return (
     <FooterContainer>
-      <TotalPriceCencosud />
-      <TotalPrice />
-      <BuyButton />
+      <TotalPriceCencosud text="Total con Tarjeta Cencosud" />
+      <TotalPrice text="Total con otros medios de pago" />
+      <BuyButton text="Comprar ahora" />
       <GoToCartButton />
     </FooterContainer>
   );

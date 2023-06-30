@@ -7,10 +7,10 @@ import Header from "@modules/cartAside/sections/header";
 import Body from "@modules/cartAside/sections/body";
 import Footer from "@modules/cartAside/sections/footer";
 
-import { CartAsideContainer, Overlay } from "./styles";
+import { Container, Overlay } from "./styles";
 import EmptyBody from "@modules/cartAside/sections/emptyBody";
 
-const CartContainer = () => {
+const CartAsideContainer = () => {
   // hooks
   const dispatch = useAppDispatch();
   const totalProducts = useAppSelector(selectTotalProductsInCart);
@@ -67,7 +67,7 @@ const CartContainer = () => {
 
   return (
     <Overlay isOpen={isOpen} onClick={methods.handleCloseOverlay}>
-      <CartAsideContainer isOpen={isOpen}>
+      <Container isOpen={isOpen}>
         <Header setIsOpen={setIsOpen} />
         {totalProducts > 0 ? (
           <>
@@ -77,8 +77,8 @@ const CartContainer = () => {
         ) : (
           <EmptyBody />
         )}
-      </CartAsideContainer>
+      </Container>
     </Overlay>
   );
 };
-export default CartContainer;
+export default CartAsideContainer;

@@ -3,10 +3,14 @@ import { selectCart } from "@store/cart";
 import { CartItemModel } from "@store/cart/types";
 import { formattedCLP } from "../../../utils/helpers";
 import { Container } from "./styles";
+import { TotalPriceProps } from "./types";
 
-const TotalPrice = () => {
+const TotalPrice = (props: TotalPriceProps) => {
   // hooks
   const { cartItems } = useAppSelector(selectCart);
+
+  // props
+  const { text, className } = props;
 
   // methods
   const methods = {
@@ -21,8 +25,8 @@ const TotalPrice = () => {
   };
 
   return (
-    <Container>
-      Total con otros medios de pago:{" "}
+    <Container className={className}>
+      {text}
       <span>{formattedCLP(methods.totalPrice())}</span>
     </Container>
   );

@@ -33,6 +33,7 @@ const ProductCard = (props: ProductCardProps) => {
           normalPrice={
             item?.items?.[0].sellers?.[0].commertialOffer?.ListPrice ?? 0
           }
+          quantity={item?.quantity ?? 0}
         />
         <QuantitySelector
           item={item}
