@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CgChevronUp, CgChevronDown } from "react-icons/cg";
-import { MdOutlineDiscount } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
+import Image from "next/image";
 import Button from "@components/atoms/Button";
-import { ButtonContainer, Container, FormContainer } from "./styles";
+import {
+  ButtonContainer,
+  Container,
+  FormContainer,
+  IconAndTextContainer,
+} from "./styles";
 
 type Inputs = {
   code: string;
@@ -41,8 +46,15 @@ const PromotionalCode = () => {
   return (
     <Container>
       <ButtonContainer onClick={handleShowForm}>
-        <MdOutlineDiscount />
-        Ingresa tu código promocional
+        <IconAndTextContainer>
+          <Image
+            src={`/icons/cart/promoCode.svg`}
+            alt="promoCode-icon"
+            width={24}
+            height={24}
+          />
+          <span>Cupón de descuento</span>
+        </IconAndTextContainer>
         {isOpen ? <CgChevronUp size={24} /> : <CgChevronDown size={24} />}
       </ButtonContainer>
       {isOpen ? (

@@ -9,7 +9,7 @@ const GoToCartButton = () => {
   };
 
   return (
-    <Button className="linkBtn goToCartBtn" onClick={handleClickBtn}>
+    <Button className="linkBtn goToCartBtn fullWidth" onClick={handleClickBtn}>
       Ir al carro de compras
     </Button>
   );

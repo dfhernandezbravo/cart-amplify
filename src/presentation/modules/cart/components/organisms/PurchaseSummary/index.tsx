@@ -1,11 +1,12 @@
+import Button from "@components/atoms/Button";
 import TotalPriceCencosud from "@components/molecules/TotalPriceCencosud";
 import TotalPrice from "@components/molecules/TotalPrice";
-import BuyButton from "@components/molecules/BuyButton";
-import { Container } from "./styles";
+import PromotionalCode from "@modules/cart/components/molecules/PromotionalCode";
 import { useAppSelector } from "@hooks/storeHooks";
 import { selectCart } from "@store/cart";
 import { CartItemModel } from "@store/cart/types";
-import { formattedCLP } from "../../../../../utils/helpers";
+import { formattedCLP } from "@utils/helpers";
+import { Container, Divider } from "./styles";
 
 const PurchaseSummary = () => {
   // hooks
@@ -33,25 +34,36 @@ const PurchaseSummary = () => {
     discounts: () => {
       return methods.normalPriceSummary() - methods.offerPriceSummary();
     },
+    handleGoToCheckout: () => {
+      console.log("handleGoToCheckout clicked!");
+    },
   };
 
   return (
     <Container>
       <h1>Resumen de mi compra</h1>
+      <Divider />
       <p>
-        Costo de tus productos:
+        Subtotal
         <span>{formattedCLP(methods.normalPriceSummary())}</span>
       </p>
       <p>
-        Costo de envío: <span>A partir de: $xx.xxx</span>
+        Costo de envío desde <span>$xx.xxx</span>
       </p>
       <p>
         Descuentos: <span>-{formattedCLP(methods.discounts())}</span>
       </p>
-
-      <TotalPriceCencosud className="purchaseSummary" text="Subtotal" />
-      <TotalPrice className="purchaseSummary" text="Total" />
-      <BuyButton text="Ir a comprar" />
+      <Divider className="light" />
+      <TotalPriceCencosud className="purchaseSummary" />
+      <TotalPrice className="purchaseSummary" />
+      {/* <BuyButton text="Ir a comprar" /> */}
+      <Button
+        className="cartBtn cartBtn--primary fullWidth"
+        onClick={methods.handleGoToCheckout}
+      >
+        Continuar tu compra
+      </Button>
+      <PromotionalCode />
     </Container>
   );
 };

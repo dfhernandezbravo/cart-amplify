@@ -2,12 +2,14 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: #fff;
-  border: 1px solid rgb(170, 170, 170);
-  border-radius: 6px;
+  border: 1px solid #bfbfbf;
+  border-radius: 8px;
   padding: 16px;
 
   h1 {
-    font-size: 15px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 30px;
   }
 
   p {
@@ -23,9 +25,20 @@ export const Container = styled.div`
   }
 
   .purchaseSummary {
-    color: #cc1414;
-    font-size: 14px;
-    font-weight: 600;
-    padding-top: 10px;
+    color: #333;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+  }
+`;
+
+export const Divider = styled.hr`
+  border: none;
+  border-bottom: 1px solid #aaa;
+  margin: 16px auto;
+  width: 85%;
+
+  &.light {
+    border-color: #eaeaea;
   }
 `;

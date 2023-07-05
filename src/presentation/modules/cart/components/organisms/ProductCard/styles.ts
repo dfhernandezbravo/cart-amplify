@@ -2,46 +2,30 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin: 0 20px;
-  padding: 20px 0;
-  border-bottom: 1px solid #eee;
+  flex-direction: column;
+  margin: 0 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #aaa;
   background-color: #fff;
 `;
 
 export const ProductInfoContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  column-gap: 16px;
 
   img {
     height: auto;
   }
 `;
 
-export const ImageAndQuantityContainer = styled.div`
+export const ProductInfoAndPriceContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const QuantitySelectorAndDeleteContainer = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const PriceAndDeleteContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-width: 135px;
-
-  button {
-    padding: 0;
-  }
-`;
-
-export const TextAndQuantityContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 75px;
-
-  span {
-    font-size: 13px;
-    color: #818180;
-  }
+  justify-content: flex-end;
 `;

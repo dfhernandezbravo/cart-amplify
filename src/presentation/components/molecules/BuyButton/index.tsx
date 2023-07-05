@@ -9,7 +9,7 @@ const BuyButton = (props: BuyButtonProps) => {
   };
 
   return (
-    <Button className="buyBtn" onClick={handleClickBtn}>
+    <Button className="buyBtn fullWidth" onClick={handleClickBtn}>
       {text}
     </Button>
   );

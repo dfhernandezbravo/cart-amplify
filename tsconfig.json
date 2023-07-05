@@ -20,7 +20,8 @@
       "@components/*": ["./src/presentation/components/*"],
       "@hooks/*": ["./src/presentation/hooks/*"],
       "@modules/*": ["./src/presentation/modules/*"],
-      "@store/*": ["./src/presentation/store/*"]
+      "@store/*": ["./src/presentation/store/*"],
+      "@utils/*": ["./src/presentation/utils/*"]
       // "@mocks/*": ["./src/presentation/mocks/*"],
       // "@entities/*": ["./src/domain/entities/*"],
       // "@interfaces/*": ["./src/domain/interfaces/*"],

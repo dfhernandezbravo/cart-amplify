@@ -5,7 +5,7 @@ export const Container = styled.div`
   border: 1px solid rgb(170, 170, 170);
   border-radius: 6px;
   margin-bottom: 16px;
-  padding: 16px;
+  padding: 12px 16px;
 
   .promotionalCodeError {
     display: flex;
@@ -33,9 +33,7 @@ export const ButtonContainer = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 14px;
   font-family: inherit;
-  font-weight: 600;
   width: 100%;
 
   svg {
@@ -69,5 +67,18 @@ export const FormContainer = styled.form`
     align-items: center;
     justify-content: center;
     margin-left: 10px;
+  }
+`;
+
+export const IconAndTextContainer = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+
+  span {
+    color: #333;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
   }
 `;

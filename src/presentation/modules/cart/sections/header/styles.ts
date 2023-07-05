@@ -1,21 +1,21 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: #fff;
+  background-color: #af1212;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 3px 5px #e3e4e6;
-  padding: 10px 30px;
+  padding: 12px 64px;
   width: 100%;
+
+  .logo {
+    height: 52px;
+  }
 `;
 
-export const TextContainer = styled.div`
-  color: #818180;
-  font-size: 14px;
-  font-weight: 500;
-
-  span {
-    color: #1a1a1a;
-  }
+export const Title = styled.div`
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+  margin-left: 16px;
 `;

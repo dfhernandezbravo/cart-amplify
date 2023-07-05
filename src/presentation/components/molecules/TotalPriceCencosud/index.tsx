@@ -1,7 +1,7 @@
 import { selectCart } from "@store/cart";
 import { CartItemModel } from "@store/cart/types";
 import { useAppSelector } from "@hooks/storeHooks";
-import { formattedCLP } from "../../../utils/helpers";
+import { formattedCLP } from "@utils/helpers";
 import { Container } from "./styles";
 import { TotalPriceCencosudProps } from "./types";
 
@@ -10,7 +10,7 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
   const { cartItems } = useAppSelector(selectCart);
 
   // props
-  const { text, className } = props;
+  const { className } = props;
 
   // methods
   const methods = {
@@ -26,7 +26,7 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
 
   return (
     <Container className={className}>
-      {text}
+      Total con tarjeta Cencosud
       <span>{formattedCLP(methods.totalPrice())}</span>
     </Container>
   );

@@ -1,13 +1,12 @@
 import LogoImage from "@modules/cart/components/molecules/LogoImage";
-import { Container, TextContainer } from "./styles";
+import { Container, Title } from "./styles";
 
 const Header = () => {
   return (
     <Container>
       <LogoImage />
-      <TextContainer>
-        Tu compra es <span>100% segura</span>
-      </TextContainer>
+      <Title>Carro</Title>
+      {/* TODO: call Regionalizer component */}
     </Container>
   );
 };

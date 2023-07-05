@@ -1,4 +1,3 @@
-import { CgShoppingCart } from "react-icons/cg";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import {
   decrementProductQuantity,
@@ -33,8 +32,7 @@ const Main = () => {
   return (
     <Container>
       <TotalProductsContainer>
-        <CgShoppingCart size={24} />
-        Tu carro de compras <span>({totalProducts} productos)</span>
+        Tu compra {`{${totalProducts}}`}
       </TotalProductsContainer>
       {cartItems?.map((item) => (
         <ProductCard

@@ -1,4 +1,4 @@
-import { formattedCLP } from "../../../utils/helpers";
+import { formattedCLP } from "@utils/helpers";
 import { ProductPriceProps } from "./types";
 import {
   Container,
