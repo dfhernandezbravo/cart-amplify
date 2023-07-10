@@ -1,8 +1,8 @@
-import { CartItemModel } from "@store/cart/types";
+import { Item } from "@entities/cart/cart.entity";
 
 export type ProductCardProps = {
-  item: CartItemModel;
-  onRemoveFromCart: (product: CartItemModel) => void;
-  onIncrementQuantity?: (product: CartItemModel) => void;
-  onDecrementQuantity?: (product: CartItemModel) => void;
+  item: Item;
+  onRemoveFromCart: (product: Item) => void;
+  onIncrementQuantity?: (product: Item) => void;
+  onDecrementQuantity?: (product: Item) => void;
 };

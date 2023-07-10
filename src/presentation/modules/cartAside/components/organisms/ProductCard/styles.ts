@@ -19,20 +19,6 @@ export const ProductInfoContainer = styled.div`
   width: 70%;
 `;
 
-export const ProductBrand = styled.div`
-  font-size: 12px;
-  color: #1a1a1a;
-  margin-top: 5px;
-  font-weight: 600;
-`;
-
-export const ProductName = styled.div`
-  font-size: 14px;
-  color: #4d4d4d;
-  margin: 5px 0;
-  font-weight: 400;
-`;
-
 export const ImageAndDeleteContainer = styled.div`
   display: flex;
   flex-direction: column;

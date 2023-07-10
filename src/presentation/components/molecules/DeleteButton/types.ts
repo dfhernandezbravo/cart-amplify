@@ -1,6 +1,6 @@
-import { CartItemModel } from "@store/cart/types";
+import { Item } from "@entities/cart/cart.entity";
 
 export type DeleteButtonProps = {
   hasIcon?: boolean;
-  onRemoveFromCart: (product: CartItemModel) => void;
+  onRemoveFromCart: (product: Item) => void;
 };

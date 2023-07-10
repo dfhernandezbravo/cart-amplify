@@ -25,7 +25,7 @@ const PromotionalCode = () => {
   } = useForm<Inputs>();
 
   // states
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [code, setCode] = useState("");
 
   const handleShowForm = () => {

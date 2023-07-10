@@ -27,5 +27,5 @@ export const Overlay = styled.div<CartAsideProp>`
   height: 100%;
   top: 0;
   right: 0;
-  z-index: 10;
+  z-index: 999;
 `;

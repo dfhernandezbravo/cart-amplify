@@ -13,7 +13,7 @@ const ProductPrice = (props: ProductPriceProps) => {
   const { offerPrice, normalPrice, quantity } = props;
 
   // constants
-  const hasDiscount = offerPrice !== normalPrice;
+  const hasDiscount = offerPrice && offerPrice !== normalPrice;
 
   // methods
   const methods = {
@@ -25,9 +25,14 @@ const ProductPrice = (props: ProductPriceProps) => {
   return (
     <Container>
       <OfferPriceContainer>
-        <OfferPrice>{formattedCLP(offerPrice * quantity)}</OfferPrice>
+        {!hasDiscount && (
+          <OfferPrice>{formattedCLP(normalPrice * quantity)}</OfferPrice>
+        )}
         {hasDiscount && (
-          <DiscountPercent>{methods.calculateDiscount()}%</DiscountPercent>
+          <>
+            <OfferPrice>{formattedCLP(offerPrice * quantity)}</OfferPrice>
+            <DiscountPercent>{methods.calculateDiscount()}%</DiscountPercent>
+          </>
         )}
       </OfferPriceContainer>
       {hasDiscount && (

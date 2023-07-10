@@ -1,8 +1,8 @@
-import { CartItemModel } from "@store/cart/types";
+import { Item } from "@entities/cart/cart.entity";
 
 export type QuantitySelectorProps = {
-  item: CartItemModel;
+  item: Item;
   quantity: number;
-  onIncrementQuantity?: (product: CartItemModel) => void;
-  onDecrementQuantity?: (product: CartItemModel) => void;
+  onIncrementQuantity?: (product: Item) => void;
+  onDecrementQuantity?: (product: Item) => void;
 };
