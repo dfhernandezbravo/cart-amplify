@@ -9,7 +9,7 @@ const Footer = () => {
     <FooterContainer>
       <TotalPriceCencosud />
       <TotalPrice />
-      <BuyButton />
+      <BuyButton text="Comprar ahora" />
       <GoToCartButton />
     </FooterContainer>
   );

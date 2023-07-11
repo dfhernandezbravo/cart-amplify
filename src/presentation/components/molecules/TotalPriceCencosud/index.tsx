@@ -1,29 +1,20 @@
 import { selectCart } from "@store/cart";
-import { CartItemModel } from "@store/cart/types";
 import { useAppSelector } from "@hooks/storeHooks";
-import { formattedCLP } from "../../../utils/helpers";
+import { formattedCLP } from "@utils/helpers";
+import { TotalPriceCencosudProps } from "./types";
 import { Container } from "./styles";
 
-const TotalPriceCencosud = () => {
+const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
   // hooks
-  const { cartItems } = useAppSelector(selectCart);
+  const { cartBFF } = useAppSelector(selectCart);
 
-  // methods
-  const methods = {
-    totalPrice: () => {
-      return cartItems?.reduce((acc: number, cur: CartItemModel) => {
-        const quantity = cur?.quantity ?? 0;
-        const price = cur?.items?.[0].sellers?.[0].commertialOffer?.Price ?? 0;
-
-        return acc + quantity * price;
-      }, 0);
-    },
-  };
+  // props
+  const { className } = props;
 
   return (
-    <Container>
-      Total con Tarjeta Cencosud:{" "}
-      <span>{formattedCLP(methods.totalPrice())}</span>
+    <Container className={className}>
+      Total con tarjeta Cencosud
+      <span>{formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}</span>
     </Container>
   );
 };

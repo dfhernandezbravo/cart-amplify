@@ -1,4 +1,4 @@
-import { formattedCLP } from "../../../utils/helpers";
+import { formattedCLP } from "@utils/helpers";
 import { ProductPriceProps } from "./types";
 import {
   Container,
@@ -10,10 +10,10 @@ import {
 
 const ProductPrice = (props: ProductPriceProps) => {
   // props
-  const { offerPrice, normalPrice } = props;
+  const { offerPrice, normalPrice, quantity } = props;
 
   // constants
-  const hasDiscount = offerPrice !== normalPrice;
+  const hasDiscount = offerPrice && offerPrice !== normalPrice;
 
   // methods
   const methods = {
@@ -25,13 +25,20 @@ const ProductPrice = (props: ProductPriceProps) => {
   return (
     <Container>
       <OfferPriceContainer>
-        <OfferPrice>{formattedCLP(offerPrice)}</OfferPrice>
+        {!hasDiscount && (
+          <OfferPrice>{formattedCLP(normalPrice * quantity)}</OfferPrice>
+        )}
         {hasDiscount && (
-          <DiscountPercent>{methods.calculateDiscount()}%</DiscountPercent>
+          <>
+            <OfferPrice>{formattedCLP(offerPrice * quantity)}</OfferPrice>
+            <DiscountPercent>{methods.calculateDiscount()}%</DiscountPercent>
+          </>
         )}
       </OfferPriceContainer>
       {hasDiscount && (
-        <NormalPrice>Normal: {formattedCLP(normalPrice)}</NormalPrice>
+        <NormalPrice>
+          Normal: {formattedCLP(normalPrice * quantity)}
+        </NormalPrice>
       )}
     </Container>
   );

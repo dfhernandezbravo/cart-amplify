@@ -5,11 +5,11 @@ import ProductPrice from "@components/molecules//ProductPrice";
 import { ProductCardProps } from "./types";
 import {
   ProductCardContainer,
-  ProductName,
   ProductInfoContainer,
-  ProductBrand,
   ImageAndDeleteContainer,
 } from "./styles";
+import ProductBrand from "@components/molecules/ProductBrand";
+import ProductName from "@components/molecules/ProductName";
 
 const ProductCard = (props: ProductCardProps) => {
   const { item, onIncrementQuantity, onDecrementQuantity, onRemoveFromCart } =
@@ -18,21 +18,17 @@ const ProductCard = (props: ProductCardProps) => {
   return (
     <ProductCardContainer>
       <ImageAndDeleteContainer>
-        <ProductImage
-          src={item?.items?.[0].images?.[0]?.imageUrl}
-          alt={item?.items?.[0].images?.[0]?.imageText}
-        />
+        <ProductImage src={item.product.images} alt="" />
         <DeleteButton onRemoveFromCart={onRemoveFromCart} />
       </ImageAndDeleteContainer>
 
       <ProductInfoContainer>
-        <ProductBrand>{item?.brand?.slice(0, 30)}</ProductBrand>
-        <ProductName>{item?.productName?.slice(0, 50)}</ProductName>
+        <ProductBrand brand={item?.product?.brand} />
+        <ProductName productName={item?.product?.description} />
         <ProductPrice
-          offerPrice={item?.items?.[0].sellers?.[0].commertialOffer?.Price ?? 0}
-          normalPrice={
-            item?.items?.[0].sellers?.[0].commertialOffer?.ListPrice ?? 0
-          }
+          offerPrice={item?.product?.prices?.offerPrice ?? 0}
+          normalPrice={item?.product?.prices?.normalPrice ?? 0}
+          quantity={item?.quantity ?? 0}
         />
         <QuantitySelector
           item={item}

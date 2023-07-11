@@ -1,10 +1,10 @@
 import Desktop from "@components/layouts/desktop";
-import CartContainer from "@modules/cartAside/components/organisms/CartContainer";
+import CartAsideContainer from "@modules/cartAside/components/organisms/CartAsideContainer";
 
 const CartAsideDesktop = () => {
   return (
     <Desktop>
-      <CartContainer />
+      <CartAsideContainer />
     </Desktop>
   );
 };

@@ -1,10 +1,10 @@
 import Mobile from "@components/layouts/mobile";
-import CartContainer from "@modules/cartAside/components/organisms/CartContainer";
+import CartAsideContainer from "@modules/cartAside/components/organisms/CartAsideContainer";
 
 const CartAsideMobile = () => {
   return (
     <Mobile>
-      <CartContainer />
+      <CartAsideContainer />
     </Mobile>
   );
 };

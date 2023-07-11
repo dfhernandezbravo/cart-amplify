@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const { NextFederationPlugin } = require('@module-federation/nextjs-mf');
+const { NextFederationPlugin } = require("@module-federation/nextjs-mf");
 
 const nextConfig = {
   reactStrictMode: true,
@@ -11,22 +11,23 @@ const nextConfig = {
       },
     ],
   },
-  webpack(config, options){
+  webpack(config, options) {
     config.plugins.push(
       new NextFederationPlugin({
-        name: 'cart',
-        filename: 'static/chunks/remoteEntry.js',
+        name: "cart",
+        filename: "static/chunks/remoteEntry.js",
         exposes: {
-          './cartAside': './src/pages/index.tsx'
+          "./cartAside": "./src/pages/index.tsx",
+          "./cart": "./src/pages/cart/index.tsx",
         },
         extraOptions: {
           exposePages: true,
-          automaticAsyncBoundary: true
-        }
+          automaticAsyncBoundary: true,
+        },
       })
     );
     return config;
-  }
-}
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

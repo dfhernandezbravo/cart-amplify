@@ -1,44 +1,51 @@
-import {
-  selectCart,
-  removeProductInCart,
-  incrementProductQuantity,
-  decrementProductQuantity,
-} from "@store/cart";
-import { CartItemModel } from "@store/cart/types";
+import { selectCart } from "@store/cart";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import ProductCard from "@modules/cartAside/components/organisms/ProductCard";
+import { Item } from "@entities/cart/cart.entity";
+import updateItem from "@use-cases/cart/update-item";
 import { BodyContainer } from "./styles";
 
 const Body = () => {
   // hooks
-  const { cartItems } = useAppSelector(selectCart);
+  const { cartItems, cartBFF } = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
 
   // methods
   const methods = {
-    handleIncrementQuantity: (item: CartItemModel) => {
-      dispatch(incrementProductQuantity(item));
+    handleIncrementQuantity: (item: Item, index: number) => {
+      const quantity = item.quantity ?? 0;
+      dispatch(
+        updateItem({
+          cartId: cartBFF?.id ?? "",
+          items: [{ quantity: quantity + 1, index: index }],
+        })
+      );
     },
-    handleDecrementQuantity: (item: CartItemModel) => {
-      dispatch(decrementProductQuantity(item));
+    handleDecrementQuantity: (item: Item, index: number) => {
+      // TODO: update with new endpoint
+      // dispatch(decrementProductQuantity(item));
     },
-    handleRemoveFromCart: (item: CartItemModel) => {
-      dispatch(removeProductInCart(item));
+    handleRemoveFromCart: (item: Item) => {
+      // TODO: update with new endpoint
+      // dispatch(removeProductInCart(item));
     },
   };
 
   return (
     <BodyContainer>
-      {cartItems?.map((item) => (
+      {cartBFF?.items?.map((item: Item, index: number) => (
         <ProductCard
-          key={item.productId}
+          key={item.itemId}
           item={item}
-          // onAddToCart={() => {}}
           onRemoveFromCart={() => {
             methods.handleRemoveFromCart(item);
           }}
-          onIncrementQuantity={() => methods.handleIncrementQuantity(item)}
-          onDecrementQuantity={() => methods.handleDecrementQuantity(item)}
+          onIncrementQuantity={() =>
+            methods.handleIncrementQuantity(item, index)
+          }
+          onDecrementQuantity={() =>
+            methods.handleDecrementQuantity(item, index)
+          }
         />
       ))}
     </BodyContainer>
