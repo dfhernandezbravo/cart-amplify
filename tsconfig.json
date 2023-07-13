@@ -22,6 +22,7 @@
       "@modules/*": ["./src/presentation/modules/*"],
       "@store/*": ["./src/presentation/store/*"],
       "@utils/*": ["./src/presentation/utils/*"],
+      "@events/*": ["./src/presentation/events/*"],
       // "@mocks/*": ["./src/presentation/mocks/*"],
       "@entities/*": ["./src/domain/entities/*"],
       "@interfaces/*": ["./src/domain/interfaces/*"],

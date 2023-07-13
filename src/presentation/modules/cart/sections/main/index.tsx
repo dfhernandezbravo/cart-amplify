@@ -1,11 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
-import {
-  decrementProductQuantity,
-  incrementProductQuantity,
-  removeProductInCart,
-  selectCart,
-  selectTotalProductsInCart,
-} from "@store/cart";
+import { selectCart, selectTotalProductsInCart } from "@store/cart";
 import ProductCard from "@modules/cart/components/organisms/ProductCard";
 import { Item } from "@entities/cart/cart.entity";
 import { Container, TotalProductsContainer } from "./styles";

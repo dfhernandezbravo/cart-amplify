@@ -1,8 +1,8 @@
 import { Item } from "@entities/cart/cart.entity";
 
 export type QuantitySelectorProps = {
-  item: Item;
+  index: number;
   quantity: number;
-  onIncrementQuantity?: (product: Item) => void;
-  onDecrementQuantity?: (product: Item) => void;
+  onIncrementQuantity: (product: Item) => void;
+  onDecrementQuantity: (product: Item) => void;
 };

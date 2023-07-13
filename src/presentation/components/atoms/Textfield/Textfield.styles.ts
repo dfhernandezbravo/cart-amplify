@@ -15,6 +15,8 @@ export const Input = styled.input`
   &.quantityInput {
     background-color: #fff;
     border: 1px solid #e3e4e6;
+    border-right: none;
+    border-left: none;
     height: 35px;
     width: 40px;
     text-align: center;

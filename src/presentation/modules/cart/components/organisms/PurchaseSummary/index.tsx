@@ -4,36 +4,15 @@ import TotalPrice from "@components/molecules/TotalPrice";
 import PromotionalCode from "@modules/cart/components/molecules/PromotionalCode";
 import { useAppSelector } from "@hooks/storeHooks";
 import { selectCart } from "@store/cart";
-import { CartItemModel } from "@store/cart/types";
 import { formattedCLP } from "@utils/helpers";
 import { Container, Divider } from "./styles";
 
 const PurchaseSummary = () => {
   // hooks
-  const { cartItems } = useAppSelector(selectCart);
+  const { cartBFF } = useAppSelector(selectCart);
 
   // methods
   const methods = {
-    normalPriceSummary: () => {
-      return cartItems?.reduce((acc: number, cur: CartItemModel) => {
-        const quantity = cur?.quantity ?? 0;
-        const price =
-          cur?.items?.[0].sellers?.[0].commertialOffer?.ListPrice ?? 0;
-
-        return acc + quantity * price;
-      }, 0);
-    },
-    offerPriceSummary: () => {
-      return cartItems?.reduce((acc: number, cur: CartItemModel) => {
-        const quantity = cur?.quantity ?? 0;
-        const price = cur?.items?.[0].sellers?.[0].commertialOffer?.Price ?? 0;
-
-        return acc + quantity * price;
-      }, 0);
-    },
-    discounts: () => {
-      return methods.normalPriceSummary() - methods.offerPriceSummary();
-    },
     handleGoToCheckout: () => {
       console.log("handleGoToCheckout clicked!");
     },
@@ -45,13 +24,15 @@ const PurchaseSummary = () => {
       <Divider />
       <p>
         Subtotal
-        <span>{formattedCLP(methods.normalPriceSummary())}</span>
+        <span>{formattedCLP(cartBFF?.totals?.subtotal ?? 0)}</span>
       </p>
       <p>
-        Costo de envío desde <span>$xx.xxx</span>
+        Costo de envío desde{" "}
+        <span>{formattedCLP(cartBFF?.totals?.shippingPrice ?? 0)}</span>
       </p>
       <p>
-        Descuentos: <span>-{formattedCLP(methods.discounts())}</span>
+        Descuentos:{" "}
+        <span>-{formattedCLP(Math.abs(cartBFF?.totals?.discount ?? 0))}</span>
       </p>
       <Divider className="light" />
       <TotalPriceCencosud className="purchaseSummary" />
