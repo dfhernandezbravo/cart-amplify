@@ -3,11 +3,12 @@ import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import ProductCard from "@modules/cartAside/components/organisms/ProductCard";
 import { Item } from "@entities/cart/cart.entity";
 import updateItem from "@use-cases/cart/update-item";
+import deleteItem from "@use-cases/cart/delete-item";
 import { BodyContainer } from "./styles";
 
 const Body = () => {
   // hooks
-  const { cartItems, cartBFF } = useAppSelector(selectCart);
+  const { cartId, cartBFF } = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
 
   // methods
@@ -16,18 +17,22 @@ const Body = () => {
       const quantity = item.quantity ?? 0;
       dispatch(
         updateItem({
-          cartId: cartBFF?.id ?? "",
+          cartId: cartId ?? "",
           items: [{ quantity: quantity + 1, index: index }],
         })
       );
     },
     handleDecrementQuantity: (item: Item, index: number) => {
-      // TODO: update with new endpoint
-      // dispatch(decrementProductQuantity(item));
+      const quantity = item.quantity ?? 0;
+      dispatch(
+        updateItem({
+          cartId: cartId ?? "",
+          items: [{ quantity: quantity - 1, index: index }],
+        })
+      );
     },
-    handleRemoveFromCart: (item: Item) => {
-      // TODO: update with new endpoint
-      // dispatch(removeProductInCart(item));
+    handleRemoveFromCart: (index: number) => {
+      dispatch(deleteItem({ cartId: cartId ?? "", itemIndex: index }));
     },
   };
 
@@ -37,8 +42,9 @@ const Body = () => {
         <ProductCard
           key={item.itemId}
           item={item}
+          index={index}
           onRemoveFromCart={() => {
-            methods.handleRemoveFromCart(item);
+            methods.handleRemoveFromCart(index);
           }}
           onIncrementQuantity={() =>
             methods.handleIncrementQuantity(item, index)

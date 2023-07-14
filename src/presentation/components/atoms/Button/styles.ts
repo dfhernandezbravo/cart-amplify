@@ -21,16 +21,18 @@ export const ButtonContainer = styled.button`
   &.quantitySelectorBtn {
     width: 35px;
     height: 35px;
+
+    &:hover {
+      border-color: #cacbcc;
+    }
   }
 
   &.quantitySelectorBtn--minus {
-    border-right: none;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 
   &.quantitySelectorBtn--plus {
-    border-left: none;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
@@ -59,6 +61,11 @@ export const ButtonContainer = styled.button`
   &:disabled {
     background-color: #f2f2f2;
     color: #818180;
+    cursor: unset;
+
+    &:hover {
+      border-color: #e3e4e6;
+    }
   }
 
   &.cartBtn {
