@@ -21,6 +21,8 @@ export const formattedCLP = (value: number) => {
 
 export const totalItems = (items: any) => {
   let sum = 0;
+  if (!items) return sum;
+
   for (const obj of items) {
     sum += obj.quantity;
   }
