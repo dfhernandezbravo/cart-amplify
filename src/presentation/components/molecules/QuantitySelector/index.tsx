@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
-import { selectCart } from "@store/cart";
+import { selectCart, updateProductQuantity } from "@store/cart";
 import Button from "@components/atoms/Button";
 import { Textfield } from "@components/atoms/Textfield";
 import updateItem from "@use-cases/cart/update-item";
@@ -29,6 +29,9 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
 
       if (newQuantity > 0 && numberRegex.test(quantityInput)) {
         dispatch(
+          updateProductQuantity({ index: index, quantity: newQuantity })
+        );
+        dispatch(
           updateItem({
             cartId: cartId ?? "",
             items: [{ quantity: newQuantity, index: index }],
@@ -48,7 +51,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
       <Button
         className="quantitySelectorBtn quantitySelectorBtn--minus"
         onClick={onDecrementQuantity}
-        disabled={quantity === 1 || loading}
+        disabled={quantity === 1}
       >
         <AiOutlineMinus />
       </Button>
@@ -68,7 +71,6 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
       <Button
         className="quantitySelectorBtn quantitySelectorBtn--plus"
         onClick={onIncrementQuantity}
-        disabled={loading}
       >
         <AiOutlinePlus />
       </Button>

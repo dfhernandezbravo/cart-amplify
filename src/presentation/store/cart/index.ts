@@ -1,11 +1,11 @@
-import { RootState } from "@hooks/storeHooks";
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "@hooks/storeHooks";
 import { Cart, Item } from "@entities/cart/cart.entity";
 import updateItem from "@use-cases/cart/update-item";
 import deleteItem from "@use-cases/cart/delete-item";
 import dispatchCartHeaderEvent from "@use-cases/cart/dispatch-cart-header-event";
 import dispatchCartDataEvent from "@use-cases/cart/dispatch-cart-data-event";
-import totalItems from "@utils/helpers";
+import { createNewItem, totalItems } from "@utils/helpers";
 
 type CartState = {
   cartBFF: Cart | null;
@@ -30,6 +30,55 @@ const cartSlice = createSlice({
     },
     addProductInCart: (state, { payload }) => {
       state.cartBFF = payload;
+    },
+    simulateAddProduct: (state, { payload }) => {
+      const productInCart = state.cartBFF?.items?.find(
+        (item) => item.product.id === payload?.productReference
+      );
+
+      if (productInCart) {
+        const quantity = productInCart.quantity ?? 0;
+        productInCart.quantity = quantity + 1;
+        return;
+      }
+
+      const newItem = createNewItem(payload);
+
+      if (state.cartBFF?.items) {
+        state.cartBFF.items?.push(newItem);
+      } else {
+        state.cartBFF = {
+          id: "",
+          currencyCode: "",
+          items: [newItem],
+        };
+      }
+    },
+    incrementProductQuantity: (state, { payload }) => {
+      const productInCart = state.cartBFF?.items[payload];
+
+      if (productInCart) {
+        productInCart.quantity = productInCart.quantity + 1;
+      }
+    },
+    decrementProductQuantity: (state, { payload }) => {
+      const productInCart = state.cartBFF?.items[payload];
+
+      if (productInCart) {
+        productInCart.quantity = productInCart.quantity - 1;
+      }
+    },
+    removeProduct: (state, { payload }) => {
+      const removeItem =
+        state.cartBFF?.items.filter((_, index) => index !== payload) ?? [];
+      state.cartBFF!.items = removeItem;
+    },
+    updateProductQuantity: (state, { payload }) => {
+      const productInCart = state.cartBFF?.items[payload.index];
+
+      if (productInCart) {
+        productInCart.quantity = payload.quantity;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -60,7 +109,15 @@ const cartSlice = createSlice({
 export default cartSlice;
 
 // actions
-export const { addProductInCart, addCartId } = cartSlice.actions;
+export const {
+  addProductInCart,
+  simulateAddProduct,
+  addCartId,
+  incrementProductQuantity,
+  decrementProductQuantity,
+  updateProductQuantity,
+  removeProduct,
+} = cartSlice.actions;
 
 // selectors
 export const selectCart = (state: RootState) => state.cart;

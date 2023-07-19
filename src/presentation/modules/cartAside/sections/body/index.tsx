@@ -1,4 +1,11 @@
-import { selectCart } from "@store/cart";
+import { useCallback } from "react";
+import _ from "lodash";
+import {
+  decrementProductQuantity,
+  incrementProductQuantity,
+  removeProduct,
+  selectCart,
+} from "@store/cart";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import ProductCard from "@modules/cartAside/components/organisms/ProductCard";
 import { Item } from "@entities/cart/cart.entity";
@@ -13,25 +20,32 @@ const Body = () => {
 
   // methods
   const methods = {
-    handleIncrementQuantity: (item: Item, index: number) => {
-      const quantity = item.quantity ?? 0;
-      dispatch(
-        updateItem({
-          cartId: cartId ?? "",
-          items: [{ quantity: quantity + 1, index: index }],
-        })
-      );
-    },
-    handleDecrementQuantity: (item: Item, index: number) => {
-      const quantity = item.quantity ?? 0;
-      dispatch(
-        updateItem({
-          cartId: cartId ?? "",
-          items: [{ quantity: quantity - 1, index: index }],
-        })
-      );
-    },
+    handleIncrementQuantity: useCallback(
+      _.debounce((item: Item, index: number) => {
+        const quantity = item.quantity ?? 0;
+        dispatch(
+          updateItem({
+            cartId: cartId ?? "",
+            items: [{ quantity: quantity + 1, index: index }],
+          })
+        );
+      }, 500),
+      []
+    ),
+    handleDecrementQuantity: useCallback(
+      _.debounce((item: Item, index: number) => {
+        const quantity = item.quantity ?? 0;
+        dispatch(
+          updateItem({
+            cartId: cartId ?? "",
+            items: [{ quantity: quantity - 1, index: index }],
+          })
+        );
+      }, 500),
+      []
+    ),
     handleRemoveFromCart: (index: number) => {
+      dispatch(removeProduct(index));
       dispatch(deleteItem({ cartId: cartId ?? "", itemIndex: index }));
     },
   };
@@ -46,12 +60,14 @@ const Body = () => {
           onRemoveFromCart={() => {
             methods.handleRemoveFromCart(index);
           }}
-          onIncrementQuantity={() =>
-            methods.handleIncrementQuantity(item, index)
-          }
-          onDecrementQuantity={() =>
-            methods.handleDecrementQuantity(item, index)
-          }
+          onIncrementQuantity={() => {
+            dispatch(incrementProductQuantity(index));
+            methods.handleIncrementQuantity(item, index);
+          }}
+          onDecrementQuantity={() => {
+            dispatch(decrementProductQuantity(index));
+            methods.handleDecrementQuantity(item, index);
+          }}
         />
       ))}
     </BodyContainer>

@@ -4,6 +4,7 @@ import {
   addCartId,
   addProductInCart,
   selectTotalProductsInCart,
+  simulateAddProduct,
 } from "@store/cart";
 import useEventListener from "@hooks/eventListenerHooks";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
@@ -41,6 +42,11 @@ const CartAsideContainer = () => {
           WindowsEvents.CART_ID,
           methods.handleGetCartId
         );
+        useEventListener(
+          document,
+          WindowsEvents.SIMULATE_ADD_PRODUCT,
+          methods.handleSimulateAddProductEvent
+        );
       }
     },
     handleSetIsOpen: (event: Event) => {
@@ -64,6 +70,12 @@ const CartAsideContainer = () => {
       event.preventDefault();
       const customEvent = event as CustomEvent;
       dispatch(addCartId(customEvent.detail?.cartId));
+    },
+    handleSimulateAddProductEvent: (event: Event) => {
+      event.preventDefault();
+      const customEvent = event as CustomEvent;
+      dispatch(simulateAddProduct(customEvent.detail?.product));
+      setIsOpen(true);
     },
   };
   methods.initialize();
