@@ -1,3 +1,5 @@
+import { CartItemModel } from "@store/cart/types";
+
 type currencyFormatter = {
   currency: string;
   value: number;
@@ -29,4 +31,46 @@ export const totalItems = (items: any) => {
   return sum;
 };
 
-export default totalItems;
+export const createNewItem = (data: CartItemModel) => {
+  const newItem = {
+    itemId: "",
+    quantity: 1,
+    adjustment: [
+      {
+        id: "",
+        value: 0,
+        name: "",
+        percentageDiscount: "",
+        priceType: "",
+      },
+    ],
+    priceAfterDiscount: 1,
+    product: {
+      id: data?.productReference,
+      sku: "",
+      description: data.items ? data.items[0]?.nameComplete : "",
+      unit: "",
+      unitValue: 1,
+      size: "",
+      color: "",
+      prices: {
+        brandPrice: undefined,
+        currency: "",
+        normalPrice: data.items
+          ? data.items[0].sellers![0]?.commertialOffer?.ListPrice
+          : 0,
+        offerPrice: data.items
+          ? data.items[0].sellers![0]?.commertialOffer?.Price
+          : 0,
+      },
+      images: data.items ? data.items[0]?.images![0]?.imageUrl : "",
+      brand: data?.brand,
+      seller: { id: "" },
+      availability: "",
+      category: "",
+      ean: "",
+    },
+  };
+
+  return newItem;
+};

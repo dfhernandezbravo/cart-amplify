@@ -6,7 +6,7 @@ import { Container } from "./styles";
 
 const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
   // hooks
-  const { cartBFF } = useAppSelector(selectCart);
+  const { cartBFF, loading } = useAppSelector(selectCart);
 
   // props
   const { className } = props;
@@ -14,7 +14,11 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
   return (
     <Container className={className}>
       Total con tarjeta Cencosud
-      <span>{formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}</span>
+      {loading ? (
+        <span className="skeleton"></span>
+      ) : (
+        <span>{formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}</span>
+      )}
     </Container>
   );
 };
