@@ -54,6 +54,26 @@ const cartSlice = createSlice({
         };
       }
     },
+    simulateRemoveProduct: (state, { payload }) => {
+      const productInCart = state.cartBFF?.items?.find(
+        (item) => item.product.id === payload
+      );
+
+      if (productInCart) {
+        const quantity = productInCart.quantity ?? 0;
+
+        if (quantity <= 1) {
+          const removeItem =
+            state.cartBFF?.items.filter(
+              (item) => item.product?.id !== payload
+            ) ?? [];
+          state.cartBFF!.items = removeItem;
+          return;
+        }
+
+        productInCart.quantity = quantity - 1;
+      }
+    },
     incrementProductQuantity: (state, { payload }) => {
       const productInCart = state.cartBFF?.items[payload];
 
@@ -112,6 +132,7 @@ export default cartSlice;
 export const {
   addProductInCart,
   simulateAddProduct,
+  simulateRemoveProduct,
   addCartId,
   incrementProductQuantity,
   decrementProductQuantity,
