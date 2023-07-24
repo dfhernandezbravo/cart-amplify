@@ -2,7 +2,7 @@ import { AppError, ResponseError } from "@entities/error/error.entity";
 
 const handleHttpError = (error: ResponseError): AppError => {
   switch (error.statusCode) {
-    case 500:
+    case 400:
       return {
         error: "HttpException",
         message: "Error al agregar producto",

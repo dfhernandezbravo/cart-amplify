@@ -30,7 +30,7 @@ const MinicartError = (props: MinicartErrorProps) => {
   }, [dispatch]);
 
   return (
-    <MainContainer>
+    <MainContainer className="minicart__error">
       <ErrorContainer>
         <IconAndTextContainer>
           <Image
