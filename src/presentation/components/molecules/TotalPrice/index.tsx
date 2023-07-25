@@ -1,7 +1,7 @@
 import { useAppSelector } from "@hooks/storeHooks";
 import { selectCart } from "@store/cart";
 import { formattedCLP } from "@utils/helpers";
-import { Container } from "./styles";
+import { Container, Title } from "./styles";
 import { TotalPriceProps } from "./types";
 
 const TotalPrice = (props: TotalPriceProps) => {
@@ -13,7 +13,7 @@ const TotalPrice = (props: TotalPriceProps) => {
 
   return (
     <Container className={className}>
-      Total con otros medios de pago
+      <Title>Total con otros medios de pago</Title>
       {loading ? (
         <span className="skeleton"></span>
       ) : (
