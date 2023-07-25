@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { MouseEvent, useState } from "react";
+import { SwipeableDrawer } from "@mui/material";
 import {
   addCartId,
   addProductInCart,
@@ -17,7 +18,6 @@ import Footer from "@modules/cartAside/sections/footer";
 import WindowsEvents from "@events/index";
 import handleHttpError from "@use-cases/error/handle-http-errors";
 import handlePayloadError from "@use-cases/error/handle-payload-errors";
-import { Container, Overlay } from "./styles";
 
 const CartAsideContainer = () => {
   // hooks
@@ -110,19 +110,30 @@ const CartAsideContainer = () => {
   methods.initialize();
 
   return (
-    <Overlay isOpen={isOpen} onClick={methods.handleCloseOverlay}>
-      <Container isOpen={isOpen}>
-        <Header setIsOpen={setIsOpen} />
-        {totalProducts > 0 ? (
-          <>
-            <Body />
-            <Footer />
-          </>
-        ) : (
-          <EmptyBody />
-        )}
-      </Container>
-    </Overlay>
+    <SwipeableDrawer
+      anchor="right"
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+      onOpen={() => setIsOpen(true)}
+      transitionDuration={300}
+      PaperProps={{
+        sx: {
+          minWidth: "280px",
+          width: "90%",
+          maxWidth: "400px",
+        },
+      }}
+    >
+      <Header setIsOpen={setIsOpen} />
+      {totalProducts > 0 ? (
+        <>
+          <Body />
+          <Footer />
+        </>
+      ) : (
+        <EmptyBody />
+      )}
+    </SwipeableDrawer>
   );
 };
 export default CartAsideContainer;

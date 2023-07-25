@@ -32,3 +32,12 @@ export const Container = styled.div`
     }
   }
 `;
+
+export const Title = styled.span`
+  font-size: 16px;
+
+  @media screen and (max-width: 767px) {
+    max-width: 187px;
+    font-size: 15px;
+  }
+`;
