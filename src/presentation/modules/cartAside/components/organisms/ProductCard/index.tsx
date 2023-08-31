@@ -20,6 +20,9 @@ const ProductCard = (props: ProductCardProps) => {
     onRemoveFromCart,
   } = props;
 
+
+  if(item.product.availability !== 'available') return
+
   return (
     <ProductCardContainer>
       <ImageAndDeleteContainer>
