@@ -87,7 +87,7 @@ const Body = () => {
 
       {itemWithoutStock?.length ? renderProductWithoutStock() : null}
 
-      {cartBFF?.items?.map((item, index) => (
+      {cartBFF?.items?.map((item: Item, index: number) => (
         <ProductCard
           key={item.itemId}
           item={item}
