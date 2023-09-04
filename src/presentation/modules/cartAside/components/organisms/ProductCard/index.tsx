@@ -19,8 +19,7 @@ const ProductCard = (props: ProductCardProps) => {
     onDecrementQuantity,
     onRemoveFromCart,
   } = props;
-
-
+  
   if(item.product.availability !== 'available') return
 
   return (

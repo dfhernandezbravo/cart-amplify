@@ -18,6 +18,7 @@ import ProductCardWithouthStock from "@modules/cartAside/components/organisms/Pr
 
 
 const withoutStock = 'withoutStock'
+const cannotBeDelivered = 'cannotBeDelivered'
 
 const Body = () => {
   // Hooks
@@ -60,7 +61,8 @@ const Body = () => {
   const itemWithoutStock: Item[] = []
 
   cartBFF?.items?.forEach((item, index) => {
-    if (item.product.availability === withoutStock) {
+    const availability = item.product.availability
+    if (availability === withoutStock ||availability === cannotBeDelivered ) {
       const product = {
         ...item,
         index
@@ -83,7 +85,7 @@ const Body = () => {
 
   return (
     <BodyContainer>
-      {error ? <MinicartError title={error.message} /> : null}
+      {/* {error ? <MinicartError title={error.message} /> : null} */}
 
       {itemWithoutStock?.length ? renderProductWithoutStock() : null}
 
