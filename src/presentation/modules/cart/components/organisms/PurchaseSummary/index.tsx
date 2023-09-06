@@ -6,6 +6,8 @@ import { useAppSelector } from "@hooks/storeHooks";
 import { selectCart } from "@store/cart";
 import { formattedCLP } from "@utils/helpers";
 import { Container, Divider } from "./styles";
+import { ProductAvailability } from "@entities/cart/cart.entity";
+import PurchaseSummaryDisabled from "../PurchaseSummaryDisabled";
 
 const PurchaseSummary = () => {
   // hooks
@@ -17,6 +19,17 @@ const PurchaseSummary = () => {
       console.log("handleGoToCheckout clicked!");
     },
   };
+
+
+  const allProductWithoutStock = cartBFF?.items.every(item => {
+   return item.product.availability === ProductAvailability.CANNOTBEDELIVERED || item.product.availability === ProductAvailability.WITHOUTSTOCK
+  })
+
+  if(allProductWithoutStock) {
+    return (
+      <PurchaseSummaryDisabled/>
+    )
+  }
 
   return (
     <Container>

@@ -21,6 +21,7 @@ export interface Item {
   product: Product;
   adjustment: Adjustment[];
   priceAfterDiscount: number;
+  index?: number;
 }
 
 interface Adjustment {
@@ -205,3 +206,11 @@ export interface BussinessHour {
   OpeningTime: string;
   ClosingTime: string;
 }
+
+export enum ProductAvailability {
+  AVAILABLE = 'available',
+  WITHOUTSTOCK = 'withoutStock',
+  CANNOTBEDELIVERED = 'cannotBeDelivered'
+}
+
+

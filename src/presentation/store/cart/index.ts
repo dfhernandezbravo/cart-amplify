@@ -102,6 +102,7 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    console.log('builder',builder)
     builder
       .addCase(updateItem.pending, (state) => {
         state.loading = true;

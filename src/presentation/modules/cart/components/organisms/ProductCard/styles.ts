@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 0 16px;
@@ -16,6 +17,7 @@ export const ProductInfoContainer = styled.div`
   img {
     height: auto;
   }
+
 `;
 
 export const ProductInfoAndPriceContainer = styled.div`
@@ -29,3 +31,13 @@ export const QuantitySelectorAndDeleteContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
 `;
+
+export const Loader = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000000;
+  opacity: 0.2;
+`

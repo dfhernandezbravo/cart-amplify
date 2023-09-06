@@ -3,19 +3,32 @@ import ProductBrand from "@components/molecules/ProductBrand";
 import ProductName from "@components/molecules/ProductName";
 import ProductPrice from "@components/molecules/ProductPrice";
 import DeleteButton from "@components/molecules/DeleteButton";
+import QuantitySelector from '@components/atoms/QuantitySelector'
+import { useAppSelector } from "@hooks/storeHooks";
 import { ProductCardProps } from "./types";
 import {
   Container,
   ProductInfoContainer,
   ProductInfoAndPriceContainer,
   QuantitySelectorAndDeleteContainer,
+  Loader,
 } from "./styles";
 
 const ProductCard = (props: ProductCardProps) => {
-  const { item, onRemoveFromCart } = props;
+  const { item, onRemoveFromCart, handleChangeQuantity } = props;
+
+  const {loading} = useAppSelector(state => state.cart)
+
+  const handleSelectedQuantity = (quantity:string) => {
+    handleChangeQuantity(item, quantity)
+  }
+
+  if(item.product.availability !== 'available') return null
 
   return (
     <Container>
+      {/* TODO  Improve the loader*/}
+      {loading && <Loader>Loading...</Loader>}
       <ProductInfoAndPriceContainer>
         <ProductInfoContainer>
           <ProductImage src={item?.product?.images} alt={""} />
@@ -33,7 +46,7 @@ const ProductCard = (props: ProductCardProps) => {
         </div>
       </ProductInfoAndPriceContainer>
       <QuantitySelectorAndDeleteContainer>
-        <div>NewQuantitySelector</div>
+        <QuantitySelector quantitySelected={(value:string) =>handleSelectedQuantity(value) } quantity={item?.quantity}/>
         <DeleteButton hasIcon={true} onRemoveFromCart={onRemoveFromCart} />
       </QuantitySelectorAndDeleteContainer>
     </Container>
