@@ -1,47 +1,43 @@
+import { useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
-import { selectCart, selectTotalProductsInCart } from "@store/cart";
+import { selectCart, selectTotalProductsInCart, setItemQuantity } from "@store/cart";
 import ProductCard from "@modules/cart/components/organisms/ProductCard";
 import { Item, ProductAvailability } from "@entities/cart/cart.entity";
 import { Container, TotalProductsContainer } from "./styles";
 import updateItem from "@use-cases/cart/update-item";
-import ProductCartWithoutStock from '@modules/cart/components/organisms/ProductCard/ProductCardWithoutStock'
+import ProductCartWithoutStock from "@modules/cart/components/organisms/ProductCard/components/ProductCardWithoutStock";
 import deleteItem from "@use-cases/cart/delete-item";
+import { getUnavailableProduct } from "@utils/helpers";
+
 
 const Main = () => {
   // hooks
-  const { cartBFF, cartId } = useAppSelector(selectCart);
+  const { cartBFF, cartId, quantitySelected} = useAppSelector(selectCart);
   const totalProducts = useAppSelector(selectTotalProductsInCart);
   const dispatch = useAppDispatch();
 
   // methods
   const methods = {
-    handleChangeQuantity: (product: Item, quantity: string, index: number) => {
+    handleChangeQuantity: (quantity: string, index: number) => {
+      const itemSelected = {
+        quantity: Number(quantity),
+        index,
+      };
       const productToUpdate = {
-        cartId: cartId ?? '',
-        items: [{ quantity: Number(quantity), index }]
-      }
-      dispatch(updateItem(productToUpdate))
-
+        cartId: cartId ?? "",
+        items: [itemSelected],
+      };
+      dispatch(setItemQuantity(itemSelected));
+      dispatch(updateItem(productToUpdate));
     },
     handleRemoveFromCart: (index: number) => {
-      // TODO: update with new endpoint
-      console.log('removed item', index)
-      dispatch(deleteItem({cartId: cartId ?? '', itemIndex: index}))
+      dispatch(deleteItem({ cartId: cartId ?? "", itemIndex: index }));
     },
   };
 
-  const itemWithoutStock: Item[] = []
-
-  cartBFF?.items?.forEach((item, index) => {
-    const availability = item.product.availability
-    if (availability ===  ProductAvailability.WITHOUTSTOCK ||availability === ProductAvailability.CANNOTBEDELIVERED) {
-      const product = {
-        ...item,
-        index
-      }
-      itemWithoutStock.push(product)
-    }
-  })
+  const itemWithoutStock = useMemo(() => {
+    return cartBFF?.items.length ? getUnavailableProduct(cartBFF) : []
+  }, [cartBFF])
 
   return (
     <Container>
@@ -49,22 +45,23 @@ const Main = () => {
         Tu compra {`${totalProducts}`}
       </TotalProductsContainer>
 
-      { itemWithoutStock.length &&
+      {itemWithoutStock.length && (
         <ProductCartWithoutStock
           items={itemWithoutStock}
-          onRemoveFromCart={(index) => methods.handleRemoveFromCart(index) } />
-      }
-
+          onRemoveFromCart={(index) => methods.handleRemoveFromCart(index)}
+        />
+      )}
 
       {cartBFF?.items?.map((item: Item, index: number) => (
         <ProductCard
           key={item?.itemId}
           item={item}
+          itemStockModify={index === quantitySelected.index  ? (quantitySelected.quantityAvailable as number) : null}
           onRemoveFromCart={() => {
             methods.handleRemoveFromCart(index);
           }}
-          handleChangeQuantity={(product, quantity) =>
-            methods.handleChangeQuantity(product, quantity, index)
+          handleChangeQuantity={(quantity) =>
+            methods.handleChangeQuantity(quantity, index)
           }
         />
       ))}

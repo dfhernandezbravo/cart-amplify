@@ -1,3 +1,5 @@
+import { Cart } from "@entities/cart/cart.entity";
+
 export interface CartItemModel {
   productId: string;
   quantity?: number;
@@ -51,6 +53,7 @@ export interface CartItemModel {
   allSpecificationsGroups?: string[] | null;
   description: string;
   items?: ItemsEntity[] | null;
+
 }
 export interface ClusterHighlights {
   1863: string;
@@ -203,3 +206,22 @@ export interface PaymentSystemsEntity {
   dueDate: string;
   availablePayments?: null;
 }
+
+export enum ProductQuantityMessage {
+  NOT_ENOUGH = 'not enough'
+}
+
+
+export type QuantitySelectedProps = {
+  index: number | null;
+  quantity: number | null;
+  quantityAvailable: number | null;
+};
+
+export type CartState = {
+  cartBFF: Cart | null;
+  cartId: string | undefined;
+  error: string;
+  loading: boolean;
+  quantitySelected: QuantitySelectedProps;
+};

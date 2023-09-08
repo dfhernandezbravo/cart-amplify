@@ -1,24 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@hooks/storeHooks";
 import { Cart, Item } from "@entities/cart/cart.entity";
+import { CartState, ProductQuantityMessage } from "./types";
 import updateItem from "@use-cases/cart/update-item";
 import deleteItem from "@use-cases/cart/delete-item";
 import dispatchCartHeaderEvent from "@use-cases/cart/dispatch-cart-header-event";
 import dispatchCartDataEvent from "@use-cases/cart/dispatch-cart-data-event";
 import { createNewItem, totalItems } from "@utils/helpers";
-
-type CartState = {
-  cartBFF: Cart | null;
-  cartId: string | undefined;
-  error: string;
-  loading: boolean;
-};
+import { toast } from "react-toastify";
+import showToast from '../../components/atoms/ToastContainer/ToastMessage';
 
 const initialState: CartState = {
   cartBFF: {} as Cart,
   cartId: undefined,
   error: "",
   loading: false,
+  quantitySelected: { quantity: null, index: null, quantityAvailable: null },
 };
 
 const cartSlice = createSlice({
@@ -94,25 +91,42 @@ const cartSlice = createSlice({
       state.cartBFF!.items = removeItem;
     },
     updateProductQuantity: (state, { payload }) => {
-      const productInCart = state.cartBFF?.items[payload.index];
 
+      const productInCart = state.cartBFF?.items[payload.index];
       if (productInCart) {
         productInCart.quantity = payload.quantity;
       }
     },
+    setItemQuantity: (state, { payload }) => {
+      state.quantitySelected = payload;
+    },
   },
   extraReducers: (builder) => {
-    console.log('builder',builder)
     builder
       .addCase(updateItem.pending, (state) => {
         state.loading = true;
       })
       .addCase(updateItem.fulfilled, (state, { payload }) => {
+        const { quantity, index } = state.quantitySelected;
+
         state.cartBFF = payload ?? state.cartBFF;
+        const itemUpdated = payload?.items[index as number] as Item;
+
+        if (itemUpdated?.quantity < (quantity as number)) {
+          state.quantitySelected.quantityAvailable = itemUpdated.quantity;
+          showToast(
+            'Hubo cambios en tus productos', 
+            'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
+            'error'
+            )
+        }
+
+
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
         dispatchCartHeaderEvent(totalQuantity);
         dispatchCartDataEvent(payload ?? state.cartBFF);
+        // toast("Valor actualizado");
       })
       .addCase(deleteItem.pending, (state) => {
         state.loading = true;
@@ -139,6 +153,7 @@ export const {
   decrementProductQuantity,
   updateProductQuantity,
   removeProduct,
+  setItemQuantity,
 } = cartSlice.actions;
 
 // selectors

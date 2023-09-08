@@ -10,7 +10,7 @@ import {
   ProductInfoAndPriceContainer,
   QuantitySelectorAndDeleteContainer,
   Loader,
-} from "../styles";
+} from "../../styles";
 import { Item } from "@entities/cart/cart.entity";
 
 type Props = {

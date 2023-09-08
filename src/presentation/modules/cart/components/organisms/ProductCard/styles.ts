@@ -17,7 +17,6 @@ export const ProductInfoContainer = styled.div`
   img {
     height: auto;
   }
-
 `;
 
 export const ProductInfoAndPriceContainer = styled.div`
@@ -40,4 +39,38 @@ export const Loader = styled.div`
   left: 0;
   background-color: #000000;
   opacity: 0.2;
-`
+`;
+
+export const ImageContainer = styled.div`
+  position: relative;
+`;
+
+export const QuantitySelectorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  & p {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  & input {
+    padding: 16px;
+    margin: 1rem 0;
+    border: 1px solid #aaaaaa;
+    border-radius: 5px;
+  }
+  & input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  & button {
+    border: 1px solid #333333;
+    border-radius: 8px;
+    background-color: #333333;
+    padding: 16px;
+    font-size:14px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+`;

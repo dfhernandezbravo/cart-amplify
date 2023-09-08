@@ -1,9 +1,12 @@
+import { Cart, Item, ProductAvailability } from "@entities/cart/cart.entity";
 import { CartItemModel } from "@store/cart/types";
 
 type currencyFormatter = {
   currency: string;
   value: number;
 };
+
+
 
 const currencyFormatter = ({ currency, value }: currencyFormatter) => {
   const formatter = new Intl.NumberFormat("es-CL", {
@@ -74,3 +77,24 @@ export const createNewItem = (data: CartItemModel) => {
 
   return newItem;
 };
+
+
+export const getUnavailableProduct = (cart:Cart ) => {
+
+  const itemWithoutStock: Item[] | never = [];
+
+  cart?.items?.forEach((item, index) => {
+    const availability = item.product.availability;
+    if (
+      availability === ProductAvailability.WITHOUTSTOCK ||
+      availability === ProductAvailability.CANNOTBEDELIVERED
+    ) {
+      const product = {
+        ...item,
+        index,
+      };
+      itemWithoutStock.push(product);
+    }
+  });
+  return itemWithoutStock
+}
