@@ -64,10 +64,11 @@ const CartAsideContainer = () => {
       setIsOpen(customEvent.detail?.open);
     },
     handleAddProductEvent: (event: Event) => {
+
       event.preventDefault();
       const customEvent = event as CustomEvent;
       dispatch(addProductInCart(customEvent.detail?.data));
-
+      console.log('Event',customEvent.detail?.data)
       const customEventError = customEvent.detail?.data?.messagesErrors;
 
       if (customEventError.length) {
@@ -97,7 +98,7 @@ const CartAsideContainer = () => {
       event.preventDefault();
       const customEvent = event as CustomEvent;
       const customEventError = customEvent.detail?.data.error;
-
+      console.log('Event Error', customEventError)
       const cartError = handleHttpError(customEventError);
       dispatch(setError(cartError));
 

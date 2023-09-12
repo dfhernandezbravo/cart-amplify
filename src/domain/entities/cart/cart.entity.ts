@@ -21,6 +21,7 @@ export interface Item {
   product: Product;
   adjustment: Adjustment[];
   priceAfterDiscount: number;
+  index?: number
 }
 
 interface Adjustment {
