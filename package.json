@@ -9,7 +9,7 @@
     "start:prod": "next build && next start -p 3003",
     "lint": "next lint",
     "prepare": "husky install",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write . --config .prettierrc"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

@@ -20,7 +20,7 @@ const ProductCard = (props: ProductCardProps) => {
     onRemoveFromCart,
   } = props;
   
-  if(item.product.availability !== 'available') return
+  if(item.product.availability !== 'available') return null
 
   return (
     <ProductCardContainer>
