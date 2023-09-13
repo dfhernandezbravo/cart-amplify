@@ -5,3 +5,9 @@ export const BodyContainer = styled.div`
   overflow-y: auto;
   background-color: white;
 `;
+
+export const AvailableProductText = styled.p `
+  padding: 1rem;
+  font-size: 12px;
+  font-weight: 700;
+`
