@@ -1,20 +1,50 @@
-import { useMemo } from "react";
-import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
-import { selectCart, selectTotalProductsInCart, setItemQuantity } from "@store/cart";
-import ProductCard from "@modules/cart/components/organisms/ProductCard";
-import { Item, ProductAvailability } from "@entities/cart/cart.entity";
-import updateItem from "@use-cases/cart/update-item";
-import ProductCartWithoutStock from "@modules/cart/components/organisms/ProductCard/components/ProductCardWithoutStock";
-import deleteItem from "@use-cases/cart/delete-item";
-import { getUnavailableProduct } from "@utils/helpers";
-import { Container, TotalProductsContainer, Loader } from "./styles";
+import { useMemo, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import {
+  selectCart,
+  selectTotalProductsInCart,
+  setItemQuantity,
+} from '@store/cart';
+import ProductCard from '@modules/cart/components/organisms/ProductCard';
+import { Item, ProductAvailability } from '@entities/cart/cart.entity';
+import updateItem from '@use-cases/cart/update-item';
+import ProductCartWithoutStock from '@modules/cart/components/organisms/ProductCard/components/ProductCardWithoutStock';
+import deleteItem from '@use-cases/cart/delete-item';
+import { getUnavailableProduct } from '@utils/helpers';
+import { Container, TotalProductsContainer, Loader } from './styles';
+import showToast from '@components/atoms/ToastContainer/ToastMessage';
 
+type UpdatedItem = {
+  index: number;
+  quantity: number;
+};
 
 const Main = () => {
   // hooks
-  const { cartBFF, cartId, quantitySelected, loading } = useAppSelector(selectCart);
+  const [updatedIndexItem, setUpdatedIndexItem] = useState<UpdatedItem | null>(
+    null,
+  );
+  const { cartBFF, cartId, quantitySelected, loading } =
+    useAppSelector(selectCart);
   const totalProducts = useAppSelector(selectTotalProductsInCart);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (updatedIndexItem) {
+      if (
+        cartBFF?.items[updatedIndexItem.index].quantity !==
+        updatedIndexItem.quantity
+      ) {
+        showToast({
+          title: 'Hubo cambios en tus productos',
+          description:
+            'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
+          type: 'success',
+        });
+        setUpdatedIndexItem(null);
+      }
+    }
+  }, [updatedIndexItem]);
 
   // methods
   const methods = {
@@ -23,21 +53,22 @@ const Main = () => {
         quantity: Number(quantity),
         index,
       };
+      setUpdatedIndexItem(itemSelected);
       const productToUpdate = {
-        cartId: cartId ?? "",
+        cartId: cartId ?? '',
         items: [itemSelected],
       };
       dispatch(setItemQuantity(itemSelected));
       dispatch(updateItem(productToUpdate));
     },
     handleRemoveFromCart: (index: number) => {
-      dispatch(deleteItem({ cartId: cartId ?? "", itemIndex: index }));
+      dispatch(deleteItem({ cartId: cartId ?? '', itemIndex: index }));
     },
   };
 
   const itemWithoutStock = useMemo(() => {
-    return cartBFF?.items.length ? getUnavailableProduct(cartBFF) : []
-  }, [cartBFF])
+    return cartBFF?.items.length ? getUnavailableProduct(cartBFF) : [];
+  }, [cartBFF]);
 
   return (
     <Container>
@@ -45,7 +76,7 @@ const Main = () => {
         Tu compra {`${totalProducts}`}
       </TotalProductsContainer>
 
-      <div className='items-container'>
+      <div className="items-container">
         {loading && <Loader />}
         {itemWithoutStock.length ? (
           <ProductCartWithoutStock
@@ -58,7 +89,11 @@ const Main = () => {
           <ProductCard
             key={item?.itemId}
             item={item}
-            itemStockModify={index === quantitySelected.index ? (quantitySelected.quantityAvailable as number) : null}
+            itemStockModify={
+              index === quantitySelected.index
+                ? (quantitySelected.quantityAvailable as number)
+                : null
+            }
             onRemoveFromCart={() => {
               methods.handleRemoveFromCart(index);
             }}

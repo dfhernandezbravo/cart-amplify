@@ -6,10 +6,11 @@ const ToastContainerCustom = () => {
   return (
     <Container>
       <ToastContainer
+        hideProgressBar
         closeOnClick={false}
         draggable={false}
         pauseOnHover={false}
-        position="bottom-right"
+        position='top-right'
       />
     </Container>
   );

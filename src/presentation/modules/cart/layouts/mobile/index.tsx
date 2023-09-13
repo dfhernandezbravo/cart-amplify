@@ -2,6 +2,7 @@ import Mobile from "@components/layouts/mobile";
 import Header from "@modules/cart/sections/header";
 import Image from "next/image";
 import CartIcon from '/icons/cart.svg'
+import ToastContainerCustom from "@components/atoms/ToastContainer";
 
 const CartMobile = () => {
   return (

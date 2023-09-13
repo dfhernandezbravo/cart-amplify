@@ -1,25 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "@hooks/storeHooks";
-import { Cart, Item } from "@entities/cart/cart.entity";
-import { CartState, ProductQuantityMessage } from "./types";
-import updateItem from "@use-cases/cart/update-item";
-import deleteItem from "@use-cases/cart/delete-item";
-import dispatchCartHeaderEvent from "@use-cases/cart/dispatch-cart-header-event";
-import dispatchCartDataEvent from "@use-cases/cart/dispatch-cart-data-event";
-import { createNewItem, totalItems } from "@utils/helpers";
-import { toast } from "react-toastify";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '@hooks/storeHooks';
+import { Cart, Item } from '@entities/cart/cart.entity';
+import { CartState, ProductQuantityMessage } from './types';
+import updateItem from '@use-cases/cart/update-item';
+import deleteItem from '@use-cases/cart/delete-item';
+import dispatchCartHeaderEvent from '@use-cases/cart/dispatch-cart-header-event';
+import dispatchCartDataEvent from '@use-cases/cart/dispatch-cart-data-event';
+import { createNewItem, totalItems } from '@utils/helpers';
+import { toast } from 'react-toastify';
 import showToast from '../../components/atoms/ToastContainer/ToastMessage';
 
 const initialState: CartState = {
   cartBFF: {} as Cart,
   cartId: undefined,
-  error: "",
+  error: '',
   loading: false,
   quantitySelected: { quantity: null, index: null, quantityAvailable: null },
 };
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState,
   reducers: {
     addCartId: (state, { payload }) => {
@@ -30,7 +30,7 @@ const cartSlice = createSlice({
     },
     simulateAddProduct: (state, { payload }) => {
       const productInCart = state.cartBFF?.items?.find(
-        (item) => item.product.id === payload?.productReference
+        (item) => item.product.id === payload?.productReference,
       );
 
       if (productInCart) {
@@ -45,15 +45,15 @@ const cartSlice = createSlice({
         state.cartBFF.items?.push(newItem);
       } else {
         state.cartBFF = {
-          id: "",
-          currencyCode: "",
+          id: '',
+          currencyCode: '',
           items: [newItem],
         };
       }
     },
     simulateRemoveProduct: (state, { payload }) => {
       const productInCart = state.cartBFF?.items?.find(
-        (item) => item.product.id === payload
+        (item) => item.product.id === payload,
       );
 
       if (productInCart) {
@@ -62,7 +62,7 @@ const cartSlice = createSlice({
         if (quantity <= 1) {
           const removeItem =
             state.cartBFF?.items.filter(
-              (item) => item.product?.id !== payload
+              (item) => item.product?.id !== payload,
             ) ?? [];
           state.cartBFF!.items = removeItem;
           return;
@@ -91,7 +91,6 @@ const cartSlice = createSlice({
       state.cartBFF!.items = removeItem;
     },
     updateProductQuantity: (state, { payload }) => {
-
       const productInCart = state.cartBFF?.items[payload.index];
       if (productInCart) {
         productInCart.quantity = payload.quantity;
@@ -112,15 +111,15 @@ const cartSlice = createSlice({
         state.cartBFF = payload ?? state.cartBFF;
         const itemUpdated = payload?.items[index as number] as Item;
 
-        if (itemUpdated?.quantity < (quantity as number)) {
-          state.quantitySelected.quantityAvailable = itemUpdated.quantity;
-          showToast(
-            'Hubo cambios en tus productos', 
-            'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
-            'error'
-            )
-        }
-
+        // if (itemUpdated?.quantity < (quantity as number)) {
+        //   state.quantitySelected.quantityAvailable = itemUpdated.quantity;
+        //   showToast({
+        //     title: 'Hubo cambios en tus productos',
+        //     description: 'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
+        //     type: 'success'
+        //   })
+        // }
+        //
 
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
@@ -162,7 +161,7 @@ export const selectCart = (state: RootState) => state.cart;
 export const selectTotalProductsInCart = (state: RootState) => {
   const total = state.cart.cartBFF?.items?.reduce(
     (acc: number, cur: Item) => acc + (cur?.quantity ?? 0) ?? 0,
-    0
+    0,
   );
   return total ? total : 0;
 };

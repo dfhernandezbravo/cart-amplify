@@ -3,7 +3,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "@store/index";
 import CartDesktop from "@modules/cart/layouts/desktop";
 import CartMobile from "@modules/cart/layouts/mobile";
-import ToastContainerCustom from '@components/atoms/ToastContainer'
+import ToastContainerCustom from "@components/atoms/ToastContainer";
+
 
 const Cart = () => {
   return (
@@ -12,6 +13,7 @@ const Cart = () => {
         <CartDesktop />
         <CartMobile />
         <ToastContainerCustom/>
+
       </PersistGate>
     </Provider>
   );
