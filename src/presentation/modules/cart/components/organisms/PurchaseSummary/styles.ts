@@ -46,7 +46,6 @@ export const ModalContainer = styled.div`
     justify-content: space-between;
 
     & button {
-      border: 2px solid #333333;
       border-radius: 8px;
       padding: 16px;
       width: 180px;
@@ -60,14 +59,18 @@ export const ModalContainer = styled.div`
   & .button-container button:first-child {
     background: #ffffff;
     color: #333333;
+    border: 2px solid #333333;
+
   }
 
   & .button-container button:last-child {
-    background-color: #333333;
+    background-color: #af1212;
+    border: 2px solid #af1212;
     color: #ffffff;
 
   }
 `;
+console.log('ModalContainer', ModalContainer)
 
 export const Divider = styled.hr<DividerProps>`
   border: none;

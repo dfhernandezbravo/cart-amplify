@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 export const ModalWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  bottom: -100px;
+  bottom: 0;
+  right: 0;
   width: 100%;
   display: flex;
   align-items: center;

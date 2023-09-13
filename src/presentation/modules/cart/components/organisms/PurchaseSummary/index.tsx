@@ -9,7 +9,7 @@ import { selectCart } from "@store/cart";
 import { formattedCLP, getUnavailableProduct } from "@utils/helpers";
 import { Container, Divider, ModalContainer } from "./styles";
 import PurchaseSummaryDisabled from "../PurchaseSummaryDisabled";
-import Modal from "@components/atoms/modal";
+import Modal from "@components/atoms/Modal";
 const PurchaseSummary = () => {
   
   const [showModal, setShowModal] = useState(false);

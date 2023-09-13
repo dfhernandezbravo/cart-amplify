@@ -19,7 +19,7 @@ import {
   QuantitySelectorContainer,
 } from "./styles";
 import AvailableQuantity from "./components/AvailableQuantity";
-import Modal from "@components/atoms/modal";
+import Modal from "@components/atoms/Modal";
 
 const ProductCard = (props: ProductCardProps) => {
   const { item, onRemoveFromCart, handleChangeQuantity, itemStockModify } =
@@ -52,8 +52,6 @@ const ProductCard = (props: ProductCardProps) => {
   return (
     <>
       <Container>
-        {/* TODO  Improve the loader*/}
-        {loading && <Loader>Loading...</Loader>}
         <ProductInfoAndPriceContainer>
           <ProductInfoContainer>
             <ImageContainer>

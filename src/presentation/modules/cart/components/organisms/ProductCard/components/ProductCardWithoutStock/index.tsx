@@ -8,8 +8,7 @@ import {
   Container,
   ProductInfoContainer,
   ProductInfoAndPriceContainer,
-  QuantitySelectorAndDeleteContainer,
-  Loader,
+  QuantitySelectorAndDeleteContainer
 } from "../../styles";
 import { Item } from "@entities/cart/cart.entity";
 
@@ -32,8 +31,6 @@ const ProductCard = (props: Props) => {
       {items.map((item, index) => {
         return (
           <Container key={index}>
-            {/* TODO  Improve the loader*/}
-            {loading && <Loader>Loading...</Loader>}
             <ProductInfoAndPriceContainer>
               <ProductInfoContainer>
                 <ProductImage src={item?.product?.images} alt={""} />

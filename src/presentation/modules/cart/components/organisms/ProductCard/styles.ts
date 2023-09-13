@@ -31,15 +31,7 @@ export const QuantitySelectorAndDeleteContainer = styled.div`
   justify-content: flex-end;
 `;
 
-export const Loader = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: #000000;
-  opacity: 0.2;
-`;
+
 
 export const ImageContainer = styled.div`
   position: relative;
