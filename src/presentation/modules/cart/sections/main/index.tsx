@@ -1,5 +1,6 @@
 import { useMemo, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import SnackBars from '@components/atoms/SnackBars';
 import {
   selectCart,
   selectTotalProductsInCart,
@@ -21,6 +22,7 @@ type UpdatedItem = {
 
 const Main = () => {
   // hooks
+  const [OpenSnackbars, setOpenSnackbars] = useState(true)
   const [updatedIndexItem, setUpdatedIndexItem] = useState<UpdatedItem | null>(
     null,
   );
@@ -39,7 +41,7 @@ const Main = () => {
           title: 'Hubo cambios en tus productos',
           description:
             'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
-          type: 'success',
+            type: 'warning'
         });
         setUpdatedIndexItem(null);
       }
@@ -75,7 +77,7 @@ const Main = () => {
       <TotalProductsContainer>
         Tu compra {`${totalProducts}`}
       </TotalProductsContainer>
-
+      {/* <SnackBars description='Los valores fueron cambiados.' horizontal='center' vertical='bottom' open={OpenSnackbars} close={() => setOpenSnackbars(false)}/> */}
       <div className="items-container">
         {loading && <Loader />}
         {itemWithoutStock.length ? (
