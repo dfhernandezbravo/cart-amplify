@@ -215,7 +215,7 @@ export enum ProductQuantityMessage {
 export type QuantitySelectedProps = {
   index: number | null;
   quantity: number | null;
-  quantityAvailable: number | null;
+  availableQuantity: number | null
 };
 
 export type CartState = {

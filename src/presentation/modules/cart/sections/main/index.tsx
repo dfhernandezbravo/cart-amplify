@@ -4,64 +4,73 @@ import SnackBars from '@components/atoms/SnackBars';
 import {
   selectCart,
   selectTotalProductsInCart,
-  setItemQuantity,
 } from '@store/cart';
 import ProductCard from '@modules/cart/components/organisms/ProductCard';
+import ProductCartWithoutStock from '@modules/cart/components/organisms/ProductCard/components/ProductCardWithoutStock';
 import { Item, ProductAvailability } from '@entities/cart/cart.entity';
 import updateItem from '@use-cases/cart/update-item';
-import ProductCartWithoutStock from '@modules/cart/components/organisms/ProductCard/components/ProductCardWithoutStock';
 import deleteItem from '@use-cases/cart/delete-item';
 import { getUnavailableProduct } from '@utils/helpers';
 import { Container, TotalProductsContainer, Loader } from './styles';
 import showToast from '@components/atoms/ToastContainer/ToastMessage';
+import cartSlice from '@store/cart';
+import { QuantitySelectedProps } from '@store/cart/types';
 
-type UpdatedItem = {
-  index: number;
-  quantity: number;
-};
+
 
 const Main = () => {
   // hooks
-  const [OpenSnackbars, setOpenSnackbars] = useState(true)
-  const [updatedIndexItem, setUpdatedIndexItem] = useState<UpdatedItem | null>(
+  // const [OpenSnackbars, setOpenSnackbars] = useState(true)
+  const [updatedIndexItem, setUpdatedIndexItem] = useState<QuantitySelectedProps | null>(
     null,
   );
+
   const { cartBFF, cartId, quantitySelected, loading } =
     useAppSelector(selectCart);
+
   const totalProducts = useAppSelector(selectTotalProductsInCart);
+  const { setQuantitySelected } = cartSlice.actions
+
   const dispatch = useAppDispatch();
 
+
   useEffect(() => {
-    if (updatedIndexItem) {
-      if (
-        cartBFF?.items[updatedIndexItem.index].quantity !==
-        updatedIndexItem.quantity
-      ) {
-        showToast({
-          title: 'Hubo cambios en tus productos',
-          description:
-            'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
-            type: 'warning'
-        });
-        setUpdatedIndexItem(null);
-      }
+
+    if (quantitySelected.availableQuantity) {
+      setUpdatedIndexItem(quantitySelected)
+      showToast({
+        title: 'Hubo cambios en tus productos',
+        description:
+          'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
+        type: 'warning'
+      });
+      dispatch(setQuantitySelected({index: null, quantity: null, availableQuantity: null}))
     }
-  }, [updatedIndexItem]);
+
+  },[cartBFF])
+
+
+
 
   // methods
   const methods = {
     handleChangeQuantity: (quantity: string, index: number) => {
+      
+      setUpdatedIndexItem({index:null, quantity: null, availableQuantity: null});
+
       const itemSelected = {
         quantity: Number(quantity),
         index,
       };
-      setUpdatedIndexItem(itemSelected);
+
       const productToUpdate = {
         cartId: cartId ?? '',
         items: [itemSelected],
       };
-      dispatch(setItemQuantity(itemSelected));
+
+      dispatch(setQuantitySelected(itemSelected))
       dispatch(updateItem(productToUpdate));
+
     },
     handleRemoveFromCart: (index: number) => {
       dispatch(deleteItem({ cartId: cartId ?? '', itemIndex: index }));
@@ -92,8 +101,8 @@ const Main = () => {
             key={item?.itemId}
             item={item}
             itemStockModify={
-              index === quantitySelected.index
-                ? (quantitySelected.quantityAvailable as number)
+              index === updatedIndexItem?.index
+                ? (updatedIndexItem.availableQuantity as number)
                 : null
             }
             onRemoveFromCart={() => {

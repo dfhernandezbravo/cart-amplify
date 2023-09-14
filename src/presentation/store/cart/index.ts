@@ -15,13 +15,14 @@ const initialState: CartState = {
   cartId: undefined,
   error: '',
   loading: false,
-  quantitySelected: { quantity: null, index: null, quantityAvailable: null },
+  quantitySelected: { quantity: null, index: null, availableQuantity :null },
 };
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+
     addCartId: (state, { payload }) => {
       state.cartId = payload;
     },
@@ -87,7 +88,7 @@ const cartSlice = createSlice({
     },
     removeProduct: (state, { payload }) => {
       const removeItem =
-        state.cartBFF?.items.filter((_, index) => index !== payload) ?? [];
+      state.cartBFF?.items.filter((_, index) => index !== payload) ?? [];
       state.cartBFF!.items = removeItem;
     },
     updateProductQuantity: (state, { payload }) => {
@@ -96,47 +97,52 @@ const cartSlice = createSlice({
         productInCart.quantity = payload.quantity;
       }
     },
-    setItemQuantity: (state, { payload }) => {
-      state.quantitySelected = payload;
-    },
+    setQuantitySelected: (state, { payload }) => {
+      state.quantitySelected = payload
+    }
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(updateItem.pending, (state) => {
         state.loading = true;
       })
       .addCase(updateItem.fulfilled, (state, { payload }) => {
-        const { quantity, index } = state.quantitySelected;
+        
+        const { index, quantity } = state.quantitySelected
 
-        state.cartBFF = payload ?? state.cartBFF;
-        const itemUpdated = payload?.items[index as number] as Item;
-
-        // if (itemUpdated?.quantity < (quantity as number)) {
-        //   state.quantitySelected.quantityAvailable = itemUpdated.quantity;
-        //   showToast({
-        //     title: 'Hubo cambios en tus productos',
-        //     description: 'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
-        //     type: 'success'
-        //   })
-        // }
-        //
-
-        state.loading = false;
-        const totalQuantity = totalItems(state.cartBFF?.items);
-        dispatchCartHeaderEvent(totalQuantity);
-        dispatchCartDataEvent(payload ?? state.cartBFF);
-        // toast("Valor actualizado");
-      })
-      .addCase(deleteItem.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(deleteItem.fulfilled, (state, { payload }) => {
         state.cartBFF = payload ?? state.cartBFF;
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
-        dispatchCartHeaderEvent(totalQuantity);
-        dispatchCartDataEvent(payload ?? state.cartBFF);
-      });
+
+        if (state.cartBFF?.items &&
+          index !== undefined &&
+          quantity !== undefined &&
+          state.cartBFF.items[index!]?.quantity !== undefined &&
+          state.cartBFF.items[index!]?.quantity < quantity!
+        ) {
+          state.quantitySelected = {
+            index, 
+            quantity, 
+            availableQuantity: state.cartBFF.items[index!]?.quantity 
+          }
+        }
+
+
+    dispatchCartHeaderEvent(totalQuantity);
+    dispatchCartDataEvent(payload ?? state.cartBFF);
+    // toast("Valor actualizado");
+  })
+  .addCase(deleteItem.pending, (state) => {
+    state.loading = true;
+  })
+  .addCase(deleteItem.fulfilled, (state, { payload }) => {
+    state.cartBFF = payload ?? state.cartBFF;
+    state.loading = false;
+    const totalQuantity = totalItems(state.cartBFF?.items);
+    dispatchCartHeaderEvent(totalQuantity);
+    dispatchCartDataEvent(payload ?? state.cartBFF);
+  });
   },
 });
 
@@ -152,7 +158,7 @@ export const {
   decrementProductQuantity,
   updateProductQuantity,
   removeProduct,
-  setItemQuantity,
+  setQuantitySelected
 } = cartSlice.actions;
 
 // selectors

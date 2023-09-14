@@ -7,14 +7,12 @@ import ProductName from "@components/molecules/ProductName";
 import ProductPrice from "@components/molecules/ProductPrice";
 import DeleteButton from "@components/molecules/DeleteButton";
 import QuantitySelector from "@components/atoms/QuantitySelector";
-import { useAppSelector } from "@hooks/storeHooks";
 import { ProductCardProps } from "./types";
 import {
   Container,
   ProductInfoContainer,
   ProductInfoAndPriceContainer,
   QuantitySelectorAndDeleteContainer,
-  Loader,
   ImageContainer,
   QuantitySelectorContainer,
 } from "./styles";
@@ -28,7 +26,6 @@ const ProductCard = (props: ProductCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quantityValue, setQuantityValue] = useState('')
 
-  const { loading } = useAppSelector((state) => state.cart);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -48,7 +45,7 @@ const ProductCard = (props: ProductCardProps) => {
   }
 
   if (item.product.availability !== "available") return null;
-
+  
   return (
     <>
       <Container>
