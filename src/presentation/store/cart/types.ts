@@ -219,8 +219,8 @@ export type QuantitySelectedProps = {
 };
 
 export type CartState = {
-  cartBFF: Cart | null;
-  cartId: string | undefined;
+  cartBFF: Cart ;
+  cartId: string ;
   error: string;
   loading: boolean;
   quantitySelected: QuantitySelectedProps;

@@ -17,14 +17,8 @@ type Props = {
   onRemoveFromCart: (index: number) => void
 }
 
-const ProductCard = (props: Props) => {
+const ProductCardWithoutStock = (props: Props) => {
   const { items, onRemoveFromCart } = props;
-
-  const { loading } = useAppSelector(state => state.cart)
-
-  // const handleRemove = (index: ) => {
-  //   onRemoveFromCart(item)
-  // }
 
   return (
     <>
@@ -52,4 +46,4 @@ const ProductCard = (props: Props) => {
   );
 };
 
-export default ProductCard;
+export default ProductCardWithoutStock;

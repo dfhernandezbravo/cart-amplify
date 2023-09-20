@@ -1,20 +1,37 @@
 import Mobile from "@components/layouts/mobile";
 import Header from "@modules/cart/sections/header";
-import Image from "next/image";
-import CartIcon from '/icons/cart.svg'
-import ToastContainerCustom from "@components/atoms/ToastContainer";
+import MainMobile from "@modules/cart/sections/main/main-mobile";
+import AsideMobile from "@modules/cart/sections/aside/asideMobile";
+
+
+//Hooks
+import { useAppSelector } from "@hooks/storeHooks";
+import { selectTotalProductsInCart } from '@store/cart'
+
+
 
 const CartMobile = () => {
+
+  const totalProducts = useAppSelector( selectTotalProductsInCart )
+
   return (
     <Mobile>
+      <Header/>
+      {totalProducts > 0 ? (
       <div className="container">
-       <Header/>
-       <div> 
-        <Image src='/icons/cart/cart.svg' width={20} height={20} alt="carrito"/>
-        <p>Resumen de compra</p>
-        
-       </div>
+        <MainMobile/>
+        <AsideMobile/>
+
       </div>
+
+
+
+      ) : (
+        <div>
+          No Products
+        </div>
+      )
+    }
     </Mobile>
   ) 
 };

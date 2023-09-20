@@ -53,3 +53,10 @@ export const Loader = styled.div`
 
     }
 `;
+
+
+
+//Mobile
+export const ContainerMobile = styled.div `
+  
+`

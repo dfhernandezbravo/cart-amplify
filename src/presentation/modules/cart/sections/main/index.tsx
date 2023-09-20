@@ -15,15 +15,18 @@ import { Container, TotalProductsContainer, Loader } from './styles';
 import showToast from '@components/atoms/ToastContainer/ToastMessage';
 import cartSlice from '@store/cart';
 import { QuantitySelectedProps } from '@store/cart/types';
+import useItemWithoutStock from '../../../../hooks/useItemWithoutStock';
+import useProductCardEvent from '@hooks/useProductCardEvent';
 
 
 
 const Main = () => {
-  // hooks
+  
+  // Hooks
   // const [OpenSnackbars, setOpenSnackbars] = useState(true)
-  const [updatedIndexItem, setUpdatedIndexItem] = useState<QuantitySelectedProps | null>(
-    null,
-  );
+  // const [updatedIndexItem, setUpdatedIndexItem] = useState<QuantitySelectedProps | null>(
+  //   null,
+  // );
 
   const { cartBFF, cartId, quantitySelected, loading } =
     useAppSelector(selectCart);
@@ -32,6 +35,8 @@ const Main = () => {
   const { setQuantitySelected } = cartSlice.actions
 
   const dispatch = useAppDispatch();
+
+  const {methods, updatedIndexItem, setUpdatedIndexItem} = useProductCardEvent(cartId)
 
 
   useEffect(() => {
@@ -49,37 +54,7 @@ const Main = () => {
 
   },[cartBFF])
 
-
-
-
-  // methods
-  const methods = {
-    handleChangeQuantity: (quantity: string, index: number) => {
-      
-      setUpdatedIndexItem({index:null, quantity: null, availableQuantity: null});
-
-      const itemSelected = {
-        quantity: Number(quantity),
-        index,
-      };
-
-      const productToUpdate = {
-        cartId: cartId ?? '',
-        items: [itemSelected],
-      };
-
-      dispatch(setQuantitySelected(itemSelected))
-      dispatch(updateItem(productToUpdate));
-
-    },
-    handleRemoveFromCart: (index: number) => {
-      dispatch(deleteItem({ cartId: cartId ?? '', itemIndex: index }));
-    },
-  };
-
-  const itemWithoutStock = useMemo(() => {
-    return cartBFF?.items.length ? getUnavailableProduct(cartBFF) : [];
-  }, [cartBFF]);
+  const itemWithoutStock = useItemWithoutStock(cartBFF)
 
   return (
     <Container>

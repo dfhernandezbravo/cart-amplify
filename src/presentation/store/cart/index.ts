@@ -12,7 +12,7 @@ import showToast from '../../components/atoms/ToastContainer/ToastMessage';
 
 const initialState: CartState = {
   cartBFF: {} as Cart,
-  cartId: undefined,
+  cartId: '',
   error: '',
   loading: false,
   quantitySelected: { quantity: null, index: null, availableQuantity :null },

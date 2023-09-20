@@ -18,7 +18,7 @@ const ToastMessage = ({ title, description }: Messages) => {
 };
 
 
-const selectLayout = (type: TypesProps, position: PositionType = 'top-right' ) => {
+const selectLayout = (type: TypesProps, position: PositionType = 'bottom-right' ) => {
 
   switch (type) {
     case 'success':
@@ -77,7 +77,7 @@ const showToast = ({
   title,
   description,
   type = 'default',
-  position= 'bottom-right'
+  position = 'bottom-right'
 } : ToastProps) => {
 
   if (type === 'default') {
