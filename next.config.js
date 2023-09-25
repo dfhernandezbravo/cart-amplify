@@ -18,7 +18,7 @@ const nextConfig = {
         filename: "static/chunks/remoteEntry.js",
         exposes: {
           "./cartAside": "./src/pages/index.tsx",
-          "./cart": "./src/pages/cart/index.tsx",
+          "./cart": "./src/pages/cart/[cardId].tsx",
         },
         extraOptions: {
           exposePages: true,

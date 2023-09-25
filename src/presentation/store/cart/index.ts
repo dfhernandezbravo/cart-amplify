@@ -7,8 +7,6 @@ import deleteItem from '@use-cases/cart/delete-item';
 import dispatchCartHeaderEvent from '@use-cases/cart/dispatch-cart-header-event';
 import dispatchCartDataEvent from '@use-cases/cart/dispatch-cart-data-event';
 import { createNewItem, totalItems } from '@utils/helpers';
-import { toast } from 'react-toastify';
-import showToast from '../../components/atoms/ToastContainer/ToastMessage';
 
 const initialState: CartState = {
   cartBFF: {} as Cart,
