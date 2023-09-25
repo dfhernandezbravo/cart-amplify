@@ -16,15 +16,13 @@ const CartMobile = () => {
 
   return (
     <Mobile>
-      <Header/>
+      {/* <Header/> */}
       {totalProducts > 0 ? (
       <div className="container">
         <MainMobile/>
         <AsideMobile/>
 
       </div>
-
-
 
       ) : (
         <div>

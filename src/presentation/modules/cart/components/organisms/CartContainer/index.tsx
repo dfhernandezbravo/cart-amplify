@@ -11,7 +11,7 @@ const CartContainer = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {totalProducts > 0 ? (
         <Container>
           <Main />

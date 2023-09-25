@@ -70,7 +70,6 @@ export const ModalContainer = styled.div`
 
   }
 `;
-console.log('ModalContainer', ModalContainer)
 
 export const Divider = styled.hr<DividerProps>`
   border: none;
