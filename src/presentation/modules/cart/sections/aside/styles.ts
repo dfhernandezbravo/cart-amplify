@@ -20,6 +20,7 @@ export const ContainerMobile = styled.div`
   bottom: 0;
   border-radius: 8px 8px 0px 0px;
   box-shadow: rgba(0,0,0,0.2) 0px -3px 3px;
+  z-index: 9999;
 
   .price-container {
       display: flex;
@@ -44,15 +45,6 @@ export const ContainerMobile = styled.div`
       width: 90%;
     }
   }
-
-    & .shade  {
-      background-color: rgba(28, 28, 28, 0.58);
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-    }
 `
 
 export const EmptyAsideContainer = styled.div `

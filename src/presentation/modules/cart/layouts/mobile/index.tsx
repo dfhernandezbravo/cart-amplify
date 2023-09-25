@@ -6,11 +6,15 @@ import AsideMobile from "@modules/cart/sections/aside/asideMobile";
 
 //Hooks
 import { useAppSelector } from "@hooks/storeHooks";
-import { selectTotalProductsInCart } from '@store/cart'
+import cartSlice, { selectTotalProductsInCart } from '@store/cart'
 
 
+//Styles
+import { Shade } from "./styles";
 
 const CartMobile = () => {
+
+  const { openDetailsMobile } = useAppSelector(state=> state.cart)
 
   const totalProducts = useAppSelector( selectTotalProductsInCart)
 
@@ -21,7 +25,7 @@ const CartMobile = () => {
       <div className="container">
         <MainMobile/>
         <AsideMobile/>
-        <div className='shade-test'></div>
+        {openDetailsMobile && <Shade/>}
       </div>
 
       ) : (

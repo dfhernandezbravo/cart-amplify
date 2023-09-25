@@ -16,6 +16,7 @@ const initialState: CartState = {
   error: '',
   loading: false,
   quantitySelected: { quantity: null, index: null, availableQuantity :null },
+  openDetailsMobile: false
 };
 
 const cartSlice = createSlice({
@@ -99,6 +100,9 @@ const cartSlice = createSlice({
     },
     setQuantitySelected: (state, { payload }) => {
       state.quantitySelected = payload
+    },
+    setOpenDetailsMobile: (state, {payload}) => {
+      state.openDetailsMobile = payload
     }
   },
 

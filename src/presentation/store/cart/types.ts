@@ -224,4 +224,5 @@ export type CartState = {
   error: string;
   loading: boolean;
   quantitySelected: QuantitySelectedProps;
+  openDetailsMobile: boolean;
 };
