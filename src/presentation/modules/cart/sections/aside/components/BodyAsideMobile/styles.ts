@@ -7,4 +7,11 @@ export const Container = styled.div<StatePropValue>`
     height: ${({openDetails}) => openDetails && 'max-content'};
     overflow: hidden;
     transition: max-height 1s ease 0s;
+
+    & .delete-cupon button {
+        background-color: transparent;
+        border: none;
+        text-decoration: underline;
+        padding: 5px 12px;
+    }
 `

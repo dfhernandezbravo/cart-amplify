@@ -6,11 +6,9 @@ import Image from 'next/image'
 import { Container, InputCuponContainer } from './styles'
 
 
-type Props ={
+type Props = StateCuponProps & StatePropValue
 
-}
-
-const CuponAsideMobile = ({openDetails, isCuponContainerOpen, setIsCuponContainerOpen }: StateCuponProps & StatePropValue) => {
+const CuponAsideMobile = ({openDetails, isCuponContainerOpen, setIsCuponContainerOpen }: Props) => {
 
 
   const renderChevron = () => {

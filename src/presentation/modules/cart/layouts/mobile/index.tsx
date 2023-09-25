@@ -12,7 +12,7 @@ import { selectTotalProductsInCart } from '@store/cart'
 
 const CartMobile = () => {
 
-  const totalProducts = useAppSelector( selectTotalProductsInCart )
+  const totalProducts = useAppSelector( selectTotalProductsInCart)
 
   return (
     <Mobile>
@@ -21,7 +21,7 @@ const CartMobile = () => {
       <div className="container">
         <MainMobile/>
         <AsideMobile/>
-
+        <div className='shade-test'></div>
       </div>
 
       ) : (

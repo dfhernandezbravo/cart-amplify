@@ -54,3 +54,9 @@ export const ContainerMobile = styled.div`
       left: 0;
     }
 `
+
+export const EmptyAsideContainer = styled.div `
+  position: fixed;
+  width: 100%;
+  bottom: 0
+`

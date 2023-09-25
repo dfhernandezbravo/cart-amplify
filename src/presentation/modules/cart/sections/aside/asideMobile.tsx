@@ -1,18 +1,28 @@
 import { useState } from 'react'
 
-import { ContainerMobile } from './styles'
 import Image from 'next/image'
 import { Divider } from '@mui/material'
 import Button from '@components/atoms/Button'
 import HeaderAsideMobile from './components/HaderAsideMobile'
 import BodyAsideMobile from './components/BodyAsideMobile'
 import SubtotalAsideMobile from './components/SubtotalAsideMobile'
+import PurchaseSummaryDisabled from '../../components/organisms/PurchaseSummaryDisabled'
+
+import { ContainerMobile, EmptyAsideContainer  } from './styles'
+
 
 const AsideMobile = () => {
 
   const [openDetails, setOpenDetails] = useState(false)
 
   const [isCuponContainerOpen, setIsCuponContainerOpen] = useState(false)
+
+  //TODO: condition to render product without stock aside or not
+  // return(
+  //   <EmptyAsideContainer>
+  //       <PurchaseSummaryDisabled/>
+  //   </EmptyAsideContainer>
+  // )
 
   return (
     <ContainerMobile>
