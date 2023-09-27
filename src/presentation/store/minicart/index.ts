@@ -13,7 +13,6 @@ const initialState: CartState = {
   cartId: '',
   error: '',
   loading: false,
-  openDetailsMobile: false
 };
 
 const minicartSlice = createSlice({
@@ -94,9 +93,6 @@ const minicartSlice = createSlice({
       if (productInCart) {
         productInCart.quantity = payload.quantity;
       }
-    },
-    setOpenDetailsMobile: (state, { payload }) => {
-      state.openDetailsMobile = payload
     }
   },
 
