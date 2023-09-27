@@ -1,42 +1,31 @@
-import { useMemo, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import SnackBars from '@components/atoms/SnackBars';
 import {
-  selectCart,
   selectTotalProductsInCart,
-} from '@store/cart';
+} from '@store/minicart';
 import ProductCard from '@modules/cart/components/organisms/ProductCard';
 import ProductCartWithoutStock from '@modules/cart/components/organisms/ProductCard/components/ProductCardWithoutStock';
-import { Item, ProductAvailability } from '@entities/cart/cart.entity';
-import updateItem from '@use-cases/cart/update-item';
-import deleteItem from '@use-cases/cart/delete-item';
-import { getUnavailableProduct } from '@utils/helpers';
+import { Cart, Item } from '@entities/cart/cart.entity';
 import { Container, TotalProductsContainer, Loader } from './styles';
 import showToast from '@components/atoms/ToastContainer/ToastMessage';
 import cartSlice from '@store/cart';
-import { QuantitySelectedProps } from '@store/cart/types';
 import useItemWithoutStock from '../../../../hooks/useItemWithoutStock';
 import useProductCardEvent from '@hooks/useProductCardEvent';
 
-
+import { quantitySelected } from '@store/cart'
 
 const Main = () => {
   
-  // Hooks
-  // const [OpenSnackbars, setOpenSnackbars] = useState(true)
-  // const [updatedIndexItem, setUpdatedIndexItem] = useState<QuantitySelectedProps | null>(
-  //   null,
-  // );
-
-  const { cartBFF, cartId, quantitySelected, loading } =
-    useAppSelector(selectCart);
+  const { cartBFF, quantitySelected, loading } =
+    useAppSelector(state => state.cart);
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
   const { setQuantitySelected } = cartSlice.actions
 
   const dispatch = useAppDispatch();
 
-  const {methods, updatedIndexItem, setUpdatedIndexItem} = useProductCardEvent(cartId)
+  const {methods, updatedIndexItem, setUpdatedIndexItem} = useProductCardEvent(cartBFF?.id as string)
 
 
   useEffect(() => {
@@ -49,12 +38,12 @@ const Main = () => {
           'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
         type: 'warning'
       });
-      dispatch(setQuantitySelected({index: null, quantity: null, availableQuantity: null}))
+      dispatch(setQuantitySelected(quantitySelected))
     }
 
   },[cartBFF])
 
-  const itemWithoutStock = useItemWithoutStock(cartBFF)
+  const itemWithoutStock = useItemWithoutStock(cartBFF as Cart)
 
   return (
     <Container>

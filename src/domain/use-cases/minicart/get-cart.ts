@@ -5,6 +5,7 @@ import cartService from "@services/cart";
 const getCart = createAsyncThunk(
   "/cart/getCart",
   async (dataRequest: GetCartRequest) => {
+    console.log('dataRequest', dataRequest)
     try {
       const { data } = await cartService.getCart(dataRequest);
       return data;

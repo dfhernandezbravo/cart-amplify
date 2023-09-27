@@ -3,7 +3,7 @@ import Main from "@modules/cart/sections/main";
 import Aside from "@modules/cart/sections/aside";
 import { Container } from "./styles";
 import { useAppSelector } from "@hooks/storeHooks";
-import { selectTotalProductsInCart } from "@store/cart";
+import { selectTotalProductsInCart } from "@store/minicart";
 import EmptyBody from "@modules/cart/sections/emptyBody";
 
 const CartContainer = () => {

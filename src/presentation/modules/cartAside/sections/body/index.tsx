@@ -4,15 +4,15 @@ import {
   decrementProductQuantity,
   incrementProductQuantity,
   removeProduct,
-  selectCart,
-} from "@store/cart";
+  selectMinicart,
+} from "@store/minicart";
 import { selectError } from "@store/error";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import ProductCard from "@modules/cartAside/components/organisms/ProductCard";
 import MinicartError from "@modules/cart/components/molecules/MinicartError";
 import { Item } from "@entities/cart/cart.entity";
-import updateItem from "@use-cases/cart/update-item";
-import deleteItem from "@use-cases/cart/delete-item";
+import updateItem from "@use-cases/minicart/update-item";
+import deleteItem from "@use-cases/minicart/delete-item";
 import { AvailableProductText, BodyContainer } from "./styles";
 import ProductCardWithouthStock from "@modules/cartAside/components/organisms/ProductCardWithoutStock";
 
@@ -22,7 +22,7 @@ const cannotBeDelivered = 'cannotBeDelivered'
 
 const Body = () => {
   // Hooks
-  const { cartId, cartBFF } = useAppSelector(selectCart);
+  const { cartId, cartBFF } = useAppSelector(selectMinicart);
   const { error } = useAppSelector(selectError);
   const dispatch = useAppDispatch();
 

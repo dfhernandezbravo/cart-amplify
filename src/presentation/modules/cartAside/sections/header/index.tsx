@@ -1,6 +1,6 @@
 import { GrClose } from "react-icons/gr";
 import { useAppSelector } from "@hooks/storeHooks";
-import { selectTotalProductsInCart } from "@store/cart";
+import { selectTotalProductsInCart } from "@store/minicart";
 import { HeaderProps } from "./types";
 import { Title } from "./styles";
 

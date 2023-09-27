@@ -7,7 +7,7 @@ import {
   selectTotalProductsInCart,
   simulateAddProduct,
   simulateRemoveProduct,
-} from "@store/cart";
+} from "@store/minicart";
 import { setError } from "@store/error";
 import useEventListener from "@hooks/eventListenerHooks";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";

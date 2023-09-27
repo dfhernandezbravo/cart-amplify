@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import { useAppSelector } from "@hooks/storeHooks";
-import { selectCart } from "@store/cart";
+import { selectMinicart } from "@store/minicart";
 import Button from "@components/atoms/Button";
 import { BuyButtonProps } from "./types";
 
 const BuyButton = (props: BuyButtonProps) => {
   const router = useRouter();
-  const { cartBFF } = useAppSelector(selectCart);
+  const { cartBFF } = useAppSelector(selectMinicart);
 
   const { text } = props;
 

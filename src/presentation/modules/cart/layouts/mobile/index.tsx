@@ -6,7 +6,7 @@ import AsideMobile from "@modules/cart/sections/aside/asideMobile";
 
 //Hooks
 import { useAppSelector } from "@hooks/storeHooks";
-import cartSlice, { selectTotalProductsInCart } from '@store/cart'
+import minicartSlice, { selectTotalProductsInCart } from '@store/minicart'
 
 
 //Styles

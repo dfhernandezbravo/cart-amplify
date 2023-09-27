@@ -4,9 +4,11 @@ import { useState } from 'react'
 import { QuantitySelectedProps } from '@store/cart/types';
 import { useAppDispatch } from './storeHooks';
 import cartSlice from '@store/cart';
-import updateItem from '@use-cases/cart/update-item';
-import deleteItem from '@use-cases/cart/delete-item';
+import updateItem from '@use-cases/minicart/update-item';
+import deleteItem from '@use-cases/minicart/delete-item';
 
+
+import { quantitySelected } from '@store/cart'
 
 const useProductCardEvent = (cartId: string) => {
 
@@ -21,7 +23,7 @@ const useProductCardEvent = (cartId: string) => {
   const methods = {
     handleChangeQuantity: (quantity: string, index: number) => {
 
-      setUpdatedIndexItem({ index: null, quantity: null, availableQuantity: null });
+      setUpdatedIndexItem(quantitySelected);
 
       const itemSelected = {
         quantity: Number(quantity),

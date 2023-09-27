@@ -1,14 +1,28 @@
+import { useEffect } from 'react'
+import { useRouter } from "next/router";
 import Desktop from "@components/layouts/desktop";
 import CartContainer from "@modules/cart/components/organisms/CartContainer";
-import { useRouter } from "next/router";
+
+
+//Hooks
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import getCart from '@use-cases/minicart/get-cart';
+
+
 
 const CartDesktop = () => {
 
-  // const router = useRouter()
+  const dispatch = useAppDispatch()
 
-  // console.log({router})
+  const { query } = useRouter()
+  const { cartBFF } = useAppSelector(state=> state.cart)
+
+  useEffect(() => {
+    const cartId = query.cartId as string
+    dispatch(getCart({cartId}))
+  },[])
   
-
+  console.log({cartBFF})
 
   return (
     <Desktop>
