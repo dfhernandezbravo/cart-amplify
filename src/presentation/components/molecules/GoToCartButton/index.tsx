@@ -8,6 +8,7 @@ const GoToCartButton = () => {
   const router = useRouter();
   const { cartId } = useAppSelector(state => state.minicart)
 
+  console.log({cartId})
   const handleClickBtn = () => {
     router.push(`/cart/${cartId}`);
   };

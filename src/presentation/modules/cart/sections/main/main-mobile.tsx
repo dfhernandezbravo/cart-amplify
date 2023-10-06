@@ -7,7 +7,7 @@ import { Item } from "@entities/cart/cart.entity";
 import { useAppSelector, useAppDispatch } from "@hooks/storeHooks";
 import useItemWithoutStock from "@hooks/useItemWithoutStock";
 import useProductCardEvent from "@hooks/useProductCardEvent";
-import minicartSlice from '@store/minicart';
+import cartSlice from '@store/cart';
 
 
 //Styles
@@ -19,13 +19,13 @@ const MainMobile = () => {
 
 
 
-  const { cartBFF, cartId, loading, quantitySelected } = useAppSelector(state => state.cart)
-  const  { setQuantitySelected} = minicartSlice.actions
+  const { cartBFF, loading, quantitySelected } = useAppSelector(state => state.cart)
+  const  { setQuantitySelected} = cartSlice.actions
   const itemWithoutStock = useItemWithoutStock(cartBFF)
   const dispatch = useAppDispatch()
 
 
-  const { methods, updatedIndexItem, setUpdatedIndexItem } = useProductCardEvent(cartId)
+  const { methods, updatedIndexItem, setUpdatedIndexItem } = useProductCardEvent(cartBFF?.id as string)
 
   useEffect(() => {
 

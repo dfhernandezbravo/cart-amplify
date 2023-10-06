@@ -54,10 +54,7 @@ const AsideMobile = () => {
             Continuar tu compra
           </Button>
         </div>
-
-
       </div>
-      {/* {openDetailsMobile && <div className='shade'></div>} */}
     </ContainerMobile>
   )
 }

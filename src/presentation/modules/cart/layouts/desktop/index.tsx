@@ -15,14 +15,12 @@ const CartDesktop = () => {
   const dispatch = useAppDispatch()
 
   const { query } = useRouter()
-  const { cartBFF } = useAppSelector(state=> state.cart)
 
   useEffect(() => {
     const cartId = query.cartId as string
     dispatch(getCart({cartId}))
   },[])
   
-  console.log({cartBFF})
 
   return (
     <Desktop>

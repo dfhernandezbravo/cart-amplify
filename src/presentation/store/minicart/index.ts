@@ -118,7 +118,7 @@ const minicartSlice = createSlice({
         const totalQuantity = totalItems(state.cartBFF?.items);
         dispatchCartHeaderEvent(totalQuantity);
         dispatchCartDataEvent(payload ?? state.cartBFF);
-      });
+      })
   },
 });
 

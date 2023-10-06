@@ -15,12 +15,12 @@ const PurchaseSummary = () => {
   const [showModal, setShowModal] = useState(false);
 
   // hooks
-  const { cartBFF, cartId } = useAppSelector(selectMinicart);
+  const { cartBFF } = useAppSelector(state => state.cart);
 
   const dispatch = useAppDispatch()
 
   const itemWithoutStock = useMemo(() => {
-    return cartBFF?.items.length ? getUnavailableProduct(cartBFF) : []
+    return cartBFF?.items?.length ? getUnavailableProduct(cartBFF) : []
   }, [cartBFF])
 
   const handleCloseModal = () => {
@@ -30,7 +30,7 @@ const PurchaseSummary = () => {
   const removeUnavailableItemsAndContinue = () => {
     
     itemWithoutStock.forEach(item => {
-      dispatch(deleteItem({cartId: cartId ?? '', itemIndex: item.index as number}))
+      dispatch(deleteItem({cartId: cartBFF?.id ?? '', itemIndex: item.index as number}))
     })
     setShowModal(false)
     console.log('go to checkout.')
@@ -48,10 +48,9 @@ const PurchaseSummary = () => {
     },
   };
 
-  if (itemWithoutStock?.length === cartBFF?.items.length) {
+  if (itemWithoutStock?.length === cartBFF?.items?.length) {
     return <PurchaseSummaryDisabled />;
   }
-
   return (
     <>
       <Container>

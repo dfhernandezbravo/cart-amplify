@@ -1,7 +1,10 @@
-import Button from '@components/atoms/Button'
-import React from 'react'
-import { StateCuponProps, StatePropValue } from '../HaderAsideMobile/HeaderAsideMobile.types'
+import { useState } from 'react'
 import Image from 'next/image'
+import Button from '@components/atoms/Button'
+import { StateCuponProps, StatePropValue } from '../HaderAsideMobile/HeaderAsideMobile.types'
+
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks'
+import addCouponCode from '@use-cases/cart/addCouponCode'
 
 import { Container, InputCuponContainer } from './styles'
 
@@ -11,11 +14,25 @@ type Props = StateCuponProps & StatePropValue
 const CuponAsideMobile = ({openDetails, isCuponContainerOpen, setIsCuponContainerOpen }: Props) => {
 
 
+  const [couponCodeValue, setCouponCodeValue] = useState('')
+
+  const dispatch = useAppDispatch()
+  const { cartBFF } = useAppSelector(state => state.cart)
+
+
   const renderChevron = () => {
     if (isCuponContainerOpen) {
       return <Image src='/icons/general/chevron-up-m.svg' width={25} height={25} alt='flecha arriba' />
     }
     return <Image src='/icons/general/chevron-down.svg' width={20} height={20} alt='flecha abajo' />
+  }
+
+  const handleCouponCode = () => {
+    const data = {
+      couponCode: couponCodeValue,
+      cartId: cartBFF?.id as string
+    }
+    dispatch(addCouponCode(data))
   }
 
 
@@ -35,12 +52,12 @@ const CuponAsideMobile = ({openDetails, isCuponContainerOpen, setIsCuponContaine
       
       <InputCuponContainer isCuponContainerOpen={isCuponContainerOpen}>
         <div className='add-cupon--input-container'>
-          <input type="text" placeholder='Ingresa tu cupón' />
+          <input type="text" value={couponCodeValue} placeholder='Ingresa tu cupón' onChange={(value) => setCouponCodeValue(value.target.value) } />
         </div>
         <div className='button-container'>
           <Button
             className="cartBtn cartBtn--primary fullWidth"
-            onClick={() => { }}
+            onClick={() => { handleCouponCode()}}
           >
             Aplicar
           </Button>

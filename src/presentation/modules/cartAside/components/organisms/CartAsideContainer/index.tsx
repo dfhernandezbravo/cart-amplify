@@ -86,6 +86,7 @@ const CartAsideContainer = () => {
     handleGetCartId: (event: Event) => {
       event.preventDefault();
       const customEvent = event as CustomEvent;
+      console.log(customEvent)
       dispatch(addCartId(customEvent.detail?.cartId));
     },
     handleSimulateAddProductEvent: (event: Event) => {

@@ -44,6 +44,7 @@ const ProductCard = (props: ProductCardProps) => {
     setIsModalOpen(false)
   }
 
+  
   if (item.product.availability !== "available") return null;
   
   return (
