@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const ButtonContainer = styled.button`
+type Props = {
+  isDisabled: boolean;
+}
+
+export const ButtonContainer = styled.button<Props>`
   display: flex;
   padding: 10px;
   background-color: #fff;
@@ -87,6 +91,7 @@ export const ButtonContainer = styled.button`
     &:hover {
       background-color: #990707;
       border-color: #990707;
+      cursor: pointer;
     }
   }
 

@@ -10,6 +10,7 @@ export type QuantitySelectedProps = {
 export type InitialState = {
     cartBFF:  Cart | undefined
     cartId: string;
+    couponId: string;
     loading: boolean;
     quantitySelected: QuantitySelectedProps,
     openDetailsMobile: boolean;

@@ -19,6 +19,7 @@ export const quantitySelected = { quantity: null, index: null, availableQuantity
 const initialValue: InitialState = {
   cartBFF: undefined ,
   cartId: '',
+  couponId: '',
   loading: false,
   quantitySelected,
   openDetailsMobile: false,
@@ -115,7 +116,6 @@ const cartSlice = createSlice({
       state.loading = true
     })
     builder.addCase(getCart.fulfilled, (state, { payload }) => {
-      console.log({payload})
       state.cartBFF = payload
       state.loading = false
     })
@@ -162,6 +162,9 @@ const cartSlice = createSlice({
       .addCase(addCouponCode.fulfilled, (state, { payload }) => {
         state.cartBFF = payload
         state.loading = false
+      })
+      .addCase(addCouponCode.rejected, (state, {payload}) => {
+        console.log('trigger', {payload})
       })
       .addCase(removeCouponCode.pending, (state) => {
         state.loading = true
