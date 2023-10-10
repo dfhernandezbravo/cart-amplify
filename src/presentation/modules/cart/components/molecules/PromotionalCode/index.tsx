@@ -33,7 +33,7 @@ const PromotionalCode = () => {
   const [code, setCode] = useState("");
 
 
-  const { cartId } = useAppSelector(state => state.cart)
+  const { cartId, couponId } = useAppSelector(state => state.cart)
   const dispatch =useAppDispatch()
 
   const handleShowForm = () => {
@@ -42,10 +42,12 @@ const PromotionalCode = () => {
 
   const inputCode = watch('code')
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     // TODO: call service and add logic to check if the code exists
 
-    dispatch(addCouponCode({couponCode:inputCode, cartId}))
+    const response  = await dispatch(addCouponCode({couponCode:inputCode, cartId}))
+
+    console.log({response})
 
     setCode(data?.code?.toUpperCase());
     reset();
@@ -87,7 +89,7 @@ const PromotionalCode = () => {
           )}
           {code ? (
             <span className="promotionalCode">
-              {code} <TiDelete onClick={handleRemoveCoupon} />
+              {couponId} <TiDelete onClick={handleRemoveCoupon} />
             </span>
           ) : null}
         </>
