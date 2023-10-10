@@ -6,8 +6,8 @@ import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import ProductCard from "@modules/cartAside/components/organisms/ProductCard";
 import MinicartError from "@modules/cart/components/molecules/MinicartError";
 import { Item } from "@entities/cart/cart.entity";
-import updateItem from "@use-cases/minicart/update-item";
-import deleteItem from "@use-cases/minicart/delete-item";
+import updateItem from "@use-cases/cart/update-item";
+import deleteItem from "@use-cases/cart/delete-item";
 import { AvailableProductText, BodyContainer } from "./styles";
 import ProductCardWithouthStock from "@modules/cartAside/components/organisms/ProductCardWithoutStock";
 

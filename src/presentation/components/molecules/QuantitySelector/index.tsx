@@ -5,7 +5,7 @@ import cartSlice from '@store/cart'
 
 import Button from "@components/atoms/Button";
 import { Textfield } from "@components/atoms/Textfield";
-import updateItem from "@use-cases/minicart/update-item";
+import updateItem from "@use-cases/cart/update-item";
 import { QuantitySelectorProps } from "./types";
 import { QuantitySelectorContainer } from "./styles";
 

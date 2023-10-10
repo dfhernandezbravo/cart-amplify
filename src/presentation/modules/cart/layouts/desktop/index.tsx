@@ -6,7 +6,7 @@ import CartContainer from "@modules/cart/components/organisms/CartContainer";
 
 //Hooks
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
-import getCart from '@use-cases/minicart/get-cart';
+import getCart from '@use-cases/cart/get-cart';
 
 
 

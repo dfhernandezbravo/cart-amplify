@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { QuantitySelectedProps } from '@store/cart/types';
 import { useAppDispatch } from './storeHooks';
 import cartSlice from '@store/cart';
-import updateItem from '@use-cases/minicart/update-item';
-import deleteItem from '@use-cases/minicart/delete-item';
+import updateItem from '@use-cases/cart/update-item';
+import deleteItem from '@use-cases/cart/delete-item';
 
 
 import { quantitySelected } from '@store/cart'

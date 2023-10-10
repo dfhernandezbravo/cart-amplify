@@ -6,7 +6,7 @@ import { useAppSelector } from "@hooks/storeHooks";
 
 const GoToCartButton = () => {
   const router = useRouter();
-  const { cartId } = useAppSelector(state => state.minicart)
+  const { cartId } = useAppSelector(state => state.cart)
 
   console.log({cartId})
   const handleClickBtn = () => {

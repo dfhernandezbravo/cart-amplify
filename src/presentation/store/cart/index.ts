@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { InitialState } from "./types";
 
 //Thunks
-import getCart from "@use-cases/minicart/get-cart";
-import updateItem from "@use-cases/minicart/update-item";
+import getCart from "@use-cases/cart/get-cart";
+import updateItem from "@use-cases/cart/update-item";
 import addCouponCode from "@use-cases/cart/addCouponCode";
 import removeCouponCode from "@use-cases/cart/removeCouponCode";
 import { createNewItem, totalItems } from "@utils/helpers";
-import dispatchCartHeaderEvent from "@use-cases/minicart/dispatch-cart-header-event";
-import dispatchCartDataEvent from "@use-cases/minicart/dispatch-cart-data-event";
-import deleteItem from "@use-cases/minicart/delete-item";
+import dispatchCartHeaderEvent from "@use-cases/cart/dispatch-cart-header-event";
+import dispatchCartDataEvent from "@use-cases/cart/dispatch-cart-data-event";
+import deleteItem from "@use-cases/cart/delete-item";
 import { RootState } from "@hooks/storeHooks";
 import { Item } from "@entities/cart/cart.entity";
 

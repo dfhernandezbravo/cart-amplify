@@ -3,7 +3,7 @@ import Desktop from "@components/layouts/desktop";
 import CartAsideContainer from "@modules/cartAside/components/organisms/CartAsideContainer";
 
 import { useAppSelector, useAppDispatch } from '@hooks/storeHooks';
-import getCart from '@use-cases/minicart/get-cart';
+import getCart from '@use-cases/cart/get-cart';
 
 const CartAsideDesktop = () => {
 
