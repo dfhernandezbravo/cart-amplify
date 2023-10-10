@@ -1,11 +1,6 @@
 import { useCallback } from "react";
 import _ from "lodash";
-import {
-  decrementProductQuantity,
-  incrementProductQuantity,
-  removeProduct,
-  selectMinicart,
-} from "@store/minicart";
+import cartSlice from '@store/cart'
 import { selectError } from "@store/error";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
 import ProductCard from "@modules/cartAside/components/organisms/ProductCard";
@@ -22,9 +17,10 @@ const cannotBeDelivered = 'cannotBeDelivered'
 
 const Body = () => {
   // Hooks
-  const { cartId, cartBFF } = useAppSelector(selectMinicart);
+  const { cartId, cartBFF } = useAppSelector(state => state.cart);
   const { error } = useAppSelector(selectError);
   const dispatch = useAppDispatch();
+  const { decrementProductQuantity, incrementProductQuantity, removeProduct} = cartSlice.actions
 
   // Methods
   const methods = {

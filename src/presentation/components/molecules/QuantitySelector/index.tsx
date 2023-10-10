@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
-import { selectMinicart, updateProductQuantity } from "@store/minicart";
+import cartSlice from '@store/cart'
+
 import Button from "@components/atoms/Button";
 import { Textfield } from "@components/atoms/Textfield";
 import updateItem from "@use-cases/minicart/update-item";
@@ -14,7 +15,8 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
 
   // hooks
   const dispatch = useAppDispatch();
-  const { cartId, loading } = useAppSelector(selectMinicart);
+  const { cartId, loading } = useAppSelector(state => state.cart);
+  const { updateProductQuantity } = cartSlice.actions
 
   const [quantityInput, setQuantityInput] = useState(`${quantity}`);
   const [isEditing, setIsEditing] = useState(false);

@@ -1,5 +1,5 @@
 import { Cart, Item, ProductAvailability } from "@entities/cart/cart.entity";
-import { CartItemModel } from "@store/minicart/types";
+import { CartItemModel } from "@store/cart/types";
 
 type currencyFormatter = {
   currency: string;
@@ -98,3 +98,6 @@ export const getUnavailableProduct = (cart:Cart ) => {
   });
   return itemWithoutStock
 }
+
+
+

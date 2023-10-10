@@ -5,7 +5,6 @@ import TotalPrice from "@components/molecules/TotalPrice";
 import PromotionalCode from "@modules/cart/components/molecules/PromotionalCode";
 import { useAppSelector, useAppDispatch } from "@hooks/storeHooks";
 import deleteItem from "@use-cases/minicart/delete-item";
-import { selectMinicart } from "@store/minicart";
 import { formattedCLP, getUnavailableProduct } from "@utils/helpers";
 import { Container, Divider, ModalContainer } from "./styles";
 import PurchaseSummaryDisabled from "../PurchaseSummaryDisabled";

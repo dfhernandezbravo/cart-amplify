@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import SnackBars from '@components/atoms/SnackBars';
 import {
   selectTotalProductsInCart,
-} from '@store/minicart';
+} from '@store/cart';
 import ProductCard from '@modules/cart/components/organisms/ProductCard';
 import ProductCartWithoutStock from '@modules/cart/components/organisms/ProductCard/components/ProductCardWithoutStock';
 import { Cart, Item } from '@entities/cart/cart.entity';

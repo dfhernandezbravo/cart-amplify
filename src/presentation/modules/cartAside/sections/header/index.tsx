@@ -1,11 +1,18 @@
+import { useMemo } from "react";
 import { GrClose } from "react-icons/gr";
-import { useAppSelector } from "@hooks/storeHooks";
-import { selectTotalProductsInCart } from "@store/minicart";
 import { HeaderProps } from "./types";
+import { useAppSelector } from "@hooks/storeHooks";
+import totalProductInCart from "@utils/totalProduct";
+import { Cart } from "@entities/cart/cart.entity";
 import { Title } from "./styles";
 
 const Header = (props: HeaderProps) => {
-  const totalProducts = useAppSelector(selectTotalProductsInCart);
+
+  // const totalProducts = useAppSelector(selectTotalProductsInCart);
+  const { cartBFF } = useAppSelector(state => state.cart)
+
+  const totalProducts = useMemo(() => totalProductInCart(cartBFF as Cart), [cartBFF])
+
   const { setIsOpen } = props;
 
   return (

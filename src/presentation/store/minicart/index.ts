@@ -137,7 +137,6 @@ export const {
 } = minicartSlice.actions;
 
 // selectors
-export const selectMinicart = (state: RootState) => state.minicart;
 
 export const selectTotalProductsInCart = (state: RootState) => {
 
@@ -145,5 +144,6 @@ export const selectTotalProductsInCart = (state: RootState) => {
     (acc: number, cur: Item) => acc + (cur?.quantity ?? 0) ?? 0,
     0,
   );
+  console.log(total)
   return total ? total : 0;
 };
