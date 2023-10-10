@@ -2,7 +2,7 @@ import { Item } from "@entities/cart/cart.entity";
 
 export type ProductCardProps = {
   item: Item;
+  itemStockModify: number | null;
   onRemoveFromCart: (product: Item) => void;
-  onIncrementQuantity?: (product: Item) => void;
-  onDecrementQuantity?: (product: Item) => void;
+  handleChangeQuantity: (value: string) => void;
 };

@@ -5,16 +5,18 @@ import storage from "redux-persist/lib/storage";
 import cartSlice from "@store/cart";
 import errorSlice from "@store/error";
 
-const persistCartConfig = {
-  key: "cart",
-  storage,
-};
 
-const persistedReducer = persistReducer(persistCartConfig, cartSlice.reducer);
+const persistCartConfig = {
+  key: 'cart',
+  storage
+}
+
+
+const persistedCartReducer = persistReducer(persistCartConfig, cartSlice.reducer)
 
 const store = configureStore({
   reducer: {
-    cart: persistedReducer,
+    cart: persistedCartReducer,
     error: errorSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

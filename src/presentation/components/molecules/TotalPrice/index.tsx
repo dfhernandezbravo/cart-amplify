@@ -1,12 +1,11 @@
 import { useAppSelector } from "@hooks/storeHooks";
-import { selectCart } from "@store/cart";
 import { formattedCLP } from "@utils/helpers";
 import { Container, Title } from "./styles";
 import { TotalPriceProps } from "./types";
 
 const TotalPrice = (props: TotalPriceProps) => {
   // hooks
-  const { cartBFF, loading } = useAppSelector(selectCart);
+  const { cartBFF, loading } = useAppSelector(state => state.cart);
 
   // props
   const { className } = props;

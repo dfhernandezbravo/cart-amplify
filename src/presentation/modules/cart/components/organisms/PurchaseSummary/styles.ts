@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+
+
+type DividerProps = {
+  fullWidth?: boolean;
+}
+
 export const Container = styled.div`
   background-color: #fff;
   border: 1px solid #bfbfbf;
@@ -32,12 +38,44 @@ export const Container = styled.div`
   }
 `;
 
-export const Divider = styled.hr`
+export const ModalContainer = styled.div`
+  width: 500px;
+
+  & .button-container {
+    display: flex;
+    justify-content: space-between;
+
+    & button {
+      border-radius: 8px;
+      padding: 16px;
+      width: 180px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 49%;
+    }
+  }
+
+  & .button-container button:first-child {
+    background: #ffffff;
+    color: #333333;
+    border: 2px solid #333333;
+
+  }
+
+  & .button-container button:last-child {
+    background-color: #af1212;
+    border: 2px solid #af1212;
+    color: #ffffff;
+
+  }
+`;
+
+export const Divider = styled.hr<DividerProps>`
   border: none;
   border-bottom: 1px solid #aaa;
   margin: 16px auto;
-  width: 85%;
-
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : '85%')};
   &.light {
     border-color: #eaeaea;
   }

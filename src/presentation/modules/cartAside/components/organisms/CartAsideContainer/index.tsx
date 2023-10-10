@@ -1,13 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useMemo, useState } from "react";
 import { SwipeableDrawer } from "@mui/material";
 import {
-  addCartId,
-  addProductInCart,
   selectTotalProductsInCart,
-  simulateAddProduct,
-  simulateRemoveProduct,
 } from "@store/cart";
+import cartSlice  from '@store/cart'
 import { setError } from "@store/error";
 import useEventListener from "@hooks/eventListenerHooks";
 import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
@@ -19,10 +16,20 @@ import WindowsEvents from "@events/index";
 import handleHttpError from "@use-cases/error/handle-http-errors";
 import handlePayloadError from "@use-cases/error/handle-payload-errors";
 
+
+import { Cart } from "@entities/cart/cart.entity";
+import totalProductInCart from "@utils/totalProduct";
+
+
+
 const CartAsideContainer = () => {
   // hooks
+  const { cartBFF } = useAppSelector(state => state.cart)
   const dispatch = useAppDispatch();
-  const totalProducts = useAppSelector(selectTotalProductsInCart);
+  const totalProducts = useMemo(() => totalProductInCart(cartBFF as Cart), [cartBFF])
+
+  const {addCartId, addProductInCart, simulateAddProduct, simulateRemoveProduct} = cartSlice.actions
+
 
   // states
   const [isOpen, setIsOpen] = useState(false);
@@ -86,6 +93,7 @@ const CartAsideContainer = () => {
     handleGetCartId: (event: Event) => {
       event.preventDefault();
       const customEvent = event as CustomEvent;
+      console.log(customEvent)
       dispatch(addCartId(customEvent.detail?.cartId));
     },
     handleSimulateAddProductEvent: (event: Event) => {
@@ -109,6 +117,7 @@ const CartAsideContainer = () => {
     },
   };
   methods.initialize();
+
 
   return (
     <SwipeableDrawer

@@ -206,3 +206,16 @@ export interface BussinessHour {
   OpeningTime: string;
   ClosingTime: string;
 }
+
+export interface CouponCode {
+  couponCode: string;
+  cartId: string;
+}
+
+export enum ProductAvailability {
+  AVAILABLE = 'available',
+  WITHOUTSTOCK = 'withoutStock',
+  CANNOTBEDELIVERED = 'cannotBeDelivered'
+}
+
+

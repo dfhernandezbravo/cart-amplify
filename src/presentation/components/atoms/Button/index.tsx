@@ -5,6 +5,7 @@ const Button = (props: ButtonProps) => {
   const { children, className, onClick, disabled } = props;
   return (
     <ButtonContainer
+      isDisabled={disabled || true}
       className={className}
       onClick={onClick}
       disabled={disabled}

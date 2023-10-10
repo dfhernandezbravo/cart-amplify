@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { Cart } from "@entities/cart/cart.entity";
+import { Cart, CouponCode } from "@entities/cart/cart.entity";
 import {
   AddItemRequest,
   DeleteItemRequest,
@@ -12,4 +12,6 @@ export default interface CartService {
   addItem(data: AddItemRequest): Promise<AxiosResponse<Cart>>;
   updateItem(data: UpdateItemRequest): Promise<AxiosResponse<Cart>>;
   deleteItem(data: DeleteItemRequest): Promise<AxiosResponse<Cart>>;
+  addCoupon(code: CouponCode) : Promise<AxiosResponse<Cart>>
+  removeCoupon(code: CouponCode) : Promise<AxiosResponse<Cart>>
 }

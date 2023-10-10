@@ -6,9 +6,12 @@ export const Container = styled.div`
   align-items: center;
   padding: 12px 64px;
   width: 100%;
-
   .logo {
     height: 52px;
+  }
+
+  @media only screen and (max-width: 48em)  {
+    padding: 12px 10px
   }
 `;
 

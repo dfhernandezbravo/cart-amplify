@@ -4,12 +4,15 @@ import { CgChevronUp, CgChevronDown } from "react-icons/cg";
 import { TiDelete } from "react-icons/ti";
 import Image from "next/image";
 import Button from "@components/atoms/Button";
+
+import { useAppSelector, useAppDispatch } from "@hooks/storeHooks";
 import {
   ButtonContainer,
   Container,
   FormContainer,
   IconAndTextContainer,
 } from "./styles";
+import addCouponCode from "@use-cases/cart/addCouponCode";
 
 type Inputs = {
   code: string;
@@ -21,6 +24,7 @@ const PromotionalCode = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<Inputs>();
 
@@ -28,12 +32,23 @@ const PromotionalCode = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [code, setCode] = useState("");
 
+
+  const { cartId, couponId } = useAppSelector(state => state.cart)
+  const dispatch =useAppDispatch()
+
   const handleShowForm = () => {
     setIsOpen(!isOpen);
   };
 
-  const onSubmit = (data: any) => {
+  const inputCode = watch('code')
+
+  const onSubmit = async (data: any) => {
     // TODO: call service and add logic to check if the code exists
+
+    const response  = await dispatch(addCouponCode({couponCode:inputCode, cartId}))
+
+    console.log({response})
+
     setCode(data?.code?.toUpperCase());
     reset();
   };
@@ -42,6 +57,7 @@ const PromotionalCode = () => {
     // TODO: call service and add logic after remove the code
     setCode("");
   };
+
 
   return (
     <Container>
@@ -64,7 +80,7 @@ const PromotionalCode = () => {
               placeholder="Ej: GH0987"
               {...register("code", { required: true })}
             />
-            <Button>Aplicar</Button>
+            <Button disabled={inputCode?.length ? false : true} className={`${inputCode?.length && 'cartBtn--primary'}`}>Aplicar</Button>
           </FormContainer>
           {errors.code && (
             <span className="promotionalCodeError">
@@ -73,7 +89,7 @@ const PromotionalCode = () => {
           )}
           {code ? (
             <span className="promotionalCode">
-              {code} <TiDelete onClick={handleRemoveCoupon} />
+              {couponId} <TiDelete onClick={handleRemoveCoupon} />
             </span>
           ) : null}
         </>

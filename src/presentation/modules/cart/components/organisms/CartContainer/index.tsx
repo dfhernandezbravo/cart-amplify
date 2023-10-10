@@ -7,12 +7,14 @@ import { selectTotalProductsInCart } from "@store/cart";
 import EmptyBody from "@modules/cart/sections/emptyBody";
 
 const CartContainer = () => {
-  const totalProducts = useAppSelector(selectTotalProductsInCart);
+  
+  const cart = useAppSelector(state => state.cart);
+  const hasItemsInCart = cart?.cartBFF?.items?.length !== undefined && cart.cartBFF.items.length > 0
 
   return (
     <>
-      <Header />
-      {totalProducts > 0 ? (
+      {/* <Header /> */}
+      { hasItemsInCart ? (
         <Container>
           <Main />
           <Aside />

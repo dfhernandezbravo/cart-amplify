@@ -1,51 +1,84 @@
-import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
-import { selectCart, selectTotalProductsInCart } from "@store/cart";
-import ProductCard from "@modules/cart/components/organisms/ProductCard";
-import { Item } from "@entities/cart/cart.entity";
-import { Container, TotalProductsContainer } from "./styles";
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import SnackBars from '@components/atoms/SnackBars';
+import {
+  selectTotalProductsInCart,
+} from '@store/cart';
+import ProductCard from '@modules/cart/components/organisms/ProductCard';
+import ProductCartWithoutStock from '@modules/cart/components/organisms/ProductCard/components/ProductCardWithoutStock';
+import { Cart, Item } from '@entities/cart/cart.entity';
+import { Container, TotalProductsContainer, Loader } from './styles';
+import showToast from '@components/atoms/ToastContainer/ToastMessage';
+import cartSlice from '@store/cart';
+import useItemWithoutStock from '../../../../hooks/useItemWithoutStock';
+import useProductCardEvent from '@hooks/useProductCardEvent';
+
+import { quantitySelected } from '@store/cart'
 
 const Main = () => {
-  // hooks
-  const { cartBFF } = useAppSelector(selectCart);
+  
+  const { cartBFF, quantitySelected, loading } =
+    useAppSelector(state => state.cart);
+
   const totalProducts = useAppSelector(selectTotalProductsInCart);
+  const { setQuantitySelected } = cartSlice.actions
+
   const dispatch = useAppDispatch();
 
-  // methods
-  const methods = {
-    handleIncrementQuantity: (item: Item, index: number) => {
-      // TODO: update with new endpoint
-      // dispatch(incrementProductQuantity(item));
-    },
-    handleDecrementQuantity: (item: Item, index: number) => {
-      // TODO: update with new endpoint
-      // dispatch(decrementProductQuantity(item));
-    },
-    handleRemoveFromCart: (item: Item) => {
-      // TODO: update with new endpoint
-      // dispatch(removeProductInCart(item));
-    },
-  };
+  const {methods, updatedIndexItem, setUpdatedIndexItem} = useProductCardEvent(cartBFF?.id as string)
+
+
+  useEffect(() => {
+
+    if (quantitySelected.availableQuantity) {
+      setUpdatedIndexItem(quantitySelected)
+      showToast({
+        title: 'Hubo cambios en tus productos',
+        description:
+          'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
+        type: 'warning'
+      });
+      dispatch(setQuantitySelected(quantitySelected))
+    }
+
+  },[cartBFF])
+
+  const itemWithoutStock = useItemWithoutStock(cartBFF as Cart)
+
 
   return (
     <Container>
       <TotalProductsContainer>
-        Tu compra {`{${totalProducts}}`}
+        Tu compra {`${totalProducts}`}
       </TotalProductsContainer>
-      {cartBFF?.items?.map((item: Item, index: number) => (
-        <ProductCard
-          key={item?.itemId}
-          item={item}
-          onRemoveFromCart={() => {
-            methods.handleRemoveFromCart(item);
-          }}
-          onIncrementQuantity={() =>
-            methods.handleIncrementQuantity(item, index)
-          }
-          onDecrementQuantity={() =>
-            methods.handleDecrementQuantity(item, index)
-          }
-        />
-      ))}
+      {/* <SnackBars description='Los valores fueron cambiados.' horizontal='center' vertical='bottom' open={OpenSnackbars} close={() => setOpenSnackbars(false)}/> */}
+      <div className="items-container">
+        {loading && <Loader />}
+        {itemWithoutStock.length ? (
+          <ProductCartWithoutStock
+            items={itemWithoutStock}
+            onRemoveFromCart={(index) => methods.handleRemoveFromCart(index)}
+          />
+        ) : null}
+
+        {cartBFF?.items?.map((item: Item, index: number) => (
+          <ProductCard
+            key={item?.itemId}
+            item={item}
+            itemStockModify={
+              index === updatedIndexItem?.index
+                ? (updatedIndexItem.availableQuantity as number)
+                : null
+            }
+            onRemoveFromCart={() => {
+              methods.handleRemoveFromCart(index);
+            }}
+            handleChangeQuantity={(quantity) =>
+              methods.handleChangeQuantity(quantity, index)
+            }
+          />
+        ))}
+      </div>
     </Container>
   );
 };

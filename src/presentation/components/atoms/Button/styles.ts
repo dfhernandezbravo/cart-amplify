@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const ButtonContainer = styled.button`
+type Props = {
+  isDisabled: boolean;
+}
+
+export const ButtonContainer = styled.button<Props>`
   display: flex;
   padding: 10px;
   background-color: #fff;
@@ -38,8 +42,8 @@ export const ButtonContainer = styled.button`
   }
 
   &.buyBtn {
-    background-color: #cc1515;
-    border: 1px solid #cc1515;
+    background-color: #af1212;
+    border: 1px solid #af1212;
     color: #fff;
     font-size: 1rem;
     height: 40px;
@@ -69,7 +73,6 @@ export const ButtonContainer = styled.button`
   }
 
   &.cartBtn {
-    border: 1px solid #333333;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 700;
@@ -82,18 +85,21 @@ export const ButtonContainer = styled.button`
   }
 
   &.cartBtn--primary {
-    background-color: #333333;
+    background-color: #af1212;
     color: #f3f3f3;
 
     &:hover {
-      background-color: rgb(175, 18, 18);
-      border-color: rgb(175, 18, 18);
+      background-color: #990707;
+      border-color: #990707;
+      cursor: pointer;
     }
   }
 
   &.cartBtn--secondary {
     background-color: transparent;
     color: #333333;
+    border: 1px solid #333333;
+
   }
 
   &.fullWidth {
