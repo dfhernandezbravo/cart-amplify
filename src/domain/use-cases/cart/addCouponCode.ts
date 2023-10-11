@@ -9,7 +9,9 @@ const addCouponCode = createAsyncThunk(
       const { data } = await cartService.addCoupon(info);
       return data;
     } catch (error) {
-      console.error({error});
+      return new Promise((_resolve, reject) => {
+        reject(new Error('throw error'));
+      });
     }
   },
 );

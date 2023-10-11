@@ -1,17 +1,13 @@
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import store, { persistor } from "@store/index";
 import CartAsideDesktop from "@modules/cartAside/layouts/desktop";
 import CartAsideMobile from "@modules/cartAside/layouts/mobile";
+import MainLayout from "@components/layouts/main-layout";
 
 const CartAside = () => {
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <CartAsideMobile />
-        <CartAsideDesktop />
-      </PersistGate>
-    </Provider>
+    <MainLayout>
+      <CartAsideMobile />
+      <CartAsideDesktop />
+    </MainLayout>
   );
 };
 export default CartAside;

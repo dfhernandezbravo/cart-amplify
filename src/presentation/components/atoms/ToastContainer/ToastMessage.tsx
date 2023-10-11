@@ -39,7 +39,7 @@ const selectLayout = (type: TypesProps, position: PositionType = 'bottom-right' 
           <Image src='/icons/cart/info-icon.svg' alt='info-icon' width={25} height={25}/>
         ),
         style: {
-          background: '#148b8',
+          background: '#147ab8',
           color: '#ffffff'
         }
       }

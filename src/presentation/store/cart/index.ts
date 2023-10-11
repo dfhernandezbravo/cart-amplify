@@ -109,6 +109,9 @@ const cartSlice = createSlice({
     },
     setOpenDetailsMobile: (state, { payload }) => {
       state.openDetailsMobile = payload
+    },
+    setCouponId: (state, {payload}) => {
+      state.couponId = payload
     }
   },
   extraReducers: (builder) => {
@@ -160,17 +163,20 @@ const cartSlice = createSlice({
         state.loading = true
       })
       .addCase(addCouponCode.fulfilled, (state, { payload }) => {
+        console.log({payload})
         state.cartBFF = payload
         state.loading = false
       })
       .addCase(addCouponCode.rejected, (state, {payload}) => {
-        console.log('trigger', {payload})
+        console.log('coupon rejected', {payload})
+        state.loading = false
       })
       .addCase(removeCouponCode.pending, (state) => {
         state.loading = true
       })
       .addCase(removeCouponCode.fulfilled, (state, { payload }) => {
         state.cartBFF = payload
+        state.couponId = ''
         state.loading = false
       })
   }
