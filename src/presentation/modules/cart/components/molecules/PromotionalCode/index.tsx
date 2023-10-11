@@ -6,6 +6,7 @@ import Image from "next/image";
 import Button from "@components/atoms/Button";
 
 import { useAppSelector, useAppDispatch } from "@hooks/storeHooks";
+import cartSlice from "@store/cart";
 import {
   ButtonContainer,
   Container,
@@ -13,6 +14,8 @@ import {
   IconAndTextContainer,
 } from "./styles";
 import addCouponCode from "@use-cases/cart/addCouponCode";
+import removeCouponCode from "@use-cases/cart/removeCouponCode";
+import showToast from "@components/atoms/ToastContainer/ToastMessage";
 
 type Inputs = {
   code: string;
@@ -22,6 +25,7 @@ const PromotionalCode = () => {
   //hooks
   const {
     register,
+    setValue,
     handleSubmit,
     reset,
     watch,
@@ -30,10 +34,9 @@ const PromotionalCode = () => {
 
   // states
   const [isOpen, setIsOpen] = useState(false);
-  const [code, setCode] = useState("");
-
 
   const { cartId, couponId } = useAppSelector(state => state.cart)
+  const { setCouponId } = cartSlice.actions
   const dispatch =useAppDispatch()
 
   const handleShowForm = () => {
@@ -47,15 +50,31 @@ const PromotionalCode = () => {
 
     const response  = await dispatch(addCouponCode({couponCode:inputCode, cartId}))
 
-    console.log({response})
+    if(response?.payload === undefined) {
+      console.log('show snackbar to show error message')
+      setValue('code', '')
+      showToast({
+        description: 'cupón no valido.',
+        type: 'error'
+      })
+      return
+    }
 
-    setCode(data?.code?.toUpperCase());
+    showToast({
+      description: 'Los valores han cambiado.',
+      type: 'info'
+    })
+    dispatch(setCouponId(inputCode.toUpperCase()))
     reset();
   };
 
-  const handleRemoveCoupon = () => {
+  const handleRemoveCoupon = async () => {
     // TODO: call service and add logic after remove the code
-    setCode("");
+     await dispatch(removeCouponCode({couponCode: couponId, cartId}))
+     showToast({
+      description: 'Los valores han cambiado.',
+      type: 'info'
+    })
   };
 
 
@@ -87,9 +106,9 @@ const PromotionalCode = () => {
               Por favor, ingresa un cupón.
             </span>
           )}
-          {code ? (
+          {couponId ? (
             <span className="promotionalCode">
-              {couponId} <TiDelete onClick={handleRemoveCoupon} />
+              {couponId.toUpperCase()} <TiDelete onClick={handleRemoveCoupon} />
             </span>
           ) : null}
         </>

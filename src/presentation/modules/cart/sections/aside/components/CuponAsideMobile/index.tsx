@@ -27,12 +27,11 @@ const CuponAsideMobile = ({openDetails, isCuponContainerOpen, setIsCuponContaine
     return <Image src='/icons/general/chevron-down.svg' width={20} height={20} alt='flecha abajo' />
   }
 
-  const handleCouponCode = () => {
+  const handleCouponCode = async () => {
     const data = {
       couponCode: couponCodeValue,
       cartId: cartBFF?.id as string
     }
-    dispatch(addCouponCode(data))
   }
 
 
