@@ -1,5 +1,5 @@
 import store, { persistor } from '@store/index'
-import { QueryClientProvider, useQueryClient } from '@tanstack/react-query'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import React from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -9,7 +9,13 @@ type Props = {
 }
 
 const MainLayout = ({ children }: Props) => {
-  const queryClient = useQueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
