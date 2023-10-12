@@ -71,8 +71,6 @@ const selectLayout = (type: TypesProps, position: PositionType = 'bottom-right' 
 }
 
 
-
-
 const showToast = ({
   title,
   description,

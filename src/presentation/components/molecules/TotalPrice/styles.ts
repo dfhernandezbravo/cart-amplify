@@ -34,7 +34,9 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.span`
-  font-size: 16px;
+  font-size: 14px;
+  color: #6E8391;
+  font-weight: 500;
 
   @media screen and (max-width: 767px) {
     max-width: 187px;

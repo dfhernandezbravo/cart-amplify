@@ -17,6 +17,7 @@ import {
 import addCouponCode from "@use-cases/cart/addCouponCode";
 import removeCouponCode from "@use-cases/cart/removeCouponCode";
 import showToast from "@components/atoms/ToastContainer/ToastMessage";
+import { ValueHasChangeToast } from "@components/atoms/ToastContainer/customMessage";
 
 type Inputs = {
   code: string;
@@ -47,35 +48,21 @@ const PromotionalCode = () => {
   const inputCode = watch('code')
 
   const onSubmit = async (data: any) => {
-    // TODO: call service and add logic to check if the code exists
 
     const response  = await dispatch(addCouponCode({couponCode:inputCode, cartId}))
 
     if(response?.payload === undefined) {
-      console.log('show snackbar to show error message')
       setValue('code', '')
-      showToast({
-        description: 'cupón no valido.',
-        type: 'error'
-      })
       return
     }
-
-    showToast({
-      description: 'Los valores han cambiado.',
-      type: 'info'
-    })
+    ValueHasChangeToast()
     dispatch(setCouponId(inputCode.toUpperCase()))
     reset();
   };
 
   const handleRemoveCoupon = async () => {
-    // TODO: call service and add logic after remove the code
      await dispatch(removeCouponCode({couponCode: couponId, cartId}))
-     showToast({
-      description: 'Los valores han cambiado.',
-      type: 'info'
-    })
+     ValueHasChangeToast()
   };
 
 

@@ -1,7 +1,7 @@
 import { useAppSelector } from "@hooks/storeHooks";
 import { formattedCLP } from "@utils/helpers";
 import { TotalPriceCencosudProps } from "./types";
-import { Container, Title, TotalCardPriceContainer } from "./styles";
+import { Container, Title, Skeleton } from "./styles";
 
 const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
   // hooks
@@ -14,11 +14,11 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
     <Container className={className}>
       <Title>Total con tarjeta Cencosud</Title>
       {loading ? (
-        <span className="skeleton"></span>
+        <Skeleton/>
       ) : (
-        <TotalCardPriceContainer>
+        <span>
           {formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}
-        </TotalCardPriceContainer>
+        </span>
       )}
     </Container>
   );

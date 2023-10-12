@@ -3,18 +3,20 @@ import { StateCuponProps } from "../HaderAsideMobile/HeaderAsideMobile.types";
 
 
 type DetailsProps = {
-  openDetails: boolean
+  openDetails: boolean;
 }
 
 type CuponProps = {
-  isCuponContainerOpen: boolean
+  isCuponContainerOpen: boolean;
 }
+
+type InputProps = DetailsProps & CuponProps
 
 export const Container = styled.div<DetailsProps>`
     max-height: ${({ openDetails }) => openDetails ? '500px' : '0'};
     height:  ${({ openDetails }) => openDetails && 'max-content'};
     overflow: hidden;
-    border: 1px solid #000000;
+    border:  ${({ openDetails }) => openDetails ? '1px solid #000000' : 'none'};
     border-radius: 8px;
     margin: 1rem;
     transition: max-height 1s ease 0s;
@@ -47,6 +49,7 @@ export const InputCuponContainer = styled.div<CuponProps> `
   & input {
     width: 90%;
     height: 50px;
+    border: 1px solid #000000;
     border-radius: 5px;
     font-size: 1rem;
     padding-left: 10px;
