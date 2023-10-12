@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import ProductCardMobile from "@modules/cart/components/organisms/ProductCardMobile";
 import ProductCartWithoutStockMobile  from '@modules/cart/components/organisms/ProductCardMobile/components/ProductCardWithoutStockMobile';
 
@@ -7,41 +6,16 @@ import { Item } from "@entities/cart/cart.entity";
 import { useAppSelector, useAppDispatch } from "@hooks/storeHooks";
 import useItemWithoutStock from "@hooks/useItemWithoutStock";
 import useProductCardEvent from "@hooks/useProductCardEvent";
-import cartSlice from '@store/cart';
-
 
 //Styles
 import { Loader, ContainerMobile } from "./styles";
-import showToast from '@components/atoms/ToastContainer/ToastMessage';
 
 
 const MainMobile = () => {
 
-
-
-  const { cartBFF, loading, quantitySelected } = useAppSelector(state => state.cart)
-  const  { setQuantitySelected} = cartSlice.actions
+  const { cartBFF, loading } = useAppSelector(state => state.cart)
   const itemWithoutStock = useItemWithoutStock(cartBFF)
-  const dispatch = useAppDispatch()
-
-
-  const { methods, updatedIndexItem, setUpdatedIndexItem } = useProductCardEvent(cartBFF?.id as string)
-
-  useEffect(() => {
-
-    if (quantitySelected.availableQuantity) {
-      setUpdatedIndexItem(quantitySelected)
-      showToast({
-        title: 'Hubo cambios en tus productos',
-        description:
-          'Lo sentimos, no contamos con la cantidad de unidades seleccionadas.',
-        type: 'warning',
-        position: 'top-center'
-      });
-      dispatch(setQuantitySelected({index: null, quantity: null, availableQuantity: null}))
-    }
-
-  },[cartBFF])
+  const { methods, updatedIndexItem } = useProductCardEvent(cartBFF?.id as string)
 
   return (
     <ContainerMobile>

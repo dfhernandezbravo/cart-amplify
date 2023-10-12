@@ -1,5 +1,4 @@
 import Mobile from "@components/layouts/mobile";
-import Header from "@modules/cart/sections/header";
 import MainMobile from "@modules/cart/sections/main/main-mobile";
 import AsideMobile from "@modules/cart/sections/aside/asideMobile";
 
@@ -11,6 +10,7 @@ import  { selectTotalProductsInCart } from '@store/cart'
 
 //Styles
 import { Shade } from "./styles";
+import EmptyBody from "@modules/cart/sections/emptyBody";
 
 const CartMobile = () => {
 
@@ -20,7 +20,6 @@ const CartMobile = () => {
 
   return (
     <Mobile>
-      {/* <Header/> */}
       {totalProducts > 0 ? (
       <div className="container">
         <MainMobile/>
@@ -29,9 +28,7 @@ const CartMobile = () => {
       </div>
 
       ) : (
-        <div>
-          No Products
-        </div>
+        <EmptyBody />
       )
     }
     </Mobile>

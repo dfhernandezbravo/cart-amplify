@@ -14,6 +14,11 @@ export const ProductInfoContainer = styled.div`
   display: flex;
   column-gap: 16px;
 
+  & p {
+    color: #485760;
+    font-weight: 600;
+  }
+
   img {
     height: auto;
   }

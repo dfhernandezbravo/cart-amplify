@@ -13,8 +13,9 @@ export const Container = styled.div`
   padding: 16px;
 
   h1 {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: 18px;
+    color: #485760;
+    font-weight: 600;
     line-height: 30px;
   }
 
@@ -23,10 +24,13 @@ export const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     font-size: 14px;
+    color: #6E8391;
     margin: 10px 0;
 
     span {
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 700;
+      color: #333333;
     }
   }
 

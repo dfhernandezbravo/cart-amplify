@@ -10,14 +10,13 @@ import updateItem from "@use-cases/cart/update-item";
 import deleteItem from "@use-cases/cart/delete-item";
 import { AvailableProductText, BodyContainer } from "./styles";
 import ProductCardWithouthStock from "@modules/cartAside/components/organisms/ProductCardWithoutStock";
+import useItemWithoutStock from "@hooks/useItemWithoutStock";
 
-
-const withoutStock = 'withoutStock'
-const cannotBeDelivered = 'cannotBeDelivered'
 
 const Body = () => {
   // Hooks
   const { cartId, cartBFF } = useAppSelector(state => state.cart);
+  const itemWithoutStock = useItemWithoutStock(cartBFF)
   const { error } = useAppSelector(selectError);
   const dispatch = useAppDispatch();
   const { decrementProductQuantity, incrementProductQuantity, removeProduct} = cartSlice.actions
@@ -53,19 +52,6 @@ const Body = () => {
       dispatch(deleteItem({ cartId: cartId ?? "", itemIndex: index }));
     },
   };
-
-  const itemWithoutStock: Item[] = []
-
-  cartBFF?.items?.forEach((item, index) => {
-    const availability = item.product.availability
-    if (availability === withoutStock ||availability === cannotBeDelivered ) {
-      const product = {
-        ...item,
-        index
-      }
-      itemWithoutStock.push(product)
-    }
-  })
 
   const renderProductWithoutStock = () => {
     return (

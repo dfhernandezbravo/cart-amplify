@@ -8,12 +8,9 @@ const GoToCartButton = () => {
   const router = useRouter();
   const { cartId } = useAppSelector(state => state.cart)
 
-  console.log({cartId})
   const handleClickBtn = () => {
     router.push(`/cart/${cartId}`);
   };
-
-
 
   return (
     <Button className="linkBtn goToCartBtn fullWidth" onClick={handleClickBtn}>

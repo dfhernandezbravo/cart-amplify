@@ -50,7 +50,6 @@ const ProductCardMobile = (props: ProductCardProps) => {
 
 
   if (item.product.availability !== "available") return null;
-  console.log('itemsStockModify', itemStockModify)
   return (
     <>
       <Container>

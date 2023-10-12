@@ -11,8 +11,13 @@ export const Container = styled.div`
     border: 1px solid #bfbfbf;
     border-radius: 8px;
 
+    & span {
+        color: #485760;
+        
+    }
     & p {
         font-size: 16px;
+        color: #485760;
         font-weight: 600;
         margin-bottom: .5rem;
     }

@@ -9,12 +9,14 @@ import { formattedCLP, getUnavailableProduct } from "@utils/helpers";
 import { Container, Divider, ModalContainer } from "./styles";
 import PurchaseSummaryDisabled from "../PurchaseSummaryDisabled";
 import Modal from "@components/atoms/Modal";
+import Discounts from "../../molecules/Discounts";
+import { Skeleton } from "@components/molecules/TotalPriceCencosud/styles";
 const PurchaseSummary = () => {
   
   const [showModal, setShowModal] = useState(false);
 
   // hooks
-  const { cartBFF } = useAppSelector(state => state.cart);
+  const { cartBFF, loading } = useAppSelector(state => state.cart);
 
   const dispatch = useAppDispatch()
 
@@ -54,20 +56,24 @@ const PurchaseSummary = () => {
     <>
       <Container>
         <h1>Resumen de mi compra</h1>
-        <Divider />
+        <Divider fullWidth={true}/>
         <p>
           Subtotal
-          <span>{formattedCLP(cartBFF?.totals?.subtotal ?? 0)}</span>
+          {loading ? <Skeleton/> : <span>{formattedCLP(cartBFF?.totals?.subtotal ?? 0)}</span>}
         </p>
         <p>
           Costo de envío desde{" "}
-          <span>{formattedCLP(cartBFF?.totals?.shippingPrice ?? 0)}</span>
+          {loading ? <Skeleton/> : <span>{formattedCLP(cartBFF?.totals?.shippingPrice ?? 0)}</span>}
         </p>
+        <Divider fullWidth={true} className="light"/>
         <p>
           Descuentos:{" "}
-          <span>-{formattedCLP(Math.abs(cartBFF?.totals?.discount ?? 0))}</span>
+          {loading ? <Skeleton/> : <span>-{formattedCLP(Math.abs(cartBFF?.totals?.discount ?? 0))}</span>}
         </p>
-        <Divider className="light" />
+        <Discounts />
+        <Divider fullWidth={true} className="light" />
+        
+
         <TotalPriceCencosud className="purchaseSummary" />
         <TotalPrice className="purchaseSummary" />
         {/* <BuyButton text="Ir a comprar" /> */}

@@ -163,7 +163,6 @@ const cartSlice = createSlice({
         state.loading = true
       })
       .addCase(addCouponCode.fulfilled, (state, { payload }) => {
-        console.log({payload})
         state.cartBFF = payload
         state.loading = false
       })

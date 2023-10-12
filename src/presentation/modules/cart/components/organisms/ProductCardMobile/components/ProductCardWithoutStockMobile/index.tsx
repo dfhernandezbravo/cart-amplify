@@ -34,7 +34,7 @@ const ProductCardWithoutStockMobile = (props: Props) => {
             <div className='main-container'>
               <ProductBrand brand={item?.product?.brand} />
               <ProductName productName={item?.product?.description} />
-              <p>Producto no disponible</p>
+              <p className="product-without-stock-text">Producto no disponible</p>
               <QuantitySelectorAndDeleteContainer>
                 <DeleteButton hasIcon={true} onRemoveFromCart={() => onRemoveFromCart(item.index as number)} />
               </QuantitySelectorAndDeleteContainer>

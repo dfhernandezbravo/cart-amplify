@@ -8,10 +8,20 @@ export const Container = styled.div<StatePropValue>`
     overflow: hidden;
     transition: max-height 1s ease 0s;
 
-    & .delete-cupon button {
-        background-color: transparent;
-        border: none;
-        text-decoration: underline;
-        padding: 5px 12px;
+    & .price-container p {
+        color: #6E8391;
+        font-size: 15px;
+    }
+    & .price-container span {
+        color: #333333;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    & .cupon-container {
+        flex-direction: column;
+        & a {
+            margin-top: 0
+        }
     }
 `
