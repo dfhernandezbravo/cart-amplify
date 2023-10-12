@@ -1,10 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
   max-width: 411px;
 `;
-
 
 //Mobile
 export const ContainerMobile = styled.div`
@@ -19,15 +18,14 @@ export const ContainerMobile = styled.div`
   left: 0;
   bottom: 0;
   border-radius: 8px 8px 0px 0px;
-  box-shadow: rgba(0,0,0,0.2) 0px -3px 3px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 3px;
   z-index: 9999;
 
   .price-container {
-      display: flex;
-      padding: 5px 12px;
-      justify-content: space-between;
-     }
-
+    display: flex;
+    padding: 5px 12px;
+    justify-content: space-between;
+  }
 
   & .wrapper {
     width: 100%;
@@ -35,20 +33,19 @@ export const ContainerMobile = styled.div`
     background-color: #ffffff;
     border-radius: 8px 8px 0px 0px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px -3px 3px;
-
   }
 
-   & .button-container {
+  & .button-container {
     display: flex;
     justify-content: center;
     & button {
       width: 90%;
     }
   }
-`
+`;
 
-export const EmptyAsideContainer = styled.div `
+export const EmptyAsideContainer = styled.div`
   position: fixed;
   width: 100%;
-  bottom: 0
-`
+  bottom: 0;
+`;

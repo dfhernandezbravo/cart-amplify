@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import Image from "next/image";
-import { GrClose } from "react-icons/gr";
-import { setError } from "@store/error";
-import { useAppDispatch } from "@hooks/storeHooks";
-import { MinicartErrorProps } from "./types";
+import { useEffect } from 'react';
+import Image from 'next/image';
+import { GrClose } from 'react-icons/gr';
+import { setError } from '@store/error';
+import { useAppDispatch } from '@hooks/storeHooks';
+import { MinicartErrorProps } from './types';
 import {
   ErrorContainer,
   MainContainer,
@@ -11,10 +11,10 @@ import {
   TextContainer,
   Content,
   Title,
-} from "./styles";
+} from './styles';
 
 const MinicartError = (props: MinicartErrorProps) => {
-  const { title, content = "Intenta nuevamente" } = props;
+  const { title, content = 'Intenta nuevamente' } = props;
 
   const dispatch = useAppDispatch();
 

@@ -1,30 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { InitialState } from "./types";
+import { createSlice } from '@reduxjs/toolkit';
+import { InitialState } from './types';
 
 //Thunks
-import getCart from "@use-cases/cart/get-cart";
-import updateItem from "@use-cases/cart/update-item";
-import addCouponCode from "@use-cases/cart/addCouponCode";
-import removeCouponCode from "@use-cases/cart/removeCouponCode";
-import { createNewItem, totalItems } from "@utils/helpers";
-import dispatchCartHeaderEvent from "@use-cases/cart/dispatch-cart-header-event";
-import dispatchCartDataEvent from "@use-cases/cart/dispatch-cart-data-event";
-import deleteItem from "@use-cases/cart/delete-item";
-import { RootState } from "@hooks/storeHooks";
-import { Item } from "@entities/cart/cart.entity";
+import getCart from '@use-cases/cart/get-cart';
+import updateItem from '@use-cases/cart/update-item';
+import addCouponCode from '@use-cases/cart/addCouponCode';
+import removeCouponCode from '@use-cases/cart/removeCouponCode';
+import { createNewItem, totalItems } from '@utils/helpers';
+import dispatchCartHeaderEvent from '@use-cases/cart/dispatch-cart-header-event';
+import dispatchCartDataEvent from '@use-cases/cart/dispatch-cart-data-event';
+import deleteItem from '@use-cases/cart/delete-item';
+import { RootState } from '@hooks/storeHooks';
+import { Item } from '@entities/cart/cart.entity';
 
-
-export const quantitySelected = { quantity: null, index: null, availableQuantity: null }
+export const quantitySelected = {
+  quantity: null,
+  index: null,
+  availableQuantity: null,
+};
 
 const initialValue: InitialState = {
-  cartBFF: undefined ,
+  cartBFF: undefined,
   cartId: '',
   couponId: '',
   loading: false,
   quantitySelected,
   openDetailsMobile: false,
-}
-
+};
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -105,29 +107,29 @@ const cartSlice = createSlice({
       }
     },
     setQuantitySelected: (state, { payload }) => {
-      state.quantitySelected = payload
+      state.quantitySelected = payload;
     },
     setOpenDetailsMobile: (state, { payload }) => {
-      state.openDetailsMobile = payload
+      state.openDetailsMobile = payload;
     },
-    setCouponId: (state, {payload}) => {
-      state.couponId = payload
-    }
+    setCouponId: (state, { payload }) => {
+      state.couponId = payload;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(getCart.pending, state => {
-      state.loading = true
-    })
-    builder.addCase(getCart.fulfilled, (state, { payload }) => {
-      state.cartBFF = payload
-      state.loading = false
-    })
+    builder.addCase(getCart.pending, (state) => {
+      state.loading = true;
+    });
+    builder
+      .addCase(getCart.fulfilled, (state, { payload }) => {
+        state.cartBFF = payload;
+        state.loading = false;
+      })
       .addCase(updateItem.pending, (state) => {
         state.loading = true;
       })
       .addCase(updateItem.fulfilled, (state, { payload }) => {
-
-        const { index, quantity } = state.quantitySelected
+        const { index, quantity } = state.quantitySelected;
 
         state.cartBFF = payload ?? state.cartBFF;
         state.loading = false;
@@ -136,7 +138,8 @@ const cartSlice = createSlice({
         dispatchCartHeaderEvent(totalQuantity);
         dispatchCartDataEvent(payload ?? state.cartBFF);
 
-        if (state.cartBFF?.items &&
+        if (
+          state.cartBFF?.items &&
           index !== undefined &&
           quantity !== undefined &&
           state.cartBFF.items[index!]?.quantity !== undefined &&
@@ -145,8 +148,8 @@ const cartSlice = createSlice({
           state.quantitySelected = {
             index,
             quantity,
-            availableQuantity: state.cartBFF.items[index!]?.quantity
-          }
+            availableQuantity: state.cartBFF.items[index!]?.quantity,
+          };
         }
       })
       .addCase(deleteItem.pending, (state) => {
@@ -160,31 +163,30 @@ const cartSlice = createSlice({
         dispatchCartDataEvent(payload ?? state.cartBFF);
       })
       .addCase(addCouponCode.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(addCouponCode.fulfilled, (state, { payload }) => {
-        state.cartBFF = payload
-        state.loading = false
+        state.cartBFF = payload;
+        state.loading = false;
       })
-      .addCase(addCouponCode.rejected, (state, {payload}) => {
-        console.log('coupon rejected', {payload})
-        state.loading = false
+      .addCase(addCouponCode.rejected, (state, { payload }) => {
+        console.log('coupon rejected', { payload });
+        state.loading = false;
       })
       .addCase(removeCouponCode.pending, (state) => {
-        state.loading = true
+        state.loading = true;
       })
       .addCase(removeCouponCode.fulfilled, (state, { payload }) => {
-        state.cartBFF = payload
-        state.couponId = ''
-        state.loading = false
-      })
-  }
-})
+        state.cartBFF = payload;
+        state.couponId = '';
+        state.loading = false;
+      });
+  },
+});
 
 // selectors
 
 export const selectTotalProductsInCart = (state: RootState) => {
-
   const total = state.cart.cartBFF?.items?.reduce(
     (acc: number, cur: Item) => acc + (cur?.quantity ?? 0) ?? 0,
     0,
@@ -192,5 +194,4 @@ export const selectTotalProductsInCart = (state: RootState) => {
   return total ? total : 0;
 };
 
-
-export default cartSlice
+export default cartSlice;

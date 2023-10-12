@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 type Props = {
   isDisabled: boolean;
-}
+};
 
 export const ButtonContainer = styled.button<Props>`
   display: flex;
@@ -99,7 +99,6 @@ export const ButtonContainer = styled.button<Props>`
     background-color: transparent;
     color: #333333;
     border: 1px solid #333333;
-
   }
 
   &.fullWidth {

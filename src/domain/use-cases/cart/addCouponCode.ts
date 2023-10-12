@@ -4,7 +4,7 @@ import cartService from '@services/cart';
 
 const addCouponCode = createAsyncThunk(
   '/cart/addCoupon',
-  async (info: CouponCode ) => {
+  async (info: CouponCode) => {
     try {
       const { data } = await cartService.addCoupon(info);
       return data;

@@ -1,67 +1,69 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { MouseEvent, useMemo, useState } from "react";
-import { SwipeableDrawer } from "@mui/material";
-import {
-  selectTotalProductsInCart,
-} from "@store/cart";
-import cartSlice  from '@store/cart'
-import { setError } from "@store/error";
-import useEventListener from "@hooks/eventListenerHooks";
-import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
-import Header from "@modules/cartAside/sections/header";
-import Body from "@modules/cartAside/sections/body";
-import EmptyBody from "@modules/cartAside/sections/emptyBody";
-import Footer from "@modules/cartAside/sections/footer";
-import WindowsEvents from "@events/index";
-import handleHttpError from "@use-cases/error/handle-http-errors";
-import handlePayloadError from "@use-cases/error/handle-payload-errors";
+import { MouseEvent, useMemo, useState } from 'react';
+import { SwipeableDrawer } from '@mui/material';
+import { selectTotalProductsInCart } from '@store/cart';
+import cartSlice from '@store/cart';
+import { setError } from '@store/error';
+import useEventListener from '@hooks/eventListenerHooks';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import Header from '@modules/cartAside/sections/header';
+import Body from '@modules/cartAside/sections/body';
+import EmptyBody from '@modules/cartAside/sections/emptyBody';
+import Footer from '@modules/cartAside/sections/footer';
+import WindowsEvents from '@events/index';
+import handleHttpError from '@use-cases/error/handle-http-errors';
+import handlePayloadError from '@use-cases/error/handle-payload-errors';
 
-
-import { Cart } from "@entities/cart/cart.entity";
-import totalProductInCart from "@utils/totalProduct";
-
-
+import { Cart } from '@entities/cart/cart.entity';
+import totalProductInCart from '@utils/totalProduct';
 
 const CartAsideContainer = () => {
   // hooks
-  const { cartBFF } = useAppSelector(state => state.cart)
+  const { cartBFF } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
-  const totalProducts = useMemo(() => totalProductInCart(cartBFF as Cart), [cartBFF])
+  const totalProducts = useMemo(
+    () => totalProductInCart(cartBFF as Cart),
+    [cartBFF],
+  );
 
-  const {addCartId, addProductInCart, simulateAddProduct, simulateRemoveProduct} = cartSlice.actions
-
+  const {
+    addCartId,
+    addProductInCart,
+    simulateAddProduct,
+    simulateRemoveProduct,
+  } = cartSlice.actions;
 
   // states
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   // methods
   const methods = {
     initialize: () => {
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         useEventListener(
           document,
           WindowsEvents.TOGGLE_CART_ASIDE,
-          methods.handleSetIsOpen
+          methods.handleSetIsOpen,
         );
         useEventListener(
           document,
           WindowsEvents.ADD_PRODUCT_IN_CART,
-          methods.handleAddProductEvent
+          methods.handleAddProductEvent,
         );
         useEventListener(
           document,
           WindowsEvents.CART_ID,
-          methods.handleGetCartId
+          methods.handleGetCartId,
         );
         useEventListener(
           document,
           WindowsEvents.SIMULATE_ADD_PRODUCT,
-          methods.handleSimulateAddProductEvent
+          methods.handleSimulateAddProductEvent,
         );
         useEventListener(
           document,
           WindowsEvents.ADD_PRODUCT_ERROR,
-          methods.handleAddProductErrorEvent
+          methods.handleAddProductErrorEvent,
         );
       }
     },
@@ -71,7 +73,6 @@ const CartAsideContainer = () => {
       setIsOpen(customEvent.detail?.open);
     },
     handleAddProductEvent: (event: Event) => {
-
       event.preventDefault();
       const customEvent = event as CustomEvent;
       dispatch(addProductInCart(customEvent.detail?.data));
@@ -115,7 +116,6 @@ const CartAsideContainer = () => {
   };
   methods.initialize();
 
-
   return (
     <SwipeableDrawer
       anchor="right"
@@ -125,9 +125,9 @@ const CartAsideContainer = () => {
       transitionDuration={300}
       PaperProps={{
         sx: {
-          minWidth: "280px",
-          width: "90%",
-          maxWidth: "400px",
+          minWidth: '280px',
+          width: '90%',
+          maxWidth: '400px',
         },
       }}
     >

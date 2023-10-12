@@ -1,13 +1,13 @@
-import Image from "next/image";
-import { useRouter } from "next/router";
-import Button from "@components/atoms/Button";
-import { Container, Description, Title } from "./styles";
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import Button from '@components/atoms/Button';
+import { Container, Description, Title } from './styles';
 
 const EmptyBody = () => {
   const router = useRouter();
 
   const handleSearchProducts = () => {
-    router.push("/");
+    router.push('/');
   };
 
   return (

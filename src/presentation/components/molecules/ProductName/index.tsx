@@ -1,5 +1,5 @@
-import { ProductNameProps } from "./types";
-import { Container } from "./styles";
+import { ProductNameProps } from './types';
+import { Container } from './styles';
 
 const ProductName = (props: ProductNameProps) => {
   const { productName } = props;

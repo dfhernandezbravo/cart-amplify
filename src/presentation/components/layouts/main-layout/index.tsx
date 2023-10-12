@@ -1,12 +1,12 @@
-import store, { persistor } from '@store/index'
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
-import React from 'react'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
+import store, { persistor } from '@store/index';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 type Props = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 const MainLayout = ({ children }: Props) => {
   const queryClient = new QueryClient({
@@ -24,8 +24,7 @@ const MainLayout = ({ children }: Props) => {
         </PersistGate>
       </Provider>
     </QueryClientProvider>
+  );
+};
 
-  )
-}
-
-export default MainLayout
+export default MainLayout;

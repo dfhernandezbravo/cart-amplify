@@ -72,3 +72,23 @@ linter:
 #   <<: *unit_test
 #   dependencies:
 #     - install dependencies
+
+pkg:container:
+  stage: package
+  extends: .docker
+  environment:
+    name: staging
+  rules:
+    - if: $CI_COMMIT_BRANCH != "master"
+  variables:
+    BUILD_IMAGE_EXTRA_ARGS: '--build-arg NEW_RELIC_APP_NAME=$NEW_RELIC_APP_NAME --build-arg NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY --build-arg NEW_RELIC_LABELS=$NEW_RELIC_LABELS --build-arg NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV --build-arg NEXT_PUBLIC_BFF_WEB_URL=$NEXT_PUBLIC_BFF_WEB_URL --build-arg NEXT_PUBLIC_API_KEY_BFF_WEB=$NEXT_PUBLIC_API_KEY_BFF_WEB --build-arg NEXT_PUBLIC_CHECKOUT_URL=$NEXT_PUBLIC_CHECKOUT_URL'
+
+pkg:production:
+  stage: package
+  extends: .docker
+  environment:
+    name: production
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  variables:
+    BUILD_IMAGE_EXTRA_ARGS: '--build-arg NEW_RELIC_APP_NAME=$NEW_RELIC_APP_NAME --build-arg NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY --build-arg NEW_RELIC_LABELS=$NEW_RELIC_LABELS --build-arg NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV --build-arg NEXT_PUBLIC_BFF_WEB_URL=$NEXT_PUBLIC_BFF_WEB_URL --build-arg NEXT_PUBLIC_API_KEY_BFF_WEB=$NEXT_PUBLIC_API_KEY_BFF_WEB --build-arg NEXT_PUBLIC_CHECKOUT_URL=$NEXT_PUBLIC_CHECKOUT_URL'

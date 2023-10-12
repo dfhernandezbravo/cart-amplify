@@ -1,4 +1,4 @@
-import CartAside from "@modules/cartAside";
+import CartAside from '@modules/cartAside';
 
 export default function Home() {
   return <CartAside />;

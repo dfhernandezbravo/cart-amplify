@@ -1,10 +1,10 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Cart } from "@entities/cart/cart.entity";
-import { DeleteItemRequest } from "@entities/cart/cart.request";
-import cartService from "@services/cart";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Cart } from '@entities/cart/cart.entity';
+import { DeleteItemRequest } from '@entities/cart/cart.request';
+import cartService from '@services/cart';
 
 const deleteItem = createAsyncThunk(
-  "/cart/deleteItem",
+  '/cart/deleteItem',
   async (dataRequest: DeleteItemRequest) => {
     try {
       const { data, status } = await cartService.deleteItem(dataRequest);
@@ -17,7 +17,7 @@ const deleteItem = createAsyncThunk(
     } catch (error) {
       console.error(error);
     }
-  }
+  },
 );
 
 export default deleteItem;

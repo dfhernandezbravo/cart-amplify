@@ -1,21 +1,21 @@
-import ProductImage from "@components/molecules/ProductImage";
-import ProductBrand from "@components/molecules/ProductBrand";
-import ProductName from "@components/molecules/ProductName";
-import DeleteButton from "@components/molecules/DeleteButton";
-import { useAppSelector } from "@hooks/storeHooks";
+import ProductImage from '@components/molecules/ProductImage';
+import ProductBrand from '@components/molecules/ProductBrand';
+import ProductName from '@components/molecules/ProductName';
+import DeleteButton from '@components/molecules/DeleteButton';
+import { useAppSelector } from '@hooks/storeHooks';
 
 import {
   Container,
   ProductInfoContainer,
   ProductInfoAndPriceContainer,
-  QuantitySelectorAndDeleteContainer
-} from "../../styles";
-import { Item } from "@entities/cart/cart.entity";
+  QuantitySelectorAndDeleteContainer,
+} from '../../styles';
+import { Item } from '@entities/cart/cart.entity';
 
 type Props = {
   items: Item[];
-  onRemoveFromCart: (index: number) => void
-}
+  onRemoveFromCart: (index: number) => void;
+};
 
 const ProductCardWithoutStock = (props: Props) => {
   const { items, onRemoveFromCart } = props;
@@ -27,7 +27,7 @@ const ProductCardWithoutStock = (props: Props) => {
           <Container key={index}>
             <ProductInfoAndPriceContainer>
               <ProductInfoContainer>
-                <ProductImage src={item?.product?.images} alt={""} />
+                <ProductImage src={item?.product?.images} alt={''} />
                 <div>
                   <ProductBrand brand={item?.product?.brand} />
                   <ProductName productName={item?.product?.description} />
@@ -36,13 +36,15 @@ const ProductCardWithoutStock = (props: Props) => {
               </ProductInfoContainer>
             </ProductInfoAndPriceContainer>
             <QuantitySelectorAndDeleteContainer>
-              <DeleteButton hasIcon={true} onRemoveFromCart={() => onRemoveFromCart(item.index as number)} />
+              <DeleteButton
+                hasIcon={true}
+                onRemoveFromCart={() => onRemoveFromCart(item.index as number)}
+              />
             </QuantitySelectorAndDeleteContainer>
           </Container>
-        )
+        );
       })}
     </>
-
   );
 };
 
