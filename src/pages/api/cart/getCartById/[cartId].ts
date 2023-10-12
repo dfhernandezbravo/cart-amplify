@@ -7,7 +7,6 @@ export default async function handler(
     res: NextApiResponse<any>,
 ) {
 
-    console.log(_req.query.cartId)
 
     const headers= {
         'Content-Type': 'application/json',

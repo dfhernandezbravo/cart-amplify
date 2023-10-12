@@ -46,7 +46,6 @@ const ProductCard = (props: ProductCardProps) => {
 
   
   if (item.product.availability !== "available") return null;
-  
   return (
     <>
       <Container>

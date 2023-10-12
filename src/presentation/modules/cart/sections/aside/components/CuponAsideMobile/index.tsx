@@ -6,7 +6,7 @@ import cartSlice from '@store/cart'
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks'
 import addCouponCode from '@use-cases/cart/addCouponCode'
 import { Container, InputCuponContainer } from './styles'
-import { CouponNoValidToast, ValueHasChangeToast } from '@components/atoms/ToastContainer/customMessage'
+import { couponNoValidToast, valueHasChangeToast } from '@components/atoms/ToastContainer/customMessage'
 
 
 type Props = StateCuponProps & StatePropValue
@@ -35,10 +35,10 @@ const CuponAsideMobile = ({openDetails, isCuponContainerOpen, setIsCuponContaine
     }
     const response = await dispatch(addCouponCode(data))
     if(response?.payload === undefined) {
-      CouponNoValidToast()
+      couponNoValidToast()
       return
     }
-    ValueHasChangeToast({position: 'top-center'})
+    valueHasChangeToast({position: 'top-center'})
     dispatch(setCouponId(couponCodeValue.toUpperCase()))
   }
 

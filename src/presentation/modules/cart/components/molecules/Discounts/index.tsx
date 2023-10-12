@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from '@hooks/storeHooks'
 import useBreakpoints from '@hooks/useBreakpoints'
-import { ValueHasChangeToast } from '@components/atoms/ToastContainer/customMessage'
+import { valueHasChangeToast } from '@components/atoms/ToastContainer/customMessage'
 
 import removeCouponCode from '@use-cases/cart/removeCouponCode'
 
@@ -22,8 +22,8 @@ const Discounts = () => {
   const removeCoupon = async(event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     await dispatch(removeCouponCode({couponCode: couponId, cartId}))
-    if(isMobile)  return ValueHasChangeToast({position:'top-center'})
-    ValueHasChangeToast()
+    if(isMobile)  return valueHasChangeToast({position:'top-center'})
+    valueHasChangeToast()
   }
  
   return (

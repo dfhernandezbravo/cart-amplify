@@ -17,7 +17,7 @@ import {
 import addCouponCode from "@use-cases/cart/addCouponCode";
 import removeCouponCode from "@use-cases/cart/removeCouponCode";
 import showToast from "@components/atoms/ToastContainer/ToastMessage";
-import { ValueHasChangeToast } from "@components/atoms/ToastContainer/customMessage";
+import { couponNoValidToast, valueHasChangeToast } from "@components/atoms/ToastContainer/customMessage";
 
 type Inputs = {
   code: string;
@@ -53,16 +53,17 @@ const PromotionalCode = () => {
 
     if(response?.payload === undefined) {
       setValue('code', '')
+      couponNoValidToast()
       return
     }
-    ValueHasChangeToast()
+    valueHasChangeToast()
     dispatch(setCouponId(inputCode.toUpperCase()))
     reset();
   };
 
   const handleRemoveCoupon = async () => {
      await dispatch(removeCouponCode({couponCode: couponId, cartId}))
-     ValueHasChangeToast()
+     valueHasChangeToast()
   };
 
 

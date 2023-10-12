@@ -12,40 +12,41 @@ import { useAppDispatch, useAppSelector } from '@hooks/storeHooks'
 import cartSlice from '@store/cart'
 
 //Styles
-import { ContainerMobile, EmptyAsideContainer  } from './styles'
+import { ContainerMobile, EmptyAsideContainer } from './styles'
+import useItemWithoutStock from '@hooks/useItemWithoutStock'
 
 
 const AsideMobile = () => {
 
-  // const [openDetails, setOpenDetails] = useState(false)
+  
+  const { openDetailsMobile, cartBFF } = useAppSelector(state => state.cart)
+  const { setOpenDetailsMobile } = cartSlice.actions
+  const [ isCuponContainerOpen, setIsCuponContainerOpen ] = useState(false)
+  const itemWithoutStock = useItemWithoutStock(cartBFF)
   
   const dispatch = useAppDispatch()
 
-  const { openDetailsMobile } = useAppSelector(state => state.cart)
-  const { setOpenDetailsMobile } = cartSlice.actions
 
-  const [isCuponContainerOpen, setIsCuponContainerOpen] = useState(false)
 
-  
   const toggleDetailsMobile = (value: boolean) => {
     dispatch(setOpenDetailsMobile(value))
   }
 
 
-
-  //TODO: condition to render product without stock aside or not
-  // return(
-  //   <EmptyAsideContainer>
-  //       <PurchaseSummaryDisabled/>
-  //   </EmptyAsideContainer>
-  // )
+  if (itemWithoutStock?.length === cartBFF?.items?.length) {
+    return (
+      <EmptyAsideContainer>
+        <PurchaseSummaryDisabled />
+      </EmptyAsideContainer>
+    );
+  }
 
   return (
     <ContainerMobile>
       <div className='wrapper'>
-        <HeaderAsideMobile openDetails={openDetailsMobile} setOpenDetails={(value:boolean) => toggleDetailsMobile(value)}/>
-        <BodyAsideMobile openDetails={openDetailsMobile}/>
-        <SubtotalAsideMobile openDetails={openDetailsMobile} isCuponContainerOpen={isCuponContainerOpen} setIsCuponContainerOpen={setIsCuponContainerOpen}/>
+        <HeaderAsideMobile openDetails={openDetailsMobile} setOpenDetails={(value: boolean) => toggleDetailsMobile(value)} />
+        <BodyAsideMobile openDetails={openDetailsMobile} />
+        <SubtotalAsideMobile openDetails={openDetailsMobile} isCuponContainerOpen={isCuponContainerOpen} setIsCuponContainerOpen={setIsCuponContainerOpen} />
         <div className='button-container'>
           <Button
             className="cartBtn cartBtn--primary fullWidth"

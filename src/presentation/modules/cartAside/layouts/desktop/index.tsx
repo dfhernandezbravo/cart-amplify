@@ -12,7 +12,6 @@ const CartAsideDesktop = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    console.log({cartId})
     if(cartId) {
       dispatch(getCart({cartId}))
 
