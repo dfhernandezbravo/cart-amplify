@@ -29,6 +29,7 @@ const CartMobile = () => {
       </div>
 
       ) : (
+        // TODO: add empty view
         <div>
           No Products
         </div>
