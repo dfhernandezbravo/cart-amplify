@@ -1,5 +1,5 @@
-type HttpError = "HttpException" | "InternalServerError";
-type PayloadError = "Error";
+type HttpError = 'HttpException' | 'InternalServerError';
+type PayloadError = 'Error';
 
 export type AppError = {
   error: HttpError | PayloadError;

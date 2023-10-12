@@ -1,10 +1,8 @@
-import styled from "styled-components";
-
-
+import styled from 'styled-components';
 
 type DividerProps = {
   fullWidth?: boolean;
-}
+};
 
 export const Container = styled.div`
   background-color: #fff;
@@ -24,7 +22,7 @@ export const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     font-size: 14px;
-    color: #6E8391;
+    color: #6e8391;
     margin: 10px 0;
 
     span {
@@ -64,14 +62,12 @@ export const ModalContainer = styled.div`
     background: #ffffff;
     color: #333333;
     border: 2px solid #333333;
-
   }
 
   & .button-container button:last-child {
     background-color: #af1212;
     border: 2px solid #af1212;
     color: #ffffff;
-
   }
 `;
 

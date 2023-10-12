@@ -1,12 +1,12 @@
 export type StatePropValue = {
-    openDetails: boolean;
-}
+  openDetails: boolean;
+};
 
 export type StateProps = StatePropValue & {
-    setOpenDetails: (value:boolean) => void;
-}
+  setOpenDetails: (value: boolean) => void;
+};
 
 export type StateCuponProps = StatePropValue & {
-    isCuponContainerOpen: boolean;
-    setIsCuponContainerOpen: (value:boolean) => void;
-}
+  isCuponContainerOpen: boolean;
+  setIsCuponContainerOpen: (value: boolean) => void;
+};

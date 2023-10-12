@@ -1,14 +1,13 @@
 import { Cart } from '@entities/cart/cart.entity';
 import { getUnavailableProduct } from '@utils/helpers';
-import { useMemo } from 'react'
+import { useMemo } from 'react';
 
-const useItemWithoutStock = (cart:Cart | undefined) => {
+const useItemWithoutStock = (cart: Cart | undefined) => {
+  const itemWithoutStock = useMemo(() => {
+    return cart?.items.length ? getUnavailableProduct(cart) : [];
+  }, [cart]);
 
-    const itemWithoutStock = useMemo(() => {
-        return cart?.items.length ? getUnavailableProduct(cart) : [];
-      }, [cart]);
+  return itemWithoutStock;
+};
 
-      return itemWithoutStock
-}
-
-export default useItemWithoutStock
+export default useItemWithoutStock;

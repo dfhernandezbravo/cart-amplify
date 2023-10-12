@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import useBreakpoints from "@hooks/useBreakpoints";
+import { ReactNode } from 'react';
+import useBreakpoints from '@hooks/useBreakpoints';
 
 interface Props {
   children: ReactNode;

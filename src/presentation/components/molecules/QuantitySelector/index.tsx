@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
-import cartSlice from '@store/cart'
+import { useEffect, useState } from 'react';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import cartSlice from '@store/cart';
 
-import Button from "@components/atoms/Button";
-import { Textfield } from "@components/atoms/Textfield";
-import updateItem from "@use-cases/cart/update-item";
-import { QuantitySelectorProps } from "./types";
-import { QuantitySelectorContainer } from "./styles";
+import Button from '@components/atoms/Button';
+import { Textfield } from '@components/atoms/Textfield';
+import updateItem from '@use-cases/cart/update-item';
+import { QuantitySelectorProps } from './types';
+import { QuantitySelectorContainer } from './styles';
 
 const QuantitySelector = (props: QuantitySelectorProps) => {
   // props
@@ -15,8 +15,8 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
 
   // hooks
   const dispatch = useAppDispatch();
-  const { cartId, loading } = useAppSelector(state => state.cart);
-  const { updateProductQuantity } = cartSlice.actions
+  const { cartId, loading } = useAppSelector((state) => state.cart);
+  const { updateProductQuantity } = cartSlice.actions;
 
   const [quantityInput, setQuantityInput] = useState(`${quantity}`);
   const [isEditing, setIsEditing] = useState(false);
@@ -31,13 +31,13 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
 
       if (newQuantity > 0 && numberRegex.test(quantityInput)) {
         dispatch(
-          updateProductQuantity({ index: index, quantity: newQuantity })
+          updateProductQuantity({ index: index, quantity: newQuantity }),
         );
         dispatch(
           updateItem({
-            cartId: cartId ?? "",
+            cartId: cartId ?? '',
             items: [{ quantity: newQuantity, index: index }],
-          })
+          }),
         );
       }
       setIsEditing(false);

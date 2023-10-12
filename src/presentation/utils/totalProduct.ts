@@ -1,4 +1,4 @@
-import { Cart, Item } from "@entities/cart/cart.entity";
+import { Cart, Item } from '@entities/cart/cart.entity';
 
 const totalProductInCart = (cart: Cart) => {
   const total = cart?.items?.reduce(
@@ -8,4 +8,4 @@ const totalProductInCart = (cart: Cart) => {
   return total ? total : 0;
 };
 
-export default  totalProductInCart
+export default totalProductInCart;

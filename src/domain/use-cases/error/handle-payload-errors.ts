@@ -1,17 +1,17 @@
-import { AppError, MessagesError } from "@entities/error/error.entity";
+import { AppError, MessagesError } from '@entities/error/error.entity';
 
 const handlePayloadError = (error: MessagesError): AppError => {
   switch (error.status) {
-    case "error":
+    case 'error':
       return {
-        error: "Error",
-        message: "Error al agregar producto",
+        error: 'Error',
+        message: 'Error al agregar producto',
       };
 
     default:
       return {
-        error: "InternalServerError",
-        message: "Error al agregar producto",
+        error: 'InternalServerError',
+        message: 'Error al agregar producto',
       };
   }
 };

@@ -1,6 +1,6 @@
-import { CartHeaderEventPayload } from "@entities/events/cart-header-event";
-import WindowsEvents from "@events/index";
-import { customDispatchEvent } from "@store/events/dispatchEvents";
+import { CartHeaderEventPayload } from '@entities/events/cart-header-event';
+import WindowsEvents from '@events/index';
+import { customDispatchEvent } from '@store/events/dispatchEvents';
 
 const dispatchCartHeaderEvent = (quantity: number) => {
   customDispatchEvent<CartHeaderEventPayload>({

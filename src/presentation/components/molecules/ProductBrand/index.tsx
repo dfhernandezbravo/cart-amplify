@@ -1,5 +1,5 @@
-import { ProductBrandProps } from "./types";
-import { Container } from "./styles";
+import { ProductBrandProps } from './types';
+import { Container } from './styles';
 
 const ProductBrand = (props: ProductBrandProps) => {
   const { brand } = props;

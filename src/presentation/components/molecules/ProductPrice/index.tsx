@@ -1,12 +1,12 @@
-import { formattedCLP } from "@utils/helpers";
-import { ProductPriceProps } from "./types";
+import { formattedCLP } from '@utils/helpers';
+import { ProductPriceProps } from './types';
 import {
   Container,
   DiscountPercent,
   NormalPrice,
   OfferPrice,
   OfferPriceContainer,
-} from "./styles";
+} from './styles';
 
 const ProductPrice = (props: ProductPriceProps) => {
   // props

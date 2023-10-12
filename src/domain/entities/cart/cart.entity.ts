@@ -21,7 +21,7 @@ export interface Item {
   product: Product;
   adjustment: Adjustment[];
   priceAfterDiscount: number;
-  index?: number
+  index?: number;
 }
 
 interface Adjustment {
@@ -215,7 +215,5 @@ export interface CouponCode {
 export enum ProductAvailability {
   AVAILABLE = 'available',
   WITHOUTSTOCK = 'withoutStock',
-  CANNOTBEDELIVERED = 'cannotBeDelivered'
+  CANNOTBEDELIVERED = 'cannotBeDelivered',
 }
-
-

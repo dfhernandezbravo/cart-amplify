@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const BodyContainer = styled.div`
   height: calc(92vh - 195px);
@@ -6,8 +6,8 @@ export const BodyContainer = styled.div`
   background-color: white;
 `;
 
-export const AvailableProductText = styled.p `
+export const AvailableProductText = styled.p`
   padding: 1rem;
   font-size: 12px;
   font-weight: 700;
-`
+`;
