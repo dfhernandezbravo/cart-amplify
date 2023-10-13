@@ -122,6 +122,7 @@ const cartSlice = createSlice({
     });
     builder
       .addCase(getCart.fulfilled, (state, { payload }) => {
+        console.log('payload ', payload);
         state.cartBFF = payload;
         state.loading = false;
       })

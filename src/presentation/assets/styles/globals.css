@@ -93,7 +93,7 @@ body {
     rgb(var(--background-start-rgb));
   font-family: 'Open Sans', sans-serif;
   background-color: #f1f3f4;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 a {

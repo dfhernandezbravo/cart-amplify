@@ -28,6 +28,7 @@ const cartService: CartService = {
     return httpInstance.post(url, body);
   },
   updateItem: (data) => {
+    console.log('updateItem data', data);
     const url = `/shoppingcart/${data.cartId}/items`;
     const body: UpdateOrderItems = { orderItems: data.items };
     return httpInstance.patch(url, body);

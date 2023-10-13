@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { MouseEvent, useMemo, useState } from 'react';
+import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import { SwipeableDrawer } from '@mui/material';
 import { selectTotalProductsInCart } from '@store/cart';
 import cartSlice from '@store/cart';
@@ -116,21 +116,33 @@ const CartAsideContainer = () => {
   };
   methods.initialize();
 
+  // useEffect(() => {
+  //   console.log('useEffect headless');
+  //   window.addEventListener('message', (event) => {
+  //     console.log('event ', event);
+  //     const key = Object.keys(event?.data);
+  //     if (key?.length > 0 && key[0] === 'IS_ENABLED_MINICART') {
+  //       localStorage.setItem('isEnabledMinicart', event.data.IS_ENABLED_MINICART);
+  //     }
+  //   });
+  // }, []);
+
   return (
-    <SwipeableDrawer
-      anchor="right"
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
-      onOpen={() => setIsOpen(true)}
-      transitionDuration={300}
-      PaperProps={{
-        sx: {
-          minWidth: '280px',
-          width: '90%',
-          maxWidth: '400px',
-        },
-      }}
-    >
+    // <SwipeableDrawer
+    //   anchor="right"
+    //   open={isOpen}
+    //   onClose={() => setIsOpen(false)}
+    //   onOpen={() => setIsOpen(true)}
+    //   transitionDuration={300}
+    //   PaperProps={{
+    //     sx: {
+    //       minWidth: '280px',
+    //       width: '90%',
+    //       maxWidth: '400px',
+    //     },
+    //   }}
+    // >
+    <>
       <Header setIsOpen={setIsOpen} />
       {totalProducts > 0 ? (
         <>
@@ -140,7 +152,8 @@ const CartAsideContainer = () => {
       ) : (
         <EmptyBody />
       )}
-    </SwipeableDrawer>
+    </>
+    // </SwipeableDrawer>
   );
 };
 export default CartAsideContainer;
