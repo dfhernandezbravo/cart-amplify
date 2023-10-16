@@ -64,9 +64,9 @@ const ProductCard = (props: ProductCardProps) => {
           </ProductInfoContainer>
           <div>
             <ProductPrice
-              offerPrice={item?.product?.prices?.offerPrice}
-              normalPrice={item?.product?.prices?.normalPrice}
+              prices={item?.product.prices}
               quantity={item?.quantity ?? 0}
+              adjustment={item?.adjustment}
             />
           </div>
         </ProductInfoAndPriceContainer>

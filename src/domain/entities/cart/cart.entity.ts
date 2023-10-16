@@ -24,7 +24,7 @@ export interface Item {
   index?: number
 }
 
-interface Adjustment {
+export interface Adjustment {
   id: string;
   value: number;
   name: string;
@@ -140,7 +140,7 @@ export type AddressShipping = {
   countryfake?: string;
 };
 
-interface Prices {
+export interface Prices {
   currency: string;
   normalPrice: number;
   offerPrice: number;

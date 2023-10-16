@@ -5,15 +5,12 @@ import CartContainer from "@modules/cart/components/organisms/CartContainer";
 
 
 //Hooks
-import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { useAppDispatch } from '@hooks/storeHooks';
 import getCart from '@use-cases/cart/get-cart';
-
-
 
 const CartDesktop = () => {
 
   const dispatch = useAppDispatch()
-
   const { query } = useRouter()
 
   useEffect(() => {

@@ -40,7 +40,6 @@ const PurchaseSummary = () => {
   // methods
   const methods = {
     handleGoToCheckout: () => {
-      console.log("productWithoutStock", itemWithoutStock);
       if (itemWithoutStock?.length) {
         setShowModal(true)
         return

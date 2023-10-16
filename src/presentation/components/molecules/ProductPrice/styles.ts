@@ -10,18 +10,9 @@ export const OfferPriceContainer = styled.div`
   align-items: center;
 `;
 
-export const OfferPrice = styled.div`
+export const FullPrice = styled.div`
   font-size: 20px;
   font-weight: 700;
-`;
-
-export const DiscountPercent = styled.div`
-  border-radius: 4px;
-  padding: 4px;
-  background: #cc1515;
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 600;
 `;
 
 export const NormalPrice = styled.div`
