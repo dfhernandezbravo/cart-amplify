@@ -1,6 +1,6 @@
-import { AppError } from "@entities/error/error.entity";
-import { RootState } from "@hooks/storeHooks";
-import { createSlice } from "@reduxjs/toolkit";
+import { AppError } from '@entities/error/error.entity';
+import { RootState } from '@hooks/storeHooks';
+import { createSlice } from '@reduxjs/toolkit';
 
 type ErrorState = {
   error: AppError | null;
@@ -11,7 +11,7 @@ const initialState: ErrorState = {
 };
 
 const errorSlice = createSlice({
-  name: "error",
+  name: 'error',
   initialState,
   reducers: {
     setError: (state, { payload }) => {

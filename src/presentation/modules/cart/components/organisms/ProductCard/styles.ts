@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
@@ -37,8 +37,6 @@ export const QuantitySelectorAndDeleteContainer = styled.div`
   margin-right: 30px;
 `;
 
-
-
 export const ImageContainer = styled.div`
   position: relative;
 `;
@@ -57,8 +55,8 @@ export const QuantitySelectorContainer = styled.div`
     border: 1px solid #aaaaaa;
     border-radius: 5px;
   }
-  & input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  & input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     appearance: none;
   }
@@ -67,7 +65,7 @@ export const QuantitySelectorContainer = styled.div`
     border-radius: 8px;
     background-color: #333333;
     padding: 16px;
-    font-size:14px;
+    font-size: 14px;
     font-weight: 700;
     color: #ffffff;
   }

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   background-color: #fff;
@@ -36,7 +36,6 @@ export const ButtonContainer = styled.button`
   font-family: inherit;
   width: 100%;
   cursor: pointer;
-
 
   svg {
     width: 24px;

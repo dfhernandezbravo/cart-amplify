@@ -1,8 +1,6 @@
 import { useAppSelector } from '@hooks/storeHooks';
 import SnackBars from '@components/atoms/SnackBars';
-import {
-  selectTotalProductsInCart,
-} from '@store/cart';
+import { selectTotalProductsInCart } from '@store/cart';
 import ProductCard from '@modules/cart/components/organisms/ProductCard';
 import ProductCartWithoutStock from '@modules/cart/components/organisms/ProductCard/components/ProductCardWithoutStock';
 import { Cart, Item } from '@entities/cart/cart.entity';
@@ -11,10 +9,12 @@ import useItemWithoutStock from '../../../../hooks/useItemWithoutStock';
 import useProductCardEvent from '@hooks/useProductCardEvent';
 
 const Main = () => {
-  const { cartBFF, loading } = useAppSelector(state => state.cart);
-  const itemWithoutStock = useItemWithoutStock(cartBFF as Cart)
+  const { cartBFF, loading } = useAppSelector((state) => state.cart);
+  const itemWithoutStock = useItemWithoutStock(cartBFF as Cart);
   const totalProducts = useAppSelector(selectTotalProductsInCart);
-  const { methods, updatedIndexItem } = useProductCardEvent(cartBFF?.id as string)
+  const { methods, updatedIndexItem } = useProductCardEvent(
+    cartBFF?.id as string,
+  );
   return (
     <Container>
       <TotalProductsContainer>

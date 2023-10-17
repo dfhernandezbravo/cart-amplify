@@ -1,5 +1,5 @@
-import { TextfieldProps } from "./Textfield.types";
-import { Input, TextFieldContainer } from "./Textfield.styles";
+import { TextfieldProps } from './Textfield.types';
+import { Input, TextFieldContainer } from './Textfield.styles';
 
 export const Textfield = (props: TextfieldProps) => {
   const {

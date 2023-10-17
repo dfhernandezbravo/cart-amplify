@@ -1,5 +1,5 @@
-import { ButtonProps } from "./types";
-import { ButtonContainer } from "./styles";
+import { ButtonProps } from './types';
+import { ButtonContainer } from './styles';
 
 const Button = (props: ButtonProps) => {
   const { children, className, onClick, disabled } = props;

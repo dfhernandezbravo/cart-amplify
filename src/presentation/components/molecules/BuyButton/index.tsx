@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
-import { useAppSelector } from "@hooks/storeHooks";
-import Button from "@components/atoms/Button";
-import { BuyButtonProps } from "./types";
+import { useRouter } from 'next/router';
+import { useAppSelector } from '@hooks/storeHooks';
+import Button from '@components/atoms/Button';
+import { BuyButtonProps } from './types';
 
 const BuyButton = (props: BuyButtonProps) => {
   const router = useRouter();
-  const { cartBFF } = useAppSelector(state => state.cart);
+  const { cartBFF } = useAppSelector((state) => state.cart);
 
   const { text } = props;
 

@@ -1,15 +1,15 @@
-import DeleteButton from "@components/molecules/DeleteButton";
-import QuantitySelector from "@components/molecules/QuantitySelector";
-import ProductImage from "@components/molecules/ProductImage";
-import ProductPrice from "@components/molecules//ProductPrice";
-import ProductBrand from "@components/molecules/ProductBrand";
-import ProductName from "@components/molecules/ProductName";
-import { ProductCardProps } from "./types";
+import DeleteButton from '@components/molecules/DeleteButton';
+import QuantitySelector from '@components/molecules/QuantitySelector';
+import ProductImage from '@components/molecules/ProductImage';
+import ProductPrice from '@components/molecules//ProductPrice';
+import ProductBrand from '@components/molecules/ProductBrand';
+import ProductName from '@components/molecules/ProductName';
+import { ProductCardProps } from './types';
 import {
   ProductCardContainer,
   ProductInfoContainer,
   ImageAndDeleteContainer,
-} from "./styles";
+} from './styles';
 
 const ProductCard = (props: ProductCardProps) => {
   const {
@@ -20,7 +20,7 @@ const ProductCard = (props: ProductCardProps) => {
     onRemoveFromCart,
   } = props;
 
-  if (item.product.availability !== 'available') return null
+  if (item.product.availability !== 'available') return null;
 
   return (
     <ProductCardContainer>

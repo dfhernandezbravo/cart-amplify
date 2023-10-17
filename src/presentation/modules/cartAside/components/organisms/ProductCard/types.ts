@@ -1,4 +1,4 @@
-import { Item } from "@entities/cart/cart.entity";
+import { Item } from '@entities/cart/cart.entity';
 
 export type ProductCardProps = {
   item: Item;

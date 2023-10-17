@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const IconAndTextContainer = styled.div`
   display: flex;

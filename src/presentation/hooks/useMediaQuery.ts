@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 /**
  * Custom hook that tells you whether a given media query is active.
@@ -16,12 +16,12 @@ export default function useMediaQuery(query: string) {
 
       const handler = (event: MediaQueryListEvent) => setMatches(event.matches);
 
-      mediaQuery.addEventListener("change", handler);
+      mediaQuery.addEventListener('change', handler);
 
-      return () => mediaQuery.removeEventListener("change", handler);
+      return () => mediaQuery.removeEventListener('change', handler);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [] // Empty array ensures effect is only run on mount and unmount
+    [], // Empty array ensures effect is only run on mount and unmount
   );
 
   return matches;

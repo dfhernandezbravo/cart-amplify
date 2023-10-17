@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-
-export const CouponCodeWrapper = styled.div `
+export const CouponCodeWrapper = styled.div`
   font-family: 'Open Sans';
 
   display: flex;
@@ -12,14 +11,14 @@ export const CouponCodeWrapper = styled.div `
     font-style: normal;
     font-weight: 600;
   }
-`
-export const  RemoveCoupon = styled.a  `
-font-family: 'Open Sans';
-font-size: 14px;
-font-style: normal;
-font-weight: 700;
-text-decoration: underline;
-display:block;
-cursor: pointer;
-margin-top: -10px;
-`
+`;
+export const RemoveCoupon = styled.a`
+  font-family: 'Open Sans';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  text-decoration: underline;
+  display: block;
+  cursor: pointer;
+  margin-top: -10px;
+`;

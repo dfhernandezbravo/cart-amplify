@@ -1,21 +1,19 @@
-import { Cart } from "@entities/cart/cart.entity"
-
+import { Cart } from '@entities/cart/cart.entity';
 
 export type QuantitySelectedProps = {
-    index: number | null;
-    quantity: number | null;
-    availableQuantity: number | null
-  };
+  index: number | null;
+  quantity: number | null;
+  availableQuantity: number | null;
+};
 
 export type InitialState = {
-    cartBFF:  Cart | undefined
-    cartId: string;
-    couponId: string;
-    loading: boolean;
-    quantitySelected: QuantitySelectedProps,
-    openDetailsMobile: boolean;
-}
-
+  cartBFF: Cart | undefined;
+  cartId: string;
+  couponId: string;
+  loading: boolean;
+  quantitySelected: QuantitySelectedProps;
+  openDetailsMobile: boolean;
+};
 
 export interface CartItemModel {
   productId: string;
@@ -37,40 +35,39 @@ export interface CartItemModel {
   categories?: string[] | null;
   categoriesIds?: string[] | null;
   link: string;
-  "Tipo de Pilas"?: string[] | null;
+  'Tipo de Pilas'?: string[] | null;
   Capacidad?: string[] | null;
-  "Tipo de Encendido"?: string[] | null;
-  "Tipo de gas"?: string[] | null;
+  'Tipo de Encendido'?: string[] | null;
+  'Tipo de gas'?: string[] | null;
   Tiro?: string[] | null;
-  "Características destacadas"?: string[] | null;
+  'Características destacadas'?: string[] | null;
   Dimensiones?: string[] | null;
   Material?: string[] | null;
   Materiales?: string[] | null;
-  "Regulador de Agua"?: string[] | null;
-  "Regulador de Gas"?: string[] | null;
+  'Regulador de Agua'?: string[] | null;
+  'Regulador de Gas'?: string[] | null;
   Sensor?: string[] | null;
   Funciones?: string[] | null;
   Beneficios?: string[] | null;
   Modelo?: string[] | null;
-  "Tipo de producto"?: string[] | null;
+  'Tipo de producto'?: string[] | null;
   Origen?: string[] | null;
-  "Otras características"?: string[] | null;
+  'Otras características'?: string[] | null;
   Recomendaciones?: string[] | null;
-  "Observaciones y recomendaciones"?: string[] | null;
+  'Observaciones y recomendaciones'?: string[] | null;
   Filtros?: string[] | null;
   Tamaño?: string[] | null;
   RutProveedor?: string[] | null;
   Configuraciones?: string[] | null;
-  "Color Bucket"?: string[] | null;
-  "Filtros Bucket"?: string[] | null;
-  "Garantía Proveedor"?: string[] | null;
-  "Garantía Mínima Legal"?: string[] | null;
-  "Garantía y Durabilidad"?: string[] | null;
+  'Color Bucket'?: string[] | null;
+  'Filtros Bucket'?: string[] | null;
+  'Garantía Proveedor'?: string[] | null;
+  'Garantía Mínima Legal'?: string[] | null;
+  'Garantía y Durabilidad'?: string[] | null;
   allSpecifications?: string[] | null;
   allSpecificationsGroups?: string[] | null;
   description: string;
   items?: ItemsEntity[] | null;
-
 }
 export interface ClusterHighlights {
   1863: string;
@@ -174,7 +171,7 @@ export interface InstallmentsEntity {
   Name: string;
 }
 export interface DiscountHighLightEntity {
-  "<Name>k__BackingField": string;
+  '<Name>k__BackingField': string;
 }
 export interface PaymentOptions {
   installmentOptions?: InstallmentOptionsEntity[] | null;
@@ -225,12 +222,12 @@ export interface PaymentSystemsEntity {
 }
 
 export enum ProductQuantityMessage {
-  NOT_ENOUGH = 'not enough'
+  NOT_ENOUGH = 'not enough',
 }
 
 export type CartState = {
-  cartBFF: Cart ;
-  cartId: string ;
+  cartBFF: Cart;
+  cartId: string;
   error: string;
   loading: boolean;
 };

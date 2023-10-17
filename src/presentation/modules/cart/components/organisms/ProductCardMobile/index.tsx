@@ -1,55 +1,49 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 //Styles
-import ProductImage from "@components/molecules/ProductImage";
-import { ProductCardProps } from "../ProductCard/types"
-import ProductBrand from "@components/molecules/ProductBrand";
-import ProductName from "@components/molecules/ProductName";
-import ProductPrice from "@components/molecules/ProductPrice";
-import QuantitySelector from "@components/atoms/QuantitySelector";
-
+import ProductImage from '@components/molecules/ProductImage';
+import { ProductCardProps } from '../ProductCard/types';
+import ProductBrand from '@components/molecules/ProductBrand';
+import ProductName from '@components/molecules/ProductName';
+import ProductPrice from '@components/molecules/ProductPrice';
+import QuantitySelector from '@components/atoms/QuantitySelector';
 
 //Styles
 import {
   Container,
   ImageContainer,
-  QuantitySelectorAndDeleteContainer
-} from "./styles"
+  QuantitySelectorAndDeleteContainer,
+} from './styles';
 import DeleteButton from '@components/molecules/DeleteButton';
 import Modal from '@components/atoms/Modal';
 import { QuantitySelectorContainer } from '../ProductCard/styles';
 import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
 
 const ProductCardMobile = (props: ProductCardProps) => {
-
   const { item, onRemoveFromCart, handleChangeQuantity, itemStockModify } =
     props;
 
-
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [quantityValue, setQuantityValue] = useState('')
-
+  const [quantityValue, setQuantityValue] = useState('');
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
   const handleSelectedQuantity = (quantity: string) => {
-    if (quantity === "6 +") {
+    if (quantity === '6 +') {
       return setIsModalOpen(true);
     }
     handleChangeQuantity(quantity);
   };
 
   const handleOnClickQuantity = () => {
-    handleSelectedQuantity(quantityValue)
-    setQuantityValue('')
-    setIsModalOpen(false)
-  }
+    handleSelectedQuantity(quantityValue);
+    setQuantityValue('');
+    setIsModalOpen(false);
+  };
 
-
-  if (item.product.availability !== "available") return null;
+  if (item.product.availability !== 'available') return null;
   return (
     <>
       <Container>
@@ -68,7 +62,9 @@ const ProductCardMobile = (props: ProductCardProps) => {
           </div>
           <QuantitySelectorAndDeleteContainer>
             <QuantitySelector
-              quantitySelected={(value: string) => handleSelectedQuantity(value)}
+              quantitySelected={(value: string) =>
+                handleSelectedQuantity(value)
+              }
               quantity={item?.quantity}
             />
             <DeleteButton hasIcon={true} onRemoveFromCart={onRemoveFromCart} />
@@ -81,13 +77,17 @@ const ProductCardMobile = (props: ProductCardProps) => {
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <QuantitySelectorContainer>
           <p>Elige cantidad</p>
-          <input type="number" value={quantityValue} placeholder="Ingresa la cantidad" onChange={(value) => setQuantityValue(value.target.value)} />
+          <input
+            type="number"
+            value={quantityValue}
+            placeholder="Ingresa la cantidad"
+            onChange={(value) => setQuantityValue(value.target.value)}
+          />
           <button onClick={() => handleOnClickQuantity()}>Aplicar</button>
         </QuantitySelectorContainer>
       </Modal>
     </>
+  );
+};
 
-  )
-}
-
-export default ProductCardMobile
+export default ProductCardMobile;

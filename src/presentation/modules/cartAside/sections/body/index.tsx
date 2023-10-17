@@ -1,25 +1,25 @@
-import { useCallback } from "react";
-import _ from "lodash";
-import cartSlice from '@store/cart'
-import { selectError } from "@store/error";
-import { useAppDispatch, useAppSelector } from "@hooks/storeHooks";
-import ProductCard from "@modules/cartAside/components/organisms/ProductCard";
-import MinicartError from "@modules/cart/components/molecules/MinicartError";
-import { Item } from "@entities/cart/cart.entity";
-import updateItem from "@use-cases/cart/update-item";
-import deleteItem from "@use-cases/cart/delete-item";
-import { AvailableProductText, BodyContainer } from "./styles";
-import ProductCardWithouthStock from "@modules/cartAside/components/organisms/ProductCardWithoutStock";
-import useItemWithoutStock from "@hooks/useItemWithoutStock";
-
+import { useCallback } from 'react';
+import _ from 'lodash';
+import cartSlice from '@store/cart';
+import { selectError } from '@store/error';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import ProductCard from '@modules/cartAside/components/organisms/ProductCard';
+import MinicartError from '@modules/cart/components/molecules/MinicartError';
+import { Item } from '@entities/cart/cart.entity';
+import updateItem from '@use-cases/cart/update-item';
+import deleteItem from '@use-cases/cart/delete-item';
+import { AvailableProductText, BodyContainer } from './styles';
+import ProductCardWithouthStock from '@modules/cartAside/components/organisms/ProductCardWithoutStock';
+import useItemWithoutStock from '@hooks/useItemWithoutStock';
 
 const Body = () => {
   // Hooks
-  const { cartId, cartBFF } = useAppSelector(state => state.cart);
-  const itemWithoutStock = useItemWithoutStock(cartBFF)
+  const { cartId, cartBFF } = useAppSelector((state) => state.cart);
+  const itemWithoutStock = useItemWithoutStock(cartBFF);
   const { error } = useAppSelector(selectError);
   const dispatch = useAppDispatch();
-  const { decrementProductQuantity, incrementProductQuantity, removeProduct} = cartSlice.actions
+  const { decrementProductQuantity, incrementProductQuantity, removeProduct } =
+    cartSlice.actions;
 
   // Methods
   const methods = {
@@ -28,42 +28,44 @@ const Body = () => {
         const quantity = item.quantity ?? 0;
         dispatch(
           updateItem({
-            cartId: cartId ?? "",
+            cartId: cartId ?? '',
             items: [{ quantity: quantity + 1, index: index }],
-          })
+          }),
         );
       }, 500),
-      []
+      [],
     ),
     handleDecrementQuantity: useCallback(
       _.debounce((item: Item, index: number) => {
         const quantity = item.quantity ?? 0;
         dispatch(
           updateItem({
-            cartId: cartId ?? "",
+            cartId: cartId ?? '',
             items: [{ quantity: quantity - 1, index: index }],
-          })
+          }),
         );
       }, 500),
-      []
+      [],
     ),
     handleRemoveFromCart: (index: number) => {
       dispatch(removeProduct(index));
-      dispatch(deleteItem({ cartId: cartId ?? "", itemIndex: index }));
+      dispatch(deleteItem({ cartId: cartId ?? '', itemIndex: index }));
     },
   };
 
   const renderProductWithoutStock = () => {
     return (
       <>
-      <ProductCardWithouthStock items={itemWithoutStock} onRemoveFromCart={(index:number) => {
-        methods.handleRemoveFromCart(index)
-      }}/>
-      <AvailableProductText>Productos disponibles</AvailableProductText>
-    </>
-    )
-  }
-
+        <ProductCardWithouthStock
+          items={itemWithoutStock}
+          onRemoveFromCart={(index: number) => {
+            methods.handleRemoveFromCart(index);
+          }}
+        />
+        <AvailableProductText>Productos disponibles</AvailableProductText>
+      </>
+    );
+  };
 
   return (
     <BodyContainer>
@@ -71,7 +73,7 @@ const Body = () => {
 
       {itemWithoutStock?.length ? renderProductWithoutStock() : null}
 
-      {cartBFF?.items?.map((item: Item, index: number)=> (
+      {cartBFF?.items?.map((item: Item, index: number) => (
         <ProductCard
           key={item.itemId}
           item={item}

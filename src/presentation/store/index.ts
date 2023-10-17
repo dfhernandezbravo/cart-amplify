@@ -1,18 +1,19 @@
 /* eslint-disable react/display-name */
-import { configureStore } from "@reduxjs/toolkit";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import cartSlice from "@store/cart";
-import errorSlice from "@store/error";
-
+import { configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import cartSlice from '@store/cart';
+import errorSlice from '@store/error';
 
 const persistCartConfig = {
   key: 'cart',
-  storage
-}
+  storage,
+};
 
-
-const persistedCartReducer = persistReducer(persistCartConfig, cartSlice.reducer)
+const persistedCartReducer = persistReducer(
+  persistCartConfig,
+  cartSlice.reducer,
+);
 
 const store = configureStore({
   reducer: {

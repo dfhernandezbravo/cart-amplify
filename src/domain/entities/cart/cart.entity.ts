@@ -21,7 +21,7 @@ export interface Item {
   product: Product;
   adjustment: Adjustment[];
   priceAfterDiscount: number;
-  index?: number
+  index?: number;
 }
 
 export interface Adjustment {
@@ -61,9 +61,9 @@ interface Customer {
   isEmployee?: boolean;
 }
 
-interface Payment { }
+interface Payment {}
 
-interface Taxes { }
+interface Taxes {}
 
 interface Totals {
   subtotal: number;
@@ -216,7 +216,5 @@ export enum ProductAvailability {
   AVAILABLE = 'available',
   WITHOUTSTOCK = 'withoutStock',
   CANNOTBEDELIVERED = 'cannotBeDelivered',
-  UNAVAILABLE_ITEM_FULFILLMENT = 'unavailableItemFulfillment'
+  UNAVAILABLE_ITEM_FULFILLMENT = 'unavailableItemFulfillment',
 }
-
-

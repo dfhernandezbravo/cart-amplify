@@ -1,12 +1,11 @@
-import { useRouter } from "next/router";
-import Button from "@components/atoms/Button";
+import { useRouter } from 'next/router';
+import Button from '@components/atoms/Button';
 
-import { useAppSelector } from "@hooks/storeHooks";
-
+import { useAppSelector } from '@hooks/storeHooks';
 
 const GoToCartButton = () => {
   const router = useRouter();
-  const { cartId } = useAppSelector(state => state.cart)
+  const { cartId } = useAppSelector((state) => state.cart);
 
   const handleClickBtn = () => {
     router.push(`/cart/${cartId}`);

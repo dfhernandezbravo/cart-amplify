@@ -1,17 +1,15 @@
-import { Cart, Item, ProductAvailability } from "@entities/cart/cart.entity";
-import { CartItemModel } from "@store/cart/types";
+import { Cart, Item, ProductAvailability } from '@entities/cart/cart.entity';
+import { CartItemModel } from '@store/cart/types';
 
 type currencyFormatter = {
   currency: string;
   value: number;
 };
 
-
-
 const currencyFormatter = ({ currency, value }: currencyFormatter) => {
-  const formatter = new Intl.NumberFormat("es-CL", {
-    style: "currency",
-    currencySign: "accounting",
+  const formatter = new Intl.NumberFormat('es-CL', {
+    style: 'currency',
+    currencySign: 'accounting',
     currency,
   });
   return formatter.format(value);
@@ -19,7 +17,7 @@ const currencyFormatter = ({ currency, value }: currencyFormatter) => {
 
 export const formattedCLP = (value: number) => {
   return currencyFormatter({
-    currency: "CLP",
+    currency: 'CLP',
     value,
   });
 };
@@ -36,29 +34,29 @@ export const totalItems = (items: any) => {
 
 export const createNewItem = (data: CartItemModel) => {
   const newItem = {
-    itemId: "",
+    itemId: '',
     quantity: 1,
     adjustment: [
       {
-        id: "",
+        id: '',
         value: 0,
-        name: "",
-        percentageDiscount: "",
-        priceType: "",
+        name: '',
+        percentageDiscount: '',
+        priceType: '',
       },
     ],
     priceAfterDiscount: 1,
     product: {
       id: data?.productReference,
-      sku: "",
-      description: data.items ? data.items[0]?.nameComplete : "",
-      unit: "",
+      sku: '',
+      description: data.items ? data.items[0]?.nameComplete : '',
+      unit: '',
       unitValue: 1,
-      size: "",
-      color: "",
+      size: '',
+      color: '',
       prices: {
-        brandPrice: undefined,
-        currency: "",
+        brandPrice: null,
+        currency: '',
         normalPrice: data.items
           ? data.items[0].sellers![0]?.commertialOffer?.ListPrice
           : 0,
@@ -66,21 +64,19 @@ export const createNewItem = (data: CartItemModel) => {
           ? data.items[0].sellers![0]?.commertialOffer?.Price
           : 0,
       },
-      images: data.items ? data.items[0]?.images![0]?.imageUrl : "",
+      images: data.items ? data.items[0]?.images![0]?.imageUrl : '',
       brand: data?.brand,
-      seller: { id: "" },
-      availability: "",
-      category: "",
-      ean: "",
+      seller: { id: '' },
+      availability: '',
+      category: '',
+      ean: '',
     },
   };
 
   return newItem;
 };
 
-
 export const getUnavailableProduct = (cart: Cart) => {
-
   const itemWithoutStock: Item[] | never = [];
 
   cart?.items?.forEach((item, index) => {
@@ -97,8 +93,5 @@ export const getUnavailableProduct = (cart: Cart) => {
       itemWithoutStock.push(product);
     }
   });
-  return itemWithoutStock
-}
-
-
-
+  return itemWithoutStock;
+};

@@ -1,4 +1,4 @@
-import { Select } from "./styles";
+import { Select } from './styles';
 
 type Props = {
   quantity: number;
@@ -6,30 +6,30 @@ type Props = {
 };
 
 const QuantitySelector = ({ quantitySelected, quantity }: Props) => {
-  const incrementalNumber = ["1", "2", "3", "4", "5"];
-  const additionalNumber = ["6 +"]
-
+  const incrementalNumber = ['1', '2', '3', '4', '5'];
+  const additionalNumber = ['6 +'];
 
   const optionsConditional = () => {
-    let options: React.ReactElement[]=[]
-    if( quantity >= 6 ) {
+    let options: React.ReactElement[] = [];
+    if (quantity >= 6) {
       incrementalNumber.forEach((number) => {
-        const option = <option value={number}>{number}</option>
-        options.push(option)
-      })
-      options.push(<option value={quantity}>{quantity}</option>)
-      options.push(<option value={additionalNumber[0]}>{additionalNumber[0]}</option>)
-      return options
+        const option = <option value={number}>{number}</option>;
+        options.push(option);
+      });
+      options.push(<option value={quantity}>{quantity}</option>);
+      options.push(
+        <option value={additionalNumber[0]}>{additionalNumber[0]}</option>,
+      );
+      return options;
     } else {
-      const allOptions = incrementalNumber.concat(additionalNumber)
-      allOptions.forEach(number => {
-        const option = <option value={number}>{number}</option>
-        options.push(option)
-      })
-      return options
+      const allOptions = incrementalNumber.concat(additionalNumber);
+      allOptions.forEach((number) => {
+        const option = <option value={number}>{number}</option>;
+        options.push(option);
+      });
+      return options;
     }
-    
-  }
+  };
 
   return (
     <Select
