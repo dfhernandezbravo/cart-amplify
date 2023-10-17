@@ -39,7 +39,7 @@ const PromotionalCode = () => {
 
   const { cartId, couponId } = useAppSelector(state => state.cart)
   const { setCouponId } = cartSlice.actions
-  const dispatch =useAppDispatch()
+  const dispatch = useAppDispatch()
 
   const handleShowForm = () => {
     setIsOpen(!isOpen);
@@ -49,9 +49,9 @@ const PromotionalCode = () => {
 
   const onSubmit = async (data: any) => {
 
-    const response  = await dispatch(addCouponCode({couponCode:inputCode, cartId}))
+    const response = await dispatch(addCouponCode({ couponCode: inputCode, cartId }))
 
-    if(response?.payload === undefined) {
+    if (response?.payload === undefined) {
       setValue('code', '')
       couponNoValidToast()
       return
@@ -62,8 +62,8 @@ const PromotionalCode = () => {
   };
 
   const handleRemoveCoupon = async () => {
-     await dispatch(removeCouponCode({couponCode: couponId, cartId}))
-     valueHasChangeToast()
+    await dispatch(removeCouponCode({ couponCode: couponId, cartId }))
+    valueHasChangeToast()
   };
 
 

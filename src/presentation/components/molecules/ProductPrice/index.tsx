@@ -15,13 +15,6 @@ const ProductPrice = (props: ProductPriceProps) => {
   // constants
   const hasDiscount = prices.offerPrice && prices.offerPrice !== prices.normalPrice;
 
-  // methods
-  const methods = {
-    calculateDiscount: () => {
-      return (100 - (prices.offerPrice * 100) / prices.normalPrice).toFixed();
-    },
-  };
-
   return (
     <Container>
       <OfferPriceContainer>

@@ -15,7 +15,6 @@ const Main = () => {
   const itemWithoutStock = useItemWithoutStock(cartBFF as Cart)
   const totalProducts = useAppSelector(selectTotalProductsInCart);
   const { methods, updatedIndexItem } = useProductCardEvent(cartBFF?.id as string)
-
   return (
     <Container>
       <TotalProductsContainer>

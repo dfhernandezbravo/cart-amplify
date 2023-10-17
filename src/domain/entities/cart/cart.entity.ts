@@ -61,9 +61,9 @@ interface Customer {
   isEmployee?: boolean;
 }
 
-interface Payment {}
+interface Payment { }
 
-interface Taxes {}
+interface Taxes { }
 
 interface Totals {
   subtotal: number;
@@ -143,8 +143,8 @@ export type AddressShipping = {
 export interface Prices {
   currency: string;
   normalPrice: number;
-  offerPrice: number;
-  brandPrice?: number;
+  offerPrice: number | null;
+  brandPrice: number | null;
 }
 
 interface Seller {
@@ -215,7 +215,8 @@ export interface CouponCode {
 export enum ProductAvailability {
   AVAILABLE = 'available',
   WITHOUTSTOCK = 'withoutStock',
-  CANNOTBEDELIVERED = 'cannotBeDelivered'
+  CANNOTBEDELIVERED = 'cannotBeDelivered',
+  UNAVAILABLE_ITEM_FULFILLMENT = 'unavailableItemFulfillment'
 }
 
 

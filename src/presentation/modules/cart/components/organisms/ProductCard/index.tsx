@@ -44,7 +44,7 @@ const ProductCard = (props: ProductCardProps) => {
     setIsModalOpen(false)
   }
 
-  
+
   if (item.product.availability !== "available") return null;
   return (
     <>
@@ -80,9 +80,9 @@ const ProductCard = (props: ProductCardProps) => {
       </Container>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <QuantitySelectorContainer>
-        <p>Elige cantidad</p>
-        <input type="number" value={quantityValue}  placeholder="Ingresa la cantidad" onChange={(value) => setQuantityValue(value.target.value)}/>
-        <button onClick={ () => handleOnClickQuantity()}>Aplicar</button>
+          <p>Elige cantidad</p>
+          <input type="number" value={quantityValue} placeholder="Ingresa la cantidad" onChange={(value) => setQuantityValue(value.target.value)} />
+          <button onClick={() => handleOnClickQuantity()}>Aplicar</button>
         </QuantitySelectorContainer>
       </Modal>
     </>

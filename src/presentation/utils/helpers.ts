@@ -79,7 +79,7 @@ export const createNewItem = (data: CartItemModel) => {
 };
 
 
-export const getUnavailableProduct = (cart:Cart ) => {
+export const getUnavailableProduct = (cart: Cart) => {
 
   const itemWithoutStock: Item[] | never = [];
 
@@ -87,7 +87,8 @@ export const getUnavailableProduct = (cart:Cart ) => {
     const availability = item.product.availability;
     if (
       availability === ProductAvailability.WITHOUTSTOCK ||
-      availability === ProductAvailability.CANNOTBEDELIVERED
+      availability === ProductAvailability.CANNOTBEDELIVERED ||
+      availability === ProductAvailability.UNAVAILABLE_ITEM_FULFILLMENT
     ) {
       const product = {
         ...item,

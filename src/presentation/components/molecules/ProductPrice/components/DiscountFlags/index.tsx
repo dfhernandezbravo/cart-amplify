@@ -5,101 +5,78 @@ import { DiscountPercent, Price, PriceContainer, PricesContainer } from "./style
 import { formattedCLP } from "@utils/helpers"
 
 enum PromotionType {
+  OFFER = 'OFFER',
   CENCOPAY = 'CENCOPAY',
   CAT = 'CAT',
-  OFFER = 'OFFER'
+  CAT_CENCOPAY = 'CAT_CENCOPAY',
+  CENCOPAY_SALDO = 'CENCOPAY_SALDO'
+}
+
+
+enum PriceType {
+  offer = 'offer',
+  brand = 'brand'
 }
 
 const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
 
 
-  const signInvertion = (value: number) => {
-    if (!value) return 0
-    return Math.abs(value)
-  }
+  const { offerPrice, brandPrice } = prices
 
-  const cencoPayPromotion = adjustment?.filter(promotion => promotion.id === PromotionType.CENCOPAY)
-  const cencosudPromotion = adjustment?.filter(promotion => promotion.id === PromotionType.CAT)
-  const offerPromotion = adjustment?.filter(promotion => promotion.id === PromotionType.OFFER)
+  const offerDiscount = adjustment?.filter(promotion => promotion.priceType === PriceType.offer)
+  const brandDiscount = adjustment?.filter(promotion => promotion.priceType === PriceType.brand)
 
-  const cencoPayDiscount = signInvertion(cencoPayPromotion[0]?.value)
-  const cencosudDiscount = signInvertion(cencosudPromotion[0]?.value)
-  const offerDiscount = signInvertion(offerPromotion[0]?.value)
 
-  const offerPrice = formattedCLP(prices.offerPrice * quantity)
+  const offerPriceQuantity = offerPrice && formattedCLP(offerPrice * quantity)
+
+  const replaceMinus = (value: string) => value.replace('-', '')
 
 
 
-
-  const CencopayPrice = () => {
-
-    const porcentage = cencoPayPromotion[0].percentageDiscount.replace('-', '')
-    return (
-      <PriceContainer>
-        <Price>{offerPrice}</Price>
-        <DiscountPercent>{porcentage}</DiscountPercent>
-        <Image src={'/icons/cart/cencopay-icon.svg'} width={40} height={40} alt="cencopay-icon" />
-      </PriceContainer>
-    )
-  }
-
-  const CencosudPrice = () => {
-    const porcentage = cencosudPromotion[0].percentageDiscount.replace('-', '')
-
-
-    return (
-      <PriceContainer>
-        <Price>{offerPrice}</Price>
-        <DiscountPercent>{porcentage}</DiscountPercent>
-        <Image src={'/icons/cart/tc-cencosud.svg'} width={40} height={40} alt="cencosud-icon" />
-      </PriceContainer>
-    )
+  const Flag = () => {
+    switch (brandDiscount[0].id) {
+      case PromotionType.CAT:
+        return <Image src={'/icons/cart/tc-cencosud.svg'} width={40} height={40} alt="cencosud-icon" />
+      case PromotionType.CENCOPAY:
+        return <Image src={'/icons/cart/cencopay-icon.svg'} width={40} height={40} alt="cencopay-icon" />
+      case PromotionType.CENCOPAY_SALDO:
+        return <Image src={'/icons/cart/cencopay-saldo.svg'} width={40} height={40} alt="cencopay-saldo-icon" />
+    }
   }
 
   const OfferPrice = () => {
-    const porcentage = offerPromotion[0].percentageDiscount.replace('-', '')
-
+    const porcentage = replaceMinus(offerDiscount[0].percentageDiscount)
     return (
       <PriceContainer>
-        <Price>{offerPrice}</Price>
+        <Price>{offerPriceQuantity}</Price>
         <DiscountPercent>{porcentage}</DiscountPercent>
       </PriceContainer>
     )
   }
 
-  if (offerDiscount >= cencoPayDiscount && offerDiscount >= cencosudDiscount) {
-    return <OfferPrice />
-  }
+  const BrandPrice = () => {
+    const porcentage = replaceMinus(brandDiscount[0].percentageDiscount)
 
-
-  if (cencosudDiscount > offerDiscount && cencosudDiscount > cencoPayDiscount) {
+    if (!brandPrice) return
     return (
       <PriceContainer>
-        <CencosudPrice />
-        <OfferPrice />
+        <Price>{formattedCLP(brandPrice)}</Price>
+        <DiscountPercent>{porcentage}</DiscountPercent>
+        <Flag />
       </PriceContainer>
     )
   }
 
-  if (cencoPayDiscount > offerDiscount && cencoPayDiscount > cencosudDiscount) {
-    return (
-      <PricesContainer>
-        <CencopayPrice />
-        <OfferPrice />
-      </PricesContainer>
-    )
+  if (offerPrice && brandPrice && offerPrice <= brandPrice) {
+    return <OfferPrice />
   }
 
-
-
-
-  // return (
-  //   <PricesContainer>
-  //     {cencoPayPromotion?.length ? <CencopayPrice /> : null}
-  //     {cencosudPromotion?.length ? <CencosudPrice /> : null}
-  //     {offerPromotion?.length ? <OfferPrice /> : null}
-  //   </PricesContainer>
-  // )
+  return (
+    <PricesContainer>
+      <OfferPrice />
+      <BrandPrice />
+    </PricesContainer>
+  )
 }
 
 export default DiscountFlags
