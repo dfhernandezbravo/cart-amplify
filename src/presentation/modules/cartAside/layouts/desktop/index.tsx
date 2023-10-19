@@ -7,7 +7,6 @@ import getCart from '@use-cases/cart/get-cart';
 
 const CartAsideDesktop = () => {
   const { cartId } = useAppSelector((state) => state.cart);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {

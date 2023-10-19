@@ -55,7 +55,7 @@ export const createNewItem = (data: CartItemModel) => {
       size: '',
       color: '',
       prices: {
-        brandPrice: undefined,
+        brandPrice: null,
         currency: '',
         normalPrice: data.items
           ? data.items[0].sellers![0]?.commertialOffer?.ListPrice
@@ -83,7 +83,8 @@ export const getUnavailableProduct = (cart: Cart) => {
     const availability = item.product.availability;
     if (
       availability === ProductAvailability.WITHOUTSTOCK ||
-      availability === ProductAvailability.CANNOTBEDELIVERED
+      availability === ProductAvailability.CANNOTBEDELIVERED ||
+      availability === ProductAvailability.UNAVAILABLE_ITEM_FULFILLMENT
     ) {
       const product = {
         ...item,

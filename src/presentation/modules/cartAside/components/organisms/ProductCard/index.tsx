@@ -33,9 +33,9 @@ const ProductCard = (props: ProductCardProps) => {
         <ProductBrand brand={item?.product?.brand} />
         <ProductName productName={item?.product?.description} />
         <ProductPrice
-          offerPrice={item?.product?.prices?.offerPrice}
-          normalPrice={item?.product?.prices?.normalPrice}
+          prices={item?.product?.prices}
           quantity={item?.quantity ?? 0}
+          adjustment={item?.adjustment}
         />
         <QuantitySelector
           index={index}
