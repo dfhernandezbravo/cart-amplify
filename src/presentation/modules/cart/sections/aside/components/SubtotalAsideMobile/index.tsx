@@ -17,7 +17,7 @@ const SubtotalAsideMobile = ({
     <div className="subtotal-wrapper">
       <SubtotalContainer>
         <div>
-          <p>SubTotal con tarjeta Cencosud </p>
+          <p>Total con tarjeta Cencosud </p>
           <Image
             src="/icons/cart/tc-cencosud.svg"
             alt="tarjeta cencosud"
@@ -29,7 +29,7 @@ const SubtotalAsideMobile = ({
       </SubtotalContainer>
 
       <SubtotalContainer>
-        <p>Subtotal con otros medios de pago</p>
+        <p>Total con otros medios de pago</p>
         <span>{formattedCLP(cartBFF?.totals?.totalCardPrice || 0)}</span>
       </SubtotalContainer>
       <CuponAsideMobile

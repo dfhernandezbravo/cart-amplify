@@ -23,7 +23,7 @@ export const ContainerMobile = styled.div`
 
   .price-container {
     display: flex;
-    padding: 5px 12px;
+    padding: 5px;
     justify-content: space-between;
   }
 

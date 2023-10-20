@@ -1,5 +1,5 @@
 import { Cart } from '@entities/cart/cart.entity';
-import { getUnavailableProduct } from '@utils/helpers';
+import { getUnavailableProduct } from '@utils/getUnavailabilityProduct';
 import { useMemo } from 'react';
 
 const useItemWithoutStock = (cart: Cart | undefined) => {

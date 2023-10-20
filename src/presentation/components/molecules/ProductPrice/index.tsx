@@ -14,7 +14,8 @@ const ProductPrice = (props: ProductPriceProps) => {
 
   // constants
   const hasDiscount =
-    prices.offerPrice && prices.offerPrice !== prices.normalPrice;
+    (prices.offerPrice && prices.offerPrice !== prices.normalPrice) ||
+    (prices.brandPrice && prices.brandPrice !== prices.normalPrice);
 
   return (
     <Container>

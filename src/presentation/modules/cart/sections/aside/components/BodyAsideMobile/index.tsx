@@ -22,11 +22,7 @@ const BodyAsideMobile = ({ openDetails }: StatePropValue) => {
           <span>{formattedCLP(cartBFF?.totals?.shippingPrice || 0)}</span>
         </div>
 
-        <div className="price-container">
-          <p>Servicio</p>
-          <span>$XX.XXX</span>
-        </div>
-        <Divider />
+        <Divider fullWidth={true} />
 
         <div className="price-container cupon-container">
           <Discounts />
@@ -35,7 +31,7 @@ const BodyAsideMobile = ({ openDetails }: StatePropValue) => {
           <p>Descuentos</p>
           <span>{formattedCLP(cartBFF?.totals?.discount || 0)}</span>
         </div>
-        <Divider />
+        <Divider fullWidth={true} />
       </div>
     </Container>
   );

@@ -7,12 +7,6 @@ import { CouponCode } from '@entities/cart/cart.entity';
 
 const httpInstance = bffWebInstance;
 
-httpInstance.interceptors.request.use(function (config) {
-  const checkoutAuth = Cookies.get('checkoutAuth');
-  config.headers.checkoutAuth = checkoutAuth ? checkoutAuth : '';
-  return config;
-});
-
 const cartService: CartService = {
   getCart: async (data) => {
     const url = `/shoppingcart/${data.cartId}`;
