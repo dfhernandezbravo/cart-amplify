@@ -1,5 +1,7 @@
+import { Adjustment, Prices } from '@entities/cart/cart.entity';
+
 export type ProductPriceProps = {
-  offerPrice: number;
-  normalPrice: number;
+  adjustment: Adjustment[];
+  prices: Prices;
   quantity: number;
 };

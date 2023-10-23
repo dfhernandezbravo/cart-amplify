@@ -35,6 +35,7 @@ export const ButtonContainer = styled.button`
   justify-content: space-between;
   font-family: inherit;
   width: 100%;
+  cursor: pointer;
 
   svg {
     width: 24px;

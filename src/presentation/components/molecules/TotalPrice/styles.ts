@@ -47,13 +47,14 @@ export const Container = styled.div`
   }
 
   &.cartAside {
-    span {
-      font-weight: 400;
-      color: #485760;
+    span:first-child {
+      font-size: 14px;
+      font-weight: 500;
+      color: #6e8391;
     }
 
     .totalPrice {
-      font-weight: 600;
+      color: #000000de;
     }
   }
 `;
@@ -64,7 +65,7 @@ export const Title = styled.span`
   font-weight: 500;
 
   @media screen and (max-width: 767px) {
-    max-width: 187px;
+    max-width: 209px;
     font-size: 15px;
   }
 `;

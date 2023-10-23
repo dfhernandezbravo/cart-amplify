@@ -24,7 +24,7 @@ export interface Item {
   index?: number;
 }
 
-interface Adjustment {
+export interface Adjustment {
   id: string;
   value: number;
   name: string;
@@ -140,11 +140,11 @@ export type AddressShipping = {
   countryfake?: string;
 };
 
-interface Prices {
+export interface Prices {
   currency: string;
   normalPrice: number;
-  offerPrice: number;
-  brandPrice?: number;
+  offerPrice: number | null;
+  brandPrice: number | null;
 }
 
 interface Seller {
@@ -216,4 +216,5 @@ export enum ProductAvailability {
   AVAILABLE = 'available',
   WITHOUTSTOCK = 'withoutStock',
   CANNOTBEDELIVERED = 'cannotBeDelivered',
+  UNAVAILABLE_ITEM_FULFILLMENT = 'unavailableItemFulfillment',
 }

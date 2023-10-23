@@ -15,10 +15,6 @@ httpInstance.interceptors.request.use(function (config) {
 
 const cartService: CartService = {
   getCart: async (data) => {
-    // const url = `/api/cart/getCartById/${data.cartId}`
-    // const response = await axios.get(url)
-    // return response
-
     const url = `/shoppingcart/${data.cartId}`;
     return httpInstance.get(url);
   },
