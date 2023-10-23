@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useAppSelector } from '@hooks/storeHooks';
 import { formattedCLP } from '@utils/helpers';
 import { TotalPriceCencosudProps } from './types';
@@ -23,6 +24,12 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
         <Skeleton />
       ) : (
         <span className="totalPrice">
+          <Image
+            src={'/icons/cart/tc-cencosud.svg'}
+            width={26}
+            height={26}
+            alt="cencosud-icon"
+          />
           {cartAside
             ? formattedCLP(calculateTotalWithoutShippingPrice())
             : formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}
