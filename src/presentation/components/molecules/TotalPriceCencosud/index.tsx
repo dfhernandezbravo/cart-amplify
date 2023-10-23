@@ -8,7 +8,13 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
   const { cartBFF, loading } = useAppSelector((state) => state.cart);
 
   // props
-  const { className } = props;
+  const { className, cartAside } = props;
+
+  const calculateTotalWithoutShippingPrice = () => {
+    const totalCardPrice = cartBFF?.totals?.totalCardPrice ?? 0;
+    const shippingPrice = cartBFF?.totals?.shippingPrice ?? 0;
+    return totalCardPrice - shippingPrice;
+  };
 
   return (
     <Container className={className}>
@@ -16,7 +22,11 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
       {loading ? (
         <Skeleton />
       ) : (
-        <span>{formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}</span>
+        <span className="totalPrice">
+          {cartAside
+            ? formattedCLP(calculateTotalWithoutShippingPrice())
+            : formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}
+        </span>
       )}
     </Container>
   );

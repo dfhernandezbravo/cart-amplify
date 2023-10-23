@@ -6,6 +6,11 @@ export type QuantitySelectedProps = {
   availableQuantity: number | null;
 };
 
+export type Hybridation = {
+  cartIdHybridation: string;
+  hasHybridation: boolean;
+};
+
 export type InitialState = {
   cartBFF: Cart | undefined;
   cartId: string;
@@ -13,6 +18,8 @@ export type InitialState = {
   loading: boolean;
   quantitySelected: QuantitySelectedProps;
   openDetailsMobile: boolean;
+  hybridation: Hybridation;
+  cartAsideIsOpen: boolean;
 };
 
 export interface CartItemModel {

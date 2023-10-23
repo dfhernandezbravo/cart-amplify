@@ -12,6 +12,7 @@ import dispatchCartDataEvent from '@use-cases/cart/dispatch-cart-data-event';
 import deleteItem from '@use-cases/cart/delete-item';
 import { RootState } from '@hooks/storeHooks';
 import { Item } from '@entities/cart/cart.entity';
+import addItem from '@use-cases/cart/add-item';
 
 export const quantitySelected = {
   quantity: null,
@@ -26,6 +27,8 @@ const initialValue: InitialState = {
   loading: false,
   quantitySelected,
   openDetailsMobile: false,
+  hybridation: { cartIdHybridation: '', hasHybridation: false },
+  cartAsideIsOpen: false,
 };
 
 const cartSlice = createSlice({
@@ -115,14 +118,26 @@ const cartSlice = createSlice({
     setCouponId: (state, { payload }) => {
       state.couponId = payload;
     },
+    setHybridation: (state, { payload }) => {
+      state.hybridation = payload;
+    },
+    setCartAsideIsOpen: (state, { payload }) => {
+      state.cartAsideIsOpen = payload;
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(getCart.pending, (state) => {
-      state.loading = true;
-    });
     builder
+      .addCase(getCart.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(getCart.fulfilled, (state, { payload }) => {
-        console.log('payload ', payload);
+        state.cartBFF = payload;
+        state.loading = false;
+      })
+      .addCase(addItem.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addItem.fulfilled, (state, { payload }) => {
         state.cartBFF = payload;
         state.loading = false;
       })
@@ -132,7 +147,8 @@ const cartSlice = createSlice({
       .addCase(updateItem.fulfilled, (state, { payload }) => {
         const { index, quantity } = state.quantitySelected;
 
-        state.cartBFF = payload ?? state.cartBFF;
+        // state.cartBFF = payload ?? state.cartBFF; TODO: Revisar
+        state.cartBFF = payload;
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
 

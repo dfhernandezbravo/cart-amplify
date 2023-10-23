@@ -45,6 +45,17 @@ export const Container = styled.div`
       }
     }
   }
+
+  &.cartAside {
+    span {
+      font-weight: 400;
+      color: #485760;
+    }
+
+    .totalPrice {
+      font-weight: 600;
+    }
+  }
 `;
 
 export const Title = styled.span`
