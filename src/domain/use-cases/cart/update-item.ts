@@ -7,7 +7,6 @@ const updateItem = createAsyncThunk(
   async (dataRequest: UpdateItemRequest) => {
     try {
       const { data } = await cartService.updateItem(dataRequest);
-
       return data;
     } catch (error) {
       console.error(error);

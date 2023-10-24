@@ -45,6 +45,18 @@ export const Container = styled.div`
       }
     }
   }
+
+  &.cartAside {
+    span:first-child {
+      font-size: 14px;
+      font-weight: 500;
+      color: #6e8391;
+    }
+
+    .totalPrice {
+      color: #000000de;
+    }
+  }
 `;
 
 export const Title = styled.span`
@@ -53,7 +65,7 @@ export const Title = styled.span`
   font-weight: 500;
 
   @media screen and (max-width: 767px) {
-    max-width: 187px;
+    max-width: 209px;
     font-size: 15px;
   }
 `;

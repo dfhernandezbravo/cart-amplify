@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { MouseEvent, useMemo, useState } from 'react';
+import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import { SwipeableDrawer } from '@mui/material';
 import { selectTotalProductsInCart } from '@store/cart';
 import cartSlice from '@store/cart';
@@ -16,10 +16,16 @@ import handlePayloadError from '@use-cases/error/handle-payload-errors';
 
 import { Cart } from '@entities/cart/cart.entity';
 import totalProductInCart from '@utils/totalProduct';
+import getCart from '@use-cases/cart/get-cart';
+import updateItem from '@use-cases/cart/update-item';
+import addItem from '@use-cases/cart/add-item';
+import HybridationEvents from '../../../../../hybridationEvents';
 
 const CartAsideContainer = () => {
   // hooks
-  const { cartBFF } = useAppSelector((state) => state.cart);
+  const { cartBFF, hybridation, cartAsideIsOpen, cartId } = useAppSelector(
+    (state) => state.cart,
+  );
   const dispatch = useAppDispatch();
   const totalProducts = useMemo(
     () => totalProductInCart(cartBFF as Cart),
@@ -31,10 +37,11 @@ const CartAsideContainer = () => {
     addProductInCart,
     simulateAddProduct,
     simulateRemoveProduct,
+    setCartAsideIsOpen,
+    setHybridation,
   } = cartSlice.actions;
 
-  // states
-  const [isOpen, setIsOpen] = useState(true);
+  const { cartIdHybridation, hasHybridation } = hybridation;
 
   // methods
   const methods = {
@@ -70,7 +77,7 @@ const CartAsideContainer = () => {
     handleSetIsOpen: (event: Event) => {
       event.preventDefault();
       const customEvent = event as CustomEvent;
-      setIsOpen(customEvent.detail?.open);
+      dispatch(setCartAsideIsOpen(customEvent.detail?.open));
     },
     handleAddProductEvent: (event: Event) => {
       event.preventDefault();
@@ -82,12 +89,12 @@ const CartAsideContainer = () => {
         const cartError = handlePayloadError(customEventError[0]);
         dispatch(setError(cartError));
       }
-      setIsOpen(true);
+      dispatch(setCartAsideIsOpen(true));
     },
     handleCloseOverlay: (event: MouseEvent<HTMLDivElement>) => {
       event.preventDefault();
       if (event.target === event.currentTarget) {
-        setIsOpen(false);
+        dispatch(setCartAsideIsOpen(false));
       }
     },
     handleGetCartId: (event: Event) => {
@@ -99,7 +106,7 @@ const CartAsideContainer = () => {
       event.preventDefault();
       const customEvent = event as CustomEvent;
       dispatch(simulateAddProduct(customEvent.detail?.product));
-      setIsOpen(true);
+      dispatch(setCartAsideIsOpen(true));
     },
     handleAddProductErrorEvent: (event: Event) => {
       event.preventDefault();
@@ -113,34 +120,134 @@ const CartAsideContainer = () => {
         dispatch(simulateRemoveProduct(customEvent.detail?.data.itemId));
       }, 4000);
     },
+    handleHybridationMessages: (event: MessageEvent) => {
+      const key = Object.keys(event?.data);
+
+      if (key?.length > 0 && key[0] === HybridationEvents.HYBRIDATION) {
+        const { cartId: cartIdHybridation, isEnabledMiniCart } = JSON.parse(
+          event?.data?.HYBRIDATION,
+        );
+        dispatch(
+          setHybridation({
+            cartIdHybridation,
+            hasHybridation: isEnabledMiniCart,
+          }),
+        );
+      }
+
+      if (key?.length > 0 && key[0] === HybridationEvents.MINICART_OPEN) {
+        dispatch(setCartAsideIsOpen(event?.data?.MINICART_OPEN));
+      }
+
+      if (
+        key?.length > 0 &&
+        key[0] === HybridationEvents.VTEX_PRODUCT_ADD_TO_CART
+      ) {
+        const { productReference, quantityValue } =
+          event?.data?.VTEX_PRODUCT_ADD_TO_CART;
+
+        const productInCart = cartBFF?.items?.find(
+          (item) => item.product.id === productReference,
+        );
+
+        if (productInCart) {
+          const productIndex = cartBFF?.items?.findIndex(
+            (item) => item.product.id === productReference,
+          );
+
+          if (productIndex !== undefined && productIndex !== -1) {
+            dispatch(
+              updateItem({
+                cartId,
+                items: [
+                  {
+                    index: productIndex,
+                    quantity: quantityValue
+                      ? productInCart.quantity + parseInt(quantityValue)
+                      : productInCart.quantity + 1,
+                  },
+                ],
+              }),
+            );
+          }
+        } else {
+          dispatch(
+            addItem({
+              cartId,
+              items: [
+                {
+                  quantity: quantityValue ? parseInt(quantityValue) : 1,
+                  id: productReference,
+                },
+              ],
+            }),
+          );
+        }
+      }
+    },
   };
   methods.initialize();
 
+  useEffect(() => {
+    if (hasHybridation) {
+      dispatch(addCartId(cartIdHybridation));
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('message', methods.handleHybridationMessages);
+    return () => {
+      window.removeEventListener('message', methods.handleHybridationMessages);
+    };
+  }, [window, methods.handleHybridationMessages]);
+
+  useEffect(() => {
+    if (cartId) {
+      dispatch(getCart({ cartId }));
+    }
+  }, [cartId]);
+
   return (
-    <SwipeableDrawer
-      anchor="right"
-      open={isOpen}
-      onClose={() => setIsOpen(false)}
-      onOpen={() => setIsOpen(true)}
-      transitionDuration={300}
-      PaperProps={{
-        sx: {
-          minWidth: '280px',
-          width: '90%',
-          maxWidth: '400px',
-        },
-      }}
-    >
-      <Header setIsOpen={setIsOpen} />
-      {totalProducts > 0 ? (
+    <>
+      {hasHybridation ? (
         <>
-          <Body />
-          <Footer />
+          <Header />
+          {totalProducts > 0 ? (
+            <>
+              <Body />
+              <Footer />
+            </>
+          ) : (
+            <EmptyBody />
+          )}
         </>
       ) : (
-        <EmptyBody />
+        <SwipeableDrawer
+          anchor="right"
+          open={cartAsideIsOpen}
+          onClose={() => dispatch(setCartAsideIsOpen(false))}
+          onOpen={() => dispatch(setCartAsideIsOpen(true))}
+          transitionDuration={300}
+          PaperProps={{
+            sx: {
+              minWidth: '280px',
+              width: '90%',
+              maxWidth: '400px',
+            },
+          }}
+        >
+          <Header />
+          {totalProducts > 0 ? (
+            <>
+              <Body />
+              <Footer />
+            </>
+          ) : (
+            <EmptyBody />
+          )}
+        </SwipeableDrawer>
       )}
-    </SwipeableDrawer>
+    </>
   );
 };
 export default CartAsideContainer;

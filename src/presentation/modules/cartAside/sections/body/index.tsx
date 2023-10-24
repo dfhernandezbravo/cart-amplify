@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import _ from 'lodash';
 import cartSlice from '@store/cart';
-import { selectError } from '@store/error';
+// import { selectError } from '@store/error';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import ProductCard from '@modules/cartAside/components/organisms/ProductCard';
-import MinicartError from '@modules/cart/components/molecules/MinicartError';
+// import MinicartError from '@modules/cart/components/molecules/MinicartError';
 import { Item } from '@entities/cart/cart.entity';
 import updateItem from '@use-cases/cart/update-item';
 import deleteItem from '@use-cases/cart/delete-item';
@@ -16,7 +16,7 @@ const Body = () => {
   // Hooks
   const { cartId, cartBFF } = useAppSelector((state) => state.cart);
   const itemWithoutStock = useItemWithoutStock(cartBFF);
-  const { error } = useAppSelector(selectError);
+  // const { error } = useAppSelector(selectError);
   const dispatch = useAppDispatch();
   const { decrementProductQuantity, incrementProductQuantity, removeProduct } =
     cartSlice.actions;

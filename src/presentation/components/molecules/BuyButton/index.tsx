@@ -2,11 +2,13 @@ import { useRouter } from 'next/router';
 import { useAppSelector } from '@hooks/storeHooks';
 import Button from '@components/atoms/Button';
 import { BuyButtonProps } from './types';
+import Link from 'next/link';
 
 const BuyButton = (props: BuyButtonProps) => {
   const router = useRouter();
-  const { cartBFF } = useAppSelector((state) => state.cart);
+  const { cartBFF, hybridation } = useAppSelector((state) => state.cart);
 
+  const { hasHybridation } = hybridation;
   const { text } = props;
 
   const handleClickBtn = () => {
@@ -16,9 +18,20 @@ const BuyButton = (props: BuyButtonProps) => {
   };
 
   return (
-    <Button className="buyBtn fullWidth" onClick={handleClickBtn}>
-      {text}
-    </Button>
+    <>
+      {!hasHybridation ? (
+        <Button className="buyBtn fullWidth" onClick={handleClickBtn}>
+          {text}
+        </Button>
+      ) : (
+        <Link
+          href={`${process.env.NEXT_PUBLIC_CHECKOUT_URL}${cartBFF?.id}`}
+          target="_parent"
+        >
+          <Button className="buyBtn fullWidth">{text}</Button>
+        </Link>
+      )}
+    </>
   );
 };
 

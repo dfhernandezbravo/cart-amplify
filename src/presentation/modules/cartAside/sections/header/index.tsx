@@ -1,21 +1,35 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { GrClose } from 'react-icons/gr';
-import { HeaderProps } from './types';
-import { useAppSelector } from '@hooks/storeHooks';
+// import { HeaderProps } from './types';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import totalProductInCart from '@utils/totalProduct';
 import { Cart } from '@entities/cart/cart.entity';
 import { Title } from './styles';
+import cartSlice from '@store/cart';
 
-const Header = (props: HeaderProps) => {
-  // const totalProducts = useAppSelector(selectTotalProductsInCart);
-  const { cartBFF } = useAppSelector((state) => state.cart);
+const Header = () => {
+  const dispatch = useAppDispatch();
+  const { cartBFF, hybridation } = useAppSelector((state) => state.cart);
+  const { setCartAsideIsOpen } = cartSlice.actions;
+  const { hasHybridation } = hybridation;
 
   const totalProducts = useMemo(
     () => totalProductInCart(cartBFF as Cart),
     [cartBFF],
   );
 
-  const { setIsOpen } = props;
+  // Hybridation
+  const closeCartHybridation = () => {
+    window.parent.postMessage({ HYBRIDATION_CLOSE_MINICART: true }, '*');
+    dispatch(setCartAsideIsOpen(false));
+  };
+
+  useEffect(() => {
+    window.parent.postMessage(
+      { HYBRIDATION_UPDATE_QUANTITY: totalProducts },
+      '*',
+    );
+  }, [totalProducts]);
 
   return (
     <Title>
@@ -27,7 +41,13 @@ const Header = (props: HeaderProps) => {
           </span>
         )}
       </div>
-      <GrClose onClick={() => setIsOpen(false)} />
+      <GrClose
+        onClick={
+          hasHybridation
+            ? () => closeCartHybridation()
+            : () => dispatch(setCartAsideIsOpen(false))
+        }
+      />
     </Title>
   );
 };
