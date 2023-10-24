@@ -12,6 +12,7 @@ import PurchaseSummaryDisabled from '../PurchaseSummaryDisabled';
 import Modal from '@components/atoms/Modal';
 import Discounts from '../../molecules/Discounts';
 import { Skeleton } from '@components/molecules/TotalPriceCencosud/styles';
+import TotalCencopayPrice from '@components/molecules/TotalCencopayPrice';
 const PurchaseSummary = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -68,14 +69,17 @@ const PurchaseSummary = () => {
             <span>{formattedCLP(cartBFF?.totals?.subtotal ?? 0)}</span>
           )}
         </p>
-        <p>
-          Costo de envío desde{' '}
-          {loading ? (
-            <Skeleton />
-          ) : (
-            <span>{formattedCLP(cartBFF?.totals?.shippingPrice ?? 0)}</span>
-          )}
-        </p>
+        {cartBFF?.totals?.shippingPrice ? (
+          <p>
+            Costo de envío desde{' '}
+            {loading ? (
+              <Skeleton />
+            ) : (
+              <span>{formattedCLP(cartBFF?.totals?.shippingPrice)}</span>
+            )}
+          </p>
+        ) : null}
+
         <Divider fullWidth={true} className="light" />
         <p>
           Descuentos:{' '}
@@ -89,7 +93,7 @@ const PurchaseSummary = () => {
         </p>
         <Discounts />
         <Divider fullWidth={true} className="light" />
-
+        <TotalCencopayPrice />
         <TotalPriceCencosud className="purchaseSummary" />
         <TotalPrice className="purchaseSummary" />
         {/* <BuyButton text="Ir a comprar" /> */}

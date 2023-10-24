@@ -1,12 +1,8 @@
 import { formattedCLP } from '@utils/helpers';
 import { ProductPriceProps } from './types';
-import {
-  Container,
-  NormalPrice,
-  FullPrice,
-  OfferPriceContainer,
-} from './styles';
 import DiscountFlags from './components/DiscountFlags';
+import PriceWithoutDiscount from './components/DiscountFlags/PriceWithoutDiscount';
+import { Container, NormalPrice, OfferPriceContainer } from './styles';
 
 const ProductPrice = (props: ProductPriceProps) => {
   // props
@@ -21,7 +17,11 @@ const ProductPrice = (props: ProductPriceProps) => {
     <Container>
       <OfferPriceContainer>
         {!hasDiscount && (
-          <FullPrice>{formattedCLP(prices.normalPrice * quantity)}</FullPrice>
+          <PriceWithoutDiscount
+            adjustment={adjustment}
+            prices={prices}
+            quantity={quantity}
+          />
         )}
         {hasDiscount && (
           <DiscountFlags

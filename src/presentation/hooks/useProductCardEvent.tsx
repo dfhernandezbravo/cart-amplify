@@ -11,12 +11,13 @@ import deleteItem from '@use-cases/cart/delete-item';
 
 import { quantitySelected as defaultQuantity } from '@store/cart';
 import { changeOfAmount } from '@components/atoms/ToastContainer/customMessage';
+import { PromotionType } from '@entities/cart/promotions';
 
 const useProductCardEvent = (cartId: string) => {
   const [updatedIndexItem, setUpdatedIndexItem] =
     useState<QuantitySelectedProps | null>(null);
 
-  const { quantitySelected } = useAppSelector((state) => state.cart);
+  const { quantitySelected, cartBFF } = useAppSelector((state) => state.cart);
   const { setQuantitySelected } = cartSlice.actions;
   const dispatch = useAppDispatch();
 
@@ -47,6 +48,17 @@ const useProductCardEvent = (cartId: string) => {
   };
 
   useEffect(() => {
+    const productIndex = quantitySelected?.index as number;
+    const productId = cartBFF?.items[productIndex]?.product.id;
+    const productModified = cartBFF?.items.filter(
+      (item) => item.product.id === productId,
+    );
+    const isMxnPromotion = productModified?.filter(
+      (product) => product.adjustment[0]?.id === PromotionType.MxN,
+    );
+
+    if (isMxnPromotion?.length) return;
+
     if (quantitySelected.availableQuantity) {
       setUpdatedIndexItem(quantitySelected);
       dispatch(setQuantitySelected(quantitySelected));

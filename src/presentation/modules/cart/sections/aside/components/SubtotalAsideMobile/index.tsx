@@ -5,16 +5,19 @@ import { useAppSelector } from '@hooks/storeHooks';
 import { formattedCLP } from '@utils/helpers';
 
 import { SubtotalContainer } from './styles';
+import TotalCencopayPrice from '@components/molecules/TotalCencopayPrice';
+import { Skeleton } from '@components/molecules/TotalPriceCencosud/styles';
 
 const SubtotalAsideMobile = ({
   openDetails,
   isCuponContainerOpen,
   setIsCuponContainerOpen,
 }: StateCuponProps) => {
-  const { cartBFF } = useAppSelector((state) => state.cart);
+  const { cartBFF, loading } = useAppSelector((state) => state.cart);
 
   return (
     <div className="subtotal-wrapper">
+      <TotalCencopayPrice />
       <SubtotalContainer>
         <div>
           <p>Total con tarjeta Cencosud </p>
@@ -25,12 +28,21 @@ const SubtotalAsideMobile = ({
             height={20}
           />
         </div>
-        <span>{formattedCLP(cartBFF?.totals?.totalCardPrice || 0)}</span>
+        {loading ? (
+          <Skeleton />
+        ) : (
+          <span>{formattedCLP(cartBFF?.totals?.totalCardPrice || 0)}</span>
+        )}
       </SubtotalContainer>
 
       <SubtotalContainer>
         <p>Total con otros medios de pago</p>
-        <span>{formattedCLP(cartBFF?.totals?.totalCardPrice || 0)}</span>
+
+        {loading ? (
+          <Skeleton />
+        ) : (
+          <span>{formattedCLP(cartBFF?.totals?.totalPrice || 0)}</span>
+        )}
       </SubtotalContainer>
       <CuponAsideMobile
         openDetails={openDetails}
