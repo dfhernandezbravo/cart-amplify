@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useAppSelector } from '@hooks/storeHooks';
 import { formattedCLP } from '@utils/helpers';
 import { TotalPriceCencosudProps } from './types';
@@ -8,7 +9,13 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
   const { cartBFF, loading } = useAppSelector((state) => state.cart);
 
   // props
-  const { className } = props;
+  const { className, cartAside } = props;
+
+  const calculateTotalWithoutShippingPrice = () => {
+    const totalCardPrice = cartBFF?.totals?.totalCardPrice ?? 0;
+    const shippingPrice = cartBFF?.totals?.shippingPrice ?? 0;
+    return totalCardPrice - shippingPrice;
+  };
 
   return (
     <Container className={className}>
@@ -16,7 +23,17 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
       {loading ? (
         <Skeleton />
       ) : (
-        <span>{formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}</span>
+        <span className="totalPrice">
+          <Image
+            src={'/icons/cart/tc-cencosud.svg'}
+            width={26}
+            height={26}
+            alt="cencosud-icon"
+          />
+          {cartAside
+            ? formattedCLP(calculateTotalWithoutShippingPrice())
+            : formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}
+        </span>
       )}
     </Container>
   );

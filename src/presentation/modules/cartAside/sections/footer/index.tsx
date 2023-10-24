@@ -7,8 +7,8 @@ import { FooterContainer } from './styles';
 const Footer = () => {
   return (
     <FooterContainer>
-      <TotalPriceCencosud />
-      <TotalPrice />
+      <TotalPriceCencosud className="cartAside" cartAside={true} />
+      <TotalPrice className="cartAside" cartAside={true} />
       <BuyButton text="Comprar ahora" />
       <GoToCartButton />
     </FooterContainer>
