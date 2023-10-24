@@ -7,8 +7,6 @@ export const typeOfCluster = (offer: string) => {
       return 'experto';
     case PromotionType.COLABOLADOR:
       return 'colaborador';
-    case PromotionType.X_UNIDAD:
-      return '2da unidad';
     default:
       return null;
   }

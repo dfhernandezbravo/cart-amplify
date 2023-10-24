@@ -7,9 +7,10 @@ import { Adjustment } from '@entities/cart/cart.entity';
 interface Props {
   brandPrice: number;
   brandDiscount: Adjustment[];
+  quantity: number;
 }
 
-const BrandPrice = ({ brandPrice, brandDiscount }: Props) => {
+const BrandPrice = ({ brandPrice, brandDiscount, quantity }: Props) => {
   if (!brandPrice) return null;
 
   const porcentage = replaceCharacter(
@@ -19,7 +20,7 @@ const BrandPrice = ({ brandPrice, brandDiscount }: Props) => {
   );
   return (
     <PriceContainer>
-      <Price>{formattedCLP(brandPrice)}</Price>
+      <Price>{formattedCLP(brandPrice * quantity)}</Price>
       <DiscountPercent>{porcentage}</DiscountPercent>
       <Flags brandId={brandDiscount[0].id} />
     </PriceContainer>

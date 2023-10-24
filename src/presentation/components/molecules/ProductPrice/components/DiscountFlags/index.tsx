@@ -22,7 +22,7 @@ const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
   const isCluster =
     offerId === PromotionType.EXPERTO_PREFERENTE ||
     offerId === PromotionType.EXPERTO ||
-    offerId === PromotionType.X_UNIDAD;
+    offerId === PromotionType.COLABOLADOR;
 
   const NormalPrice = () => {
     return <FullPrice>{formattedCLP(prices.normalPrice * quantity)}</FullPrice>;
@@ -41,7 +41,11 @@ const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
   if (!offerPrice && brandPrice) {
     return (
       <PricesContainer>
-        <BrandPrice brandPrice={brandPrice} brandDiscount={brandDiscount} />
+        <BrandPrice
+          brandPrice={brandPrice}
+          brandDiscount={brandDiscount}
+          quantity={quantity}
+        />
         <NormalPrice />
       </PricesContainer>
     );
@@ -62,6 +66,7 @@ const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
       <BrandPrice
         brandPrice={brandPrice as number}
         brandDiscount={brandDiscount}
+        quantity={quantity}
       />
       <OfferPrice
         offerDiscount={offerDiscount}

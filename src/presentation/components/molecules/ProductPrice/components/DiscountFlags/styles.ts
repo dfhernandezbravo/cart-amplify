@@ -51,7 +51,7 @@ export const WrapperClusterPrice = styled.div<ClusterProps>`
 
   & .cluster-percent {
     border-top-left-radius: 6px;
-    border-bottom-left-radius: 6%;
+    border-bottom-left-radius: 6px;
     padding: 4px;
     background: ${({ cluster }) =>
       cluster === 'experto'

@@ -7,7 +7,6 @@ export enum PromotionType {
   EXPERTO = 'EXPERTO',
   EXPERTO_PREFERENTE = 'EXPERTO_PREFERENTE',
   COLABOLADOR = 'COLABORADOR',
-  X_UNIDAD = 'X_UNIDAD',
   MxN = 'MxN',
 }
 
