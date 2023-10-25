@@ -19,7 +19,11 @@ import {
 import AvailableQuantity from './components/AvailableQuantity';
 import Modal from '@components/atoms/Modal';
 
+import mockData from './mock-data.json';
+
 const ProductCard = (props: ProductCardProps) => {
+  // const item = mockData.items[0]
+
   const { item, onRemoveFromCart, handleChangeQuantity, itemStockModify } =
     props;
 

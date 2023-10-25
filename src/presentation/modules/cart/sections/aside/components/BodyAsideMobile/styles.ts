@@ -7,6 +7,10 @@ export const Container = styled.div<StatePropValue>`
   overflow: hidden;
   transition: max-height 1s ease 0s;
 
+  & .content-wrapper {
+    padding: 0 10px;
+  }
+
   & .price-container p {
     color: #6e8391;
     font-size: 15px;

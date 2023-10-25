@@ -71,6 +71,7 @@ interface Totals {
   shippingPrice: number;
   totalCardPrice: number;
   totalPrice: number;
+  totalCencoPay: number;
 }
 
 interface MessagesError {

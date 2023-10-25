@@ -5,12 +5,17 @@ import TotalPrice from '@components/molecules/TotalPrice';
 import PromotionalCode from '@modules/cart/components/molecules/PromotionalCode';
 import { useAppSelector, useAppDispatch } from '@hooks/storeHooks';
 import deleteItem from '@use-cases/cart/delete-item';
-import { formattedCLP, getUnavailableProduct } from '@utils/helpers';
+import { formattedCLP } from '@utils/helpers';
+import { getUnavailableProduct } from '@utils/getUnavailabilityProduct';
 import { Container, Divider, ModalContainer } from './styles';
 import PurchaseSummaryDisabled from '../PurchaseSummaryDisabled';
 import Modal from '@components/atoms/Modal';
 import Discounts from '../../molecules/Discounts';
 import { Skeleton } from '@components/molecules/TotalPriceCencosud/styles';
+import TotalCencopayPrice from '@components/molecules/TotalCencopayPrice';
+import SubtotalPrice from '@components/molecules/SubtotalPrice';
+import ShippinPrice from '@components/molecules/ShippingPrice';
+import TotalPriceDiscount from '@components/molecules/TotalPriceDiscount';
 const PurchaseSummary = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -59,36 +64,13 @@ const PurchaseSummary = () => {
       <Container>
         <h1>Resumen de mi compra</h1>
         <Divider fullWidth={true} />
-        <p>
-          Subtotal
-          {loading ? (
-            <Skeleton />
-          ) : (
-            <span>{formattedCLP(cartBFF?.totals?.subtotal ?? 0)}</span>
-          )}
-        </p>
-        <p>
-          Costo de envío desde{' '}
-          {loading ? (
-            <Skeleton />
-          ) : (
-            <span>{formattedCLP(cartBFF?.totals?.shippingPrice ?? 0)}</span>
-          )}
-        </p>
+        <SubtotalPrice />
+        <ShippinPrice />
         <Divider fullWidth={true} className="light" />
-        <p>
-          Descuentos:{' '}
-          {loading ? (
-            <Skeleton />
-          ) : (
-            <span>
-              -{formattedCLP(Math.abs(cartBFF?.totals?.discount ?? 0))}
-            </span>
-          )}
-        </p>
+        <TotalPriceDiscount />
         <Discounts />
         <Divider fullWidth={true} className="light" />
-
+        <TotalCencopayPrice />
         <TotalPriceCencosud className="purchaseSummary" />
         <TotalPrice className="purchaseSummary" />
         {/* <BuyButton text="Ir a comprar" /> */}

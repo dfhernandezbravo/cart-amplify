@@ -1,105 +1,78 @@
-import Image from 'next/image';
-import { ProductPriceProps } from '../../types';
-import {
-  DiscountPercent,
-  Price,
-  PriceContainer,
-  PricesContainer,
-} from './styles';
+import ClusterPrice from './ClusterPrice';
+import OfferPrice from './OfferPrice';
+import BrandPrice from './BrandPrice';
 import { formattedCLP } from '@utils/helpers';
-
-enum PromotionType {
-  OFFER = 'OFFER',
-  CENCOPAY = 'CENCOPAY',
-  CAT = 'CAT',
-  CAT_CENCOPAY = 'CAT_CENCOPAY',
-  CENCOPAY_SALDO = 'CENCOPAY_SALDO',
-}
-
-enum PriceType {
-  offer = 'offer',
-  brand = 'brand',
-}
+import { ProductPriceProps } from '../../types';
+import { PriceType, PromotionType } from '@entities/cart/promotions';
+import { FullPrice } from '../../styles';
+import { PricesContainer } from './styles';
 
 const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
   const { offerPrice, brandPrice } = prices;
-
   const offerDiscount = adjustment?.filter(
     (promotion) => promotion.priceType === PriceType.offer,
   );
+
   const brandDiscount = adjustment?.filter(
     (promotion) => promotion.priceType === PriceType.brand,
   );
 
-  const offerPriceQuantity = offerPrice && formattedCLP(offerPrice * quantity);
+  const offerId = offerDiscount[0]?.id;
 
-  const replaceMinus = (value: string) => value.replace('-', '');
+  const isCluster =
+    offerId === PromotionType.EXPERTO_PREFERENTE ||
+    offerId === PromotionType.EXPERTO ||
+    offerId === PromotionType.COLABOLADOR;
 
-  const Flag = () => {
-    switch (brandDiscount[0].id) {
-      case PromotionType.CAT:
-        return (
-          <Image
-            src={'/icons/cart/tc-cencosud.svg'}
-            width={40}
-            height={40}
-            alt="cencosud-icon"
-          />
-        );
-      case PromotionType.CENCOPAY:
-        return (
-          <Image
-            src={'/icons/cart/cencopay-icon.svg'}
-            width={40}
-            height={40}
-            alt="cencopay-icon"
-          />
-        );
-      case PromotionType.CENCOPAY_SALDO:
-        return (
-          <Image
-            src={'/icons/cart/cencopay-saldo.svg'}
-            width={40}
-            height={40}
-            alt="cencopay-saldo-icon"
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
-  const OfferPrice = () => {
-    const porcentage = replaceMinus(offerDiscount[0].percentageDiscount);
-    return (
-      <PriceContainer>
-        <Price>{offerPriceQuantity}</Price>
-        <DiscountPercent>{porcentage}</DiscountPercent>
-      </PriceContainer>
-    );
-  };
-
-  const BrandPrice = () => {
-    const porcentage = replaceMinus(brandDiscount[0].percentageDiscount);
-
-    if (!brandPrice) return null;
-    return (
-      <PriceContainer>
-        <Price>{formattedCLP(brandPrice)}</Price>
-        <DiscountPercent>{porcentage}</DiscountPercent>
-        <Flag />
-      </PriceContainer>
-    );
+  const NormalPrice = () => {
+    return <FullPrice>{formattedCLP(prices.normalPrice * quantity)}</FullPrice>;
   };
 
   if (offerPrice && brandPrice && offerPrice <= brandPrice) {
-    return <OfferPrice />;
+    return (
+      <OfferPrice
+        offerDiscount={offerDiscount}
+        offerPrice={offerPrice}
+        quantity={quantity}
+      />
+    );
+  }
+
+  if (!offerPrice && brandPrice) {
+    return (
+      <PricesContainer>
+        <BrandPrice
+          brandPrice={brandPrice}
+          brandDiscount={brandDiscount}
+          quantity={quantity}
+        />
+        <NormalPrice />
+      </PricesContainer>
+    );
+  }
+
+  if (offerPrice && !brandPrice && isCluster) {
+    return (
+      <ClusterPrice
+        offerDiscount={offerDiscount}
+        offerPrice={offerPrice}
+        quantity={quantity}
+      />
+    );
   }
 
   return (
     <PricesContainer>
-      <OfferPrice />
-      <BrandPrice />
+      <BrandPrice
+        brandPrice={brandPrice as number}
+        brandDiscount={brandDiscount}
+        quantity={quantity}
+      />
+      <OfferPrice
+        offerDiscount={offerDiscount}
+        offerPrice={offerPrice as number}
+        quantity={quantity}
+      />
     </PricesContainer>
   );
 };

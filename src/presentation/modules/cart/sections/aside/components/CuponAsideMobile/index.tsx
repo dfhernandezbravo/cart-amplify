@@ -55,7 +55,8 @@ const CuponAsideMobile = ({
     };
     const response = await dispatch(addCouponCode(data));
     if (response?.payload === undefined) {
-      couponNoValidToast();
+      couponNoValidToast({ position: 'top-center' });
+      setCouponCodeValue('');
       return;
     }
     valueHasChangeToast({ position: 'top-center' });

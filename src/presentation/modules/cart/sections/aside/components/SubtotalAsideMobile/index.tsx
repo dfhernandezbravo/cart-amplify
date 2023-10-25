@@ -1,43 +1,26 @@
-import Image from 'next/image';
 import { StateCuponProps } from '../HaderAsideMobile/HeaderAsideMobile.types';
 import CuponAsideMobile from '../CuponAsideMobile';
-import { useAppSelector } from '@hooks/storeHooks';
-import { formattedCLP } from '@utils/helpers';
-
-import { SubtotalContainer } from './styles';
+import { Container } from './styles';
+import TotalCencopayPrice from '@components/molecules/TotalCencopayPrice';
+import TotalPriceCencosud from '@components/molecules/TotalPriceCencosud';
+import TotalPrice from '@components/molecules/TotalPrice';
 
 const SubtotalAsideMobile = ({
   openDetails,
   isCuponContainerOpen,
   setIsCuponContainerOpen,
 }: StateCuponProps) => {
-  const { cartBFF } = useAppSelector((state) => state.cart);
-
   return (
-    <div className="subtotal-wrapper">
-      <SubtotalContainer>
-        <div>
-          <p>SubTotal con tarjeta Cencosud </p>
-          <Image
-            src="/icons/cart/tc-cencosud.svg"
-            alt="tarjeta cencosud"
-            width={40}
-            height={20}
-          />
-        </div>
-        <span>{formattedCLP(cartBFF?.totals?.totalCardPrice || 0)}</span>
-      </SubtotalContainer>
-
-      <SubtotalContainer>
-        <p>Subtotal con otros medios de pago</p>
-        <span>{formattedCLP(cartBFF?.totals?.totalCardPrice || 0)}</span>
-      </SubtotalContainer>
+    <Container>
+      <TotalCencopayPrice />
+      <TotalPriceCencosud />
+      <TotalPrice />
       <CuponAsideMobile
         openDetails={openDetails}
         isCuponContainerOpen={isCuponContainerOpen}
         setIsCuponContainerOpen={setIsCuponContainerOpen}
       />
-    </div>
+    </Container>
   );
 };
 
