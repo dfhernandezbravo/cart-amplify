@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export type clusterValues = 'experto' | 'colaborador';
+export type clusterValues = 'EXPERTO' | 'EXPERTO_PREFERENTE' | 'COLABORADOR';
 
 type ClusterProps = {
   cluster: clusterValues;
@@ -40,9 +40,9 @@ export const WrapperClusterPrice = styled.div<ClusterProps>`
   align-items: center;
   border: 1px solid
     ${({ cluster }) =>
-      cluster === 'experto'
+      cluster === 'EXPERTO' || cluster === 'EXPERTO_PREFERENTE'
         ? '#363f45'
-        : cluster === 'colaborador'
+        : cluster === 'COLABORADOR'
         ? '#df6f1a'
         : '#178ad1'};
   border-radius: 8px;
@@ -54,9 +54,9 @@ export const WrapperClusterPrice = styled.div<ClusterProps>`
     border-bottom-left-radius: 6px;
     padding: 4px;
     background: ${({ cluster }) =>
-      cluster === 'experto'
+      cluster === 'EXPERTO' || cluster === 'EXPERTO_PREFERENTE'
         ? '#363f45'
-        : cluster === 'colaborador'
+        : cluster === 'COLABORADOR'
         ? '#df6f1a'
         : '#178ad1'};
     color: #fff;
@@ -70,9 +70,9 @@ export const WrapperClusterPrice = styled.div<ClusterProps>`
     font-size: 14px;
     font-weight: 600;
     color: ${({ cluster }) =>
-      cluster === 'experto'
+      cluster === 'EXPERTO' || cluster === 'EXPERTO_PREFERENTE'
         ? '#363f45'
-        : cluster === 'colaborador'
+        : cluster === 'COLABORADOR'
         ? '#df6f1a'
         : '#178ad1'};
   }

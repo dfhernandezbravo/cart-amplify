@@ -19,17 +19,19 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
 
   return (
     <Container className={className}>
-      <Title>Total con tarjeta Cencosud</Title>
+      <div className="title-container">
+        <Title>Total con tarjeta Cencosud</Title>
+        <Image
+          src={'/icons/cart/tc-cencosud.svg'}
+          width={26}
+          height={26}
+          alt="cencosud-icon"
+        />
+      </div>
       {loading ? (
         <Skeleton />
       ) : (
         <span className="totalPrice">
-          <Image
-            src={'/icons/cart/tc-cencosud.svg'}
-            width={26}
-            height={26}
-            alt="cencosud-icon"
-          />
           {cartAside
             ? formattedCLP(calculateTotalWithoutShippingPrice())
             : formattedCLP(cartBFF?.totals?.totalCardPrice ?? 0)}

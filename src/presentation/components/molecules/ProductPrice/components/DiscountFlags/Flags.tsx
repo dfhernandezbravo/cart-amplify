@@ -1,42 +1,28 @@
 import { PromotionType } from '@entities/cart/promotions';
 import Image from 'next/image';
 
-interface Props {
-  brandId: string;
+export interface FlagProps {
+  brandId:
+    | PromotionType.CAT
+    | PromotionType.CENCOPAY
+    | PromotionType.CENCOPAY_SALDO;
 }
 
-const Flag = ({ brandId }: Props) => {
-  switch (brandId) {
-    case PromotionType.CAT:
-      return (
-        <Image
-          src={'/icons/cart/tc-cencosud.svg'}
-          width={40}
-          height={40}
-          alt="cencosud-icon"
-        />
-      );
-    case PromotionType.CENCOPAY:
-      return (
-        <Image
-          src={'/icons/cart/cencopay-icon.svg'}
-          width={40}
-          height={40}
-          alt="cencopay-icon"
-        />
-      );
-    case PromotionType.CENCOPAY_SALDO:
-      return (
-        <Image
-          src={'/icons/cart/cencopay-saldo.svg'}
-          width={40}
-          height={40}
-          alt="cencopay-saldo-icon"
-        />
-      );
-    default:
-      return null;
-  }
+const Flag = ({ brandId }: FlagProps) => {
+  const source = {
+    CAT: '/icons/cart/tc-cencosud.svg',
+    CENCOPAY: '/icons/cart/cencopay-icon.svg',
+    CENCOPAY_SALDO: '/icons/cart/cencopay-saldo.svg',
+  };
+
+  return (
+    <Image
+      src={source[brandId]}
+      width={40}
+      height={40}
+      alt={`icon-${brandId}`}
+    />
+  );
 };
 
 export default Flag;

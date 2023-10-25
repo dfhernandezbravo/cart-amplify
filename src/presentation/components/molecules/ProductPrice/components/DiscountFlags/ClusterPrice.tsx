@@ -1,4 +1,3 @@
-import { typeOfCluster } from '@utils/typeOfCluster';
 import {
   Price,
   PricesContainer,
@@ -14,13 +13,11 @@ const ClusterPrice = ({
   offerPrice,
   quantity,
 }: DiscountProps) => {
-  const clusterName = typeOfCluster(offerDiscount[0].id);
-  const clusterText =
-    clusterName === 'experto'
-      ? 'Mundo Experto'
-      : clusterName === 'colaborador'
-      ? 'Dto. Colaborador'
-      : 'Dto. 2da unidad';
+  const hashLabel = {
+    EXPERTO: 'Mundo Experto',
+    EXPERTO_PREFERENTE: 'Mundo Experto',
+    COLABORADOR: 'Colaborador',
+  };
 
   const porcentage = replaceCharacter(
     offerDiscount[0].percentageDiscount,
@@ -32,9 +29,11 @@ const ClusterPrice = ({
     <PricesContainer>
       <div className="cluster-container">
         <Price>{formattedCLP(offerPrice * quantity)}</Price>
-        <WrapperClusterPrice cluster={clusterName as clusterValues}>
+        <WrapperClusterPrice cluster={offerDiscount[0].id as clusterValues}>
           <div className="cluster-percent">{porcentage}</div>
-          <p className="text-promotion">{clusterText}</p>
+          <p className="text-promotion">
+            {hashLabel[offerDiscount[0].id as clusterValues]}
+          </p>
         </WrapperClusterPrice>
       </div>
     </PricesContainer>

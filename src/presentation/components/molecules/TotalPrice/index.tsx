@@ -2,6 +2,7 @@ import { useAppSelector } from '@hooks/storeHooks';
 import { formattedCLP } from '@utils/helpers';
 import { Container, Title } from './styles';
 import { TotalPriceProps } from './types';
+import { Skeleton } from '../TotalPriceCencosud/styles';
 
 const TotalPrice = (props: TotalPriceProps) => {
   // hooks
@@ -20,7 +21,7 @@ const TotalPrice = (props: TotalPriceProps) => {
     <Container className={className}>
       <Title>Total con otros medios de pago</Title>
       {loading ? (
-        <span className="skeleton"></span>
+        <Skeleton />
       ) : (
         <span className="totalPrice">
           {cartAside

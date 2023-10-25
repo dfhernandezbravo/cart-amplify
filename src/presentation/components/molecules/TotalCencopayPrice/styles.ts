@@ -18,15 +18,6 @@ export const Container = styled.div`
     font-weight: 700;
     line-height: 20px;
   }
-  @media only screen and (max-width: 1024px) {
-    padding: 5px 12px;
-    margin: 0;
-
-    & .value-price {
-      font-size: 15px;
-      font-weight: 600;
-    }
-  }
 `;
 
 export const Title = styled.span`
