@@ -120,92 +120,94 @@ const CartAsideContainer = () => {
         dispatch(simulateRemoveProduct(customEvent.detail?.data.itemId));
       }, 4000);
     },
-    handleHybridationMessages: (event: MessageEvent) => {
-      const key = Object.keys(event?.data);
+  };
+  methods.initialize();
 
-      if (key?.length > 0 && key[0] === HybridationEvents.HYBRIDATION) {
-        const { cartId: cartIdHybridation, isEnabledMiniCart } = JSON.parse(
-          event?.data?.HYBRIDATION,
-        );
-        dispatch(
-          setHybridation({
-            cartIdHybridation,
-            hasHybridation: isEnabledMiniCart,
-          }),
-        );
-      }
+  const handleHybridationMessages = (event: MessageEvent) => {
+    const key = Object.keys(event?.data);
 
-      if (key?.length > 0 && key[0] === HybridationEvents.MINICART_OPEN) {
-        dispatch(setCartAsideIsOpen(event?.data?.MINICART_OPEN));
-      }
+    if (key?.length > 0 && key[0] === HybridationEvents.HYBRIDATION) {
+      const { cartId: cartIdHybridation, isEnabledMiniCart } = JSON.parse(
+        event?.data?.HYBRIDATION,
+      );
+      dispatch(
+        setHybridation({
+          cartIdHybridation,
+          hasHybridation: isEnabledMiniCart,
+        }),
+      );
+    }
 
-      if (
-        key?.length > 0 &&
-        key[0] === HybridationEvents.VTEX_PRODUCT_ADD_TO_CART
-      ) {
-        const { productReference, quantityValue } =
-          event?.data?.VTEX_PRODUCT_ADD_TO_CART;
+    if (key?.length > 0 && key[0] === HybridationEvents.MINICART_OPEN) {
+      dispatch(setCartAsideIsOpen(event?.data?.MINICART_OPEN));
+    }
 
-        const productInCart = cartBFF?.items?.find(
+    if (
+      key?.length > 0 &&
+      key[0] === HybridationEvents.VTEX_PRODUCT_ADD_TO_CART
+    ) {
+      const { productReference, quantityValue } =
+        event?.data?.VTEX_PRODUCT_ADD_TO_CART;
+
+      const productInCart = cartBFF?.items?.find(
+        (item) => item.product.id === productReference,
+      );
+
+      if (productInCart) {
+        const productIndex = cartBFF?.items?.findIndex(
           (item) => item.product.id === productReference,
         );
 
-        if (productInCart) {
-          const productIndex = cartBFF?.items?.findIndex(
-            (item) => item.product.id === productReference,
-          );
-
-          if (productIndex !== undefined && productIndex !== -1) {
-            dispatch(
-              updateItem({
-                cartId,
-                items: [
-                  {
-                    index: productIndex,
-                    quantity: quantityValue
-                      ? productInCart.quantity + parseInt(quantityValue)
-                      : productInCart.quantity + 1,
-                  },
-                ],
-              }),
-            );
-          }
-        } else {
+        if (productIndex !== undefined && productIndex !== -1) {
           dispatch(
-            addItem({
+            updateItem({
               cartId,
               items: [
                 {
-                  quantity: quantityValue ? parseInt(quantityValue) : 1,
-                  id: productReference,
+                  index: productIndex,
+                  quantity: quantityValue
+                    ? productInCart.quantity + parseInt(quantityValue)
+                    : productInCart.quantity + 1,
                 },
               ],
             }),
           );
         }
+      } else {
+        dispatch(
+          addItem({
+            cartId,
+            items: [
+              {
+                quantity: quantityValue ? parseInt(quantityValue) : 1,
+                id: productReference,
+              },
+            ],
+          }),
+        );
       }
-    },
+    }
   };
-  methods.initialize();
 
   useEffect(() => {
-    if (hasHybridation) {
+    window.addEventListener('message', handleHybridationMessages);
+    return () => {
+      window.removeEventListener('message', handleHybridationMessages);
+    };
+  }, [handleHybridationMessages]);
+
+  useEffect(() => {
+    if (hasHybridation && cartIdHybridation) {
+      dispatch(getCart({ cartId: cartIdHybridation }));
       dispatch(addCartId(cartIdHybridation));
     }
-  }, []);
+  }, [hasHybridation, cartIdHybridation]);
 
   useEffect(() => {
-    window.addEventListener('message', methods.handleHybridationMessages);
-    return () => {
-      window.removeEventListener('message', methods.handleHybridationMessages);
-    };
-  }, [window, methods.handleHybridationMessages]);
-
-  useEffect(() => {
-    if (cartId) {
+    if (cartId && !hasHybridation) {
       dispatch(getCart({ cartId }));
     }
-  }, [cartId]);
+  }, [cartId, hasHybridation]);
 
   return (
     <>
