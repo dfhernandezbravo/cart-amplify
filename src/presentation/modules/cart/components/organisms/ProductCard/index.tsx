@@ -19,11 +19,7 @@ import {
 import AvailableQuantity from './components/AvailableQuantity';
 import Modal from '@components/atoms/Modal';
 
-import mockData from './mock-data.json';
-
 const ProductCard = (props: ProductCardProps) => {
-  // const item = mockData.items[0]
-
   const { item, onRemoveFromCart, handleChangeQuantity, itemStockModify } =
     props;
 
@@ -48,6 +44,7 @@ const ProductCard = (props: ProductCardProps) => {
   };
 
   if (item.product.availability !== 'available') return null;
+  console.log({ item });
   return (
     <>
       <Container>

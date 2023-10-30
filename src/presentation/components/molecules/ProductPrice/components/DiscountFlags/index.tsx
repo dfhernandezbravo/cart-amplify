@@ -6,6 +6,7 @@ import { ProductPriceProps } from '../../types';
 import { PriceType, PromotionType } from '@entities/cart/promotions';
 import { FullPrice } from '../../styles';
 import { PricesContainer } from './styles';
+import StrikethroughPrice from './StrikethroughPrice';
 
 const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
   const { offerPrice, brandPrice } = prices;
@@ -53,11 +54,32 @@ const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
 
   if (offerPrice && !brandPrice && isCluster) {
     return (
-      <ClusterPrice
-        offerDiscount={offerDiscount}
-        offerPrice={offerPrice}
-        quantity={quantity}
-      />
+      <PricesContainer>
+        <ClusterPrice
+          offerDiscount={offerDiscount}
+          offerPrice={offerPrice}
+          quantity={quantity}
+        />
+        <StrikethroughPrice prices={prices} quantity={quantity} />
+      </PricesContainer>
+    );
+  }
+
+  if (offerPrice && brandPrice && isCluster) {
+    return (
+      <PricesContainer>
+        <BrandPrice
+          brandPrice={brandPrice}
+          brandDiscount={brandDiscount}
+          quantity={quantity}
+        />
+        <ClusterPrice
+          offerDiscount={offerDiscount}
+          offerPrice={offerPrice}
+          quantity={quantity}
+        />
+        <StrikethroughPrice prices={prices} quantity={quantity} />
+      </PricesContainer>
     );
   }
 
@@ -73,6 +95,7 @@ const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
         offerPrice={offerPrice as number}
         quantity={quantity}
       />
+      <StrikethroughPrice prices={prices} quantity={quantity} />
     </PricesContainer>
   );
 };
