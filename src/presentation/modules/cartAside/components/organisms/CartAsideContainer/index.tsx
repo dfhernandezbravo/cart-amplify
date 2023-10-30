@@ -41,7 +41,7 @@ const CartAsideContainer = () => {
     setHybridation,
   } = cartSlice.actions;
 
-  const { cartIdHybridation, hasHybridation } = hybridation;
+  const { cartIdHybridation, hasHybridation, flag } = hybridation;
 
   // methods
   const methods = {
@@ -134,12 +134,10 @@ const CartAsideContainer = () => {
         setHybridation({
           cartIdHybridation,
           hasHybridation: isEnabledMiniCart,
+          flag: true,
         }),
       );
-    }
-
-    if (key?.length > 0 && key[0] === HybridationEvents.MINICART_OPEN) {
-      dispatch(setCartAsideIsOpen(event?.data?.MINICART_OPEN));
+      dispatch(setCartAsideIsOpen(true));
     }
 
     if (
@@ -197,11 +195,11 @@ const CartAsideContainer = () => {
   }, [handleHybridationMessages]);
 
   useEffect(() => {
-    if (hasHybridation && cartIdHybridation) {
+    if (hasHybridation && cartIdHybridation && flag) {
       dispatch(getCart({ cartId: cartIdHybridation }));
       dispatch(addCartId(cartIdHybridation));
     }
-  }, [hasHybridation, cartIdHybridation]);
+  }, [hasHybridation, cartIdHybridation, flag]);
 
   useEffect(() => {
     if (cartId && !hasHybridation) {

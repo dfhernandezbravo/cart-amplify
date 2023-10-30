@@ -20,6 +20,8 @@ export const Input = styled.input`
     height: 35px;
     width: 40px;
     text-align: center;
+    appearance: textfield;
+    -moz-appearance: textfield;
 
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
