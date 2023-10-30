@@ -27,7 +27,7 @@ const initialValue: InitialState = {
   loading: false,
   quantitySelected,
   openDetailsMobile: false,
-  hybridation: { cartIdHybridation: '', hasHybridation: false },
+  hybridation: { cartIdHybridation: '', hasHybridation: false, flag: false },
   cartAsideIsOpen: false,
 };
 
@@ -43,7 +43,7 @@ const cartSlice = createSlice({
     },
     simulateAddProduct: (state, { payload }) => {
       const productInCart = state.cartBFF?.items?.find(
-        (item) => item.product.id === payload?.productReference,
+        (item) => item.product.id === payload?.items[0]?.itemId,
       );
 
       if (productInCart) {

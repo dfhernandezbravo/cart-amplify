@@ -9,6 +9,7 @@ export type QuantitySelectedProps = {
 export type Hybridation = {
   cartIdHybridation: string;
   hasHybridation: boolean;
+  flag: boolean;
 };
 
 export type InitialState = {

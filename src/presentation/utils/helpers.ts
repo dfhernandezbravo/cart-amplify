@@ -47,7 +47,7 @@ export const createNewItem = (data: CartItemModel) => {
     ],
     priceAfterDiscount: 1,
     product: {
-      id: data?.productReference,
+      id: data.items ? data?.items[0]?.itemId : '',
       sku: '',
       description: data.items ? data.items[0]?.nameComplete : '',
       unit: '',
