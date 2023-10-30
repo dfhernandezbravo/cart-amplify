@@ -5,7 +5,7 @@ interface Props {
 }
 
 const ProductSku = ({ id }: Props) => {
-  return <p>SKU {id}</p>;
+  return <Container>SKU {id}</Container>;
 };
 
 export default ProductSku;

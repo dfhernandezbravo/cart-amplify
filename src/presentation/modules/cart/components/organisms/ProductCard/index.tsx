@@ -6,7 +6,10 @@ import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
 import ProductPrice from '@components/molecules/ProductPrice';
 import DeleteButton from '@components/molecules/DeleteButton';
-import QuantitySelector from '@components/atoms/QuantitySelector';
+import QuantitySelector from '@components/atoms/CartQuantitySelector';
+import ProductSku from '@components/molecules/ProductSku';
+import AvailableQuantity from './components/AvailableQuantity';
+import Modal from '@components/atoms/Modal';
 import { ProductCardProps } from './types';
 import {
   Container,
@@ -16,8 +19,6 @@ import {
   ImageContainer,
   QuantitySelectorContainer,
 } from './styles';
-import AvailableQuantity from './components/AvailableQuantity';
-import Modal from '@components/atoms/Modal';
 
 const ProductCard = (props: ProductCardProps) => {
   const { item, onRemoveFromCart, handleChangeQuantity, itemStockModify } =
@@ -44,7 +45,6 @@ const ProductCard = (props: ProductCardProps) => {
   };
 
   if (item.product.availability !== 'available') return null;
-  console.log({ item });
   return (
     <>
       <Container>
@@ -52,13 +52,11 @@ const ProductCard = (props: ProductCardProps) => {
           <ProductInfoContainer>
             <ImageContainer>
               <ProductImage src={item?.product?.images} alt={''} />
-              {itemStockModify && (
-                <AvailableQuantity quantity={itemStockModify as number} />
-              )}
             </ImageContainer>
             <div>
               <ProductBrand brand={item?.product?.brand} />
               <ProductName productName={item?.product?.description} />
+              <ProductSku id={item?.product.sku} />
             </div>
           </ProductInfoContainer>
           <div>
@@ -69,14 +67,23 @@ const ProductCard = (props: ProductCardProps) => {
             />
           </div>
         </ProductInfoAndPriceContainer>
+
         <QuantitySelectorAndDeleteContainer>
-          <QuantitySelector
-            quantitySelected={(value: string) => handleSelectedQuantity(value)}
-            quantity={item?.quantity}
-          />
-          <DeleteButton hasIcon={true} onRemoveFromCart={onRemoveFromCart} />
+          {itemStockModify && (
+            <AvailableQuantity quantity={itemStockModify as number} />
+          )}
+          <div className="quantity-container">
+            <QuantitySelector
+              quantitySelected={(value: string) =>
+                handleSelectedQuantity(value)
+              }
+              quantity={item?.quantity}
+            />
+            <DeleteButton hasIcon={true} onRemoveFromCart={onRemoveFromCart} />
+          </div>
         </QuantitySelectorAndDeleteContainer>
       </Container>
+
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <QuantitySelectorContainer>
           <p>Elige cantidad</p>

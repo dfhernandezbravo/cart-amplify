@@ -32,10 +32,16 @@ export const ProductInfoAndPriceContainer = styled.div`
 
 export const QuantitySelectorAndDeleteContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-end;
   justify-content: flex-end;
-  margin-right: 106px;
+
+  & .quantity-container {
+    display: flex;
+    margin-right: 106px;
+  }
 `;
+console.log(QuantitySelectorAndDeleteContainer);
 
 export const ImageContainer = styled.div`
   position: relative;
