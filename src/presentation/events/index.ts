@@ -6,6 +6,7 @@ enum WindowsEvents {
   CART_ID = 'CART_ID',
   SIMULATE_ADD_PRODUCT = 'SIMULATE_ADD_PRODUCT',
   ADD_PRODUCT_ERROR = 'ADD_PRODUCT_ERROR',
+  ANALYTICS = 'ANALYTICS',
 }
 
 export default WindowsEvents;
