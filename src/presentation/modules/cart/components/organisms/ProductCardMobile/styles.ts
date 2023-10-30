@@ -5,6 +5,7 @@ export const Container = styled.div`
   background-color: #ffffff;
   padding: 10px;
   min-height: 200px;
+  border-bottom: 1px solid #cdcdcd;
 `;
 
 export const ImageContainer = styled.div``;

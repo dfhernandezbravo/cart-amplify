@@ -28,6 +28,7 @@ const BrandPrice = ({ brandPrice, brandDiscount, quantity }: Props) => {
     '-',
     '',
   );
+
   return (
     <PriceContainer>
       <Price>{formattedCLP(brandPrice * quantity)}</Price>

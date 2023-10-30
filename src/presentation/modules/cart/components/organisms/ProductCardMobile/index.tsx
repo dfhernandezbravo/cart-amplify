@@ -18,6 +18,7 @@ import DeleteButton from '@components/molecules/DeleteButton';
 import Modal from '@components/atoms/Modal';
 import { QuantitySelectorContainer } from '../ProductCard/styles';
 import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
+import ProductSku from '@components/molecules/ProductSku';
 
 const ProductCardMobile = (props: ProductCardProps) => {
   const { item, onRemoveFromCart, handleChangeQuantity, itemStockModify } =

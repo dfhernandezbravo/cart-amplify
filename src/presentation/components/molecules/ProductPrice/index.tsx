@@ -31,11 +31,6 @@ const ProductPrice = (props: ProductPriceProps) => {
           />
         )}
       </OfferPriceContainer>
-      {hasDiscount && (
-        <NormalPrice>
-          Normal: {formattedCLP(prices.normalPrice * quantity)}
-        </NormalPrice>
-      )}
     </Container>
   );
 };
