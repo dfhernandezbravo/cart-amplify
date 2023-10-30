@@ -1,5 +1,5 @@
 import DeleteButton from '@components/molecules/DeleteButton';
-import QuantitySelector from '@components/molecules/QuantitySelector';
+import QuantitySelector from '@components/molecules/MinicartQuantitySelector';
 import ProductImage from '@components/molecules/ProductImage';
 import ProductPrice from '@components/molecules//ProductPrice';
 import ProductBrand from '@components/molecules/ProductBrand';

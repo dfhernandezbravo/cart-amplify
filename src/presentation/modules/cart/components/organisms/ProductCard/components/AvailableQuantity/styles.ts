@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  position: absolute;
-  width: 300px;
+  margin-right: 75px;
+  margin-bottom: 1rem;
   font-size: 14px;
   font-weight: 700;
   color: #a75314;
@@ -16,5 +16,8 @@ export const Container = styled.div`
     height: 25px;
     margin-right: 10px;
     margin-top: -5px;
+  }
+  @media only screen and (max-width: 48em) {
+    margin-top: 1rem;
   }
 `;

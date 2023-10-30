@@ -58,7 +58,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
         <AiOutlineMinus />
       </Button>
       <Textfield
-        type="number"
+        type="text"
         name="quantityInput"
         min={1}
         onFocus={() => {

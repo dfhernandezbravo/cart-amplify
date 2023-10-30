@@ -6,7 +6,7 @@ import { ProductCardProps } from '../ProductCard/types';
 import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
 import ProductPrice from '@components/molecules/ProductPrice';
-import QuantitySelector from '@components/atoms/QuantitySelector';
+import QuantitySelector from '@components/atoms/CartQuantitySelector';
 
 //Styles
 import {
@@ -54,6 +54,7 @@ const ProductCardMobile = (props: ProductCardProps) => {
         <div>
           <ProductBrand brand={item?.product?.brand} />
           <ProductName productName={item?.product?.description} />
+          <ProductSku id={item?.product.sku} />
           <div>
             <ProductPrice
               prices={item?.product?.prices}
@@ -61,6 +62,9 @@ const ProductCardMobile = (props: ProductCardProps) => {
               adjustment={item?.adjustment}
             />
           </div>
+          {itemStockModify && (
+            <AvailableQuantity quantity={itemStockModify as number} />
+          )}
           <QuantitySelectorAndDeleteContainer>
             <QuantitySelector
               quantitySelected={(value: string) =>
@@ -70,9 +74,6 @@ const ProductCardMobile = (props: ProductCardProps) => {
             />
             <DeleteButton hasIcon={true} onRemoveFromCart={onRemoveFromCart} />
           </QuantitySelectorAndDeleteContainer>
-          {itemStockModify && (
-            <AvailableQuantity quantity={itemStockModify as number} />
-          )}
         </div>
       </Container>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
