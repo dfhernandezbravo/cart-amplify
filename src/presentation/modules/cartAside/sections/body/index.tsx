@@ -11,6 +11,7 @@ import deleteItem from '@use-cases/cart/delete-item';
 import { AvailableProductText, BodyContainer } from './styles';
 import ProductCardWithouthStock from '@modules/cartAside/components/organisms/ProductCardWithoutStock';
 import useItemWithoutStock from '@hooks/useItemWithoutStock';
+import { useAnalytics } from '@hooks/useAnalytics';
 
 const Body = () => {
   // Hooks
@@ -20,6 +21,10 @@ const Body = () => {
   const dispatch = useAppDispatch();
   const { decrementProductQuantity, incrementProductQuantity, removeProduct } =
     cartSlice.actions;
+
+  const {
+    methods: { sendQuantityClickEvent },
+  } = useAnalytics();
 
   // Methods
   const methods = {
@@ -32,6 +37,25 @@ const Body = () => {
             items: [{ quantity: quantity + 1, index: index }],
           }),
         );
+        sendQuantityClickEvent({
+          event: 'addToCart',
+          ecommerce: {
+            currencyCode: 'CLP',
+            add: {
+              products: [
+                {
+                  name: item.product.description,
+                  id: item.itemId,
+                  price: item.product.prices.normalPrice.toString(),
+                  brand: item.product.brand,
+                  category: item.product.category,
+                  variant: '',
+                  quantity: 1,
+                },
+              ],
+            },
+          },
+        });
       }, 500),
       [],
     ),
@@ -44,6 +68,25 @@ const Body = () => {
             items: [{ quantity: quantity - 1, index: index }],
           }),
         );
+        sendQuantityClickEvent({
+          event: 'removeFromCart',
+          ecommerce: {
+            currencyCode: 'CLP',
+            remove: {
+              products: [
+                {
+                  name: item.product.description,
+                  id: item.itemId,
+                  price: item.product.prices.normalPrice.toString(),
+                  brand: item.product.brand,
+                  category: item.product.category,
+                  variant: '',
+                  quantity: 1,
+                },
+              ],
+            },
+          },
+        });
       }, 500),
       [],
     ),
