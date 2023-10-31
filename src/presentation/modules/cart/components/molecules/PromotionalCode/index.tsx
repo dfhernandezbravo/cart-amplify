@@ -1,26 +1,22 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { CgChevronUp, CgChevronDown } from 'react-icons/cg';
 import { TiDelete } from 'react-icons/ti';
-import Image from 'next/image';
+import {
+  couponNoValidToast,
+  valueHasChangeToast,
+} from '@components/atoms/ToastContainer/customMessage';
 import Button from '@components/atoms/Button';
-
 import { useAppSelector, useAppDispatch } from '@hooks/storeHooks';
-import cartSlice from '@store/cart';
+import addCouponCode from '@use-cases/cart/addCouponCode';
+import removeCouponCode from '@use-cases/cart/removeCouponCode';
 import {
   ButtonContainer,
   Container,
   FormContainer,
   IconAndTextContainer,
 } from './styles';
-import addCouponCode from '@use-cases/cart/addCouponCode';
-import removeCouponCode from '@use-cases/cart/removeCouponCode';
-import showToast from '@components/atoms/ToastContainer/ToastMessage';
-import {
-  couponNoValidToast,
-  valueHasChangeToast,
-} from '@components/atoms/ToastContainer/customMessage';
 
 type Inputs = {
   code: string;
@@ -40,8 +36,7 @@ const PromotionalCode = () => {
   // states
   const [isOpen, setIsOpen] = useState(false);
 
-  const { cartId, couponId } = useAppSelector((state) => state.cart);
-  const { setCouponId } = cartSlice.actions;
+  const { cartId, cartBFF } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   const handleShowForm = () => {
@@ -61,12 +56,18 @@ const PromotionalCode = () => {
       return;
     }
     valueHasChangeToast();
-    dispatch(setCouponId(inputCode.toUpperCase()));
+    // dispatch(setCouponId(inputCode.toUpperCase()));
     reset();
   };
 
+  const couponId = cartBFF?.adjustments?.filter(
+    (adjusment) => adjusment.type === 'coupon',
+  )[0]?.id;
+
   const handleRemoveCoupon = async () => {
-    await dispatch(removeCouponCode({ couponCode: couponId, cartId }));
+    await dispatch(
+      removeCouponCode({ couponCode: couponId as string, cartId }),
+    );
     valueHasChangeToast();
   };
 

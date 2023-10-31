@@ -23,7 +23,6 @@ export const quantitySelected = {
 const initialValue: InitialState = {
   cartBFF: undefined,
   cartId: '',
-  couponId: '',
   loading: false,
   quantitySelected,
   openDetailsMobile: false,
@@ -115,9 +114,6 @@ const cartSlice = createSlice({
     setOpenDetailsMobile: (state, { payload }) => {
       state.openDetailsMobile = payload;
     },
-    setCouponId: (state, { payload }) => {
-      state.couponId = payload;
-    },
     setHybridation: (state, { payload }) => {
       state.hybridation = payload;
     },
@@ -195,7 +191,6 @@ const cartSlice = createSlice({
       })
       .addCase(removeCouponCode.fulfilled, (state, { payload }) => {
         state.cartBFF = payload;
-        state.couponId = '';
         state.loading = false;
       });
   },

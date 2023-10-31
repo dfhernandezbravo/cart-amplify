@@ -32,7 +32,7 @@ export interface Adjustment {
   priceType: string;
 }
 
-interface Adjustments {
+export interface Adjustments {
   id: string;
   description: string;
   value: number;
