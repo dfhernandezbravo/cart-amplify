@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { MouseEvent, useEffect, useMemo, useState } from 'react';
+import { MouseEvent, useEffect, useMemo } from 'react';
 import { SwipeableDrawer } from '@mui/material';
 import { selectTotalProductsInCart } from '@store/cart';
 import cartSlice from '@store/cart';
@@ -144,8 +144,10 @@ const CartAsideContainer = () => {
       key?.length > 0 &&
       key[0] === HybridationEvents.VTEX_PRODUCT_ADD_TO_CART
     ) {
-      const { productReference, quantityValue } =
+      const { productReference, quantityValue, product } =
         event?.data?.VTEX_PRODUCT_ADD_TO_CART;
+
+      dispatch(simulateAddProduct({ ...product, quantityValue }));
 
       const productInCart = cartBFF?.items?.find(
         (item) => item.product.id === productReference,
@@ -198,6 +200,7 @@ const CartAsideContainer = () => {
     if (hasHybridation && cartIdHybridation && flag) {
       dispatch(getCart({ cartId: cartIdHybridation }));
       dispatch(addCartId(cartIdHybridation));
+      dispatch(setHybridation({ ...hybridation, flag: false }));
     }
   }, [hasHybridation, cartIdHybridation, flag]);
 

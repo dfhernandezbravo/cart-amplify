@@ -76,8 +76,8 @@ export const Title = styled.span`
   font-weight: 500;
   color: #6e8391;
 
-  @media screen and (max-width: 767px) {
+  /* @media screen and (max-width: 767px) {
     max-width: 209px;
     font-size: 15px;
-  }
+  } */
 `;

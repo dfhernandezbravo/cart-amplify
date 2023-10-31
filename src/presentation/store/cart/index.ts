@@ -46,13 +46,19 @@ const cartSlice = createSlice({
         (item) => item.product.id === payload?.items[0]?.itemId,
       );
 
+      const quantityValue = payload?.quantityValue; // PDP quantity from vtex hybridation
+
       if (productInCart) {
         const quantity = productInCart.quantity ?? 0;
-        productInCart.quantity = quantity + 1;
+        productInCart.quantity = quantityValue
+          ? quantity + parseInt(quantityValue)
+          : quantity + 1;
         return;
       }
 
-      const newItem = createNewItem(payload);
+      const newItem = quantityValue
+        ? createNewItem(payload, parseInt(quantityValue))
+        : createNewItem(payload);
 
       if (state.cartBFF?.items) {
         state.cartBFF.items?.push(newItem);
