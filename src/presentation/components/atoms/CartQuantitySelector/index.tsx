@@ -8,7 +8,6 @@ type Props = {
 const QuantitySelector = ({ quantitySelected, quantity }: Props) => {
   const incrementalNumber = ['1', '2', '3', '4', '5'];
   const additionalNumber = ['6 +'];
-  console.log('updated');
   const optionsConditional = () => {
     let options: React.ReactElement[] = [];
     if (quantity >= 6) {

@@ -23,7 +23,6 @@ const CuponAsideMobile = ({
 }: Props) => {
   const [couponCodeValue, setCouponCodeValue] = useState('');
 
-  const { setCouponId } = cartSlice.actions;
   const dispatch = useAppDispatch();
   const { cartBFF } = useAppSelector((state) => state.cart);
 
@@ -60,7 +59,6 @@ const CuponAsideMobile = ({
       return;
     }
     valueHasChangeToast({ position: 'top-center' });
-    dispatch(setCouponId(couponCodeValue.toUpperCase()));
   };
 
   return (

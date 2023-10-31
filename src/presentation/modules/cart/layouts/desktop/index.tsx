@@ -32,7 +32,6 @@ const CartDesktop = () => {
   useEffect(() => {
     const queryCartId = query.cartId as string;
     if (cartId === queryCartId) return;
-
     dispatch(addCartId(queryCartId));
     dispatch(getCart({ cartId: queryCartId }));
   }, []);

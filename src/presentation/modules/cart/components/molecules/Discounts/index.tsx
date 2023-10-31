@@ -5,20 +5,26 @@ import { valueHasChangeToast } from '@components/atoms/ToastContainer/customMess
 import removeCouponCode from '@use-cases/cart/removeCouponCode';
 
 import { CouponCodeWrapper, RemoveCoupon } from './styles';
+import getCouponCodeId from '@utils/getCouponId';
+import { Adjustments, Cart } from '@entities/cart/cart.entity';
+
 const Discounts = () => {
   const { isXs, isMd } = useBreakpoints();
-
-  const { cartBFF, couponId, cartId } = useAppSelector((state) => state.cart);
-  const dispatch = useAppDispatch();
-  const couponCode = cartBFF?.adjustments?.filter((adjustment) => {
-    return adjustment.type === 'coupon';
-  });
-
   const isMobile = isXs || isMd;
+
+  const { cartBFF, cartId } = useAppSelector((state) => state.cart);
+  const couponCode = getCouponCodeId(cartBFF as Cart);
+
+  const dispatch = useAppDispatch();
 
   const removeCoupon = async (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    await dispatch(removeCouponCode({ couponCode: couponId, cartId }));
+    await dispatch(
+      removeCouponCode({
+        couponCode: (couponCode as Adjustments[])[0].id,
+        cartId,
+      }),
+    );
     if (isMobile) return valueHasChangeToast({ position: 'top-center' });
     valueHasChangeToast();
   };

@@ -41,7 +41,6 @@ export const QuantitySelectorAndDeleteContainer = styled.div`
     margin-right: 106px;
   }
 `;
-console.log(QuantitySelectorAndDeleteContainer);
 
 export const ImageContainer = styled.div`
   position: relative;
