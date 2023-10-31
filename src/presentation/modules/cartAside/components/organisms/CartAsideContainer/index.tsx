@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { MouseEvent, useEffect, useMemo } from 'react';
+import { MouseEvent, useCallback, useEffect, useMemo } from 'react';
 import { SwipeableDrawer } from '@mui/material';
 import { selectTotalProductsInCart } from '@store/cart';
 import cartSlice from '@store/cart';
@@ -123,7 +123,7 @@ const CartAsideContainer = () => {
   };
   methods.initialize();
 
-  const handleHybridationMessages = (event: MessageEvent) => {
+  const handleHybridationMessages = useCallback((event: MessageEvent) => {
     const key = Object.keys(event?.data);
 
     if (key?.length > 0 && key[0] === HybridationEvents.HYBRIDATION) {
@@ -187,7 +187,7 @@ const CartAsideContainer = () => {
         );
       }
     }
-  };
+  }, []);
 
   useEffect(() => {
     window.addEventListener('message', handleHybridationMessages);
