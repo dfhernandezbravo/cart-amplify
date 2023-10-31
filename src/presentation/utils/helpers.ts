@@ -32,10 +32,10 @@ export const totalItems = (items: any) => {
   return sum;
 };
 
-export const createNewItem = (data: CartItemModel) => {
+export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
   const newItem = {
     itemId: '',
-    quantity: 1,
+    quantity: quantityValue ? quantityValue : 1,
     adjustment: [
       {
         id: '',
