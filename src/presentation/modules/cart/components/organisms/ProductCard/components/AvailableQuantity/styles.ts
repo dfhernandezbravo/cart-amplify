@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin-right: 75px;
+  margin-right: 45px;
   margin-bottom: 1rem;
   font-size: 14px;
   font-weight: 700;
