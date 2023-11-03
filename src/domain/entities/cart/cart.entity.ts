@@ -65,13 +65,19 @@ interface Payment {}
 
 interface Taxes {}
 
-interface Totals {
+export interface Totals {
   subtotal: number;
   discount: number;
   shippingPrice: number;
   totalCardPrice: number;
   totalPrice: number;
   totalCencoPay: number;
+}
+
+export enum PriceType {
+  totalPrice = 'totalPrice',
+  totalCardPrice = 'totalCardPrice',
+  totalCencoPay = 'totalCencoPay',
 }
 
 interface MessagesError {

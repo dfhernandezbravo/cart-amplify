@@ -66,9 +66,9 @@ export const QuantitySelectorContainer = styled.div`
     appearance: none;
   }
   & button {
-    border: 1px solid #333333;
+    border: 1px solid #af1211;
     border-radius: 8px;
-    background-color: #333333;
+    background-color: #af1211;
     padding: 16px;
     font-size: 14px;
     font-weight: 700;

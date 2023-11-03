@@ -13,13 +13,13 @@ export const Container = styled.div`
 
   & .totalPrice {
     color: #000000de;
-    font-weight: 700;
+    font-weight: 600;
   }
 
   &.cartAside {
     span:first-child {
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       color: #6e8391;
     }
   }
@@ -28,10 +28,5 @@ export const Container = styled.div`
 export const Title = styled.span`
   font-size: 14px;
   color: #6e8391;
-  font-weight: 500;
-
-  /* @media screen and (max-width: 767px) {
-    max-width: 209px;
-    font-size: 15px;
-  } */
+  font-weight: 400;
 `;

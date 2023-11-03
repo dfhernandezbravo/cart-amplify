@@ -90,6 +90,7 @@ const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
         brandDiscount={brandDiscount}
         quantity={quantity}
       />
+
       <OfferPrice
         offerDiscount={offerDiscount}
         offerPrice={offerPrice as number}
