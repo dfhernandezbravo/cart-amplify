@@ -5,7 +5,7 @@ type Props = {
 };
 
 export const valueHasChangeToast = (props?: Props) => {
-  const position = props?.position || 'bottom-right';
+  const position = props?.position || 'top-right';
   return showToast({
     description: 'Los valores han cambiado.',
     type: 'info',
@@ -14,7 +14,7 @@ export const valueHasChangeToast = (props?: Props) => {
 };
 
 export const couponNoValidToast = (props?: Props) => {
-  const position = props?.position || 'bottom-right';
+  const position = props?.position || 'top-right';
   return showToast({
     description: 'cupón no valido.',
     type: 'error',
@@ -23,7 +23,7 @@ export const couponNoValidToast = (props?: Props) => {
 };
 
 export const changeOfAmount = (props?: Props) => {
-  const position = props?.position || 'bottom-right';
+  const position = props?.position || 'top-right';
   return showToast({
     title: 'Hubo cambios en tus productos',
     description:

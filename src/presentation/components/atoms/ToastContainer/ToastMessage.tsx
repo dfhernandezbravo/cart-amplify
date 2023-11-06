@@ -95,7 +95,7 @@ const showToast = ({
   title,
   description,
   type = 'default',
-  position = 'bottom-right',
+  position = 'top-right',
 }: ToastProps) => {
   if (type === 'default') {
     return toast(<ToastMessage title={title} description={description} />, {

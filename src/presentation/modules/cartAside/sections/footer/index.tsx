@@ -8,9 +8,9 @@ import TotalCencopayPrice from '@components/molecules/TotalCencopayPrice';
 const Footer = () => {
   return (
     <FooterContainer>
-      <TotalCencopayPrice cartAside={true} />
-      <TotalPriceCencosud className="cartAside" cartAside={true} />
-      <TotalPrice className="cartAside" cartAside={true} />
+      <TotalCencopayPrice />
+      <TotalPriceCencosud className="cartAside" />
+      <TotalPrice className="cartAside" />
       <BuyButton text="Comprar ahora" />
       <GoToCartButton />
     </FooterContainer>

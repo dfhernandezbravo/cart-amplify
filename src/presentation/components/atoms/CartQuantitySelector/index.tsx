@@ -12,18 +12,18 @@ const QuantitySelector = ({ quantitySelected, quantity }: Props) => {
     let options: React.ReactElement[] = [];
     if (quantity >= 6) {
       incrementalNumber.forEach((number) => {
-        const option = <option value={`${number}`}>{number}u.</option>;
+        const option = <option value={`${number}`}>{number} un.</option>;
         options.push(option);
       });
-      options.push(<option value={quantity}>{quantity}u.</option>);
+      options.push(<option value={quantity}>{quantity} un.</option>);
       options.push(
-        <option value={additionalNumber[0]}>{additionalNumber[0]}</option>,
+        <option value={additionalNumber[0]}>{additionalNumber[0]} un.</option>,
       );
       return options;
     } else {
       const allOptions = incrementalNumber.concat(additionalNumber);
       allOptions.forEach((number) => {
-        const option = <option value={number}>{number}u.</option>;
+        const option = <option value={number}>{number} un.</option>;
         options.push(option);
       });
       return options;

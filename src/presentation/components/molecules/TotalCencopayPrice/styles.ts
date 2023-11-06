@@ -15,13 +15,13 @@ export const Container = styled.div`
   & .value-price {
     color: #333333;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 20px;
   }
 `;
 
 export const Title = styled.span`
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   color: #6e8391;
 `;
