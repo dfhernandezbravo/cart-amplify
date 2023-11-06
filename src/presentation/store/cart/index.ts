@@ -148,8 +148,7 @@ const cartSlice = createSlice({
       })
       .addCase(updateItem.fulfilled, (state, { payload }) => {
         const { index, quantity } = state.quantitySelected;
-
-        // state.cartBFF = payload ?? state.cartBFF; TODO: Revisar
+        // state.cartBFF = payload ?? state.cartBFF; // TODO: Revisar
         state.cartBFF = payload;
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
@@ -175,7 +174,8 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(deleteItem.fulfilled, (state, { payload }) => {
-        state.cartBFF = payload ?? state.cartBFF;
+        // state.cartBFF = payload ?? state.cartBFF; // TODO: Revisar
+        state.cartBFF = payload;
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
         dispatchCartHeaderEvent(totalQuantity);
