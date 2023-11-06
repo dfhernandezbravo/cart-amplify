@@ -123,71 +123,74 @@ const CartAsideContainer = () => {
   };
   methods.initialize();
 
-  const handleHybridationMessages = useCallback((event: MessageEvent) => {
-    const key = Object.keys(event?.data);
+  const handleHybridationMessages = useCallback(
+    (event: MessageEvent) => {
+      const key = Object.keys(event?.data);
 
-    if (key?.length > 0 && key[0] === HybridationEvents.HYBRIDATION) {
-      const { cartId: cartIdHybridation, isEnabledMiniCart } = JSON.parse(
-        event?.data?.HYBRIDATION,
-      );
-      dispatch(
-        setHybridation({
-          cartIdHybridation,
-          hasHybridation: isEnabledMiniCart,
-          flag: true,
-        }),
-      );
-      dispatch(setCartAsideIsOpen(true));
-    }
+      if (key?.length > 0 && key[0] === HybridationEvents.HYBRIDATION) {
+        const { cartId: cartIdHybridation, isEnabledMiniCart } = JSON.parse(
+          event?.data?.HYBRIDATION,
+        );
+        dispatch(
+          setHybridation({
+            cartIdHybridation,
+            hasHybridation: isEnabledMiniCart,
+            flag: true,
+          }),
+        );
+        dispatch(setCartAsideIsOpen(true));
+      }
 
-    if (
-      key?.length > 0 &&
-      key[0] === HybridationEvents.VTEX_PRODUCT_ADD_TO_CART
-    ) {
-      const { productReference, quantityValue, product } =
-        event?.data?.VTEX_PRODUCT_ADD_TO_CART;
+      if (
+        key?.length > 0 &&
+        key[0] === HybridationEvents.VTEX_PRODUCT_ADD_TO_CART
+      ) {
+        const { productReference, quantityValue, product } =
+          event?.data?.VTEX_PRODUCT_ADD_TO_CART;
 
-      dispatch(simulateAddProduct({ ...product, quantityValue }));
+        dispatch(simulateAddProduct({ ...product, quantityValue }));
 
-      const productInCart = cartBFF?.items?.find(
-        (item) => item.product.id === productReference,
-      );
-
-      if (productInCart) {
-        const productIndex = cartBFF?.items?.findIndex(
+        const productInCart = cartBFF?.items?.find(
           (item) => item.product.id === productReference,
         );
 
-        if (productIndex !== undefined && productIndex !== -1) {
+        if (productInCart) {
+          const productIndex = cartBFF?.items?.findIndex(
+            (item) => item.product.id === productReference,
+          );
+
+          if (productIndex !== undefined && productIndex !== -1) {
+            dispatch(
+              updateItem({
+                cartId,
+                items: [
+                  {
+                    index: productIndex,
+                    quantity: quantityValue
+                      ? productInCart.quantity + parseInt(quantityValue)
+                      : productInCart.quantity + 1,
+                  },
+                ],
+              }),
+            );
+          }
+        } else {
           dispatch(
-            updateItem({
+            addItem({
               cartId,
               items: [
                 {
-                  index: productIndex,
-                  quantity: quantityValue
-                    ? productInCart.quantity + parseInt(quantityValue)
-                    : productInCart.quantity + 1,
+                  quantity: quantityValue ? parseInt(quantityValue) : 1,
+                  id: productReference,
                 },
               ],
             }),
           );
         }
-      } else {
-        dispatch(
-          addItem({
-            cartId,
-            items: [
-              {
-                quantity: quantityValue ? parseInt(quantityValue) : 1,
-                id: productReference,
-              },
-            ],
-          }),
-        );
       }
-    }
-  }, []);
+    },
+    [cartBFF],
+  );
 
   useEffect(() => {
     window.addEventListener('message', handleHybridationMessages);
