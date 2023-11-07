@@ -14,4 +14,13 @@ const getCart = createAsyncThunk(
   },
 );
 
+export const getCartSync = async (dataRequest: GetCartRequest) => {
+  try {
+    const { data } = await cartService.getCart(dataRequest);
+    return data;
+  } catch (error) {
+    throw new Error('Error al cargar el carro');
+  }
+};
+
 export default getCart;

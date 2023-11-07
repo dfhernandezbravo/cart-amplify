@@ -1,14 +1,17 @@
+import ToastContainerCustom from '@components/atoms/ToastContainer';
+import CartContainerProvider from '@components/layouts/container';
+import MainLayout from '@components/layouts/main-layout';
 import CartDesktop from '@modules/cart/layouts/desktop';
 import CartMobile from '@modules/cart/layouts/mobile';
-import ToastContainerCustom from '@components/atoms/ToastContainer';
-import MainLayout from '@components/layouts/main-layout';
 
 const Cart = () => {
   return (
     <MainLayout>
-      <CartDesktop />
-      <CartMobile />
-      <ToastContainerCustom />
+      <CartContainerProvider>
+        <CartDesktop />
+        <CartMobile />
+        <ToastContainerCustom />
+      </CartContainerProvider>
     </MainLayout>
   );
 };
