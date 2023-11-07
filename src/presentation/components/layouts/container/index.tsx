@@ -34,6 +34,7 @@ const CartContainerProvider = ({ children }: Props) => {
   );
 
   const updateShippingCart = () => {
+    console.log('custom event triggered');
     if (cartId) {
       dispatch(getCart({ cartId }));
     }

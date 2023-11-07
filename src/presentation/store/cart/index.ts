@@ -24,7 +24,7 @@ export const quantitySelected = {
 const initialValue: InitialState = {
   cartBFF: undefined,
   cartId: '',
-  loading: true,
+  loading: false,
   quantitySelected,
   openDetailsMobile: false,
   hybridation: { cartIdHybridation: '', hasHybridation: false, flag: false },

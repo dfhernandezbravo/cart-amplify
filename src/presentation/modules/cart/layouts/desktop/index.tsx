@@ -1,10 +1,15 @@
 import Desktop from '@components/layouts/desktop';
-import CartContainer from '@modules/cart/components/organisms/CartContainer';
+import Aside from '@modules/cart/sections/aside';
+import Main from '@modules/cart/sections/main';
+import { Container } from './styles';
 
 const CartDesktop = () => {
   return (
     <Desktop>
-      <CartContainer />
+      <Container>
+        <Main />
+        <Aside />
+      </Container>
     </Desktop>
   );
 };

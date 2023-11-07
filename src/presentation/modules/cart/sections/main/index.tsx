@@ -32,7 +32,7 @@ const Main = () => {
 
         {cartBFF?.items?.map((item: Item, index: number) => (
           <ProductCard
-            key={item?.itemId}
+            key={index}
             item={item}
             itemStockModify={
               index === updatedIndexItem?.index
