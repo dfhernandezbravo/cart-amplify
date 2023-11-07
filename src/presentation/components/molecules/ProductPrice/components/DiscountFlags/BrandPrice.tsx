@@ -1,9 +1,11 @@
-import { replaceCharacter } from '@utils/replaceCharacter';
-import { DiscountPercent, Price, PriceContainer } from './styles';
-import Flags, { FlagProps } from './Flags';
+import Flags from './Flags';
 import { formattedCLP } from '@utils/helpers';
+import { useAppSelector } from '@hooks/storeHooks';
+import { replaceCharacter } from '@utils/replaceCharacter';
 import { Adjustment } from '@entities/cart/cart.entity';
 import { PromotionType } from '@entities/cart/promotions';
+import { DiscountPercent, Price, PriceContainer } from './styles';
+import { validateCencopayId } from '@utils/validateCencopayId';
 
 interface Props {
   brandPrice: number;
@@ -21,7 +23,10 @@ type ValidBrandValue = {
 }[PromotionType];
 
 const BrandPrice = ({ brandPrice, brandDiscount, quantity }: Props) => {
-  if (!brandPrice) return null;
+  const { isCencopayActive } = useAppSelector((state) => state.cart);
+  const isCencoPay = validateCencopayId(brandDiscount[0].id);
+
+  if (isCencoPay && !isCencopayActive) return null;
 
   const porcentage = replaceCharacter(
     brandDiscount[0]?.percentageDiscount,

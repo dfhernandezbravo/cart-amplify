@@ -13,6 +13,7 @@ import deleteItem from '@use-cases/cart/delete-item';
 import { RootState } from '@hooks/storeHooks';
 import { Item } from '@entities/cart/cart.entity';
 import addItem from '@use-cases/cart/add-item';
+import getParamData from '@use-cases/cms/getParamData';
 
 export const quantitySelected = {
   quantity: null,
@@ -28,6 +29,7 @@ const initialValue: InitialState = {
   openDetailsMobile: false,
   hybridation: { cartIdHybridation: '', hasHybridation: false, flag: false },
   cartAsideIsOpen: false,
+  isCencopayActive: false,
 };
 
 const cartSlice = createSlice({
@@ -198,6 +200,9 @@ const cartSlice = createSlice({
       .addCase(removeCouponCode.fulfilled, (state, { payload }) => {
         state.cartBFF = payload;
         state.loading = false;
+      })
+      .addCase(getParamData.fulfilled, (state, { payload }) => {
+        state.isCencopayActive = payload?.value as boolean;
       });
   },
 });

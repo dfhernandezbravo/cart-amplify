@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import getCart from '@use-cases/cart/get-cart';
 import WindowsEvents from '@events/index';
 import useEventListener from '@hooks/eventListenerHooks';
+import getParamData from '@use-cases/cms/getParamData';
 
 const CartDesktop = () => {
   const { addCartId } = cartSlice.actions;
@@ -31,8 +32,10 @@ const CartDesktop = () => {
 
   useEffect(() => {
     const queryCartId = query.cartId as string;
-    // if (cartId === queryCartId) return;
     dispatch(addCartId(queryCartId));
+    dispatch(
+      getParamData({ groupName: 'switches', paramName: 'isCencopayActive' }),
+    );
     dispatch(getCart({ cartId: queryCartId }));
   }, []);
 
