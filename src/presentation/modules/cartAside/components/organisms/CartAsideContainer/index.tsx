@@ -20,6 +20,7 @@ import getCart from '@use-cases/cart/get-cart';
 import updateItem from '@use-cases/cart/update-item';
 import addItem from '@use-cases/cart/add-item';
 import HybridationEvents from '../../../../../hybridationEvents';
+import getParamData from '@use-cases/cms/getParamData';
 
 const CartAsideContainer = () => {
   // hooks
@@ -212,6 +213,12 @@ const CartAsideContainer = () => {
       dispatch(getCart({ cartId }));
     }
   }, [cartId, hasHybridation]);
+
+  useEffect(() => {
+    dispatch(
+      getParamData({ groupName: 'switches', paramName: 'isCencopayActive' }),
+    );
+  }, []);
 
   return (
     <>

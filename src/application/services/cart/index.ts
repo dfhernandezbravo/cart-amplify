@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie';
-// import axios from "axios";
 import { bffWebInstance } from '@data-sources/bbf-web-instance';
 import { AddOrderItems, UpdateOrderItems } from '@entities/cart/cart.request';
 import CartService from '@interfaces/cart-service.interface';

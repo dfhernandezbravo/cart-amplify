@@ -25,8 +25,8 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
         <Title>Subtotal con tarjeta Cencosud</Title>
         <Image
           src={'/icons/cart/tc-cencosud.svg'}
-          width={30}
-          height={30}
+          width={41}
+          height={41}
           alt="cencosud-icon"
         />
       </div>

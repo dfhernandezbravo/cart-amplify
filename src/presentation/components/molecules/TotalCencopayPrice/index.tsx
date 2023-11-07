@@ -7,9 +7,11 @@ import calculateTotalWithoutShippingPrice from '@utils/calculateTotalWithoutShip
 import { PriceType, Totals } from '@entities/cart/cart.entity';
 
 const TotalCencopayPrice = () => {
-  const { cartBFF, loading } = useAppSelector((state) => state.cart);
+  const { cartBFF, loading, isCencopayActive } = useAppSelector(
+    (state) => state.cart,
+  );
 
-  if (!cartBFF?.totals?.totalCencoPay) return null;
+  if (!cartBFF?.totals?.totalCencoPay || !isCencopayActive) return null;
 
   const valueWithoutShipping = calculateTotalWithoutShippingPrice(
     cartBFF?.totals as Totals,
@@ -23,8 +25,8 @@ const TotalCencopayPrice = () => {
         <Title>Subtotal con tarjeta Cencopay</Title>
         <Image
           src="/icons/cart/cencopay-icon.svg"
-          width={30}
-          height={30}
+          width={41}
+          height={41}
           alt="cencopay-icon"
         />
       </div>

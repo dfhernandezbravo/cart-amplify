@@ -15,7 +15,7 @@ export const Container = styled.div`
   & .value-price {
     color: #333333;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 20px;
   }
 `;
