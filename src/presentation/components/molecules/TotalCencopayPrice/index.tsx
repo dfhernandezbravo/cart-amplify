@@ -25,8 +25,8 @@ const TotalCencopayPrice = () => {
         <Title>Subtotal con tarjeta Cencopay</Title>
         <Image
           src="/icons/cart/cencopay-icon.svg"
-          width={41}
-          height={41}
+          width={30}
+          height={30}
           alt="cencopay-icon"
         />
       </div>
