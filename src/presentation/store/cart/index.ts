@@ -11,7 +11,7 @@ import dispatchCartHeaderEvent from '@use-cases/cart/dispatch-cart-header-event'
 import dispatchCartDataEvent from '@use-cases/cart/dispatch-cart-data-event';
 import deleteItem from '@use-cases/cart/delete-item';
 import { RootState } from '@hooks/storeHooks';
-import { Item } from '@entities/cart/cart.entity';
+import { Cart, Item } from '@entities/cart/cart.entity';
 import addItem from '@use-cases/cart/add-item';
 import getParamData from '@use-cases/cms/getParamData';
 
@@ -127,6 +127,9 @@ const cartSlice = createSlice({
     },
     setCartAsideIsOpen: (state, { payload }) => {
       state.cartAsideIsOpen = payload;
+    },
+    setCart: (state, { payload }: { payload: Cart }) => {
+      state.cartBFF = payload;
     },
   },
   extraReducers: (builder) => {

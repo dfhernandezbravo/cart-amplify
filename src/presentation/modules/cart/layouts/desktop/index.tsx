@@ -1,47 +1,15 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Desktop from '@components/layouts/desktop';
-import CartContainer from '@modules/cart/components/organisms/CartContainer';
-
-//Hooks
-import cartSlice from '@store/cart';
-import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
-import getCart from '@use-cases/cart/get-cart';
-import WindowsEvents from '@events/index';
-import useEventListener from '@hooks/eventListenerHooks';
-import getParamData from '@use-cases/cms/getParamData';
+import Aside from '@modules/cart/sections/aside';
+import Main from '@modules/cart/sections/main';
+import { Container } from './styles';
 
 const CartDesktop = () => {
-  const { addCartId } = cartSlice.actions;
-  const { query } = useRouter();
-  const { cartId } = useAppSelector((state) => state.cart);
-
-  const dispatch = useAppDispatch();
-
-  const updateShippingCart = () => {
-    if (cartId) {
-      dispatch(getCart({ cartId }));
-    }
-  };
-
-  useEventListener(
-    document,
-    WindowsEvents.UPDATE_SHIPPING_CART,
-    updateShippingCart,
-  );
-
-  useEffect(() => {
-    const queryCartId = query.cartId as string;
-    dispatch(addCartId(queryCartId));
-    dispatch(
-      getParamData({ groupName: 'switches', paramName: 'isCencopayActive' }),
-    );
-    dispatch(getCart({ cartId: queryCartId }));
-  }, []);
-
   return (
     <Desktop>
-      <CartContainer />
+      <Container>
+        <Main />
+        <Aside />
+      </Container>
     </Desktop>
   );
 };
