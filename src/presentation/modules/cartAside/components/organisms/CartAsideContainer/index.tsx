@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { MouseEvent, useCallback, useEffect, useMemo } from 'react';
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { SwipeableDrawer } from '@mui/material';
 import { selectTotalProductsInCart } from '@store/cart';
 import cartSlice from '@store/cart';
@@ -24,7 +24,7 @@ import getParamData from '@use-cases/cms/getParamData';
 
 const CartAsideContainer = () => {
   // hooks
-  const { cartBFF, hybridation, cartAsideIsOpen, cartId } = useAppSelector(
+  const { cartBFF, hasHybridation, cartAsideIsOpen, cartId } = useAppSelector(
     (state) => state.cart,
   );
   const dispatch = useAppDispatch();
@@ -32,6 +32,7 @@ const CartAsideContainer = () => {
     () => totalProductInCart(cartBFF as Cart),
     [cartBFF],
   );
+  const [newCartId, setNewCartId] = useState(null);
 
   const {
     addCartId,
@@ -39,10 +40,8 @@ const CartAsideContainer = () => {
     simulateAddProduct,
     simulateRemoveProduct,
     setCartAsideIsOpen,
-    setHybridation,
+    resetCartBFF,
   } = cartSlice.actions;
-
-  const { cartIdHybridation, hasHybridation, flag } = hybridation;
 
   // methods
   const methods = {
@@ -124,22 +123,33 @@ const CartAsideContainer = () => {
   };
   methods.initialize();
 
+  const verifyOrderformId = useCallback(() => {
+    console.log('newCartId ', newCartId);
+    if (newCartId) return newCartId;
+    if (cartId && cartId?.length > 0) return cartId;
+  }, [newCartId, cartId]);
+
   const handleHybridationMessages = useCallback(
     (event: MessageEvent) => {
       const key = Object.keys(event?.data);
 
-      if (key?.length > 0 && key[0] === HybridationEvents.HYBRIDATION) {
-        const { cartId: cartIdHybridation, isEnabledMiniCart } = JSON.parse(
-          event?.data?.HYBRIDATION,
-        );
-        dispatch(
-          setHybridation({
-            cartIdHybridation,
-            hasHybridation: isEnabledMiniCart,
-            flag: true,
-          }),
-        );
-        dispatch(setCartAsideIsOpen(true));
+      if (key?.length > 0 && key[0] === HybridationEvents.CART_ID_VTEX) {
+        const cartIdVtex = event?.data?.CART_ID_VTEX;
+        setNewCartId(cartIdVtex);
+        console.log('Message CART_ID_VTEX ', cartIdVtex);
+        console.log('cartId ', cartId);
+
+        const hasUpdatedCartId = cartId !== cartIdVtex;
+        console.log('hasUpdatedCartId ', hasUpdatedCartId);
+
+        if (hasUpdatedCartId) {
+          // Resetear cartBFF o llamará información de antiguo cartId
+          console.log('antes de resetCartBFF');
+          dispatch(resetCartBFF());
+          dispatch(addCartId(cartIdVtex));
+          // dispatch(getCart({ cartId: cartIdVtex }));
+          dispatch(setCartAsideIsOpen(true));
+        }
       }
 
       if (
@@ -151,6 +161,11 @@ const CartAsideContainer = () => {
 
         dispatch(simulateAddProduct({ ...product, quantityValue }));
 
+        console.log('before add cartBFF, cartId ', {
+          cartBFF,
+          cartId,
+        });
+
         const productInCart = cartBFF?.items?.find(
           (item) => item.product.id === productReference,
         );
@@ -161,36 +176,41 @@ const CartAsideContainer = () => {
           );
 
           if (productIndex !== undefined && productIndex !== -1) {
+            console.log('before updateItem ', cartId);
+
+            verifyOrderformId() &&
+              dispatch(
+                updateItem({
+                  cartId: verifyOrderformId() ?? '',
+                  items: [
+                    {
+                      index: productIndex,
+                      quantity: quantityValue
+                        ? productInCart.quantity + parseInt(quantityValue)
+                        : productInCart.quantity + 1,
+                    },
+                  ],
+                }),
+              );
+          }
+        } else {
+          console.log('before addItem ', cartId);
+          verifyOrderformId() &&
             dispatch(
-              updateItem({
-                cartId,
+              addItem({
+                cartId: verifyOrderformId() ?? '',
                 items: [
                   {
-                    index: productIndex,
-                    quantity: quantityValue
-                      ? productInCart.quantity + parseInt(quantityValue)
-                      : productInCart.quantity + 1,
+                    quantity: quantityValue ? parseInt(quantityValue) : 1,
+                    id: productReference,
                   },
                 ],
               }),
             );
-          }
-        } else {
-          dispatch(
-            addItem({
-              cartId,
-              items: [
-                {
-                  quantity: quantityValue ? parseInt(quantityValue) : 1,
-                  id: productReference,
-                },
-              ],
-            }),
-          );
         }
       }
     },
-    [cartBFF],
+    [cartBFF, cartId, hasHybridation, addCartId, newCartId],
   );
 
   useEffect(() => {
@@ -198,27 +218,29 @@ const CartAsideContainer = () => {
     return () => {
       window.removeEventListener('message', handleHybridationMessages);
     };
-  }, [handleHybridationMessages]);
+    // }, [cartBFF, cartId, hasHybridation]);
+  }, []);
 
   useEffect(() => {
-    if (hasHybridation && cartIdHybridation && flag) {
-      dispatch(getCart({ cartId: cartIdHybridation }));
-      dispatch(addCartId(cartIdHybridation));
-      dispatch(setHybridation({ ...hybridation, flag: false }));
+    dispatch(getParamData());
+  }, []);
+
+  useEffect(() => {
+    if (verifyOrderformId()) {
+      dispatch(getCart({ cartId: verifyOrderformId() ?? '' }));
     }
-  }, [hasHybridation, cartIdHybridation, flag]);
+  }, [verifyOrderformId()]);
 
   useEffect(() => {
-    if (cartId && !hasHybridation) {
+    console.log('inside useEffect before getCart ', {
+      cartId,
+      newCartId,
+    });
+    if (cartId?.length > 0 && cartId === newCartId) {
+      console.log('inside if getCart');
       dispatch(getCart({ cartId }));
     }
-  }, [cartId, hasHybridation]);
-
-  useEffect(() => {
-    dispatch(
-      getParamData({ groupName: 'switches', paramName: 'isCencopayActive' }),
-    );
-  }, []);
+  }, [cartId, newCartId]);
 
   return (
     <>

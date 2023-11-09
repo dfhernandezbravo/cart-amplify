@@ -9,9 +9,8 @@ import cartSlice from '@store/cart';
 
 const Header = () => {
   const dispatch = useAppDispatch();
-  const { cartBFF, hybridation } = useAppSelector((state) => state.cart);
+  const { cartBFF, hasHybridation } = useAppSelector((state) => state.cart);
   const { setCartAsideIsOpen } = cartSlice.actions;
-  const { hasHybridation } = hybridation;
 
   const totalProducts = useMemo(
     () => totalProductInCart(cartBFF as Cart),

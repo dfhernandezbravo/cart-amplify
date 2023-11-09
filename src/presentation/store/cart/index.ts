@@ -27,7 +27,8 @@ const initialValue: InitialState = {
   loading: false,
   quantitySelected,
   openDetailsMobile: false,
-  hybridation: { cartIdHybridation: '', hasHybridation: false, flag: false },
+  // hybridation: { cartIdHybridation: '', hasHybridation: false, flag: false },
+  hasHybridation: false,
   cartAsideIsOpen: false,
   isCencopayActive: false,
 };
@@ -37,6 +38,7 @@ const cartSlice = createSlice({
   initialState: initialValue,
   reducers: {
     addCartId: (state, { payload }) => {
+      console.log('addCartId ', payload);
       state.cartId = payload;
     },
     addProductInCart: (state, { payload }) => {
@@ -122,14 +124,18 @@ const cartSlice = createSlice({
     setOpenDetailsMobile: (state, { payload }) => {
       state.openDetailsMobile = payload;
     },
-    setHybridation: (state, { payload }) => {
-      state.hybridation = payload;
-    },
+    // setHybridation: (state, { payload }) => {
+    //   state.hybridation = payload;
+    // },
     setCartAsideIsOpen: (state, { payload }) => {
       state.cartAsideIsOpen = payload;
     },
     setCart: (state, { payload }: { payload: Cart }) => {
       state.cartBFF = payload;
+    },
+    resetCartBFF: (state) => {
+      console.log('inside resetCartBFF');
+      state.cartBFF = undefined;
     },
   },
   extraReducers: (builder) => {
@@ -205,7 +211,11 @@ const cartSlice = createSlice({
         state.loading = false;
       })
       .addCase(getParamData.fulfilled, (state, { payload }) => {
-        state.isCencopayActive = payload?.value as boolean;
+        console.log('getParamData ', payload);
+        state.hasHybridation = Boolean(
+          payload?.params?.hybridation?.isEnabledMiniCart,
+        );
+        state.isCencopayActive = Boolean(payload?.params?.isCencopayActive);
       });
   },
 });
