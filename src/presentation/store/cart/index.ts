@@ -38,7 +38,7 @@ const cartSlice = createSlice({
   initialState: initialValue,
   reducers: {
     addCartId: (state, { payload }) => {
-      console.log('addCartId ', payload);
+      console.log('addCartId redux ', payload);
       state.cartId = payload;
     },
     addProductInCart: (state, { payload }) => {

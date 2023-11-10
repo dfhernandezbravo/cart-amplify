@@ -32,7 +32,7 @@ const CartAsideContainer = () => {
     () => totalProductInCart(cartBFF as Cart),
     [cartBFF],
   );
-  const [newCartId, setNewCartId] = useState(null);
+  const [cartIdHybridation, setCartIdHybridation] = useState('');
 
   const {
     addCartId,
@@ -123,33 +123,26 @@ const CartAsideContainer = () => {
   };
   methods.initialize();
 
-  const verifyOrderformId = useCallback(() => {
-    console.log('newCartId ', newCartId);
-    if (newCartId) return newCartId;
-    if (cartId && cartId?.length > 0) return cartId;
-  }, [newCartId, cartId]);
-
   const handleHybridationMessages = useCallback(
     (event: MessageEvent) => {
       const key = Object.keys(event?.data);
 
       if (key?.length > 0 && key[0] === HybridationEvents.CART_ID_VTEX) {
         const cartIdVtex = event?.data?.CART_ID_VTEX;
-        setNewCartId(cartIdVtex);
         console.log('Message CART_ID_VTEX ', cartIdVtex);
         console.log('cartId ', cartId);
 
-        const hasUpdatedCartId = cartId !== cartIdVtex;
-        console.log('hasUpdatedCartId ', hasUpdatedCartId);
+        // const hasUpdatedCartId = cartId !== cartIdVtex;
+        // console.log('hasUpdatedCartId ', hasUpdatedCartId);
 
-        if (hasUpdatedCartId) {
-          // Resetear cartBFF o llamará información de antiguo cartId
-          console.log('antes de resetCartBFF');
-          dispatch(resetCartBFF());
-          dispatch(addCartId(cartIdVtex));
-          // dispatch(getCart({ cartId: cartIdVtex }));
-          dispatch(setCartAsideIsOpen(true));
-        }
+        // if (hasUpdatedCartId) {
+        // Resetear cartBFF o llamará información de antiguo cartId
+        // console.log('antes de resetCartBFF');
+        // dispatch(resetCartBFF());
+        dispatch(addCartId(cartIdVtex));
+        // dispatch(getCart({ cartId: cartIdHybridation }));
+        dispatch(setCartAsideIsOpen(true));
+        // }
       }
 
       if (
@@ -161,10 +154,7 @@ const CartAsideContainer = () => {
 
         dispatch(simulateAddProduct({ ...product, quantityValue }));
 
-        console.log('before add cartBFF, cartId ', {
-          cartBFF,
-          cartId,
-        });
+        console.log('before add cartBFF, cartId ', { cartBFF, cartId });
 
         const productInCart = cartBFF?.items?.find(
           (item) => item.product.id === productReference,
@@ -177,40 +167,37 @@ const CartAsideContainer = () => {
 
           if (productIndex !== undefined && productIndex !== -1) {
             console.log('before updateItem ', cartId);
-
-            verifyOrderformId() &&
-              dispatch(
-                updateItem({
-                  cartId: verifyOrderformId() ?? '',
-                  items: [
-                    {
-                      index: productIndex,
-                      quantity: quantityValue
-                        ? productInCart.quantity + parseInt(quantityValue)
-                        : productInCart.quantity + 1,
-                    },
-                  ],
-                }),
-              );
-          }
-        } else {
-          console.log('before addItem ', cartId);
-          verifyOrderformId() &&
             dispatch(
-              addItem({
-                cartId: verifyOrderformId() ?? '',
+              updateItem({
+                cartId,
                 items: [
                   {
-                    quantity: quantityValue ? parseInt(quantityValue) : 1,
-                    id: productReference,
+                    index: productIndex,
+                    quantity: quantityValue
+                      ? productInCart.quantity + parseInt(quantityValue)
+                      : productInCart.quantity + 1,
                   },
                 ],
               }),
             );
+          }
+        } else {
+          console.log('before addItem ', cartId);
+          dispatch(
+            addItem({
+              cartId,
+              items: [
+                {
+                  quantity: quantityValue ? parseInt(quantityValue) : 1,
+                  id: productReference,
+                },
+              ],
+            }),
+          );
         }
       }
     },
-    [cartBFF, cartId, hasHybridation, addCartId, newCartId],
+    [cartBFF, cartId, hasHybridation],
   );
 
   useEffect(() => {
@@ -226,21 +213,11 @@ const CartAsideContainer = () => {
   }, []);
 
   useEffect(() => {
-    if (verifyOrderformId()) {
-      dispatch(getCart({ cartId: verifyOrderformId() ?? '' }));
-    }
-  }, [verifyOrderformId()]);
-
-  useEffect(() => {
-    console.log('inside useEffect before getCart ', {
-      cartId,
-      newCartId,
-    });
-    if (cartId?.length > 0 && cartId === newCartId) {
-      console.log('inside if getCart');
+    if (cartId) {
+      console.log('inside useEffect before getCart ', cartId);
       dispatch(getCart({ cartId }));
     }
-  }, [cartId, newCartId]);
+  }, [cartId]);
 
   return (
     <>
