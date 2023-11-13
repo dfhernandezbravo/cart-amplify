@@ -21,6 +21,7 @@ import updateItem from '@use-cases/cart/update-item';
 import addItem from '@use-cases/cart/add-item';
 import HybridationEvents from '../../../../../hybridationEvents';
 import getParamData from '@use-cases/cms/getParamData';
+import { useRouter } from 'next/router';
 
 const CartAsideContainer = () => {
   // hooks
@@ -32,7 +33,6 @@ const CartAsideContainer = () => {
     () => totalProductInCart(cartBFF as Cart),
     [cartBFF],
   );
-  const [cartIdHybridation, setCartIdHybridation] = useState('');
 
   const {
     addCartId,
@@ -43,6 +43,57 @@ const CartAsideContainer = () => {
     resetCartBFF,
   } = cartSlice.actions;
 
+  const handleSetIsOpen = (event: Event) => {
+    event.preventDefault();
+    const customEvent = event as CustomEvent;
+    dispatch(setCartAsideIsOpen(customEvent.detail?.open));
+  };
+
+  const handleAddProductEvent = (event: Event) => {
+    event.preventDefault();
+    const customEvent = event as CustomEvent;
+    dispatch(addProductInCart(customEvent.detail?.data));
+    const customEventError = customEvent.detail?.data?.messagesErrors;
+
+    if (customEventError.length) {
+      const cartError = handlePayloadError(customEventError[0]);
+      dispatch(setError(cartError));
+    }
+    dispatch(setCartAsideIsOpen(true));
+  };
+
+  const handleCloseOverlay = (event: MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (event.target === event.currentTarget) {
+      dispatch(setCartAsideIsOpen(false));
+    }
+  };
+  const handleGetCartId = (event: Event) => {
+    event.preventDefault();
+
+    const customEvent = event as CustomEvent;
+    dispatch(addCartId(customEvent.detail?.cartId));
+  };
+  const handleSimulateAddProductEvent = (event: Event) => {
+    event.preventDefault();
+    const customEvent = event as CustomEvent;
+    dispatch(simulateAddProduct(customEvent.detail?.product));
+    dispatch(setCartAsideIsOpen(true));
+  };
+
+  const handleAddProductErrorEvent = (event: Event) => {
+    event.preventDefault();
+    const customEvent = event as CustomEvent;
+    const customEventError = customEvent.detail?.data.error;
+    const cartError = handleHttpError(customEventError);
+    dispatch(setError(cartError));
+
+    // wait 4sec before remove product
+    setTimeout(() => {
+      dispatch(simulateRemoveProduct(customEvent.detail?.data.itemId));
+    }, 4000);
+  };
+
   // methods
   const methods = {
     initialize: () => {
@@ -50,75 +101,25 @@ const CartAsideContainer = () => {
         useEventListener(
           document,
           WindowsEvents.TOGGLE_CART_ASIDE,
-          methods.handleSetIsOpen,
+          handleSetIsOpen,
         );
         useEventListener(
           document,
           WindowsEvents.ADD_PRODUCT_IN_CART,
-          methods.handleAddProductEvent,
+          handleAddProductEvent,
         );
-        useEventListener(
-          document,
-          WindowsEvents.CART_ID,
-          methods.handleGetCartId,
-        );
+        useEventListener(document, WindowsEvents.CART_ID, handleGetCartId);
         useEventListener(
           document,
           WindowsEvents.SIMULATE_ADD_PRODUCT,
-          methods.handleSimulateAddProductEvent,
+          handleSimulateAddProductEvent,
         );
         useEventListener(
           document,
           WindowsEvents.ADD_PRODUCT_ERROR,
-          methods.handleAddProductErrorEvent,
+          handleAddProductErrorEvent,
         );
       }
-    },
-    handleSetIsOpen: (event: Event) => {
-      event.preventDefault();
-      const customEvent = event as CustomEvent;
-      dispatch(setCartAsideIsOpen(customEvent.detail?.open));
-    },
-    handleAddProductEvent: (event: Event) => {
-      event.preventDefault();
-      const customEvent = event as CustomEvent;
-      dispatch(addProductInCart(customEvent.detail?.data));
-      const customEventError = customEvent.detail?.data?.messagesErrors;
-
-      if (customEventError.length) {
-        const cartError = handlePayloadError(customEventError[0]);
-        dispatch(setError(cartError));
-      }
-      dispatch(setCartAsideIsOpen(true));
-    },
-    handleCloseOverlay: (event: MouseEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      if (event.target === event.currentTarget) {
-        dispatch(setCartAsideIsOpen(false));
-      }
-    },
-    handleGetCartId: (event: Event) => {
-      event.preventDefault();
-      const customEvent = event as CustomEvent;
-      dispatch(addCartId(customEvent.detail?.cartId));
-    },
-    handleSimulateAddProductEvent: (event: Event) => {
-      event.preventDefault();
-      const customEvent = event as CustomEvent;
-      dispatch(simulateAddProduct(customEvent.detail?.product));
-      dispatch(setCartAsideIsOpen(true));
-    },
-    handleAddProductErrorEvent: (event: Event) => {
-      event.preventDefault();
-      const customEvent = event as CustomEvent;
-      const customEventError = customEvent.detail?.data.error;
-      const cartError = handleHttpError(customEventError);
-      dispatch(setError(cartError));
-
-      // wait 4sec before remove product
-      setTimeout(() => {
-        dispatch(simulateRemoveProduct(customEvent.detail?.data.itemId));
-      }, 4000);
     },
   };
   methods.initialize();
@@ -129,20 +130,9 @@ const CartAsideContainer = () => {
 
       if (key?.length > 0 && key[0] === HybridationEvents.CART_ID_VTEX) {
         const cartIdVtex = event?.data?.CART_ID_VTEX;
-        console.log('Message CART_ID_VTEX ', cartIdVtex);
-        console.log('cartId ', cartId);
 
-        // const hasUpdatedCartId = cartId !== cartIdVtex;
-        // console.log('hasUpdatedCartId ', hasUpdatedCartId);
-
-        // if (hasUpdatedCartId) {
-        // Resetear cartBFF o llamará información de antiguo cartId
-        // console.log('antes de resetCartBFF');
-        // dispatch(resetCartBFF());
         dispatch(addCartId(cartIdVtex));
-        // dispatch(getCart({ cartId: cartIdHybridation }));
         dispatch(setCartAsideIsOpen(true));
-        // }
       }
 
       if (
@@ -151,25 +141,31 @@ const CartAsideContainer = () => {
       ) {
         const { productReference, quantityValue, product } =
           event?.data?.VTEX_PRODUCT_ADD_TO_CART;
+        const cartStorage = localStorage.getItem('cbff');
+        const vtexorderform = localStorage.getItem('vtxorderform');
 
-        dispatch(simulateAddProduct({ ...product, quantityValue }));
+        const cart =
+          cartStorage &&
+          cartStorage! == undefined &&
+          JSON.parse(cartStorage || '{}');
 
-        console.log('before add cartBFF, cartId ', { cartBFF, cartId });
+        //dispatch(simulateAddProduct({ ...product, quantityValue }));
 
-        const productInCart = cartBFF?.items?.find(
-          (item) => item.product.id === productReference,
+        const productInCart = cart?.items?.find(
+          (item: any) => item.product.id === productReference,
         );
 
         if (productInCart) {
-          const productIndex = cartBFF?.items?.findIndex(
-            (item) => item.product.id === productReference,
+          const productIndex = cart?.items?.findIndex(
+            (item: any) => item.product.id === productReference,
           );
 
+          console.log('>>>> product in cart <<<:', productInCart);
+
           if (productIndex !== undefined && productIndex !== -1) {
-            console.log('before updateItem ', cartId);
             dispatch(
               updateItem({
-                cartId,
+                cartId: vtexorderform || '',
                 items: [
                   {
                     index: productIndex,
@@ -182,10 +178,9 @@ const CartAsideContainer = () => {
             );
           }
         } else {
-          console.log('before addItem ', cartId);
           dispatch(
             addItem({
-              cartId,
+              cartId: vtexorderform || '',
               items: [
                 {
                   quantity: quantityValue ? parseInt(quantityValue) : 1,
@@ -200,12 +195,83 @@ const CartAsideContainer = () => {
     [cartBFF, cartId, hasHybridation],
   );
 
+  const hybridation = useCallback(() => {
+    window.addEventListener('message', (event: MessageEvent) => {
+      const key = Object.keys(event?.data);
+      const keyValue = () => {
+        if (key?.length > 0 && key[0]) return key[0];
+        else return '';
+      };
+      switch (keyValue()) {
+        case HybridationEvents.CART_ID_VTEX:
+          const cartIdVtex = event?.data?.CART_ID_VTEX;
+          console.log('>>>> Event CART ID VTEX <<<<', cartIdVtex);
+          dispatch(addCartId(cartIdVtex));
+          dispatch(setCartAsideIsOpen(true));
+          break;
+        case HybridationEvents.VTEX_PRODUCT_ADD_TO_CART:
+          console.log('>>>> Event VTEX PRODUCT ADD TO CART');
+          const { productReference, quantityValue, product } =
+            event?.data?.VTEX_PRODUCT_ADD_TO_CART;
+          console.log({
+            cartId,
+            cartBFF,
+          });
+          const productInCart = cartBFF?.items?.find(
+            (item: any) => item.product.id === productReference,
+          );
+          console.log('>>> productInCart <<< :', productInCart);
+          if (productInCart) {
+            const productIndex = cartBFF?.items?.findIndex(
+              (item: any) => item.product.id === productReference,
+            );
+
+            console.log('>>>> product in cart <<<:', productInCart);
+
+            if (productIndex !== undefined && productIndex !== -1) {
+              dispatch(
+                updateItem({
+                  cartId,
+                  items: [
+                    {
+                      index: productIndex,
+                      quantity: quantityValue
+                        ? productInCart.quantity + parseInt(quantityValue)
+                        : productInCart.quantity + 1,
+                    },
+                  ],
+                }),
+              );
+              //dispatch(getCart({ cartId }));
+              return;
+            }
+          } else {
+            dispatch(
+              addItem({
+                cartId,
+                items: [
+                  {
+                    quantity: quantityValue ? parseInt(quantityValue) : 1,
+                    id: productReference,
+                  },
+                ],
+              }),
+            );
+            //dispatch(getCart({ cartId }));
+            return;
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }, [addCartId, cartBFF, cartId, dispatch, setCartAsideIsOpen]);
+
   useEffect(() => {
-    window.addEventListener('message', handleHybridationMessages);
+    hybridation();
     return () => {
-      window.removeEventListener('message', handleHybridationMessages);
+      window.removeEventListener('message', hybridation);
     };
-    // }, [cartBFF, cartId, hasHybridation]);
   }, []);
 
   useEffect(() => {
@@ -214,25 +280,34 @@ const CartAsideContainer = () => {
 
   useEffect(() => {
     if (cartId) {
-      console.log('inside useEffect before getCart ', cartId);
-      dispatch(getCart({ cartId }));
+      const vtexorderform = localStorage.getItem('vtxorderform');
+      const cartIdValue = cartId || vtexorderform || '';
+      dispatch(getCart({ cartId: cartIdValue }));
     }
   }, [cartId]);
+
+  const CartHybrid = () => {
+    return (
+      <>
+        <Header />
+        {totalProducts > 0 ? (
+          <>
+            <Body />
+            <Footer />
+          </>
+        ) : (
+          <EmptyBody />
+        )}
+      </>
+    );
+  };
+
+  console.log('>>>> CART BFF <<<:', cartBFF);
 
   return (
     <>
       {hasHybridation ? (
-        <>
-          <Header />
-          {totalProducts > 0 ? (
-            <>
-              <Body />
-              <Footer />
-            </>
-          ) : (
-            <EmptyBody />
-          )}
-        </>
+        <CartHybrid />
       ) : (
         <SwipeableDrawer
           anchor="right"

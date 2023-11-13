@@ -39,6 +39,7 @@ const cartSlice = createSlice({
   reducers: {
     addCartId: (state, { payload }) => {
       console.log('addCartId redux ', payload);
+      localStorage.setItem('vtxorderform', payload);
       state.cartId = payload;
     },
     addProductInCart: (state, { payload }) => {
@@ -134,7 +135,6 @@ const cartSlice = createSlice({
       state.cartBFF = payload;
     },
     resetCartBFF: (state) => {
-      console.log('inside resetCartBFF');
       state.cartBFF = undefined;
     },
   },
@@ -144,6 +144,7 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(getCart.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
       })
@@ -151,6 +152,8 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(addItem.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
+        console.log('>> add item redux <<<:', payload);
         state.cartBFF = payload;
         state.loading = false;
       })
@@ -158,8 +161,10 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateItem.fulfilled, (state, { payload }) => {
+        console.log('>> update item redux <<<:', payload);
         const { index, quantity } = state.quantitySelected;
         // state.cartBFF = payload ?? state.cartBFF; // TODO: Revisar
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
@@ -186,6 +191,7 @@ const cartSlice = createSlice({
       })
       .addCase(deleteItem.fulfilled, (state, { payload }) => {
         // state.cartBFF = payload ?? state.cartBFF; // TODO: Revisar
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
@@ -196,6 +202,7 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(addCouponCode.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
       })
@@ -207,6 +214,7 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(removeCouponCode.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
       })

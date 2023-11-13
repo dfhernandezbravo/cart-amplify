@@ -5,31 +5,44 @@ import { CouponCode } from '@entities/cart/cart.entity';
 
 const httpInstance = bffWebInstance;
 
+const valitadeId = (id: string | undefined) => {
+  if (id && id?.length > 0) return id;
+  else {
+    const localId = localStorage.getItem('vtxorderform');
+    return localId;
+  }
+};
+
 const cartService: CartService = {
   getCart: async (data) => {
-    const url = `/shoppingcart/${data.cartId}`;
+    const url = `/shoppingcart/${valitadeId(data.cartId)}`;
     return httpInstance.get(url);
   },
   addItem: (data) => {
-    const url = `/shoppingcart/${data.cartId}/items`;
+    console.log('inside HEre >>:', valitadeId(data.cartId));
+    const url = `/shoppingcart/${valitadeId(data.cartId)}/items`;
     const body: AddOrderItems = { orderItems: data.items };
     return httpInstance.post(url, body);
   },
   updateItem: (data) => {
-    const url = `/shoppingcart/${data.cartId}/items`;
+    const url = `/shoppingcart/${valitadeId(data.cartId)}/items`;
     const body: UpdateOrderItems = { orderItems: data.items };
     return httpInstance.patch(url, body);
   },
   deleteItem: (data) => {
-    const url = `/shoppingcart/${data.cartId}/items/${data.itemIndex}`;
+    const url = `/shoppingcart/${valitadeId(data.cartId)}/items/${
+      data.itemIndex
+    }`;
     return httpInstance.delete(url);
   },
   addCoupon: (data: CouponCode) => {
-    const url = `/shoppingcart/${data.cartId}/coupon`;
+    const url = `/shoppingcart/${valitadeId(data.cartId)}/coupon`;
     return httpInstance.post(url, { couponCode: data.couponCode });
   },
   removeCoupon: (data) => {
-    const url = `/shoppingcart/${data.cartId}/coupon/${data.couponCode}`;
+    const url = `/shoppingcart/${valitadeId(data.cartId)}/coupon/${
+      data.couponCode
+    }`;
     return httpInstance.delete(url);
   },
 };
