@@ -19,7 +19,6 @@ const cartService: CartService = {
     return httpInstance.get(url);
   },
   addItem: (data) => {
-    console.log('inside HEre >>:', valitadeId(data.cartId));
     const url = `/shoppingcart/${valitadeId(data.cartId)}/items`;
     const body: AddOrderItems = { orderItems: data.items };
     return httpInstance.post(url, body);

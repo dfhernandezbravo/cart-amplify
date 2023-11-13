@@ -38,7 +38,6 @@ const cartSlice = createSlice({
   initialState: initialValue,
   reducers: {
     addCartId: (state, { payload }) => {
-      console.log('addCartId redux ', payload);
       localStorage.setItem('vtxorderform', payload);
       state.cartId = payload;
     },
@@ -153,7 +152,6 @@ const cartSlice = createSlice({
       })
       .addCase(addItem.fulfilled, (state, { payload }) => {
         localStorage.setItem('cbff', JSON.stringify(payload));
-        console.log('>> add item redux <<<:', payload);
         state.cartBFF = payload;
         state.loading = false;
       })
@@ -161,7 +159,6 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateItem.fulfilled, (state, { payload }) => {
-        console.log('>> update item redux <<<:', payload);
         const { index, quantity } = state.quantitySelected;
         // state.cartBFF = payload ?? state.cartBFF; // TODO: Revisar
         localStorage.setItem('cbff', JSON.stringify(payload));
@@ -219,7 +216,6 @@ const cartSlice = createSlice({
         state.loading = false;
       })
       .addCase(getParamData.fulfilled, (state, { payload }) => {
-        console.log('getParamData ', payload);
         state.hasHybridation = Boolean(
           payload?.params?.hybridation?.isEnabledMiniCart,
         );

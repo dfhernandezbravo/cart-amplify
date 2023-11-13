@@ -1,21 +1,22 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { GrClose } from 'react-icons/gr';
 // import { HeaderProps } from './types';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
-import totalProductInCart from '@utils/totalProduct';
-import { Cart } from '@entities/cart/cart.entity';
+import { selectTotalProductsInCart } from '@store/cart';
 import { Title } from './styles';
 import cartSlice from '@store/cart';
 
 const Header = () => {
   const dispatch = useAppDispatch();
-  const { cartBFF, hasHybridation } = useAppSelector((state) => state.cart);
+  const { hasHybridation } = useAppSelector((state) => state.cart);
   const { setCartAsideIsOpen } = cartSlice.actions;
 
-  const totalProducts = useMemo(
-    () => totalProductInCart(cartBFF as Cart),
-    [cartBFF],
-  );
+  // const totalProducts = useMemo(
+  //   () => totalProductInCart(cartBFF as Cart),
+  //   [cartBFF],
+  // );
+
+  const totalProducts = useAppSelector(selectTotalProductsInCart);
 
   // Hybridation
   const closeCartHybridation = () => {
