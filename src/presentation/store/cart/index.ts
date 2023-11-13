@@ -194,7 +194,6 @@ const cartSlice = createSlice({
         state.loading = false;
       })
       .addCase(addCouponCode.rejected, (state, { payload }) => {
-        console.log('coupon rejected', { payload });
         state.loading = false;
       })
       .addCase(removeCouponCode.pending, (state) => {

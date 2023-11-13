@@ -24,10 +24,9 @@ const useProductCardEvent = (cartId: string) => {
   const { isXs, isSm } = useBreakpoints();
 
   const isMobile = isXs || isSm;
-
   const methods = {
     handleChangeQuantity: (quantity: string, index: number) => {
-      setUpdatedIndexItem(quantitySelected);
+      setUpdatedIndexItem(defaultQuantity);
 
       const itemSelected = {
         quantity: Number(quantity),
@@ -38,6 +37,7 @@ const useProductCardEvent = (cartId: string) => {
         cartId: cartId ?? '',
         items: [itemSelected],
       };
+      console.log({ productToUpdate });
 
       dispatch(setQuantitySelected(itemSelected));
       dispatch(updateItem(productToUpdate));
