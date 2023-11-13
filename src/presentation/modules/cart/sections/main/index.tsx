@@ -15,6 +15,7 @@ const Main = () => {
   const { methods, updatedIndexItem } = useProductCardEvent(
     cartBFF?.id as string,
   );
+
   return (
     <Container>
       <TotalProductsContainer>

@@ -168,10 +168,16 @@ const cartSlice = createSlice({
           state.cartBFF.items[index!]?.quantity !== undefined &&
           state.cartBFF.items[index!]?.quantity < quantity!
         ) {
+          const availableItemNewResponse =
+            state.cartBFF.items[index!]?.quantity;
+
           state.quantitySelected = {
             index,
             quantity,
-            availableQuantity: state.cartBFF.items[index!]?.quantity,
+            availableQuantity:
+              availableItemNewResponse < (quantity as number)
+                ? availableItemNewResponse
+                : null,
           };
         }
       })

@@ -37,7 +37,6 @@ const useProductCardEvent = (cartId: string) => {
         cartId: cartId ?? '',
         items: [itemSelected],
       };
-      console.log({ productToUpdate });
 
       dispatch(setQuantitySelected(itemSelected));
       dispatch(updateItem(productToUpdate));
