@@ -20,9 +20,6 @@ const EmptyBody = () => {
       />
       <Title>Tu carro está vacío</Title>
       <Description>Miles de productos y ofertas te están esperando</Description>
-      {/* <Button className="cartBtn cartBtn--primary" onClick={handleLogin}>
-        Iniciar sesión
-      </Button> */}
       <Button
         className=" cartBtn cartBtn--secondary"
         onClick={handleSearchProducts}

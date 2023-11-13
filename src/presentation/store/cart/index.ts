@@ -131,6 +131,9 @@ const cartSlice = createSlice({
     setCart: (state, { payload }: { payload: Cart }) => {
       state.cartBFF = payload;
     },
+    setLoading: (state, { payload }: { payload: boolean }) => {
+      state.loading = payload;
+    },
   },
   extraReducers: (builder) => {
     builder
