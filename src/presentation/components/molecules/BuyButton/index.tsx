@@ -6,9 +6,8 @@ import Link from 'next/link';
 
 const BuyButton = (props: BuyButtonProps) => {
   const router = useRouter();
-  const { cartBFF, hybridation } = useAppSelector((state) => state.cart);
+  const { cartBFF, hasHybridation } = useAppSelector((state) => state.cart);
 
-  const { hasHybridation } = hybridation;
   const { text } = props;
 
   const handleClickBtn = () => {
