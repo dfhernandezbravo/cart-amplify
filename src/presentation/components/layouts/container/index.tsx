@@ -6,6 +6,7 @@ import EmptyBody from '@modules/cart/sections/emptyBody';
 import cartSlice from '@store/cart';
 import { useQuery } from '@tanstack/react-query';
 import getCart, { getCartSync } from '@use-cases/cart/get-cart';
+import getParamData from '@use-cases/cms/getParamData';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import React, { useEffect } from 'react';
@@ -45,6 +46,10 @@ const CartContainerProvider = ({ children }: Props) => {
     WindowsEvents.UPDATE_SHIPPING_CART,
     updateShippingCart,
   );
+
+  useEffect(() => {
+    dispatch(getParamData());
+  }, []);
 
   useEffect(() => {
     dispatch(addCartId(cartQuery));

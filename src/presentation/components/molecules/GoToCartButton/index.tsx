@@ -6,9 +6,7 @@ import Link from 'next/link';
 
 const GoToCartButton = () => {
   const router = useRouter();
-  const { cartId, hybridation } = useAppSelector((state) => state.cart);
-
-  const { hasHybridation } = hybridation;
+  const { cartId, hasHybridation } = useAppSelector((state) => state.cart);
 
   const handleClickBtn = () => {
     router.push(`/cart/${cartId}`);

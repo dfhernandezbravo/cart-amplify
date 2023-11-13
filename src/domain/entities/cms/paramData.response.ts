@@ -1,6 +1,8 @@
 export interface ParamDataResponse {
-  groupName: string;
-  name: string;
-  type: string;
-  value: boolean;
+  params: {
+    hybridation: {
+      isEnabledMiniCart: boolean;
+    };
+    isCencopayActive: boolean;
+  };
 }

@@ -27,7 +27,7 @@ const initialValue: InitialState = {
   loading: false,
   quantitySelected,
   openDetailsMobile: false,
-  hybridation: { cartIdHybridation: '', hasHybridation: false, flag: false },
+  hasHybridation: false,
   cartAsideIsOpen: false,
   isCencopayActive: false,
 };
@@ -37,6 +37,7 @@ const cartSlice = createSlice({
   initialState: initialValue,
   reducers: {
     addCartId: (state, { payload }) => {
+      localStorage.setItem('vtxorderform', payload);
       state.cartId = payload;
     },
     addProductInCart: (state, { payload }) => {
@@ -122,9 +123,6 @@ const cartSlice = createSlice({
     setOpenDetailsMobile: (state, { payload }) => {
       state.openDetailsMobile = payload;
     },
-    setHybridation: (state, { payload }) => {
-      state.hybridation = payload;
-    },
     setCartAsideIsOpen: (state, { payload }) => {
       state.cartAsideIsOpen = payload;
     },
@@ -141,6 +139,7 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(getCart.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
       })
@@ -148,6 +147,7 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(addItem.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
       })
@@ -157,6 +157,7 @@ const cartSlice = createSlice({
       .addCase(updateItem.fulfilled, (state, { payload }) => {
         const { index, quantity } = state.quantitySelected;
         // state.cartBFF = payload ?? state.cartBFF; // TODO: Revisar
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
@@ -189,6 +190,7 @@ const cartSlice = createSlice({
       })
       .addCase(deleteItem.fulfilled, (state, { payload }) => {
         // state.cartBFF = payload ?? state.cartBFF; // TODO: Revisar
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
         const totalQuantity = totalItems(state.cartBFF?.items);
@@ -199,6 +201,7 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(addCouponCode.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
       })
@@ -209,11 +212,15 @@ const cartSlice = createSlice({
         state.loading = true;
       })
       .addCase(removeCouponCode.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
       })
       .addCase(getParamData.fulfilled, (state, { payload }) => {
-        state.isCencopayActive = payload?.value as boolean;
+        state.hasHybridation = Boolean(
+          payload?.params?.hybridation?.isEnabledMiniCart,
+        );
+        state.isCencopayActive = Boolean(payload?.params?.isCencopayActive);
       });
   },
 });
