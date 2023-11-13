@@ -27,7 +27,6 @@ const initialValue: InitialState = {
   loading: false,
   quantitySelected,
   openDetailsMobile: false,
-  // hybridation: { cartIdHybridation: '', hasHybridation: false, flag: false },
   hasHybridation: false,
   cartAsideIsOpen: false,
   isCencopayActive: false,
@@ -124,17 +123,11 @@ const cartSlice = createSlice({
     setOpenDetailsMobile: (state, { payload }) => {
       state.openDetailsMobile = payload;
     },
-    // setHybridation: (state, { payload }) => {
-    //   state.hybridation = payload;
-    // },
     setCartAsideIsOpen: (state, { payload }) => {
       state.cartAsideIsOpen = payload;
     },
     setCart: (state, { payload }: { payload: Cart }) => {
       state.cartBFF = payload;
-    },
-    resetCartBFF: (state) => {
-      state.cartBFF = undefined;
     },
   },
   extraReducers: (builder) => {
