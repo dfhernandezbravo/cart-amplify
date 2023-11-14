@@ -113,6 +113,7 @@ interface Product {
   seller: Seller;
   options?: Option[];
   availability: string;
+  availableQuantity: number;
   category: string;
   ean: string;
 }
