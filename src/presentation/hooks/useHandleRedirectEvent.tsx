@@ -4,17 +4,9 @@ import { useAppDispatch, useAppSelector } from './storeHooks';
 import deleteItem from '@use-cases/cart/delete-item';
 import useItemWithoutStock from './useItemWithoutStock';
 import { getUnavailableProduct } from '@utils/getUnavailabilityProduct';
+import { enviroments } from '../../configs/env';
 
 const useHandleRedirectEvent = () => {
-  const enviromentTest = [
-    'localhost',
-    'https://cl-ccom-easy-host-headless.ecomm-stg.cencosud.com',
-  ];
-
-  const host = enviromentTest.includes(location.host)
-    ? 'https://checkout.qa.easy.cl'
-    : 'https://checkout.easy.cl';
-
   const [showModal, setShowModal] = useState(false);
 
   const { cartBFF, cartId } = useAppSelector((state) => state.cart);
@@ -28,7 +20,8 @@ const useHandleRedirectEvent = () => {
   };
   const unavailableItems = validateItemWithoutStock(cartBFF);
 
-  const goToCheckout = () => router.push(`${host}/${cartId}`);
+  const goToCheckout = () =>
+    router.push(`${enviroments.checkoutDomain}/${cartId}`);
 
   const handleState = () => {
     setShowModal(false);
