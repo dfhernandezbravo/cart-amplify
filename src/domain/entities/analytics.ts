@@ -1,4 +1,7 @@
-export type AnalyticsEvents = 'removeFromCart' | 'addToCart';
+export type AnalyticsEvents =
+  | 'removeFromCart'
+  | 'addToCart'
+  | 'PageviewVirtual';
 
 export type ProductAnalytics = {
   name: string;
@@ -29,7 +32,15 @@ export type QuantityProductEvent = {
   ecommerce: RemoveProductImpressions | AddProductImpressions;
 };
 
+type PageviewVirtualEvent = {
+  event: AnalyticsEvents;
+  page: string;
+  title: string;
+  location: string;
+};
+
 export interface UseAnalytics {
   dispatchAnalyticsEvent: <T>(data: T) => void;
   sendQuantityClickEvent: (data: QuantityProductEvent) => void;
+  sendPageviewVirtualEvent: (data: PageviewVirtualEvent) => void;
 }
