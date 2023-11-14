@@ -19,6 +19,7 @@ import addItem from '@use-cases/cart/add-item';
 import HybridationEvents from '../../../../../hybridationEvents';
 import getParamData from '@use-cases/cms/getParamData';
 import { useRouter } from 'next/router';
+import { Container } from './styles';
 
 const CartAsideContainer = () => {
   // hooks
@@ -218,7 +219,7 @@ const CartAsideContainer = () => {
 
   return (
     <>
-      {hasHybridation ? (
+      {/* {hasHybridation ? (
         <>
           <Header />
           {totalProducts > 0 ? (
@@ -230,32 +231,32 @@ const CartAsideContainer = () => {
             <EmptyBody />
           )}
         </>
-      ) : (
-        <SwipeableDrawer
-          anchor="right"
-          open={cartAsideIsOpen}
-          onClose={() => dispatch(setCartAsideIsOpen(false))}
-          onOpen={() => dispatch(setCartAsideIsOpen(true))}
-          transitionDuration={300}
-          PaperProps={{
-            sx: {
-              minWidth: '280px',
-              width: '90%',
-              maxWidth: '400px',
-            },
-          }}
-        >
-          <Header />
-          {totalProducts > 0 ? (
-            <>
-              <Body />
-              <Footer />
-            </>
-          ) : (
-            <EmptyBody />
-          )}
-        </SwipeableDrawer>
-      )}
+      ) : ( */}
+      <SwipeableDrawer
+        anchor="right"
+        open={cartAsideIsOpen}
+        onClose={() => dispatch(setCartAsideIsOpen(false))}
+        onOpen={() => dispatch(setCartAsideIsOpen(true))}
+        transitionDuration={300}
+        PaperProps={{
+          sx: {
+            minWidth: '280px',
+            width: '90%',
+            maxWidth: '400px',
+          },
+        }}
+      >
+        <Header />
+        {totalProducts > 0 ? (
+          <Container>
+            <Body />
+            <Footer />
+          </Container>
+        ) : (
+          <EmptyBody />
+        )}
+      </SwipeableDrawer>
+      {/* )} */}
     </>
   );
 };

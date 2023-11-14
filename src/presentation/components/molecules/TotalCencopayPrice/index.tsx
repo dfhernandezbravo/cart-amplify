@@ -22,7 +22,7 @@ const TotalCencopayPrice = () => {
   return (
     <Container>
       <div className="cencopay-total-container">
-        <Title>Subtotal con tarjeta Cencopay</Title>
+        <Title className="title">Subtotal con tarjeta Cencopay</Title>
         <Image
           src="/icons/cart/cencopay-icon.svg"
           width={30}
