@@ -6,5 +6,5 @@ export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse<any>,
 ) {
-  res.status(200).json({ message: 'healt test' });
+  res.status(200).json({ message: 'healt test cart headless' });
 }
