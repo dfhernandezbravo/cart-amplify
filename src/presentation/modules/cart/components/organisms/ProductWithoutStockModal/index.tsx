@@ -16,7 +16,7 @@ const ProductWithoutStockModal = ({
   return (
     <Modal isOpen={showModal} onClose={() => handleCloseModal()}>
       <ModalContainer>
-        <p>Title</p>
+        <p>Productos Agotados</p>
         <Divider fullWidth />
         <p>
           Algunos productos no están disponibles en tu ubicación. Al continuar

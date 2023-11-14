@@ -25,7 +25,6 @@ const CartContainerProvider = ({ children }: Props) => {
   const { cartId, cartBFF } = useAppSelector((state) => state.cart);
   const { cartId: cartQuery } = query as ParsedUrlQueryForPage;
   const dispatch = useAppDispatch();
-  setLoading(false);
 
   const { data: cart, isLoading } = useQuery(
     ['get-cart', cartQuery],
@@ -48,6 +47,7 @@ const CartContainerProvider = ({ children }: Props) => {
   );
 
   useEffect(() => {
+    dispatch(setLoading(false));
     dispatch(getParamData());
   }, []);
 

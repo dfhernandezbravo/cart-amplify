@@ -29,4 +29,8 @@ export const ModalContainer = styled.div`
     border: 2px solid #af1212;
     color: #ffffff;
   }
+
+  @media only screen and (max-width: 780px) {
+    width: auto;
+  }
 `;

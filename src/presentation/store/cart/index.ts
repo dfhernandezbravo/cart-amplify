@@ -124,6 +124,7 @@ const cartSlice = createSlice({
       state.openDetailsMobile = payload;
     },
     setCartAsideIsOpen: (state, { payload }) => {
+      console.log(payload);
       state.cartAsideIsOpen = payload;
     },
     setCart: (state, { payload }: { payload: Cart }) => {
