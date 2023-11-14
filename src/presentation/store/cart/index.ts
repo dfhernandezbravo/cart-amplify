@@ -124,10 +124,14 @@ const cartSlice = createSlice({
       state.openDetailsMobile = payload;
     },
     setCartAsideIsOpen: (state, { payload }) => {
+      console.log(payload);
       state.cartAsideIsOpen = payload;
     },
     setCart: (state, { payload }: { payload: Cart }) => {
       state.cartBFF = payload;
+    },
+    setLoading: (state, { payload }: { payload: boolean }) => {
+      state.loading = payload;
     },
   },
   extraReducers: (builder) => {
@@ -169,10 +173,16 @@ const cartSlice = createSlice({
           state.cartBFF.items[index!]?.quantity !== undefined &&
           state.cartBFF.items[index!]?.quantity < quantity!
         ) {
+          const availableItemNewResponse =
+            state.cartBFF.items[index!]?.quantity;
+
           state.quantitySelected = {
             index,
             quantity,
-            availableQuantity: state.cartBFF.items[index!]?.quantity,
+            availableQuantity:
+              availableItemNewResponse < (quantity as number)
+                ? availableItemNewResponse
+                : null,
           };
         }
       })
@@ -197,7 +207,6 @@ const cartSlice = createSlice({
         state.loading = false;
       })
       .addCase(addCouponCode.rejected, (state, { payload }) => {
-        console.log('coupon rejected', { payload });
         state.loading = false;
       })
       .addCase(removeCouponCode.pending, (state) => {

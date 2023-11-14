@@ -20,9 +20,9 @@ interface Props {
 }
 
 const CartContainerProvider = ({ children }: Props) => {
-  const { addCartId, setCart } = cartSlice.actions;
+  const { addCartId, setCart, setLoading } = cartSlice.actions;
   const { query } = useRouter();
-  const { cartId } = useAppSelector((state) => state.cart);
+  const { cartId, cartBFF } = useAppSelector((state) => state.cart);
   const { cartId: cartQuery } = query as ParsedUrlQueryForPage;
   const dispatch = useAppDispatch();
 
@@ -35,7 +35,6 @@ const CartContainerProvider = ({ children }: Props) => {
   );
 
   const updateShippingCart = () => {
-    console.log('custom event triggered');
     if (cartId) {
       dispatch(getCart({ cartId }));
     }
@@ -48,6 +47,7 @@ const CartContainerProvider = ({ children }: Props) => {
   );
 
   useEffect(() => {
+    dispatch(setLoading(false));
     dispatch(getParamData());
   }, []);
 
@@ -61,7 +61,7 @@ const CartContainerProvider = ({ children }: Props) => {
 
   if (isLoading) return <SkeletonCartPage />;
 
-  if (!cart) return <EmptyBody />;
+  if (!cartBFF?.items?.length) return <EmptyBody />;
 
   return <>{children}</>;
 };
