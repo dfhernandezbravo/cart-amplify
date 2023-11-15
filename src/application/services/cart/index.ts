@@ -6,11 +6,11 @@ import { CouponCode } from '@entities/cart/cart.entity';
 const httpInstance = bffWebInstance;
 
 const valitadeId = (id: string | undefined) => {
-  if (id && id?.length > 0) return id;
-  else {
-    const localId = localStorage.getItem('vtxorderform');
+  const localId = localStorage.getItem('vtxorderform');
+  if (localId && localId !== 'undefined') {
     return localId;
   }
+  if (id && id?.length > 0) return id;
 };
 
 const cartService: CartService = {
@@ -21,16 +21,34 @@ const cartService: CartService = {
   addItem: (data) => {
     const url = `/shoppingcart/${valitadeId(data.cartId)}/items`;
     const body: AddOrderItems = { orderItems: data.items };
+    // const body: AddOrderItems = {
+    //   orderItems: [
+    //     {
+    //       id: '000',
+    //       quantity: 1,
+    //     },
+    //   ],
+    // };
+
     return httpInstance.post(url, body);
   },
   updateItem: (data) => {
     const url = `/shoppingcart/${valitadeId(data.cartId)}/items`;
     const body: UpdateOrderItems = { orderItems: data.items };
+    // const body: UpdateOrderItems = {
+    //   orderItems: [
+    //     {
+    //       index: 9,
+    //       quantity: 1,
+    //     },
+    //   ],
+    // };
     return httpInstance.patch(url, body);
   },
   deleteItem: (data) => {
     const url = `/shoppingcart/${valitadeId(data.cartId)}/items/${
       data.itemIndex
+      // 9
     }`;
     return httpInstance.delete(url);
   },

@@ -13,7 +13,6 @@ export type InitialState = {
   quantitySelected: QuantitySelectedProps;
   openDetailsMobile: boolean;
   hasHybridation: boolean;
-  cartAsideIsOpen: boolean;
   isCencopayActive: boolean;
 };
 

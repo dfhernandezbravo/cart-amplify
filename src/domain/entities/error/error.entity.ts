@@ -23,3 +23,9 @@ export type MessagesError = {
   status: string;
   text: string;
 };
+
+export enum CartAction {
+  ADD = 'agregar',
+  UPDATE = 'actualizar',
+  DELETE = 'eliminar',
+}

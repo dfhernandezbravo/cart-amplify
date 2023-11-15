@@ -67,7 +67,7 @@ export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
       images: data.items ? data.items[0]?.images![0]?.imageUrl : '',
       brand: data?.brand,
       seller: { id: '' },
-      availability: '',
+      availability: 'available',
       category: '',
       ean: '',
     },

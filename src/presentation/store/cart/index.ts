@@ -28,7 +28,6 @@ const initialValue: InitialState = {
   quantitySelected,
   openDetailsMobile: false,
   hasHybridation: false,
-  cartAsideIsOpen: false,
   isCencopayActive: false,
 };
 
@@ -73,10 +72,12 @@ const cartSlice = createSlice({
       }
     },
     simulateRemoveProduct: (state, { payload }) => {
+      console.log('simulateRemoveProduct ', payload);
       const productInCart = state.cartBFF?.items?.find(
         (item) => item.product.id === payload,
       );
 
+      console.log('simulateRemoveProduct productInCart ', productInCart);
       if (productInCart) {
         const quantity = productInCart.quantity ?? 0;
 
@@ -123,9 +124,6 @@ const cartSlice = createSlice({
     setOpenDetailsMobile: (state, { payload }) => {
       state.openDetailsMobile = payload;
     },
-    setCartAsideIsOpen: (state, { payload }) => {
-      state.cartAsideIsOpen = payload;
-    },
     setCart: (state, { payload }: { payload: Cart }) => {
       state.cartBFF = payload;
     },
@@ -148,10 +146,14 @@ const cartSlice = createSlice({
         state.cartBFF = payload;
         state.loading = false;
       })
+      .addCase(addItem.rejected, (state) => {
+        state.loading = false;
+      })
       .addCase(updateItem.pending, (state) => {
         state.loading = true;
       })
       .addCase(updateItem.fulfilled, (state, { payload }) => {
+        console.log('redux updateItem ', payload);
         const { index, quantity } = state.quantitySelected;
         // state.cartBFF = payload ?? state.cartBFF; // TODO: Revisar
         localStorage.setItem('cbff', JSON.stringify(payload));
@@ -176,10 +178,15 @@ const cartSlice = createSlice({
           };
         }
       })
+      .addCase(updateItem.rejected, (state) => {
+        console.log('redux updateItem rejected');
+        state.loading = false;
+      })
       .addCase(deleteItem.pending, (state) => {
         state.loading = true;
       })
       .addCase(deleteItem.fulfilled, (state, { payload }) => {
+        console.log('redux deleteItem fulfilled', payload);
         // state.cartBFF = payload ?? state.cartBFF; // TODO: Revisar
         localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
@@ -187,6 +194,10 @@ const cartSlice = createSlice({
         const totalQuantity = totalItems(state.cartBFF?.items);
         dispatchCartHeaderEvent(totalQuantity);
         dispatchCartDataEvent(payload ?? state.cartBFF);
+      })
+      .addCase(deleteItem.rejected, (state) => {
+        console.log('redux deleteItem rejected');
+        state.loading = false;
       })
       .addCase(addCouponCode.pending, (state) => {
         state.loading = true;

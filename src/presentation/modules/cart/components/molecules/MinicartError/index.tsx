@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Image from 'next/image';
 import { GrClose } from 'react-icons/gr';
 import { setError } from '@store/error';
-import { useAppDispatch } from '@hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import { MinicartErrorProps } from './types';
 import {
   ErrorContainer,
@@ -12,10 +12,15 @@ import {
   Content,
   Title,
 } from './styles';
+import cartSlice from '@store/cart';
+import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
 
 const MinicartError = (props: MinicartErrorProps) => {
+  console.log('MinicartError props ', props);
   const { title, content = 'Intenta nuevamente' } = props;
+  const { addProductInCart } = cartSlice.actions;
 
+  const { cartBFF } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   const handleOnClose = () => {
@@ -25,6 +30,7 @@ const MinicartError = (props: MinicartErrorProps) => {
   // wait 4sec and disappear
   useEffect(() => {
     setTimeout(() => {
+      dispatch(addProductInCart(getCartFromLocalStorage(cartBFF)));
       dispatch(setError(null));
     }, 4000);
   }, [dispatch]);

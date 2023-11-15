@@ -1,27 +1,19 @@
 import { useEffect } from 'react';
 import { GrClose } from 'react-icons/gr';
-// import { HeaderProps } from './types';
-import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
+import { HeaderProps } from './types';
+import { useAppSelector } from '@hooks/storeHooks';
 import { selectTotalProductsInCart } from '@store/cart';
 import { Title } from './styles';
-import cartSlice from '@store/cart';
 
-const Header = () => {
-  const dispatch = useAppDispatch();
+const Header = (props: HeaderProps) => {
   const { hasHybridation } = useAppSelector((state) => state.cart);
-  const { setCartAsideIsOpen } = cartSlice.actions;
-
-  // const totalProducts = useMemo(
-  //   () => totalProductInCart(cartBFF as Cart),
-  //   [cartBFF],
-  // );
+  const { setIsOpen } = props;
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
 
   // Hybridation
   const closeCartHybridation = () => {
     window.parent.postMessage({ HYBRIDATION_CLOSE_MINICART: true }, '*');
-    dispatch(setCartAsideIsOpen(false));
   };
 
   useEffect(() => {
@@ -43,9 +35,7 @@ const Header = () => {
       </div>
       <GrClose
         onClick={
-          hasHybridation
-            ? () => closeCartHybridation()
-            : () => dispatch(setCartAsideIsOpen(false))
+          hasHybridation ? () => closeCartHybridation() : () => setIsOpen(false)
         }
       />
     </Title>
