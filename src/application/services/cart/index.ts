@@ -6,11 +6,11 @@ import { CouponCode } from '@entities/cart/cart.entity';
 const httpInstance = bffWebInstance;
 
 const valitadeId = (id: string | undefined) => {
-  if (id && id?.length > 0) return id;
-  else {
-    const localId = localStorage.getItem('vtxorderform');
+  const localId = localStorage.getItem('vtxorderform');
+  if (localId && localId !== 'undefined') {
     return localId;
   }
+  if (id && id?.length > 0) return id;
 };
 
 const cartService: CartService = {
