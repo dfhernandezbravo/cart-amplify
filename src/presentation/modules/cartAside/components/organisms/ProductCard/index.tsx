@@ -42,6 +42,7 @@ const ProductCard = (props: ProductCardProps) => {
           onIncrementQuantity={onIncrementQuantity}
           quantity={item?.quantity ?? 0}
           onDecrementQuantity={onDecrementQuantity}
+          item={item}
         />
       </ProductInfoContainer>
     </ProductCardContainer>
