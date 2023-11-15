@@ -34,6 +34,12 @@ export const Container = styled.div`
       }
     }
   }
+
+  @media only screen and (max-width: 320px) {
+    &.cartAside span:first-child {
+      font-size: 12px;
+    }
+  }
 `;
 
 export const Skeleton = styled.span`

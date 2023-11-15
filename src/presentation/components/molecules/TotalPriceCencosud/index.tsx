@@ -12,17 +12,15 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
 
   // props
   const { className } = props;
-
   const valueWithoutShipping = calculateTotalWithoutShippingPrice(
     cartBFF?.totals as Totals,
     PriceType.totalCardPrice,
   );
   const value = formattedCLP(valueWithoutShipping);
-
   return (
     <Container className={className}>
       <div className="title-container">
-        <Title>Subtotal con tarjeta Cencosud</Title>
+        <Title>Subtotal con Cencosud</Title>
         <Image
           src={'/icons/cart/tc-cencosud.svg'}
           width={30}

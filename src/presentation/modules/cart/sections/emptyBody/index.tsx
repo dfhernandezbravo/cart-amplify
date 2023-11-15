@@ -7,6 +7,7 @@ import { enviroments } from '../../../../../configs/env';
 
 const EmptyBody = () => {
   const { hasHybridation } = useAppSelector((state) => state.cart);
+
   const router = useRouter();
 
   const isProduction = () => {
