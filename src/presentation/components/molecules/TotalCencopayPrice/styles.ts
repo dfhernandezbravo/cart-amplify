@@ -18,6 +18,12 @@ export const Container = styled.div`
     font-weight: 400;
     line-height: 20px;
   }
+
+  @media only screen and (max-width: 320px) {
+    &.cartAside span {
+      font-size: 12px;
+    }
+  }
 `;
 
 export const Title = styled.span`

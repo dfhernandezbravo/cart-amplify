@@ -8,7 +8,7 @@ import TotalCencopayPrice from '@components/molecules/TotalCencopayPrice';
 const Footer = () => {
   return (
     <FooterContainer>
-      <TotalCencopayPrice />
+      <TotalCencopayPrice className="cartAside" />
       <TotalPriceCencosud className="cartAside" />
       <TotalPrice className="cartAside" />
       <BuyButton text="Comprar ahora" />
