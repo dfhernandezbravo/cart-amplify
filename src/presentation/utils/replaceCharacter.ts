@@ -2,4 +2,4 @@ export const replaceCharacter = (
   value: string,
   characterToReplace: string,
   characterToInsert: string,
-) => value.replace(characterToReplace, characterToInsert);
+) => value?.replace(characterToReplace, characterToInsert);
