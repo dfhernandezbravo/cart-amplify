@@ -5,4 +5,5 @@ export type QuantitySelectorProps = {
   quantity: number;
   onIncrementQuantity: (product: Item) => void;
   onDecrementQuantity: (product: Item) => void;
+  item: Item;
 };
