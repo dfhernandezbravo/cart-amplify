@@ -6,7 +6,12 @@ import Image from 'next/image';
 import calculateTotalWithoutShippingPrice from '@utils/calculateTotalWithoutShippingPrice';
 import { PriceType, Totals } from '@entities/cart/cart.entity';
 
-const TotalCencopayPrice = () => {
+interface Props {
+  className?: string;
+}
+
+const TotalCencopayPrice = (props: Props) => {
+  const { className } = props;
   const { cartBFF, loading, isCencopayActive } = useAppSelector(
     (state) => state.cart,
   );
@@ -20,9 +25,9 @@ const TotalCencopayPrice = () => {
   const value = formattedCLP(valueWithoutShipping);
 
   return (
-    <Container>
-      <div className="cencopay-total-container">
-        <Title>Subtotal con tarjeta Cencopay</Title>
+    <Container className={`${className}`}>
+      <div className={`cencopay-total-container`}>
+        <Title className="title">Subtotal con CencoPay</Title>
         <Image
           src="/icons/cart/cencopay-icon.svg"
           width={30}

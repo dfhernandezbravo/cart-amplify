@@ -21,7 +21,7 @@ const TotalPrice = (props: TotalPriceProps) => {
 
   return (
     <Container className={className}>
-      <Title>Subtotal con otros medios de pago</Title>
+      <Title className="title">Subtotal con otros medios de pago</Title>
       {loading ? <Skeleton /> : <span className="totalPrice">{value}</span>}
     </Container>
   );

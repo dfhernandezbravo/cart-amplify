@@ -68,6 +68,7 @@ export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
       brand: data?.brand,
       seller: { id: '' },
       availability: 'available',
+      availableQuantity: 0,
       category: '',
       ean: '',
     },

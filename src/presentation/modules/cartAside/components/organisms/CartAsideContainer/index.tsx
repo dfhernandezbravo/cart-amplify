@@ -20,6 +20,7 @@ import HybridationEvents from '../../../../../hybridationEvents';
 import getParamData from '@use-cases/cms/getParamData';
 import { CartAction } from '@entities/error/error.entity';
 import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
+import { Container } from './styles';
 
 const CartAsideContainer = () => {
   // hooks
@@ -220,10 +221,10 @@ const CartAsideContainer = () => {
         >
           <Header setIsOpen={setIsOpen} />
           {totalProducts > 0 ? (
-            <>
+            <Container>
               <Body />
               <Footer />
-            </>
+            </Container>
           ) : (
             <EmptyBody />
           )}

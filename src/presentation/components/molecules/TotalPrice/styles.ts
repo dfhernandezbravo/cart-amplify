@@ -23,6 +23,14 @@ export const Container = styled.div`
       color: #6e8391;
     }
   }
+
+  @media only screen and (max-width: 320px) {
+    &.cartAside {
+      span:first-child {
+        font-size: 12px;
+      }
+    }
+  }
 `;
 
 export const Title = styled.span`
