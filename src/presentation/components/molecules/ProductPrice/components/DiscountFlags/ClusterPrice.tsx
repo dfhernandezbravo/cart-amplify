@@ -14,8 +14,8 @@ const ClusterPrice = ({
   quantity,
 }: DiscountProps) => {
   const hashLabel = {
-    EXPERTO: 'Mundo Experto',
-    EXPERTO_PREFERENTE: 'Mundo Experto',
+    EXPERTO: 'M. Experto',
+    EXPERTO_PREFERENTE: 'M. Experto',
     COLABORADOR: 'Colaborador',
   };
 
