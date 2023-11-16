@@ -16,7 +16,6 @@ import cartSlice from '@store/cart';
 import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
 
 const MinicartError = (props: MinicartErrorProps) => {
-  console.log('MinicartError props ', props);
   const { title, content = 'Intenta nuevamente' } = props;
   const { addProductInCart } = cartSlice.actions;
 
