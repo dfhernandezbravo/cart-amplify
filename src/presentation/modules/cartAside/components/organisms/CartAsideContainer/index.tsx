@@ -18,8 +18,6 @@ import updateItem from '@use-cases/cart/update-item';
 import addItem from '@use-cases/cart/add-item';
 import HybridationEvents from '../../../../../hybridationEvents';
 import getParamData from '@use-cases/cms/getParamData';
-import { useRouter } from 'next/router';
-import { Container } from './styles';
 
 const CartAsideContainer = () => {
   // hooks
@@ -248,10 +246,10 @@ const CartAsideContainer = () => {
         >
           <Header />
           {totalProducts > 0 ? (
-            <Container>
+            <>
               <Body />
               <Footer />
-            </Container>
+            </>
           ) : (
             <EmptyBody />
           )}

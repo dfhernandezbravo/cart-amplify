@@ -23,6 +23,10 @@ export const PriceContainer = styled.div`
 export const Price = styled.p`
   font-size: 20px;
   font-weight: 700;
+
+  @media only screen and (max-width: 320px) {
+    font-size: 18px;
+  }
 `;
 export const DiscountPercent = styled.div`
   border-radius: 4px;
@@ -75,5 +79,11 @@ export const WrapperClusterPrice = styled.div<ClusterProps>`
         : cluster === 'COLABORADOR'
         ? '#df6f1a'
         : '#178ad1'};
+  }
+
+  @media only screen and (max-width: 320px) {
+    & .text-promotion {
+      font-size: 12px;
+    }
   }
 `;
