@@ -2,15 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Cart } from '@entities/cart/cart.entity';
 import { DeleteItemRequest } from '@entities/cart/cart.request';
 import cartService from '@services/cart';
-import handlePayloadError from '@use-cases/error/handle-payload-errors';
-import {
-  CartAction,
-  MessagesError,
-  ResponseError,
-} from '@entities/error/error.entity';
-import { setError } from '@store/error';
+import { CartAction } from '@entities/error/error.entity';
 import { AxiosError } from 'axios';
-import handleHttpError from '@use-cases/error/handle-http-errors';
+import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
+import dispatchHttpErrors from '@use-cases/error/dispatch-http-errors';
 
 const deleteItem = createAsyncThunk(
   '/cart/deleteItem',
@@ -25,24 +20,10 @@ const deleteItem = createAsyncThunk(
         return {} as Cart;
       }
 
-      const messagesError = data?.messagesErrors;
-
-      if (messagesError?.length) {
-        const cartError = handlePayloadError(
-          messagesError[0] as unknown as MessagesError,
-          CartAction.DELETE,
-        );
-        dispatch(setError(cartError));
-      }
+      dispatchPayloadErrors(data, dispatch, CartAction.DELETE);
       return fulfillWithValue(data);
     } catch (error) {
-      const axiosError = error as AxiosError;
-      const errorData = axiosError?.response?.data as ResponseError;
-
-      if (errorData) {
-        const cartError = handleHttpError(errorData, CartAction.DELETE);
-        dispatch(setError(cartError));
-      }
+      dispatchHttpErrors(error as AxiosError, dispatch, CartAction.DELETE);
       return rejectWithValue(error);
     }
   },

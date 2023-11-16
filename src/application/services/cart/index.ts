@@ -21,34 +21,16 @@ const cartService: CartService = {
   addItem: (data) => {
     const url = `/shoppingcart/${valitadeId(data.cartId)}/items`;
     const body: AddOrderItems = { orderItems: data.items };
-    // const body: AddOrderItems = {
-    //   orderItems: [
-    //     {
-    //       id: '000',
-    //       quantity: 1,
-    //     },
-    //   ],
-    // };
-
     return httpInstance.post(url, body);
   },
   updateItem: (data) => {
     const url = `/shoppingcart/${valitadeId(data.cartId)}/items`;
     const body: UpdateOrderItems = { orderItems: data.items };
-    // const body: UpdateOrderItems = {
-    //   orderItems: [
-    //     {
-    //       index: 9,
-    //       quantity: 1,
-    //     },
-    //   ],
-    // };
     return httpInstance.patch(url, body);
   },
   deleteItem: (data) => {
     const url = `/shoppingcart/${valitadeId(data.cartId)}/items/${
       data.itemIndex
-      // 9
     }`;
     return httpInstance.delete(url);
   },
