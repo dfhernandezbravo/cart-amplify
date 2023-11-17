@@ -19,6 +19,10 @@ export const FullPrice = styled.div<FullPriceProps>`
   font-size: 20px;
   font-weight: 700;
   color: ${({ isFree }) => (isFree ? '#1c8556' : '#363f45')};
+
+  @media only screen and (max-width: 320px) {
+    font-size: 18px;
+  }
 `;
 
 export const NormalPrice = styled.div`

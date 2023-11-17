@@ -20,7 +20,7 @@ export const Container = styled.div`
   }
 
   @media only screen and (max-width: 320px) {
-    &.cartAside span {
+    &.cartAside .title {
       font-size: 12px;
     }
   }

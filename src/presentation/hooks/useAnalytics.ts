@@ -25,6 +25,9 @@ export const useAnalytics = () => {
         );
       }
     },
+    sendPageviewVirtualEvent: (data) => {
+      methods.dispatchAnalyticsEvent(data);
+    },
   };
 
   return { methods };

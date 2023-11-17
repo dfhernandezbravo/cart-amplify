@@ -8,15 +8,20 @@ import { Textfield } from '@components/atoms/Textfield';
 import updateItem from '@use-cases/cart/update-item';
 import { QuantitySelectorProps } from './types';
 import { QuantitySelectorContainer } from './styles';
+import useAnalytics from '@hooks/useAnalytics';
 
 const QuantitySelector = (props: QuantitySelectorProps) => {
   // props
-  const { index, quantity, onIncrementQuantity, onDecrementQuantity } = props;
+  const { index, quantity, onIncrementQuantity, onDecrementQuantity, item } =
+    props;
 
   // hooks
   const dispatch = useAppDispatch();
   const { cartId, loading } = useAppSelector((state) => state.cart);
   const { updateProductQuantity } = cartSlice.actions;
+  const {
+    methods: { sendQuantityClickEvent },
+  } = useAnalytics();
 
   const [quantityInput, setQuantityInput] = useState(`${quantity}`);
   const [isEditing, setIsEditing] = useState(false);
@@ -30,6 +35,26 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
       const numberRegex = /^\d+$/; // only integers
 
       if (newQuantity > 0 && numberRegex.test(quantityInput)) {
+        sendQuantityClickEvent({
+          event: newQuantity > quantity ? 'addToCart' : 'removeFromCart',
+          ecommerce: {
+            currencyCode: 'CLP',
+            add: {
+              products: [
+                {
+                  name: item.product.description,
+                  id: item.itemId,
+                  price: item.product.prices.normalPrice.toString(),
+                  brand: item.product.brand,
+                  category: item.product.category,
+                  variant: '',
+                  quantity: Math.abs(quantity - newQuantity),
+                },
+              ],
+            },
+          },
+        });
+
         dispatch(
           updateProductQuantity({ index: index, quantity: newQuantity }),
         );
