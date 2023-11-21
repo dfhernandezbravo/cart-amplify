@@ -5,7 +5,7 @@ import { formattedCLP } from '@utils/helpers';
 
 const OfferPrice = ({ offerDiscount, quantity, offerPrice }: DiscountProps) => {
   const porcentage = replaceCharacter(
-    offerDiscount[0].percentageDiscount,
+    offerDiscount[0]?.percentageDiscount,
     '-',
     '',
   );

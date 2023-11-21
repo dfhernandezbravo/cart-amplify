@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { MouseEvent, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SwipeableDrawer } from '@mui/material';
 import { selectTotalProductsInCart } from '@store/cart';
 import cartSlice from '@store/cart';
@@ -18,31 +18,24 @@ import updateItem from '@use-cases/cart/update-item';
 import addItem from '@use-cases/cart/add-item';
 import HybridationEvents from '../../../../../hybridationEvents';
 import getParamData from '@use-cases/cms/getParamData';
+import { CartAction } from '@entities/error/error.entity';
+import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
 
 const CartAsideContainer = () => {
   // hooks
-  const { cartBFF, hasHybridation, cartAsideIsOpen, cartId } = useAppSelector(
+  const { cartBFF, hasHybridation, cartId } = useAppSelector(
     (state) => state.cart,
   );
   const dispatch = useAppDispatch();
-  // const totalProducts = useMemo(
-  //   () => totalProductInCart(cartBFF as Cart),
-  //   [cartBFF],
-  // );
+  const [isOpen, setIsOpen] = useState(false);
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
-  const {
-    addCartId,
-    addProductInCart,
-    simulateAddProduct,
-    simulateRemoveProduct,
-    setCartAsideIsOpen,
-  } = cartSlice.actions;
+  const { addCartId, addProductInCart, simulateAddProduct } = cartSlice.actions;
 
   const handleSetIsOpen = (event: Event) => {
     event.preventDefault();
     const customEvent = event as CustomEvent;
-    dispatch(setCartAsideIsOpen(customEvent.detail?.open));
+    setIsOpen(customEvent.detail?.open);
   };
 
   const handleAddProductEvent = (event: Event) => {
@@ -52,42 +45,32 @@ const CartAsideContainer = () => {
     const customEventError = customEvent.detail?.data?.messagesErrors;
 
     if (customEventError.length) {
-      const cartError = handlePayloadError(customEventError[0]);
+      const cartError = handlePayloadError(customEventError[0], CartAction.ADD);
       dispatch(setError(cartError));
     }
-    dispatch(setCartAsideIsOpen(true));
+    setIsOpen(true);
   };
 
-  const handleCloseOverlay = (event: MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    if (event.target === event.currentTarget) {
-      dispatch(setCartAsideIsOpen(false));
-    }
-  };
   const handleGetCartId = (event: Event) => {
     event.preventDefault();
 
     const customEvent = event as CustomEvent;
     dispatch(addCartId(customEvent.detail?.cartId));
   };
+
   const handleSimulateAddProductEvent = (event: Event) => {
     event.preventDefault();
     const customEvent = event as CustomEvent;
     dispatch(simulateAddProduct(customEvent.detail?.product));
-    dispatch(setCartAsideIsOpen(true));
+    setIsOpen(true);
   };
 
   const handleAddProductErrorEvent = (event: Event) => {
     event.preventDefault();
     const customEvent = event as CustomEvent;
     const customEventError = customEvent.detail?.data.error;
-    const cartError = handleHttpError(customEventError);
+    const cartError = handleHttpError(customEventError, CartAction.ADD);
     dispatch(setError(cartError));
-
-    // wait 4sec before remove product
-    setTimeout(() => {
-      dispatch(simulateRemoveProduct(customEvent.detail?.data.itemId));
-    }, 4000);
   };
 
   // methods
@@ -120,15 +103,6 @@ const CartAsideContainer = () => {
   };
   methods.initialize();
 
-  const getCartFromLS = () => {
-    const cartLS = localStorage.getItem('cbff');
-    if (cartLS && cartLS !== 'undefined') {
-      return JSON.parse(cartLS);
-    } else {
-      return cartBFF;
-    }
-  };
-
   const hybridation = useCallback(() => {
     window.addEventListener('message', (event: MessageEvent) => {
       const key = Object.keys(event?.data);
@@ -140,7 +114,7 @@ const CartAsideContainer = () => {
         case HybridationEvents.CART_ID_VTEX:
           const cartIdVtex = event?.data?.CART_ID_VTEX;
           dispatch(addCartId(cartIdVtex));
-          dispatch(setCartAsideIsOpen(true));
+          setIsOpen(true);
           break;
         case HybridationEvents.VTEX_PRODUCT_ADD_TO_CART:
           const { productReference, quantityValue, product } =
@@ -148,11 +122,13 @@ const CartAsideContainer = () => {
 
           dispatch(simulateAddProduct({ ...product, quantityValue }));
 
-          const productInCart = getCartFromLS()?.items?.find(
+          const productInCart = getCartFromLocalStorage(cartBFF)?.items?.find(
             (item: any) => item.product.id === productReference,
           );
           if (productInCart) {
-            const productIndex = getCartFromLS()?.items?.findIndex(
+            const productIndex = getCartFromLocalStorage(
+              cartBFF,
+            )?.items?.findIndex(
               (item: any) => item.product.id === productReference,
             );
 
@@ -170,7 +146,6 @@ const CartAsideContainer = () => {
                   ],
                 }),
               );
-              //dispatch(getCart({ cartId }));
               return;
             }
           } else {
@@ -185,7 +160,6 @@ const CartAsideContainer = () => {
                 ],
               }),
             );
-            //dispatch(getCart({ cartId }));
             return;
           }
           break;
@@ -193,7 +167,7 @@ const CartAsideContainer = () => {
           break;
       }
     });
-  }, [addCartId, cartBFF, cartId, dispatch, setCartAsideIsOpen]);
+  }, [addCartId, cartBFF, cartId, dispatch, setIsOpen]);
 
   useEffect(() => {
     hybridation();
@@ -219,7 +193,7 @@ const CartAsideContainer = () => {
     <>
       {hasHybridation ? (
         <>
-          <Header />
+          <Header setIsOpen={setIsOpen} />
           {totalProducts > 0 ? (
             <>
               <Body />
@@ -232,9 +206,9 @@ const CartAsideContainer = () => {
       ) : (
         <SwipeableDrawer
           anchor="right"
-          open={cartAsideIsOpen}
-          onClose={() => dispatch(setCartAsideIsOpen(false))}
-          onOpen={() => dispatch(setCartAsideIsOpen(true))}
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          onOpen={() => setIsOpen(true)}
           transitionDuration={300}
           PaperProps={{
             sx: {
@@ -244,7 +218,7 @@ const CartAsideContainer = () => {
             },
           }}
         >
-          <Header />
+          <Header setIsOpen={setIsOpen} />
           {totalProducts > 0 ? (
             <>
               <Body />

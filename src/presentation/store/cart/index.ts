@@ -28,7 +28,6 @@ const initialValue: InitialState = {
   quantitySelected,
   openDetailsMobile: false,
   hasHybridation: false,
-  cartAsideIsOpen: false,
   isCencopayActive: false,
 };
 
@@ -123,10 +122,6 @@ const cartSlice = createSlice({
     setOpenDetailsMobile: (state, { payload }) => {
       state.openDetailsMobile = payload;
     },
-    setCartAsideIsOpen: (state, { payload }) => {
-      console.log(payload);
-      state.cartAsideIsOpen = payload;
-    },
     setCart: (state, { payload }: { payload: Cart }) => {
       state.cartBFF = payload;
     },
@@ -150,6 +145,9 @@ const cartSlice = createSlice({
       .addCase(addItem.fulfilled, (state, { payload }) => {
         localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
+        state.loading = false;
+      })
+      .addCase(addItem.rejected, (state) => {
         state.loading = false;
       })
       .addCase(updateItem.pending, (state) => {
@@ -186,6 +184,9 @@ const cartSlice = createSlice({
           };
         }
       })
+      .addCase(updateItem.rejected, (state) => {
+        state.loading = false;
+      })
       .addCase(deleteItem.pending, (state) => {
         state.loading = true;
       })
@@ -197,6 +198,9 @@ const cartSlice = createSlice({
         const totalQuantity = totalItems(state.cartBFF?.items);
         dispatchCartHeaderEvent(totalQuantity);
         dispatchCartDataEvent(payload ?? state.cartBFF);
+      })
+      .addCase(deleteItem.rejected, (state) => {
+        state.loading = false;
       })
       .addCase(addCouponCode.pending, (state) => {
         state.loading = true;
