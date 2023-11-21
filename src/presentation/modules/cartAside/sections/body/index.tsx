@@ -28,6 +28,29 @@ const Body = () => {
 
   // Methods
   const methods = {
+    incrementQuantity: (item: Item, index: number) => {
+      sendQuantityClickEvent({
+        event: 'addToCart',
+        eventType: 'CH',
+        ecommerce: {
+          currencyCode: 'CLP',
+          add: {
+            products: [
+              {
+                name: item.product.description,
+                id: item.product.sku,
+                price: item.product.prices.normalPrice.toString(),
+                brand: item.product.brand,
+                category: item.product.category,
+                variant: '',
+                quantity: 1,
+              },
+            ],
+          },
+        },
+      });
+      methods.handleIncrementQuantity(item, index);
+    },
     handleIncrementQuantity: useCallback(
       _.debounce((item: Item, index: number) => {
         const quantity = item.quantity ?? 0;
@@ -39,13 +62,14 @@ const Body = () => {
         );
         sendQuantityClickEvent({
           event: 'addToCart',
+          eventType: 'CH',
           ecommerce: {
             currencyCode: 'CLP',
             add: {
               products: [
                 {
                   name: item.product.description,
-                  id: item.itemId,
+                  id: item.product.sku,
                   price: item.product.prices.normalPrice.toString(),
                   brand: item.product.brand,
                   category: item.product.category,
@@ -70,13 +94,14 @@ const Body = () => {
         );
         sendQuantityClickEvent({
           event: 'removeFromCart',
+          eventType: 'CH',
           ecommerce: {
             currencyCode: 'CLP',
             remove: {
               products: [
                 {
                   name: item.product.description,
-                  id: item.itemId,
+                  id: item.product.sku,
                   price: item.product.prices.normalPrice.toString(),
                   brand: item.product.brand,
                   category: item.product.category,
@@ -94,13 +119,14 @@ const Body = () => {
     handleRemoveFromCart: (item: Item, index: number) => {
       sendQuantityClickEvent({
         event: 'removeFromCart',
+        eventType: 'CH',
         ecommerce: {
           currencyCode: 'CLP',
           remove: {
             products: [
               {
                 name: item.product.description,
-                id: item.itemId,
+                id: item.product.sku,
                 price: item.product.prices.normalPrice.toString(),
                 brand: item.product.brand,
                 category: item.product.category,

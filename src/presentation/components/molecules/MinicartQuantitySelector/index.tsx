@@ -37,6 +37,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
       if (newQuantity > 0 && numberRegex.test(quantityInput)) {
         sendQuantityClickEvent({
           event: newQuantity > quantity ? 'addToCart' : 'removeFromCart',
+          eventType: 'CH',
           ecommerce: {
             currencyCode: 'CLP',
             add: {

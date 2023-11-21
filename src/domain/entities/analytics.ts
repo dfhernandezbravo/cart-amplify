@@ -29,6 +29,7 @@ export type AddProductImpressions = {
 
 export type QuantityProductEvent = {
   event: AnalyticsEvents;
+  eventType: string;
   ecommerce: RemoveProductImpressions | AddProductImpressions;
 };
 
