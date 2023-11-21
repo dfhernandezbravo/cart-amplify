@@ -6,7 +6,7 @@ import { Container, Description, Title } from './styles';
 import { enviroments } from '../../../../../configs/env';
 
 const EmptyBody = () => {
-  const { hasHybridation } = useAppSelector((state) => state.cart);
+  const { isHeadless } = useAppSelector((state) => state.cart);
 
   const router = useRouter();
 
@@ -16,9 +16,9 @@ const EmptyBody = () => {
   };
 
   const handleSearchProducts = () => {
-    if (hasHybridation && isProduction()) {
+    if (!isHeadless && isProduction()) {
       router.push('https://easy.cl');
-    } else if (hasHybridation && !isProduction()) {
+    } else if (!isHeadless && !isProduction()) {
       router.push('https://site.qa.easy.cl');
     } else {
       router.push('/');

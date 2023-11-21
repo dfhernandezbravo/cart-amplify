@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const BuyButton = (props: BuyButtonProps) => {
   const router = useRouter();
-  const { cartBFF, hasHybridation } = useAppSelector((state) => state.cart);
+  const { cartBFF, isHeadless } = useAppSelector((state) => state.cart);
 
   const { text } = props;
 
@@ -18,7 +18,7 @@ const BuyButton = (props: BuyButtonProps) => {
 
   return (
     <>
-      {!hasHybridation ? (
+      {isHeadless ? (
         <Button className="buyBtn fullWidth" onClick={handleClickBtn}>
           {text}
         </Button>

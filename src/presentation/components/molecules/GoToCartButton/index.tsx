@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const GoToCartButton = () => {
   const router = useRouter();
-  const { cartId, hasHybridation } = useAppSelector((state) => state.cart);
+  const { cartId, isHeadless } = useAppSelector((state) => state.cart);
 
   const handleClickBtn = () => {
     router.push(`/cart/${cartId}`);
@@ -14,7 +14,7 @@ const GoToCartButton = () => {
 
   return (
     <>
-      {!hasHybridation ? (
+      {isHeadless ? (
         <Button
           className="linkBtn goToCartBtn fullWidth"
           onClick={handleClickBtn}

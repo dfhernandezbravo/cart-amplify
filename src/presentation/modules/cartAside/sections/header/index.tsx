@@ -6,7 +6,7 @@ import { selectTotalProductsInCart } from '@store/cart';
 import { Title } from './styles';
 
 const Header = (props: HeaderProps) => {
-  const { hasHybridation } = useAppSelector((state) => state.cart);
+  const { hasHybridation, isHeadless } = useAppSelector((state) => state.cart);
   const { setIsOpen } = props;
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
@@ -35,7 +35,9 @@ const Header = (props: HeaderProps) => {
       </div>
       <GrClose
         onClick={
-          hasHybridation ? () => closeCartHybridation() : () => setIsOpen(false)
+          hasHybridation && !isHeadless
+            ? () => closeCartHybridation()
+            : () => setIsOpen(false)
         }
       />
     </Title>

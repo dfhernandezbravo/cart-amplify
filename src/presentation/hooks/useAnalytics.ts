@@ -4,7 +4,7 @@ import { customDispatchEvent } from '@store/events/dispatchEvents';
 import { useAppSelector } from './storeHooks';
 
 export const useAnalytics = () => {
-  const { hasHybridation } = useAppSelector((state) => state.cart);
+  const { hasHybridation, isHeadless } = useAppSelector((state) => state.cart);
 
   const methods: UseAnalytics = {
     dispatchAnalyticsEvent: (data) => {
@@ -18,7 +18,7 @@ export const useAnalytics = () => {
     sendQuantityClickEvent: (data) => {
       methods.dispatchAnalyticsEvent(data);
       // Híbrido cart headless/vtex
-      if (hasHybridation) {
+      if (hasHybridation && !isHeadless) {
         window.parent.postMessage(
           { ANALYTICS_MINICART_HYBRIDATION: data },
           '*',

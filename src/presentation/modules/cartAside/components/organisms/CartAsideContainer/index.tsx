@@ -23,14 +23,15 @@ import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
 
 const CartAsideContainer = () => {
   // hooks
-  const { cartBFF, hasHybridation, cartId } = useAppSelector(
+  const { cartBFF, hasHybridation, cartId, isHeadless } = useAppSelector(
     (state) => state.cart,
   );
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
-  const { addCartId, addProductInCart, simulateAddProduct } = cartSlice.actions;
+  const { addCartId, addProductInCart, simulateAddProduct, setIsHeadless } =
+    cartSlice.actions;
 
   const handleSetIsOpen = (event: Event) => {
     event.preventDefault();
@@ -179,6 +180,11 @@ const CartAsideContainer = () => {
   useEffect(() => {
     localStorage.removeItem('cbff');
     dispatch(getParamData());
+    if (typeof window !== 'undefined') {
+      const isHeadlessSessionStorage =
+        sessionStorage.getItem('isHeadless') === 'true';
+      dispatch(setIsHeadless(isHeadlessSessionStorage));
+    }
   }, []);
 
   useEffect(() => {
@@ -191,7 +197,7 @@ const CartAsideContainer = () => {
 
   return (
     <>
-      {hasHybridation ? (
+      {hasHybridation && !isHeadless ? (
         <>
           <Header setIsOpen={setIsOpen} />
           {totalProducts > 0 ? (

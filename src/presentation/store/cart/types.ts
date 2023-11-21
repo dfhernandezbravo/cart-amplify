@@ -14,6 +14,7 @@ export type InitialState = {
   openDetailsMobile: boolean;
   hasHybridation: boolean;
   isCencopayActive: boolean;
+  isHeadless: boolean;
 };
 
 export interface CartItemModel {
