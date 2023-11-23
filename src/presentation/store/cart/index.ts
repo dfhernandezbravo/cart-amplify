@@ -29,6 +29,7 @@ const initialValue: InitialState = {
   openDetailsMobile: false,
   hasHybridation: false,
   isCencopayActive: false,
+  isHeadless: false,
 };
 
 const cartSlice = createSlice({
@@ -127,6 +128,9 @@ const cartSlice = createSlice({
     },
     setLoading: (state, { payload }: { payload: boolean }) => {
       state.loading = payload;
+    },
+    setIsHeadless: (state, { payload }) => {
+      state.isHeadless = payload;
     },
   },
   extraReducers: (builder) => {
