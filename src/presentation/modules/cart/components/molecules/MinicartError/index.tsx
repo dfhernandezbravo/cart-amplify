@@ -19,7 +19,7 @@ const MinicartError = (props: MinicartErrorProps) => {
   const { title, content = 'Intenta nuevamente' } = props;
   const { addProductInCart } = cartSlice.actions;
 
-  const { cartBFF } = useAppSelector((state) => state.cart);
+  const { cartBFF, isHeadless } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   const handleOnClose = () => {
@@ -29,7 +29,10 @@ const MinicartError = (props: MinicartErrorProps) => {
   // wait 4sec and disappear
   useEffect(() => {
     setTimeout(() => {
-      dispatch(addProductInCart(getCartFromLocalStorage(cartBFF)));
+      if (!isHeadless) {
+        dispatch(addProductInCart(getCartFromLocalStorage(cartBFF)));
+      }
+      // TODO: when isHeadless, check error and dispatch simulateRemoveProduct with the id
       dispatch(setError(null));
     }, 4000);
   }, [dispatch]);
