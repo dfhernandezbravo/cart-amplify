@@ -116,7 +116,11 @@ const Body = () => {
       [],
     ),
 
-    handleRemoveFromCart: (item: Item, index: number) => {
+    handleRemoveFromCart: (index: number) => {
+      dispatch(removeProduct(index));
+      dispatch(deleteItem({ cartId: cartId ?? '', itemIndex: index }));
+    },
+    sendRemoveFromCart: (item: Item, index: number) => {
       sendQuantityClickEvent({
         event: 'removeFromCart',
         eventType: 'CH',
@@ -137,8 +141,6 @@ const Body = () => {
           },
         },
       });
-      // dispatch(removeProduct(index));
-      dispatch(deleteItem({ cartId: cartId ?? '', itemIndex: index }));
     },
   };
 
@@ -148,7 +150,7 @@ const Body = () => {
         <ProductCardWithouthStock
           items={itemWithoutStock}
           onRemoveFromCart={(index: number) => {
-            // methods.handleRemoveFromCart(index);
+            methods.handleRemoveFromCart(index);
           }}
         />
         <AvailableProductText>Productos disponibles</AvailableProductText>
@@ -168,7 +170,7 @@ const Body = () => {
           item={item}
           index={index}
           onRemoveFromCart={() => {
-            methods.handleRemoveFromCart(item, index);
+            methods.handleRemoveFromCart(index);
           }}
           onIncrementQuantity={() => {
             dispatch(incrementProductQuantity(index));
