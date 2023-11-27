@@ -4,7 +4,7 @@ import { DeleteItemRequest } from '@entities/cart/cart.request';
 import cartService from '@services/cart';
 import { CartAction } from '@entities/error/error.entity';
 import { AxiosError } from 'axios';
-import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
+// import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
 import dispatchHttpErrors from '@use-cases/error/dispatch-http-errors';
 
 const deleteItem = createAsyncThunk(
@@ -20,7 +20,7 @@ const deleteItem = createAsyncThunk(
         return {} as Cart;
       }
 
-      dispatchPayloadErrors(data, dispatch, CartAction.DELETE);
+      // dispatchPayloadErrors(data, dispatch, CartAction.DELETE);
       return fulfillWithValue(data);
     } catch (error) {
       dispatchHttpErrors(error as AxiosError, dispatch, CartAction.DELETE);

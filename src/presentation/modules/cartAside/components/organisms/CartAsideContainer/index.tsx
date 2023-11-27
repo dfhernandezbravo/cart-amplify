@@ -43,12 +43,12 @@ const CartAsideContainer = () => {
     event.preventDefault();
     const customEvent = event as CustomEvent;
     dispatch(addProductInCart(customEvent.detail?.data));
-    const customEventError = customEvent.detail?.data?.messagesErrors;
+    // const customEventError = customEvent.detail?.data?.messagesErrors;
 
-    if (customEventError.length) {
-      const cartError = handlePayloadError(customEventError[0], CartAction.ADD);
-      dispatch(setError(cartError));
-    }
+    // if (customEventError.length) {
+    //   const cartError = handlePayloadError(customEventError[0], CartAction.ADD);
+    //   dispatch(setError(cartError));
+    // }
     setIsOpen(true);
   };
 
