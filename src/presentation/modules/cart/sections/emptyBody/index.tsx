@@ -3,17 +3,12 @@ import { useRouter } from 'next/router';
 import Button from '@components/atoms/Button';
 import { useAppSelector } from '@hooks/storeHooks';
 import { Container, Description, Title } from './styles';
-import { enviroments } from '../../../../../configs/env';
+import { isProduction } from '@utils/helpers';
 
 const EmptyBody = () => {
   const { isHeadless } = useAppSelector((state) => state.cart);
 
   const router = useRouter();
-
-  const isProduction = () => {
-    const checkoutDomain = enviroments.checkoutDomain;
-    return !checkoutDomain?.includes('qa');
-  };
 
   const handleSearchProducts = () => {
     if (!isHeadless && isProduction()) {

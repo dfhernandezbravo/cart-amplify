@@ -1,36 +1,21 @@
-import { useRouter } from 'next/router';
 import Button from '@components/atoms/Button';
-
 import { useAppSelector } from '@hooks/storeHooks';
 import Link from 'next/link';
+import { enviroments } from '../../../../configs/env';
 
 const GoToCartButton = () => {
-  const router = useRouter();
   const { cartId, isHeadless } = useAppSelector((state) => state.cart);
-
-  const handleClickBtn = () => {
-    router.push(`/cart/${cartId}`);
-  };
 
   return (
     <>
-      {isHeadless ? (
-        <Button
-          className="linkBtn goToCartBtn fullWidth"
-          onClick={handleClickBtn}
-        >
+      <Link
+        href={`${enviroments.hostDomain}cart/${cartId}`}
+        target={isHeadless ? '_self' : '_parent'}
+      >
+        <Button className="linkBtn goToCartBtn fullWidth">
           Ir al carro de compras
         </Button>
-      ) : (
-        <Link
-          href={`https://cl-ccom-easy-host-headless.ecomm-stg.cencosud.com/cart/${cartId}`}
-          target="_parent"
-        >
-          <Button className="linkBtn goToCartBtn fullWidth">
-            Ir al carro de compras
-          </Button>
-        </Link>
-      )}
+      </Link>
     </>
   );
 };
