@@ -1,5 +1,6 @@
 import { Cart, Item, ProductAvailability } from '@entities/cart/cart.entity';
 import { CartItemModel } from '@store/cart/types';
+import { enviroments } from '../../configs/env';
 
 type currencyFormatter = {
   currency: string;
@@ -75,4 +76,9 @@ export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
   };
 
   return newItem;
+};
+
+export const isProduction = () => {
+  const checkoutDomain = enviroments.checkoutDomain;
+  return !checkoutDomain?.includes('qa');
 };
