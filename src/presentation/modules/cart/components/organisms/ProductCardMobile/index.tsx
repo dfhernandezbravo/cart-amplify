@@ -19,10 +19,16 @@ import Modal from '@components/atoms/Modal';
 import { QuantitySelectorContainer } from '../ProductCard/styles';
 import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
 import ProductSku from '@components/molecules/ProductSku';
+import useAnalytics from '@hooks/useAnalytics';
+import { AnalyticsEvents } from '@entities/analytics';
 
 const ProductCardMobile = (props: ProductCardProps) => {
   const { item, onRemoveFromCart, handleChangeQuantity, itemStockModify } =
     props;
+
+  const {
+    methods: { sendQuantityClickEvent, sendRemoveFromCart },
+  } = useAnalytics();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quantityValue, setQuantityValue] = useState('');
@@ -36,6 +42,65 @@ const ProductCardMobile = (props: ProductCardProps) => {
       return setIsModalOpen(true);
     }
     handleChangeQuantity(quantity);
+
+    const eventName = (
+      newQuantity: string,
+      oldQuantity: number,
+    ): AnalyticsEvents => {
+      return parseInt(newQuantity) > oldQuantity
+        ? 'addToCart'
+        : 'removeFromCart';
+    };
+
+    const productData = {
+      products: [
+        {
+          name: item.product.description,
+          id: item.itemId,
+          price: item.product.prices.normalPrice.toString(),
+          price_tecno: item.product.prices.brandPrice?.toString(),
+          brand: item.product.brand,
+          category: item.product.category,
+          variant: '',
+          quantity: Math.abs(parseInt(quantity) - item.quantity),
+        },
+      ],
+    };
+    sendQuantityClickEvent({
+      event: eventName(quantity, item.quantity),
+      eventType: 'CH',
+      ecommerce: {
+        currencyCode: 'CLP',
+        add: productData,
+      },
+    });
+  };
+
+  const handleRemoveFromCart = () => {
+    onRemoveFromCart(item);
+
+    const productData = {
+      products: [
+        {
+          name: item.product.description,
+          id: item.itemId,
+          price: item.product.prices.normalPrice.toString(),
+          price_tecno: item.product.prices.brandPrice?.toString(),
+          brand: item.product.brand,
+          category: item.product.category,
+          variant: '',
+          quantity: item.quantity,
+        },
+      ],
+    };
+    sendRemoveFromCart({
+      event: 'removeFromCart',
+      eventType: 'CH',
+      ecommerce: {
+        currencyCode: 'CLP',
+        add: productData,
+      },
+    });
   };
 
   const handleOnClickQuantity = () => {
@@ -72,7 +137,10 @@ const ProductCardMobile = (props: ProductCardProps) => {
               }
               quantity={item?.quantity}
             />
-            <DeleteButton hasIcon={true} onRemoveFromCart={onRemoveFromCart} />
+            <DeleteButton
+              hasIcon={true}
+              onRemoveFromCart={handleRemoveFromCart}
+            />
           </QuantitySelectorAndDeleteContainer>
         </div>
       </Container>

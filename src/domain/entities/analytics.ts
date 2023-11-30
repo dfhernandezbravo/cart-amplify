@@ -27,7 +27,7 @@ export type AddProductImpressions = {
   };
 };
 
-export type QuantityProductEvent = {
+export type CartProductEvent = {
   event: AnalyticsEvents;
   eventType: string;
   ecommerce: RemoveProductImpressions | AddProductImpressions;
@@ -42,6 +42,7 @@ type PageviewVirtualEvent = {
 
 export interface UseAnalytics {
   dispatchAnalyticsEvent: <T>(data: T) => void;
-  sendQuantityClickEvent: (data: QuantityProductEvent) => void;
+  sendQuantityClickEvent: (data: CartProductEvent) => void;
+  sendRemoveFromCart: (data: CartProductEvent) => void;
   sendPageviewVirtualEvent: (data: PageviewVirtualEvent) => void;
 }
