@@ -33,9 +33,10 @@ export const totalItems = (items: any) => {
   return sum;
 };
 
+// Vtex object structure
 export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
   const newItem = {
-    itemId: '',
+    itemId: data.items ? data?.items[0]?.itemId : '',
     quantity: quantityValue ? quantityValue : 1,
     adjustment: [
       {
@@ -66,6 +67,39 @@ export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
           : 0,
       },
       images: data.items ? data.items[0]?.images![0]?.imageUrl : '',
+      brand: data?.brand,
+      seller: { id: '' },
+      availability: 'available',
+      availableQuantity: 0,
+      category: '',
+      ean: '',
+    },
+  };
+
+  return newItem;
+};
+
+export const createNewItemHeadless = (data: CartItemModel) => {
+  const newItem = {
+    itemId: data.productId,
+    quantity: 1,
+    adjustment: [],
+    priceAfterDiscount: 1,
+    product: {
+      id: data.productId,
+      sku: '',
+      description: data.productName,
+      unit: '',
+      unitValue: 1,
+      size: '',
+      color: '',
+      prices: {
+        brandPrice: null,
+        currency: '',
+        normalPrice: data.prices?.normalPrice ? data.prices?.normalPrice : 0,
+        offerPrice: null,
+      },
+      images: data.imageUrl,
       brand: data?.brand,
       seller: { id: '' },
       availability: 'available',
