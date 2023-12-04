@@ -1,5 +1,6 @@
 import { Cart, Item, ProductAvailability } from '@entities/cart/cart.entity';
 import { CartItemModel } from '@store/cart/types';
+import { enviroments } from '../../configs/env';
 
 type currencyFormatter = {
   currency: string;
@@ -32,6 +33,7 @@ export const totalItems = (items: any) => {
   return sum;
 };
 
+// Vtex object structure
 export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
   const newItem = {
     itemId: data.items ? data?.items[0]?.itemId : '',
@@ -108,4 +110,9 @@ export const createNewItemHeadless = (data: CartItemModel) => {
   };
 
   return newItem;
+};
+
+export const isProduction = () => {
+  const checkoutDomain = enviroments.checkoutDomain;
+  return !checkoutDomain?.includes('qa');
 };

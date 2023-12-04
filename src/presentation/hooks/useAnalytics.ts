@@ -25,6 +25,9 @@ export const useAnalytics = () => {
         );
       }
     },
+    sendRemoveFromCart: (data) => {
+      methods.dispatchAnalyticsEvent(data);
+    },
     sendPageviewVirtualEvent: (data) => {
       methods.dispatchAnalyticsEvent(data);
     },
