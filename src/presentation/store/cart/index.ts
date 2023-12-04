@@ -6,7 +6,11 @@ import getCart from '@use-cases/cart/get-cart';
 import updateItem from '@use-cases/cart/update-item';
 import addCouponCode from '@use-cases/cart/addCouponCode';
 import removeCouponCode from '@use-cases/cart/removeCouponCode';
-import { createNewItem, totalItems } from '@utils/helpers';
+import {
+  createNewItem,
+  createNewItemHeadless,
+  totalItems,
+} from '@utils/helpers';
 import dispatchCartHeaderEvent from '@use-cases/cart/dispatch-cart-header-event';
 import dispatchCartDataEvent from '@use-cases/cart/dispatch-cart-data-event';
 import deleteItem from '@use-cases/cart/delete-item';
@@ -61,6 +65,29 @@ const cartSlice = createSlice({
       const newItem = quantityValue
         ? createNewItem(payload, parseInt(quantityValue))
         : createNewItem(payload);
+
+      if (state.cartBFF?.items) {
+        state.cartBFF.items?.push(newItem);
+      } else {
+        state.cartBFF = {
+          id: '',
+          currencyCode: '',
+          items: [newItem],
+        };
+      }
+    },
+    simulateAddProductHeadless: (state, { payload }) => {
+      const productInCart = state.cartBFF?.items?.find(
+        (item) => item.product.id === payload?.productId,
+      );
+
+      if (productInCart) {
+        const quantity = productInCart?.quantity ?? 0;
+        productInCart.quantity = quantity + 1;
+        return;
+      }
+
+      const newItem = createNewItemHeadless(payload);
 
       if (state.cartBFF?.items) {
         state.cartBFF.items?.push(newItem);

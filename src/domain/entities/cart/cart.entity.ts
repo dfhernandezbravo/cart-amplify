@@ -38,6 +38,8 @@ export interface Adjustments {
   value: number;
   type: string;
   name: string;
+  percentDiscount: string;
+  priceType: string;
 }
 
 interface Shipping {

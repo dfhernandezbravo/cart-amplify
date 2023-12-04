@@ -30,8 +30,14 @@ const CartAsideContainer = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
-  const { addCartId, addProductInCart, simulateAddProduct, setIsHeadless } =
-    cartSlice.actions;
+  const {
+    addCartId,
+    addProductInCart,
+    simulateAddProduct,
+    setIsHeadless,
+    simulateAddProductHeadless,
+    simulateRemoveProduct,
+  } = cartSlice.actions;
 
   const handleSetIsOpen = (event: Event) => {
     event.preventDefault();
@@ -54,7 +60,6 @@ const CartAsideContainer = () => {
 
   const handleGetCartId = (event: Event) => {
     event.preventDefault();
-
     const customEvent = event as CustomEvent;
     dispatch(addCartId(customEvent.detail?.cartId));
   };
@@ -62,7 +67,7 @@ const CartAsideContainer = () => {
   const handleSimulateAddProductEvent = (event: Event) => {
     event.preventDefault();
     const customEvent = event as CustomEvent;
-    dispatch(simulateAddProduct(customEvent.detail?.product));
+    dispatch(simulateAddProductHeadless(customEvent.detail?.product));
     setIsOpen(true);
   };
 
@@ -72,6 +77,9 @@ const CartAsideContainer = () => {
     const customEventError = customEvent.detail?.data.error;
     const cartError = handleHttpError(customEventError, CartAction.ADD);
     dispatch(setError(cartError));
+    setTimeout(() => {
+      dispatch(simulateRemoveProduct(customEvent.detail?.data?.itemId));
+    }, 4000);
   };
 
   // methods

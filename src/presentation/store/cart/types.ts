@@ -1,4 +1,4 @@
-import { Cart } from '@entities/cart/cart.entity';
+import { Adjustments, Cart } from '@entities/cart/cart.entity';
 
 export type QuantitySelectedProps = {
   index: number | null;
@@ -22,6 +22,14 @@ export interface CartItemModel {
   quantity?: number;
   productName: string;
   brand: string;
+  imageUrl: string;
+  prices: {
+    brandPrice?: number;
+    currency: string;
+    normalPrice?: number;
+    offerPrice?: number;
+  };
+  adjustments?: Adjustments[] | [];
   brandId: number;
   brandImageUrl?: null;
   linkText: string;

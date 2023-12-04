@@ -32,7 +32,6 @@ const MinicartError = (props: MinicartErrorProps) => {
       if (!isHeadless) {
         dispatch(addProductInCart(getCartFromLocalStorage(cartBFF)));
       }
-      // TODO: when isHeadless, check error and dispatch simulateRemoveProduct with the id
       dispatch(setError(null));
     }, 4000);
   }, [dispatch]);

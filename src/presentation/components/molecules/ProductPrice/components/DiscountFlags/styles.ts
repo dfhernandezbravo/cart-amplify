@@ -18,6 +18,7 @@ export const PriceContainer = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
+  padding-bottom: 3px;
 `;
 
 export const Price = styled.p`
