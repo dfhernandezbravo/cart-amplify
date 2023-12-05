@@ -1,38 +1,35 @@
+import { useEffect, useState } from 'react';
 import Button from '@components/atoms/Button';
 import { useAppSelector } from '@hooks/storeHooks';
 import Link from 'next/link';
 import { enviroments } from '../../../../configs/env';
-import { useRouter } from 'next/router';
 
 const GoToCartButton = () => {
   const { cartBFF, isHeadless } = useAppSelector((state) => state.cart);
 
-  const router = useRouter();
+  //TODO: delete this conditional when hybrid is gone
+  const [recursiveNumber, setRecursiveNumber] = useState(0);
 
-  console.log({ router });
-
-  const url = cartBFF?.id
-    ? `${enviroments.hostDomain}cart/${cartBFF?.id}`
-    : '#';
-
-  const handleOnclick = () => {
-    console.log('no id detected...');
-  };
+  useEffect(() => {
+    if (recursiveNumber <= 5) {
+      setRecursiveNumber(recursiveNumber + 1);
+    }
+  }, [recursiveNumber]);
 
   if (!cartBFF?.id) {
     return (
-      <Button onClick={handleOnclick} className="linkBtn goToCartBtn fullWidth">
+      <Button className="linkBtn goToCartBtn fullWidth">
         Ir al carro de comprass
       </Button>
     );
   }
+  //TODO: delete this conditional when hybrid is gone
 
   return (
     <>
       <Link
         href={`${enviroments.hostDomain}cart/${cartBFF?.id}`}
         target={isHeadless ? '_self' : '_parent'}
-        onClick={handleOnclick}
       >
         <Button className="linkBtn goToCartBtn fullWidth">
           Ir al carro de compras
