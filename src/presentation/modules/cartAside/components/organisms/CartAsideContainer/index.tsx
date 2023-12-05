@@ -130,20 +130,25 @@ const CartAsideContainer = () => {
             event?.data?.VTEX_PRODUCT_ADD_TO_CART;
 
           dispatch(simulateAddProduct({ ...product, quantityValue }));
-
+          const cartBFFfromLocalStorage = getCartFromLocalStorage(cartBFF);
           const productInCart = getCartFromLocalStorage(cartBFF)?.items?.find(
             (item: any) => item.product.id === productReference,
           );
+
+          if (
+            cartBFFfromLocalStorage?.id &&
+            cartBFFfromLocalStorage?.id !== cartId
+          ) {
+            dispatch(addCartId(cartBFFfromLocalStorage?.id));
+          }
+
           if (productInCart) {
             const productIndex = getCartFromLocalStorage(
               cartBFF,
             )?.items?.findIndex(
               (item: any) => item.product.id === productReference,
             );
-            console.log({
-              cartBFF,
-              cartId,
-            });
+
             if (productIndex !== undefined && productIndex !== -1) {
               dispatch(
                 updateItem({

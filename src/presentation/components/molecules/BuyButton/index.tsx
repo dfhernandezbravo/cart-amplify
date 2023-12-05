@@ -7,6 +7,10 @@ const BuyButton = (props: BuyButtonProps) => {
   const { cartBFF, isHeadless } = useAppSelector((state) => state.cart);
   const { text } = props;
 
+  if (!cartBFF?.id) {
+    return <Button className="buyBtn fullWidth">{text}</Button>;
+  }
+
   return (
     <>
       <Link
