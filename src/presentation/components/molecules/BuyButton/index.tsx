@@ -12,10 +12,10 @@ const BuyButton = (props: BuyButtonProps) => {
   const [recursiveNumber, setRecursiveNumber] = useState(0);
 
   useEffect(() => {
-    if (recursiveNumber <= 5) {
+    if (!cartBFF?.id && recursiveNumber <= 5) {
       setRecursiveNumber(recursiveNumber + 1);
     }
-  }, [recursiveNumber]);
+  }, [recursiveNumber, cartBFF]);
 
   if (!cartBFF?.id) {
     return <Button className="buyBtn fullWidth">{text}</Button>;
