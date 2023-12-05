@@ -140,7 +140,10 @@ const CartAsideContainer = () => {
             )?.items?.findIndex(
               (item: any) => item.product.id === productReference,
             );
-
+            console.log({
+              cartBFF,
+              cartId,
+            });
             if (productIndex !== undefined && productIndex !== -1) {
               dispatch(
                 updateItem({
