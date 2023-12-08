@@ -10,6 +10,7 @@ import useProductCardEvent from '@hooks/useProductCardEvent';
 import useAnalytics from '@hooks/useAnalytics';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { ProductAnalytics } from '@entities/analytics';
 
 const Main = () => {
   const { cartBFF, loading } = useAppSelector((state) => state.cart);
@@ -20,10 +21,32 @@ const Main = () => {
   );
 
   const {
-    methods: { sendPageviewVirtualEvent },
+    methods: { sendPageviewVirtualEvent, sendCustomCart },
   } = useAnalytics();
 
   const { asPath } = useRouter();
+
+  const impressionData = (): ProductAnalytics[] => {
+    if (!cartBFF || !cartBFF.items) {
+      return [];
+    }
+
+    const data: ProductAnalytics[] = cartBFF.items.map(
+      ({ product }, index) => ({
+        name: product.description,
+        id: product.id,
+        price: product.prices.normalPrice.toString(),
+        brand: product.brand,
+        category: product.category,
+        variant: '',
+        quantity: cartBFF.items[index].quantity,
+        dimension1: product.productId || '',
+        dimension2: product.sku,
+        dimension3: product.description,
+      }),
+    );
+    return data;
+  };
 
   useEffect(() => {
     sendPageviewVirtualEvent({
@@ -31,6 +54,21 @@ const Main = () => {
       page: asPath,
       title: 'Checkout - cart',
       location: window.location.origin,
+    });
+
+    const productsImpression = impressionData();
+    sendCustomCart({
+      event: 'customCart',
+      title: 'Cart',
+      ecommerce: {
+        checkout: {
+          actionField: {
+            step: '1',
+            action: 'checkout',
+          },
+        },
+        products: productsImpression,
+      },
     });
   }, []);
 
