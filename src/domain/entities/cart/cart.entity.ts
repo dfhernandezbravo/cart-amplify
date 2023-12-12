@@ -167,6 +167,7 @@ export interface Option {
   id: string;
   description: string;
   price: number;
+  isApplied: boolean;
 }
 
 export interface ShippingMethod {

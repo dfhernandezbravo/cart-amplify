@@ -43,6 +43,7 @@ const MainMobile = () => {
           handleChangeQuantity={(quantity) =>
             methods.handleChangeQuantity(quantity, index)
           }
+          index={index}
         />
       ))}
     </ContainerMobile>
