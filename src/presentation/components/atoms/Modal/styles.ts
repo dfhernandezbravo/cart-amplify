@@ -17,11 +17,7 @@ export const ModalWrapper = styled.div<ModalProps>`
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  z-index: 9999;
-
-  @media (max-width: 767px) {
-    justify-content: ${(props) => (props.hasHeader ? 'start' : 'center')};
-  }
+  z-index: 99999;
 `;
 
 export const ModalContent = styled.div<ModalProps>`
@@ -39,7 +35,9 @@ export const ModalContent = styled.div<ModalProps>`
     overflow-y: auto;
 
     @media (max-width: 767px) {
-      max-height: calc(100% - 300px);
+      max-height: 324px;
+      max-width: 85%;
+      border-radius: 0 0 8px 8px;
     }
   }
 `;
@@ -55,7 +53,7 @@ export const ModalHeader = styled.div<ModalProps>`
   max-width: 508px;
 
   @media (max-width: 767px) {
-    border-radius: ${(props) => (props.hasHeader ? '0' : '8px 8px 0 0')};
+    max-width: 85%;
   }
 `;
 

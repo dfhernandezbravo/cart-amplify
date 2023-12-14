@@ -22,7 +22,6 @@ import {
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
 import ProductService from '@modules/cart/components/molecules/ProductService';
-import { useAppSelector } from '@hooks/storeHooks';
 
 const ProductCard = (props: ProductCardProps) => {
   const {
@@ -32,8 +31,6 @@ const ProductCard = (props: ProductCardProps) => {
     itemStockModify,
     index,
   } = props;
-
-  const { isHeadless } = useAppSelector((state) => state.cart);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quantityValue, setQuantityValue] = useState('');
@@ -162,7 +159,7 @@ const ProductCard = (props: ProductCardProps) => {
             </div>
           </QuantitySelectorAndDeleteContainer>
         </>
-        {isHeadless && hasServices?.length
+        {hasServices?.length
           ? hasServices.map((obj) => (
               <ProductService key={obj.id} option={obj} index={index} />
             ))

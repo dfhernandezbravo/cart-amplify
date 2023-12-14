@@ -12,7 +12,6 @@ import {
   MainContainer,
 } from './styles';
 import ProductService from '@modules/cartAside/components/molecules/ProductService';
-import { useAppSelector } from '@hooks/storeHooks';
 
 const ProductCard = (props: ProductCardProps) => {
   const {
@@ -23,11 +22,9 @@ const ProductCard = (props: ProductCardProps) => {
     onRemoveFromCart,
   } = props;
 
-  const { isHeadless } = useAppSelector((state) => state.cart);
-
   if (item.product.availability !== 'available') return null;
 
-  const hasAppliedServices = item.product.options?.filter(
+  const hasServiceApplied = item.product.options?.filter(
     (obj) => obj.isApplied === true,
   );
 
@@ -56,8 +53,8 @@ const ProductCard = (props: ProductCardProps) => {
           />
         </ProductInfoContainer>
       </MainContainer>
-      {isHeadless && hasAppliedServices?.length
-        ? hasAppliedServices.map((obj) => (
+      {hasServiceApplied?.length
+        ? hasServiceApplied.map((obj) => (
             <ProductService key={obj.id} option={obj} />
           ))
         : null}

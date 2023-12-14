@@ -23,7 +23,6 @@ import ProductSku from '@components/molecules/ProductSku';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
 import ProductService from '@modules/cart/components/molecules/ProductService';
-import { useAppSelector } from '@hooks/storeHooks';
 
 const ProductCardMobile = (props: ProductCardProps) => {
   const {
@@ -33,8 +32,6 @@ const ProductCardMobile = (props: ProductCardProps) => {
     itemStockModify,
     index,
   } = props;
-
-  const { isHeadless } = useAppSelector((state) => state.cart);
 
   const {
     methods: { sendQuantityClickEvent, sendRemoveFromCart },
@@ -160,7 +157,7 @@ const ProductCardMobile = (props: ProductCardProps) => {
             </QuantitySelectorAndDeleteContainer>
           </div>
         </MainContainer>
-        {isHeadless && hasServices?.length
+        {hasServices?.length
           ? hasServices.map((obj) => (
               <ProductService key={obj.id} option={obj} index={index} />
             ))

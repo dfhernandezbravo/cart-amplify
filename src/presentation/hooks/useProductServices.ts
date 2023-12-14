@@ -1,3 +1,5 @@
+import { Cart } from '@entities/cart/cart.entity';
+
 const productServiceTypes = {
   visit: {
     title: 'Visita de factibilidad',
@@ -21,7 +23,31 @@ const useProductServices = () => {
     return productServiceTypes.instalation;
   };
 
-  return { mapServicetype };
+  const totalServicePrice = (cart: Cart | undefined) => {
+    let total = 0;
+
+    const productsWithServices = cart?.items.filter(
+      (item) => item.product.options?.length,
+    );
+
+    if (!productsWithServices) return total;
+
+    for (let i = 0; i < productsWithServices.length; i++) {
+      const options = productsWithServices[i].product.options;
+
+      if (options) {
+        const price = options
+          .filter(({ isApplied }) => isApplied === true)
+          .reduce((acc, cur) => acc + cur.price, 0);
+
+        total = price ? total + price : total;
+      }
+    }
+
+    return total;
+  };
+
+  return { mapServicetype, totalServicePrice };
 };
 
 export default useProductServices;
