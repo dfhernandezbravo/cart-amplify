@@ -10,7 +10,7 @@ import {
 } from './styles';
 import { ProductServiceDeviceProps } from '../types';
 import { formattedCLP } from '@utils/helpers';
-import ProductServiceModal from '../ProductServiceModal';
+import ProductServiceModal from '@components/molecules/ProductServiceModal';
 
 const ProductServiceDesktop = (props: ProductServiceDeviceProps) => {
   const {
