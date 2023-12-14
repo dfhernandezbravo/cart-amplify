@@ -20,6 +20,7 @@ import HybridationEvents from '../../../../../hybridationEvents';
 import getParamData from '@use-cases/cms/getParamData';
 import { CartAction } from '@entities/error/error.entity';
 import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
+import { AccessToken } from '@store/cart/types';
 
 const CartAsideContainer = () => {
   // hooks
@@ -37,6 +38,7 @@ const CartAsideContainer = () => {
     setIsHeadless,
     simulateAddProductHeadless,
     simulateRemoveProduct,
+    setCookieAuth,
   } = cartSlice.actions;
 
   const handleSetIsOpen = (event: Event) => {
@@ -120,6 +122,19 @@ const CartAsideContainer = () => {
         else return '';
       };
       switch (keyValue()) {
+        case HybridationEvents.cookieAuth: {
+          const cookieAuth = event?.data?.cookieAuth;
+          let cookieValues = {} as AccessToken;
+          if (cookieAuth) {
+            cookieValues.auth = cookieAuth[0].auth;
+            cookieValues.token = cookieAuth[1].token;
+          } else {
+            cookieValues.auth = null;
+            cookieValues.token = null;
+          }
+          dispatch(setCookieAuth(cookieValues));
+        }
+
         case HybridationEvents.CART_ID_VTEX:
           const cartIdVtex = event?.data?.CART_ID_VTEX;
           dispatch(addCartId(cartIdVtex));
