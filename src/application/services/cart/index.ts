@@ -1,5 +1,9 @@
 import { bffWebInstance } from '@data-sources/bbf-web-instance';
-import { AddOrderItems, UpdateOrderItems } from '@entities/cart/cart.request';
+import {
+  AddOrderItems,
+  AddProductServiceBody,
+  UpdateOrderItems,
+} from '@entities/cart/cart.request';
 import CartService from '@interfaces/cart-service.interface';
 import { CouponCode } from '@entities/cart/cart.entity';
 
@@ -42,6 +46,19 @@ const cartService: CartService = {
     const url = `/shoppingcart/${valitadeId(data.cartId)}/coupon/${
       data.couponCode
     }`;
+    return httpInstance.delete(url);
+  },
+  addProductService: (data) => {
+    const url = `/shoppingcart/${valitadeId(data.cartId)}/items/${
+      data.itemIndex
+    }/options`;
+    const body: AddProductServiceBody = { id: data.id };
+    return httpInstance.post(url, body);
+  },
+  deleteProductService: (data) => {
+    const url = `/shoppingcart/${valitadeId(data.cartId)}/items/${
+      data.itemIndex
+    }/options/${data.optionId}`;
     return httpInstance.delete(url);
   },
 };

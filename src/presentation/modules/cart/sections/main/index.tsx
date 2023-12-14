@@ -102,6 +102,7 @@ const Main = () => {
             handleChangeQuantity={(quantity) =>
               methods.handleChangeQuantity(quantity, index)
             }
+            index={index}
           />
         ))}
       </div>

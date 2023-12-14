@@ -18,6 +18,8 @@ import { RootState } from '@hooks/storeHooks';
 import { Cart, Item } from '@entities/cart/cart.entity';
 import addItem from '@use-cases/cart/add-item';
 import getParamData from '@use-cases/cms/getParamData';
+import addProductService from '@use-cases/cart/add-product-service';
+import deleteProductService from '@use-cases/cart/delete-product-service';
 
 export const quantitySelected = {
   quantity: null,
@@ -261,6 +263,28 @@ const cartSlice = createSlice({
           payload?.params?.hybridation?.isEnabledMiniCart,
         );
         state.isCencopayActive = Boolean(payload?.params?.isCencopayActive);
+      })
+      .addCase(addProductService.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addProductService.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
+        state.cartBFF = payload;
+        state.loading = false;
+      })
+      .addCase(addProductService.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(deleteProductService.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteProductService.fulfilled, (state, { payload }) => {
+        localStorage.setItem('cbff', JSON.stringify(payload));
+        state.cartBFF = payload;
+        state.loading = false;
+      })
+      .addCase(deleteProductService.rejected, (state) => {
+        state.loading = false;
       });
   },
 });

@@ -8,6 +8,7 @@ export const ProductCardContainer = styled.div`
   display: flex;
   gap: 10px;
   margin-top: 1rem;
+  flex-direction: column;
 
   img {
     max-width: 80%;
@@ -24,4 +25,8 @@ export const ImageAndDeleteContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+`;
+
+export const MainContainer = styled.div`
+  display: flex;
 `;

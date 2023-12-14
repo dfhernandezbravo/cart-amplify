@@ -21,13 +21,21 @@ import {
 } from './styles';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
+import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
-  const { item, onRemoveFromCart, handleChangeQuantity, itemStockModify } =
-    props;
+  const {
+    item,
+    onRemoveFromCart,
+    handleChangeQuantity,
+    itemStockModify,
+    index,
+  } = props;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quantityValue, setQuantityValue] = useState('');
+
+  const hasServices = item.product.options;
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -108,46 +116,54 @@ const ProductCard = (props: ProductCardProps) => {
   };
 
   if (item.product.availability !== 'available') return null;
+
   return (
     <>
       <Container>
-        <ProductInfoAndPriceContainer>
-          <ProductInfoContainer>
-            <ImageContainer>
-              <ProductImage src={item?.product?.images} alt={''} />
-            </ImageContainer>
+        <>
+          <ProductInfoAndPriceContainer>
+            <ProductInfoContainer>
+              <ImageContainer>
+                <ProductImage src={item?.product?.images} alt={''} />
+              </ImageContainer>
+              <div>
+                <ProductBrand brand={item?.product?.brand} />
+                <ProductName productName={item?.product?.description} />
+                <ProductSku id={item?.product.sku} />
+              </div>
+            </ProductInfoContainer>
             <div>
-              <ProductBrand brand={item?.product?.brand} />
-              <ProductName productName={item?.product?.description} />
-              <ProductSku id={item?.product.sku} />
+              <ProductPrice
+                prices={item?.product.prices}
+                quantity={item?.quantity ?? 0}
+                adjustment={item?.adjustment}
+              />
             </div>
-          </ProductInfoContainer>
-          <div>
-            <ProductPrice
-              prices={item?.product.prices}
-              quantity={item?.quantity ?? 0}
-              adjustment={item?.adjustment}
-            />
-          </div>
-        </ProductInfoAndPriceContainer>
+          </ProductInfoAndPriceContainer>
 
-        <QuantitySelectorAndDeleteContainer>
-          {itemStockModify && (
-            <AvailableQuantity quantity={itemStockModify as number} />
-          )}
-          <div className="quantity-container">
-            <QuantitySelector
-              quantitySelected={(value: string) =>
-                handleSelectedQuantity(value)
-              }
-              quantity={item?.quantity}
-            />
-            <DeleteButton
-              hasIcon={true}
-              onRemoveFromCart={handleRemoveFromCart}
-            />
-          </div>
-        </QuantitySelectorAndDeleteContainer>
+          <QuantitySelectorAndDeleteContainer>
+            {itemStockModify && (
+              <AvailableQuantity quantity={itemStockModify as number} />
+            )}
+            <div className="quantity-container">
+              <QuantitySelector
+                quantitySelected={(value: string) =>
+                  handleSelectedQuantity(value)
+                }
+                quantity={item?.quantity}
+              />
+              <DeleteButton
+                hasIcon={true}
+                onRemoveFromCart={handleRemoveFromCart}
+              />
+            </div>
+          </QuantitySelectorAndDeleteContainer>
+        </>
+        {hasServices?.length
+          ? hasServices.map((obj) => (
+              <ProductService key={obj.id} option={obj} index={index} />
+            ))
+          : null}
       </Container>
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>

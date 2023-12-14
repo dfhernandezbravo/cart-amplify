@@ -34,6 +34,10 @@ export const Loader = styled.div`
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.1);
 
+  @media screen and (max-width: 1023px) {
+    position: fixed;
+  }
+
   &:before {
     content: '';
     display: block;
