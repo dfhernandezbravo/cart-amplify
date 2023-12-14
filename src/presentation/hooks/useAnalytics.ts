@@ -31,6 +31,9 @@ export const useAnalytics = () => {
     sendPageviewVirtualEvent: (data) => {
       methods.dispatchAnalyticsEvent(data);
     },
+    sendCustomCart: (data) => {
+      methods.dispatchAnalyticsEvent(data);
+    },
   };
 
   return { methods };

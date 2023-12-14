@@ -1,7 +1,8 @@
 export type AnalyticsEvents =
   | 'removeFromCart'
   | 'addToCart'
-  | 'PageviewVirtual';
+  | 'PageviewVirtual'
+  | 'customCart';
 
 export type ProductAnalytics = {
   name: string;
@@ -11,6 +12,9 @@ export type ProductAnalytics = {
   category: string;
   variant: string;
   quantity: number;
+  dimension1?: string;
+  dimension2?: string;
+  dimension3?: string;
 };
 
 export type RemoveProductImpressions = {
@@ -33,6 +37,16 @@ export type CartProductEvent = {
   ecommerce: RemoveProductImpressions | AddProductImpressions;
 };
 
+export type CustomCartImpression = {
+  checkout: {
+    actionField: {
+      step: string;
+      action: string;
+    };
+  };
+  products: ProductAnalytics[];
+};
+
 type PageviewVirtualEvent = {
   event: AnalyticsEvents;
   page: string;
@@ -40,9 +54,16 @@ type PageviewVirtualEvent = {
   location: string;
 };
 
+type CustomCartEvent = {
+  event: AnalyticsEvents;
+  title: string;
+  ecommerce: CustomCartImpression;
+};
+
 export interface UseAnalytics {
   dispatchAnalyticsEvent: <T>(data: T) => void;
   sendQuantityClickEvent: (data: CartProductEvent) => void;
   sendRemoveFromCart: (data: CartProductEvent) => void;
   sendPageviewVirtualEvent: (data: PageviewVirtualEvent) => void;
+  sendCustomCart: (data: CustomCartEvent) => void;
 }

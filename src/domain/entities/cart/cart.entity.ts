@@ -118,6 +118,7 @@ interface Product {
   availableQuantity: number;
   category: string;
   ean: string;
+  productId?: string;
 }
 
 export interface WithdrawalThird {
