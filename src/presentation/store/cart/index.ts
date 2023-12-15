@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AccessToken, InitialState } from './types';
+import { InitialState } from './types';
 
 //Thunks
 import getCart from '@use-cases/cart/get-cart';
@@ -34,7 +34,6 @@ const initialValue: InitialState = {
   hasHybridation: false,
   isCencopayActive: false,
   isHeadless: false,
-  accessToken: { auth: null, token: null },
 };
 
 const cartSlice = createSlice({
@@ -159,9 +158,6 @@ const cartSlice = createSlice({
     },
     setIsHeadless: (state, { payload }) => {
       state.isHeadless = payload;
-    },
-    setCookieAuth: (state, { payload }: { payload: AccessToken }) => {
-      state.accessToken = payload;
     },
   },
   extraReducers: (builder) => {

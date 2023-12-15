@@ -6,11 +6,6 @@ export type QuantitySelectedProps = {
   availableQuantity: number | null;
 };
 
-export type AccessToken = {
-  auth: string | null;
-  token: string | null;
-};
-
 export type InitialState = {
   cartBFF: Cart | undefined;
   cartId: string;
@@ -20,7 +15,6 @@ export type InitialState = {
   hasHybridation: boolean;
   isCencopayActive: boolean;
   isHeadless: boolean;
-  accessToken: AccessToken;
 };
 
 export interface CartItemModel {
