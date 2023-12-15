@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useCallback, useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import { SwipeableDrawer } from '@mui/material';
 import { selectTotalProductsInCart } from '@store/cart';
 import cartSlice from '@store/cart';
@@ -20,7 +21,6 @@ import HybridationEvents from '../../../../../hybridationEvents';
 import getParamData from '@use-cases/cms/getParamData';
 import { CartAction } from '@entities/error/error.entity';
 import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
-import { AccessToken } from '@store/cart/types';
 
 const CartAsideContainer = () => {
   // hooks
@@ -38,7 +38,6 @@ const CartAsideContainer = () => {
     setIsHeadless,
     simulateAddProductHeadless,
     simulateRemoveProduct,
-    setCookieAuth,
   } = cartSlice.actions;
 
   const handleSetIsOpen = (event: Event) => {
@@ -124,15 +123,13 @@ const CartAsideContainer = () => {
       switch (keyValue()) {
         case HybridationEvents.cookieAuth: {
           const cookieAuth = event?.data?.cookieAuth;
-          let cookieValues = {} as AccessToken;
           if (cookieAuth) {
-            cookieValues.auth = cookieAuth[0].auth;
-            cookieValues.token = cookieAuth[1].token;
+            Cookies.set('token', cookieAuth[0].token);
+            Cookies.set('checkoutAuth', cookieAuth[1].auth);
           } else {
-            cookieValues.auth = null;
-            cookieValues.token = null;
+            Cookies.remove('token');
+            Cookies.remove('checkoutAuth');
           }
-          dispatch(setCookieAuth(cookieValues));
         }
 
         case HybridationEvents.CART_ID_VTEX:
