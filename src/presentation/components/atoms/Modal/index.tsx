@@ -1,13 +1,24 @@
-import React, { useEffect } from 'react';
-import { ModalContent, ModalWrapper } from './styles';
+import { useEffect } from 'react';
+import Image from 'next/image';
+import {
+  ModalContent,
+  ModalWrapper,
+  ModalHeader,
+  Title,
+  CloseButton,
+} from './styles';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  className?: string;
+  headerTitle?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = (props) => {
+  const { isOpen, onClose, children, className, headerTitle } = props;
+
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -35,8 +46,25 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   }
 
   return (
-    <ModalWrapper onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
+    <ModalWrapper onClick={onClose} hasHeader={Boolean(headerTitle)}>
+      {headerTitle ? (
+        <ModalHeader onClick={(e) => e.stopPropagation()} hasHeader={true}>
+          <Title>{headerTitle}</Title>
+          <CloseButton onClick={onClose}>
+            <Image
+              src="/icons/general/close-modal.svg"
+              width={24}
+              height={24}
+              alt="close-modal"
+            />
+          </CloseButton>
+        </ModalHeader>
+      ) : null}
+      <ModalContent
+        onClick={(e) => e.stopPropagation()}
+        className={className}
+        hasHeader={Boolean(headerTitle)}
+      >
         {children}
       </ModalContent>
     </ModalWrapper>

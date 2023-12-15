@@ -9,7 +9,9 @@ import {
   ProductCardContainer,
   ProductInfoContainer,
   ImageAndDeleteContainer,
+  MainContainer,
 } from './styles';
+import ProductService from '@modules/cartAside/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
   const {
@@ -22,29 +24,40 @@ const ProductCard = (props: ProductCardProps) => {
 
   if (item.product.availability !== 'available') return null;
 
+  const hasServiceApplied = item.product.options?.filter(
+    (obj) => obj.isApplied === true,
+  );
+
   return (
     <ProductCardContainer>
-      <ImageAndDeleteContainer>
-        <ProductImage src={item.product.images} alt="" />
-        <DeleteButton onRemoveFromCart={onRemoveFromCart} />
-      </ImageAndDeleteContainer>
+      <MainContainer>
+        <ImageAndDeleteContainer>
+          <ProductImage src={item.product.images} alt="" />
+          <DeleteButton onRemoveFromCart={onRemoveFromCart} />
+        </ImageAndDeleteContainer>
 
-      <ProductInfoContainer>
-        <ProductBrand brand={item?.product?.brand} />
-        <ProductName productName={item?.product?.description} />
-        <ProductPrice
-          prices={item?.product?.prices}
-          quantity={item?.quantity ?? 0}
-          adjustment={item?.adjustment}
-        />
-        <QuantitySelector
-          index={index}
-          onIncrementQuantity={onIncrementQuantity}
-          quantity={item?.quantity ?? 0}
-          onDecrementQuantity={onDecrementQuantity}
-          item={item}
-        />
-      </ProductInfoContainer>
+        <ProductInfoContainer>
+          <ProductBrand brand={item?.product?.brand} />
+          <ProductName productName={item?.product?.description} />
+          <ProductPrice
+            prices={item?.product?.prices}
+            quantity={item?.quantity ?? 0}
+            adjustment={item?.adjustment}
+          />
+          <QuantitySelector
+            index={index}
+            onIncrementQuantity={onIncrementQuantity}
+            quantity={item?.quantity ?? 0}
+            onDecrementQuantity={onDecrementQuantity}
+            item={item}
+          />
+        </ProductInfoContainer>
+      </MainContainer>
+      {hasServiceApplied?.length
+        ? hasServiceApplied.map((obj) => (
+            <ProductService key={obj.id} option={obj} />
+          ))
+        : null}
     </ProductCardContainer>
   );
 };

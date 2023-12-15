@@ -25,3 +25,19 @@ export type UpdateBodyItem = {
 export type UpdateOrderItems = {
   orderItems: UpdateBodyItem[];
 };
+
+export type AddProductServiceBody = {
+  id: string;
+};
+
+export type AddProductServiceRequest = {
+  cartId: string;
+  itemIndex: number;
+  id: string;
+};
+
+export type DeleteProductServiceRequest = {
+  cartId: string;
+  itemIndex: number;
+  optionId: string;
+};

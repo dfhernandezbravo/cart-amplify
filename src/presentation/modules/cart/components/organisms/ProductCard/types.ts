@@ -5,4 +5,5 @@ export type ProductCardProps = {
   itemStockModify: number | null;
   onRemoveFromCart: (product: Item) => void;
   handleChangeQuantity: (value: string) => void;
+  index: number;
 };

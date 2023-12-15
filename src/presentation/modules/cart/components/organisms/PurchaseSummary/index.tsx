@@ -12,6 +12,7 @@ import ShippinPrice from '@components/molecules/ShippingPrice';
 import TotalPriceDiscount from '@components/molecules/TotalPriceDiscount';
 import ProductWithoutStockModal from '../ProductWithoutStockModal';
 import useHandleRedirectEvent from '@hooks/useHandleRedirectEvent';
+import ServicePrice from '@components/molecules/ServicePrice';
 
 const PurchaseSummary = () => {
   const {
@@ -35,6 +36,7 @@ const PurchaseSummary = () => {
         <Divider fullWidth={true} />
         <SubtotalPrice />
         <ShippinPrice />
+        <ServicePrice />
         <Divider fullWidth={true} className="light" />
         <TotalPriceDiscount />
         <Discounts />
