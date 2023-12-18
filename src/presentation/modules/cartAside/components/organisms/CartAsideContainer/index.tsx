@@ -121,7 +121,7 @@ const CartAsideContainer = () => {
         else return '';
       };
       switch (keyValue()) {
-        case HybridationEvents.cookieAuth: {
+        case HybridationEvents.cookieAuth:
           const cookieAuth = event?.data?.cookieAuth;
           if (cookieAuth) {
             Cookies.set('token', cookieAuth[0].token);
@@ -130,7 +130,7 @@ const CartAsideContainer = () => {
             Cookies.remove('token');
             Cookies.remove('checkoutAuth');
           }
-        }
+          break;
 
         case HybridationEvents.CART_ID_VTEX:
           const cartIdVtex = event?.data?.CART_ID_VTEX;
