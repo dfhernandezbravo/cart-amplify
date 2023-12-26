@@ -119,6 +119,7 @@ interface Product {
   category: string;
   ean: string;
   productId?: string;
+  detailUrl: string;
 }
 
 export interface WithdrawalThird {

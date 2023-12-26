@@ -38,7 +38,10 @@ const ProductCard = (props: ProductCardProps) => {
 
         <ProductInfoContainer>
           <ProductBrand brand={item?.product?.brand} />
-          <ProductName productName={item?.product?.description} />
+          <ProductName
+            productName={item?.product?.description}
+            productUrl={item?.product?.detailUrl}
+          />
           <ProductPrice
             prices={item?.product?.prices}
             quantity={item?.quantity ?? 0}
