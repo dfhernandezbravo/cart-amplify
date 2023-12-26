@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { SwipeableDrawer } from '@mui/material';
 import { selectTotalProductsInCart } from '@store/cart';
@@ -24,11 +24,9 @@ import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
 
 const CartAsideContainer = () => {
   // hooks
-  const { cartBFF, hasHybridation, cartId, isHeadless } = useAppSelector(
-    (state) => state.cart,
-  );
+  const { cartBFF, hasHybridation, cartId, isHeadless, cartAsideIsOpen } =
+    useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
-  const [isOpen, setIsOpen] = useState(false);
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
   const {
@@ -38,12 +36,13 @@ const CartAsideContainer = () => {
     setIsHeadless,
     simulateAddProductHeadless,
     simulateRemoveProduct,
+    setCartAsideIsOpen,
   } = cartSlice.actions;
 
   const handleSetIsOpen = (event: Event) => {
     event.preventDefault();
     const customEvent = event as CustomEvent;
-    setIsOpen(customEvent.detail?.open);
+    dispatch(setCartAsideIsOpen(customEvent.detail?.open));
   };
 
   const handleAddProductEvent = (event: Event) => {
@@ -56,7 +55,7 @@ const CartAsideContainer = () => {
     //   const cartError = handlePayloadError(customEventError[0], CartAction.ADD);
     //   dispatch(setError(cartError));
     // }
-    setIsOpen(true);
+    dispatch(setCartAsideIsOpen(true));
   };
 
   const handleGetCartId = (event: Event) => {
@@ -69,7 +68,7 @@ const CartAsideContainer = () => {
     event.preventDefault();
     const customEvent = event as CustomEvent;
     dispatch(simulateAddProductHeadless(customEvent.detail?.product));
-    setIsOpen(true);
+    dispatch(setCartAsideIsOpen(true));
   };
 
   const handleAddProductErrorEvent = (event: Event) => {
@@ -135,7 +134,7 @@ const CartAsideContainer = () => {
         case HybridationEvents.CART_ID_VTEX:
           const cartIdVtex = event?.data?.CART_ID_VTEX;
           dispatch(addCartId(cartIdVtex));
-          setIsOpen(true);
+          dispatch(setCartAsideIsOpen(true));
           break;
         case HybridationEvents.VTEX_PRODUCT_ADD_TO_CART:
           const { productReference, quantityValue, product } =
@@ -196,7 +195,7 @@ const CartAsideContainer = () => {
           break;
       }
     });
-  }, [addCartId, cartBFF, cartId, dispatch, setIsOpen]);
+  }, [addCartId, cartBFF, cartId, dispatch]);
 
   useEffect(() => {
     hybridation();
@@ -227,7 +226,7 @@ const CartAsideContainer = () => {
     <>
       {hasHybridation && !isHeadless ? (
         <>
-          <Header setIsOpen={setIsOpen} />
+          <Header />
           {totalProducts > 0 ? (
             <>
               <Body />
@@ -240,9 +239,9 @@ const CartAsideContainer = () => {
       ) : (
         <SwipeableDrawer
           anchor="right"
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-          onOpen={() => setIsOpen(true)}
+          open={cartAsideIsOpen}
+          onClose={() => dispatch(setCartAsideIsOpen(false))}
+          onOpen={() => dispatch(setCartAsideIsOpen(true))}
           transitionDuration={300}
           PaperProps={{
             sx: {
@@ -252,7 +251,7 @@ const CartAsideContainer = () => {
             },
           }}
         >
-          <Header setIsOpen={setIsOpen} />
+          <Header />
           {totalProducts > 0 ? (
             <>
               <Body />
