@@ -30,7 +30,10 @@ const ProductCardWithoutStock = (props: Props) => {
                 <ProductImage src={item?.product?.images} alt={''} />
                 <div>
                   <ProductBrand brand={item?.product?.brand} />
-                  <ProductName productName={item?.product?.description} />
+                  <ProductName
+                    productName={item?.product?.description}
+                    productUrl={item?.product?.detailUrl}
+                  />
                   <p>Producto no disponible</p>
                 </div>
               </ProductInfoContainer>

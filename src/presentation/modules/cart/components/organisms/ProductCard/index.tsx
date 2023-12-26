@@ -128,7 +128,10 @@ const ProductCard = (props: ProductCardProps) => {
               </ImageContainer>
               <div>
                 <ProductBrand brand={item?.product?.brand} />
-                <ProductName productName={item?.product?.description} />
+                <ProductName
+                  productName={item?.product?.description}
+                  productUrl={item?.product?.detailUrl}
+                />
                 <ProductSku id={item?.product.sku} />
               </div>
             </ProductInfoContainer>

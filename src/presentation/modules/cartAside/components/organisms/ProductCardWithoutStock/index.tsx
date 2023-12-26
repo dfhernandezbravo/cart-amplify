@@ -34,7 +34,10 @@ const ProductCardWithouthStock = ({ items, onRemoveFromCart }: Props) => {
               </div>
               <div>
                 <ProductBrand brand={item.product.brand} />
-                <ProductName productName={item.product.description} />
+                <ProductName
+                  productName={item.product.description}
+                  productUrl={item?.product?.detailUrl}
+                />
                 <DeleteButton
                   onRemoveFromCart={() => onRemoveFromCart(item.index)}
                 />

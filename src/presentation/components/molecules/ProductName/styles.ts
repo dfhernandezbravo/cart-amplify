@@ -7,4 +7,8 @@ export const Container = styled.div`
   font-weight: 400;
   line-height: 21px;
   max-width: 300px;
+
+  a {
+    color: inherit;
+  }
 `;

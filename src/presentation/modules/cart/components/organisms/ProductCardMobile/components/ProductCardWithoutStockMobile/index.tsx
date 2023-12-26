@@ -33,7 +33,10 @@ const ProductCardWithoutStockMobile = (props: Props) => {
 
             <div className="main-container">
               <ProductBrand brand={item?.product?.brand} />
-              <ProductName productName={item?.product?.description} />
+              <ProductName
+                productName={item?.product?.description}
+                productUrl={item?.product?.detailUrl}
+              />
               <p className="product-without-stock-text">
                 Producto no disponible
               </p>

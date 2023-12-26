@@ -73,6 +73,7 @@ export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
       availableQuantity: 0,
       category: '',
       ean: '',
+      detailUrl: '',
     },
   };
 
@@ -106,6 +107,7 @@ export const createNewItemHeadless = (data: CartItemModel) => {
       availableQuantity: 0,
       category: '',
       ean: '',
+      detailUrl: '',
     },
   };
 
