@@ -1,6 +1,6 @@
 import { Cart, Item, ProductAvailability } from '@entities/cart/cart.entity';
 import { CartItemModel } from '@store/cart/types';
-import { enviroments } from '../../configs/env';
+import { environments } from '../../configs/env';
 
 type currencyFormatter = {
   currency: string;
@@ -115,6 +115,6 @@ export const createNewItemHeadless = (data: CartItemModel) => {
 };
 
 export const isProduction = () => {
-  const checkoutDomain = enviroments.checkoutDomain;
+  const checkoutDomain = environments.checkoutDomain;
   return !checkoutDomain?.includes('qa');
 };

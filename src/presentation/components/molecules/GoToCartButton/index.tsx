@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Button from '@components/atoms/Button';
 import { useAppSelector } from '@hooks/storeHooks';
 import Link from 'next/link';
-import { enviroments } from '../../../../configs/env';
+import { environments } from '../../../../configs/env';
 
 const GoToCartButton = () => {
   const { cartBFF, isHeadless } = useAppSelector((state) => state.cart);
@@ -28,7 +28,7 @@ const GoToCartButton = () => {
   return (
     <>
       <Link
-        href={`${enviroments.hostDomain}cart/${cartBFF?.id}`}
+        href={`${environments.hostDomain}cart/${cartBFF?.id}`}
         target={isHeadless ? '_self' : '_parent'}
       >
         <Button className="linkBtn goToCartBtn fullWidth">

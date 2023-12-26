@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from './storeHooks';
 import deleteItem from '@use-cases/cart/delete-item';
 import useItemWithoutStock from './useItemWithoutStock';
 import { getUnavailableProduct } from '@utils/getUnavailabilityProduct';
-import { enviroments } from '../../configs/env';
+import { environments } from '../../configs/env';
 
 const useHandleRedirectEvent = () => {
   const [showModal, setShowModal] = useState(false);
@@ -21,7 +21,7 @@ const useHandleRedirectEvent = () => {
   const unavailableItems = validateItemWithoutStock(cartBFF);
 
   const goToCheckout = () =>
-    router.push(`${enviroments.checkoutDomain}/${cartId}`);
+    router.push(`${environments.checkoutDomain}/${cartId}`);
 
   const handleState = () => {
     setShowModal(false);
