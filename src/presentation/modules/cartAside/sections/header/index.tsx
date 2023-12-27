@@ -1,18 +1,20 @@
 import { useEffect } from 'react';
 import { GrClose } from 'react-icons/gr';
-import { useAppSelector } from '@hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import cartSlice, { selectTotalProductsInCart } from '@store/cart';
 import { Title } from './styles';
 
 const Header = () => {
   const { hasHybridation, isHeadless } = useAppSelector((state) => state.cart);
   const totalProducts = useAppSelector(selectTotalProductsInCart);
+  const dispatch = useAppDispatch();
 
   const { setCartAsideIsOpen } = cartSlice.actions;
 
   // Hybridation
   const closeCartHybridation = () => {
     window.parent.postMessage({ HYBRIDATION_CLOSE_MINICART: true }, '*');
+    dispatch(setCartAsideIsOpen(false));
   };
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const Header = () => {
         onClick={
           hasHybridation && !isHeadless
             ? () => closeCartHybridation()
-            : () => setCartAsideIsOpen(false)
+            : () => dispatch(setCartAsideIsOpen(false))
         }
       />
     </Title>
