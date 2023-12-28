@@ -30,6 +30,7 @@ const ProductCard = (props: ProductCardProps) => {
     handleChangeQuantity,
     itemStockModify,
     index,
+    itemLength,
   } = props;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -119,7 +120,7 @@ const ProductCard = (props: ProductCardProps) => {
 
   return (
     <>
-      <Container>
+      <Container isLastItem={itemLength === index + 1}>
         <>
           <ProductInfoAndPriceContainer>
             <ProductInfoContainer>

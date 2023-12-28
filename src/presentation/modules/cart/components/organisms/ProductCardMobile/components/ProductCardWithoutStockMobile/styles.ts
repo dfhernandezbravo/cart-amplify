@@ -4,10 +4,16 @@ export const Container = styled.div`
   display: flex;
   background-color: #ffffff;
   padding: 10px;
-  min-height: 200px;
+  min-height: 100px;
+  margin-top: 0.5rem;
 
-  & .product-without-stock-text {
-    color: #485760;
-    font-weight: 600;
+  & .image-container {
+    display: flex;
+    align-items: center;
+  }
+
+  & .main-container {
+    display: flex;
+    align-items: center;
   }
 `;

@@ -11,6 +11,7 @@ import {
   QuantitySelectorAndDeleteContainer,
 } from '../../styles';
 import { Item } from '@entities/cart/cart.entity';
+import WarningProductWithoutStock from '@components/atoms/WarningProductWithoutStock';
 
 type Props = {
   items: Item[];
@@ -22,9 +23,11 @@ const ProductCardWithoutStock = (props: Props) => {
 
   return (
     <>
+      <WarningProductWithoutStock />
       {items.map((item, index) => {
+        const isLastItem = items?.length === index + 1;
         return (
-          <Container key={index}>
+          <Container key={index} isLastItem={isLastItem}>
             <ProductInfoAndPriceContainer>
               <ProductInfoContainer>
                 <ProductImage src={item?.product?.images} alt={''} />
@@ -34,7 +37,6 @@ const ProductCardWithoutStock = (props: Props) => {
                     productName={item?.product?.description}
                     productUrl={item?.product?.detailUrl}
                   />
-                  <p>Producto no disponible</p>
                 </div>
               </ProductInfoContainer>
             </ProductInfoAndPriceContainer>

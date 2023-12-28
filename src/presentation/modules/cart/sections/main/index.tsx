@@ -11,6 +11,7 @@ import useAnalytics from '@hooks/useAnalytics';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { ProductAnalytics } from '@entities/analytics';
+import ProductAvailableTitle from '@components/atoms/ProductAvailableTitle';
 
 const Main = () => {
   const { cartBFF, loading } = useAppSelector((state) => state.cart);
@@ -19,6 +20,8 @@ const Main = () => {
   const { methods, updatedIndexItem } = useProductCardEvent(
     cartBFF?.id as string,
   );
+
+  const itemLength = cartBFF?.items?.length;
 
   const {
     methods: { sendPageviewVirtualEvent, sendCustomCart },
@@ -80,13 +83,14 @@ const Main = () => {
       {/* <SnackBars description='Los valores fueron cambiados.' horizontal='center' vertical='bottom' open={OpenSnackbars} close={() => setOpenSnackbars(false)}/> */}
       <div className="items-container">
         {loading && <Loader />}
-        {itemWithoutStock.length ? (
+        {itemWithoutStock.length && (
           <ProductCartWithoutStock
             items={itemWithoutStock}
             onRemoveFromCart={(index) => methods.handleRemoveFromCart(index)}
           />
-        ) : null}
+        )}
 
+        {itemWithoutStock.length && <ProductAvailableTitle />}
         {cartBFF?.items?.map((item: Item, index: number) => (
           <ProductCard
             key={index}
@@ -103,6 +107,7 @@ const Main = () => {
               methods.handleChangeQuantity(quantity, index)
             }
             index={index}
+            itemLength={itemLength as number}
           />
         ))}
       </div>

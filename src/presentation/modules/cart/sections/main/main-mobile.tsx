@@ -9,6 +9,7 @@ import useProductCardEvent from '@hooks/useProductCardEvent';
 
 //Styles
 import { Loader, ContainerMobile } from './styles';
+import ProductAvailableTitle from '@components/atoms/ProductAvailableTitle';
 
 const MainMobile = () => {
   const { cartBFF, loading } = useAppSelector((state) => state.cart);
@@ -16,6 +17,7 @@ const MainMobile = () => {
   const { methods, updatedIndexItem } = useProductCardEvent(
     cartBFF?.id as string,
   );
+  const itemLength = cartBFF?.items?.length;
 
   return (
     <ContainerMobile>
@@ -28,6 +30,7 @@ const MainMobile = () => {
           }
         />
       ) : null}
+      {itemWithoutStock.length && <ProductAvailableTitle />}
       {cartBFF?.items?.map((item: Item, index: number) => (
         <ProductCardMobile
           key={item?.itemId}
@@ -44,6 +47,7 @@ const MainMobile = () => {
             methods.handleChangeQuantity(quantity, index)
           }
           index={index}
+          itemLength={itemLength as number}
         />
       ))}
     </ContainerMobile>
