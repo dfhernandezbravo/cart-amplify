@@ -31,7 +31,6 @@ const useHandleRedirectEvent = () => {
     setShowModal(false);
     goToCheckout();
   };
-  console.log({ joinProductUnavailable });
   const handleGoToCheckout = () => {
     if (joinProductUnavailable.length > 0) {
       setShowModal(true);
