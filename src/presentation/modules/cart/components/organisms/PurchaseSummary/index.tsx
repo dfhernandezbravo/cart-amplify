@@ -17,7 +17,7 @@ import ServicePrice from '@components/molecules/ServicePrice';
 const PurchaseSummary = () => {
   const {
     showModal,
-    itemWithoutStock,
+    joinProductUnavailable,
     setShowModal,
     handleGoToCheckout,
     removeUnavailableItemsAndContinue,
@@ -26,7 +26,7 @@ const PurchaseSummary = () => {
   // hooks
   const { cartBFF } = useAppSelector((state) => state.cart);
 
-  if (itemWithoutStock?.length === cartBFF?.items?.length) {
+  if (joinProductUnavailable.length === cartBFF?.items?.length) {
     return <PurchaseSummaryDisabled />;
   }
   return (

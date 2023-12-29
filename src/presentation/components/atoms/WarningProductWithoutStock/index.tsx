@@ -1,7 +1,23 @@
 import Image from 'next/image';
 import { Container } from './styles';
+import { ProductAvailability } from '@entities/cart/cart.entity';
 
-const WarningProductWithoutStock = () => {
+interface Props {
+  messageType:
+    | ProductAvailability.CANNOTBEDELIVERED
+    | ProductAvailability.WITHOUTSTOCK;
+}
+
+const WarningProductWithoutStock = ({ messageType }: Props) => {
+  const textMessage = {
+    [ProductAvailability.CANNOTBEDELIVERED]: {
+      title: 'Productos no disponibles para tu ubicación',
+    },
+    [ProductAvailability.WITHOUTSTOCK]: {
+      title: 'Productos sin stock disponible',
+    },
+  };
+
   return (
     <Container>
       <Image
@@ -11,7 +27,7 @@ const WarningProductWithoutStock = () => {
         alt="warning-icon"
       />
       <div className="text-container">
-        <p className="title">Producttos sin stock disponibles</p>
+        <p className="title">{textMessage[messageType].title}</p>
         <span className="description">
           El valor de estos productos no está incluido.
         </span>
