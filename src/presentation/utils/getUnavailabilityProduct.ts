@@ -27,7 +27,6 @@ export const getUnavailableProduct = (cart: Cart) => {
     ...productWithoutStock,
   ];
 
-  console.log({ productCannotBeDelivered, productWithoutStock });
   return {
     productCannotBeDelivered,
     productWithoutStock,
