@@ -9,6 +9,8 @@ const GoToCartButton = () => {
 
   //TODO: delete this conditional when hybrid is gone
   const [recursiveNumber, setRecursiveNumber] = useState(0);
+  const channel = cartBFF?.channel;
+  const FONOCOMPRA = 'fonocompra';
 
   useEffect(() => {
     if (!cartBFF?.id && recursiveNumber <= 5) {
@@ -28,7 +30,11 @@ const GoToCartButton = () => {
   return (
     <>
       <Link
-        href={`${environments.hostDomain}cart/${cartBFF?.id}`}
+        href={
+          !isHeadless && channel === FONOCOMPRA
+            ? `${environments.hybridDomain}checkout`
+            : `${environments.hostDomain}cart/${cartBFF?.id}`
+        }
         target={isHeadless ? '_self' : '_parent'}
       >
         <Button className="linkBtn goToCartBtn fullWidth">

@@ -3,6 +3,7 @@ import { useAppSelector } from '@hooks/storeHooks';
 import Button from '@components/atoms/Button';
 import { BuyButtonProps } from './types';
 import Link from 'next/link';
+import { environments } from '../../../../configs/env';
 
 const BuyButton = (props: BuyButtonProps) => {
   const { cartBFF, isHeadless } = useAppSelector((state) => state.cart);
@@ -10,6 +11,8 @@ const BuyButton = (props: BuyButtonProps) => {
 
   //TODO: delete this conditional when hybrid is gone
   const [recursiveNumber, setRecursiveNumber] = useState(0);
+  const channel = cartBFF?.channel;
+  const FONOCOMPRA = 'fonocompra';
 
   useEffect(() => {
     if (!cartBFF?.id && recursiveNumber <= 5) {
@@ -21,10 +24,15 @@ const BuyButton = (props: BuyButtonProps) => {
     return <Button className="buyBtn fullWidth">{text}</Button>;
   }
   //TODO: delete this conditional when hybrid is gone
+
   return (
     <>
       <Link
-        href={`${process.env.NEXT_PUBLIC_CHECKOUT_URL}${cartBFF?.id}`}
+        href={
+          !isHeadless && channel === FONOCOMPRA
+            ? `${environments.hybridDomain}checkout`
+            : `${environments.checkoutDomain}${cartBFF?.id}`
+        }
         target={isHeadless ? '_self' : '_parent'}
       >
         <Button className="buyBtn fullWidth">{text}</Button>
