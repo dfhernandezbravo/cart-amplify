@@ -31,6 +31,7 @@ const ProductCardMobile = (props: ProductCardProps) => {
     handleChangeQuantity,
     itemStockModify,
     index,
+    itemLength,
   } = props;
 
   const {
@@ -121,7 +122,7 @@ const ProductCardMobile = (props: ProductCardProps) => {
   if (item.product.availability !== 'available') return null;
   return (
     <>
-      <Container>
+      <Container isLastItem={itemLength === index + 1}>
         <MainContainer>
           <ImageContainer>
             <ProductImage

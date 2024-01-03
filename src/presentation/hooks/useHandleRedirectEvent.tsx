@@ -5,20 +5,24 @@ import deleteItem from '@use-cases/cart/delete-item';
 import useItemWithoutStock from './useItemWithoutStock';
 import { getUnavailableProduct } from '@utils/getUnavailabilityProduct';
 import { environments } from '../../configs/env';
+import { Cart } from '@entities/cart/cart.entity';
 
 const useHandleRedirectEvent = () => {
   const [showModal, setShowModal] = useState(false);
 
   const { cartBFF, cartId } = useAppSelector((state) => state.cart);
-  const itemWithoutStock = useItemWithoutStock(cartBFF);
+  const {
+    joinProductUnavailable,
+    productCannotBeDelivered,
+    productWithoutStock,
+  } = useItemWithoutStock(cartBFF as Cart);
 
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const validateItemWithoutStock = (cart: any) => {
-    return cartBFF?.items?.length ? getUnavailableProduct(cart) : [];
+    return getUnavailableProduct(cart);
   };
-  const unavailableItems = validateItemWithoutStock(cartBFF);
 
   const goToCheckout = () =>
     router.push(`${environments.checkoutDomain}/${cartId}`);
@@ -27,9 +31,8 @@ const useHandleRedirectEvent = () => {
     setShowModal(false);
     goToCheckout();
   };
-
   const handleGoToCheckout = () => {
-    if (itemWithoutStock?.length) {
+    if (joinProductUnavailable.length > 0) {
       setShowModal(true);
       return;
     }
@@ -37,15 +40,16 @@ const useHandleRedirectEvent = () => {
   };
 
   const removeUnavailableItemsAndContinue = useCallback(async () => {
-    if (unavailableItems.length > 0) {
+    if (joinProductUnavailable.length > 0) {
       const response = await dispatch(
         deleteItem({
           cartId: cartBFF?.id ?? '',
-          itemIndex: unavailableItems[0].index as number,
+          itemIndex: joinProductUnavailable[0].index as number,
         }),
       );
       const updatedCart = validateItemWithoutStock(response.payload);
-      if (updatedCart.length > 0) {
+
+      if (updatedCart.joinProductUnavailable.length > 0) {
         removeUnavailableItemsAndContinue();
         router.push(router.asPath);
       } else {
@@ -58,7 +62,9 @@ const useHandleRedirectEvent = () => {
 
   return {
     showModal,
-    itemWithoutStock,
+    productCannotBeDelivered,
+    productWithoutStock,
+    joinProductUnavailable,
     setShowModal,
     removeUnavailableItemsAndContinue,
     handleGoToCheckout,

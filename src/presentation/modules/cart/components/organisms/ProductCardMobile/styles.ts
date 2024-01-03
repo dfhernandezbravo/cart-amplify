@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+interface Props {
+  isLastItem: boolean;
+}
+
+export const Container = styled.div<Props>`
   display: flex;
   background-color: #ffffff;
   padding: 10px;
   min-height: 200px;
-  border-bottom: 1px solid #cdcdcd;
+  border-bottom: ${({ isLastItem }) =>
+    isLastItem ? 'none' : '1px solid #cdcdcd'};
   flex-direction: column;
 `;
 

@@ -5,7 +5,7 @@ import { selectError } from '@store/error';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import ProductCard from '@modules/cartAside/components/organisms/ProductCard';
 import MinicartError from '@modules/cart/components/molecules/MinicartError';
-import { Item } from '@entities/cart/cart.entity';
+import { Cart, Item } from '@entities/cart/cart.entity';
 import updateItem from '@use-cases/cart/update-item';
 import deleteItem from '@use-cases/cart/delete-item';
 import { AvailableProductText, BodyContainer } from './styles';
@@ -16,7 +16,7 @@ import { useAnalytics } from '@hooks/useAnalytics';
 const Body = () => {
   // Hooks
   const { cartId, cartBFF } = useAppSelector((state) => state.cart);
-  const itemWithoutStock = useItemWithoutStock(cartBFF);
+  const { joinProductUnavailable } = useItemWithoutStock(cartBFF as Cart);
   const { error } = useAppSelector(selectError);
   const dispatch = useAppDispatch();
   const { decrementProductQuantity, incrementProductQuantity, removeProduct } =
@@ -148,7 +148,7 @@ const Body = () => {
     return (
       <>
         <ProductCardWithouthStock
-          items={itemWithoutStock}
+          items={joinProductUnavailable}
           onRemoveFromCart={(index: number) => {
             methods.handleRemoveFromCart(index);
           }}
@@ -162,7 +162,7 @@ const Body = () => {
     <BodyContainer>
       {error ? <MinicartError title={error.message} /> : null}
 
-      {itemWithoutStock?.length ? renderProductWithoutStock() : null}
+      {joinProductUnavailable?.length ? renderProductWithoutStock() : null}
 
       {cartBFF?.items?.map((item: Item, index: number) => (
         <ProductCard

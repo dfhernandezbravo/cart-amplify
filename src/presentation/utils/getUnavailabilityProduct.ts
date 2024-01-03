@@ -1,21 +1,35 @@
 import { Cart, Item, ProductAvailability } from '@entities/cart/cart.entity';
 
 export const getUnavailableProduct = (cart: Cart) => {
-  const itemWithoutStock: Item[] | never = [];
+  const productWithoutStock: Item[] = [];
+  const productCannotBeDelivered: Item[] = [];
 
   cart?.items?.forEach((item, index) => {
     const availability = item.product.availability;
-    if (
-      availability === ProductAvailability.WITHOUTSTOCK ||
-      availability === ProductAvailability.CANNOTBEDELIVERED ||
-      availability === ProductAvailability.UNAVAILABLE_ITEM_FULFILLMENT
-    ) {
+
+    if (availability === ProductAvailability.CANNOTBEDELIVERED) {
       const product = {
         ...item,
         index,
       };
-      itemWithoutStock.push(product);
+      productCannotBeDelivered.push(product);
+    } else if (availability === ProductAvailability.WITHOUTSTOCK) {
+      const product = {
+        ...item,
+        index,
+      };
+      productWithoutStock.push(product);
     }
   });
-  return itemWithoutStock;
+
+  const joinProductUnavailable = [
+    ...productCannotBeDelivered,
+    ...productWithoutStock,
+  ];
+
+  return {
+    productCannotBeDelivered,
+    productWithoutStock,
+    joinProductUnavailable,
+  };
 };

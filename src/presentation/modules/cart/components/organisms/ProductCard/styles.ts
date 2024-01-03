@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+interface Props {
+  isLastItem: boolean;
+}
+
+export const Container = styled.div<Props>`
   position: relative;
   display: flex;
   flex-direction: column;
-  margin: 0 16px;
   padding: 16px 0;
-  border-bottom: 1px solid #aaa;
+  border-bottom: ${({ isLastItem }) =>
+    isLastItem ? 'none' : '1px solid #aaa;'};
   background-color: #fff;
 `;
 
@@ -27,6 +31,7 @@ export const ProductInfoContainer = styled.div`
 export const ProductInfoAndPriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
 `;
 

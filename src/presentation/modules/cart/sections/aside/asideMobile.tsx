@@ -21,7 +21,7 @@ const AsideMobile = () => {
   const [isCuponContainerOpen, setIsCuponContainerOpen] = useState(false);
   const {
     showModal,
-    itemWithoutStock,
+    joinProductUnavailable,
     setShowModal,
     handleGoToCheckout,
     removeUnavailableItemsAndContinue,
@@ -33,7 +33,7 @@ const AsideMobile = () => {
     dispatch(setOpenDetailsMobile(value));
   };
 
-  if (itemWithoutStock?.length === cartBFF?.items?.length) {
+  if (joinProductUnavailable.length === cartBFF?.items?.length) {
     return (
       <EmptyAsideContainer>
         <PurchaseSummaryDisabled />
