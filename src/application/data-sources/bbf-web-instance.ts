@@ -25,5 +25,8 @@ bffWebInstance.interceptors.request.use(function (config) {
   config.headers.Authorization = `Bearer ${
     hasAccessToken ? accessToken : token
   }`;
+
+  const channel = Cookies.get('channel');
+  if (channel) config.headers['x-channel'] = channel;
   return config;
 });

@@ -13,6 +13,7 @@ export interface Cart {
   canEdit?: boolean;
   loggedIn?: boolean;
   terms?: boolean;
+  channel: string;
 }
 
 export interface Item {

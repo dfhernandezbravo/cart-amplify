@@ -76,6 +76,7 @@ const cartSlice = createSlice({
           id: '',
           currencyCode: '',
           items: [newItem],
+          channel: 'web',
         };
       }
     },
@@ -99,6 +100,7 @@ const cartSlice = createSlice({
           id: '',
           currencyCode: '',
           items: [newItem],
+          channel: 'web',
         };
       }
     },

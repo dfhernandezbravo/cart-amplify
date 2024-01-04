@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useCallback, useEffect } from 'react';
-import Cookies from 'js-cookie';
+import Cookies, { CookieAttributes } from 'js-cookie';
 import { SwipeableDrawer } from '@mui/material';
 import { selectTotalProductsInCart } from '@store/cart';
 import cartSlice from '@store/cart';
@@ -112,6 +112,27 @@ const CartAsideContainer = () => {
   };
   methods.initialize();
 
+  const setSalesChannelCookie = (
+    cartId: string,
+    orderFormVtex: string,
+    salesChannel: string,
+    iframeCookieAttributes: CookieAttributes,
+  ) => {
+    if (salesChannel) {
+      Cookies.set('channel', salesChannel, iframeCookieAttributes);
+      return;
+    }
+
+    const isCurrentCartId = cartId === orderFormVtex;
+    const currentChannelCookie = Cookies.get('channel');
+
+    if (!isCurrentCartId && currentChannelCookie) {
+      Cookies.remove('channel', iframeCookieAttributes);
+    }
+
+    return;
+  };
+
   const hybridation = useCallback(() => {
     window.addEventListener('message', (event: MessageEvent) => {
       const key = Object.keys(event?.data);
@@ -119,15 +140,25 @@ const CartAsideContainer = () => {
         if (key?.length > 0 && key[0]) return key[0];
         else return '';
       };
+
+      const iframeCookieAttributes: CookieAttributes = {
+        sameSite: 'None',
+        secure: true,
+      };
+
       switch (keyValue()) {
         case HybridationEvents.cookieAuth:
           const cookieAuth = event?.data?.cookieAuth;
           if (cookieAuth) {
-            Cookies.set('token', cookieAuth[0].token);
-            Cookies.set('checkoutAuth', cookieAuth[1].auth);
+            Cookies.set('token', cookieAuth[0].token, iframeCookieAttributes);
+            Cookies.set(
+              'checkoutAuth',
+              cookieAuth[1].auth,
+              iframeCookieAttributes,
+            );
           } else {
-            Cookies.remove('token');
-            Cookies.remove('checkoutAuth');
+            Cookies.remove('token', iframeCookieAttributes);
+            Cookies.remove('checkoutAuth', iframeCookieAttributes);
           }
           break;
 
@@ -137,8 +168,13 @@ const CartAsideContainer = () => {
           dispatch(setCartAsideIsOpen(true));
           break;
         case HybridationEvents.VTEX_PRODUCT_ADD_TO_CART:
-          const { productReference, quantityValue, product } =
-            event?.data?.VTEX_PRODUCT_ADD_TO_CART;
+          const {
+            productReference,
+            quantityValue,
+            product,
+            salesChannel,
+            orderFormVtex,
+          } = event?.data?.VTEX_PRODUCT_ADD_TO_CART;
 
           dispatch(simulateAddProduct({ ...product, quantityValue }));
           const cartBFFfromLocalStorage = getCartFromLocalStorage(cartBFF);
@@ -151,6 +187,15 @@ const CartAsideContainer = () => {
             cartBFFfromLocalStorage?.id !== cartId
           ) {
             dispatch(addCartId(cartBFFfromLocalStorage?.id));
+          }
+
+          if (orderFormVtex) {
+            setSalesChannelCookie(
+              cartBFFfromLocalStorage?.id,
+              orderFormVtex,
+              salesChannel,
+              iframeCookieAttributes,
+            );
           }
 
           if (productInCart) {
