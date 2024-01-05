@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='-r @newrelic/next' next dev --port 3003",
+    "dev": "NODE_OPTIONS='-r @newrelic/next' rm -rf .next && next dev --port 3003",
     "build": "next build",
     "start": "NODE_OPTIONS='-r @newrelic/next' next start -p 3003",
     "start:prod": "next build && next start -p 3003",
