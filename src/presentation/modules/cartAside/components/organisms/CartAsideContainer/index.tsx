@@ -21,6 +21,8 @@ import HybridationEvents from '../../../../../hybridationEvents';
 import getParamData from '@use-cases/cms/getParamData';
 import { CartAction } from '@entities/error/error.entity';
 import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
+import { customDispatchEvent } from '@store/events/dispatchEvents';
+import { Cart } from '@entities/cart/cart.entity';
 
 const CartAsideContainer = () => {
   // hooks
@@ -37,6 +39,7 @@ const CartAsideContainer = () => {
     simulateAddProductHeadless,
     simulateRemoveProduct,
     setCartAsideIsOpen,
+    setCart,
   } = cartSlice.actions;
 
   const handleSetIsOpen = (event: Event) => {
@@ -82,6 +85,15 @@ const CartAsideContainer = () => {
     }, 4000);
   };
 
+  const handleGetShoppingCart = (event: Event) => {
+    event.stopPropagation();
+    const customEvent = event as CustomEvent<{ shoppingCart: Cart }>;
+    const {
+      detail: { shoppingCart },
+    } = customEvent;
+    dispatch(setCart(shoppingCart));
+  };
+
   // methods
   const methods = {
     initialize: () => {
@@ -96,7 +108,12 @@ const CartAsideContainer = () => {
           WindowsEvents.ADD_PRODUCT_IN_CART,
           handleAddProductEvent,
         );
-        useEventListener(document, WindowsEvents.CART_ID, handleGetCartId);
+        useEventListener(document, WindowsEvents.GET_CART_ID, handleGetCartId);
+        useEventListener(
+          document,
+          WindowsEvents.GET_SHOPPING_CART,
+          handleGetShoppingCart,
+        );
         useEventListener(
           document,
           WindowsEvents.SIMULATE_ADD_PRODUCT,
@@ -241,6 +258,14 @@ const CartAsideContainer = () => {
       }
     });
   }, [addCartId, cartBFF, cartId, dispatch]);
+
+  useEffect(() => {
+    customDispatchEvent({
+      name: WindowsEvents.DISPATCH_GET_CART_ID,
+      detail: {},
+    });
+    customDispatchEvent({ name: WindowsEvents.DISPATCH_GET_CART, detail: {} });
+  }, []);
 
   useEffect(() => {
     hybridation();
