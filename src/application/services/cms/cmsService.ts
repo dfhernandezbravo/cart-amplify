@@ -1,4 +1,4 @@
-import { bffWebInstanceV2 } from '@data-sources/v2/bff-instance';
+import { bffWebInstanceV2 } from '@data-sources/bff-v2/bff-instance';
 import CmsService from '@interfaces/cms-service.interface';
 
 const httpInstance = bffWebInstanceV2;

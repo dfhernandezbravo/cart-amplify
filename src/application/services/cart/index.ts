@@ -5,7 +5,7 @@ import {
 } from '@entities/cart/cart.request';
 import CartService from '@interfaces/cart-service.interface';
 import { CouponCode } from '@entities/cart/cart.entity';
-import { bffWebInstanceV1 } from '@data-sources/v1/bff-instance';
+import { bffWebInstanceV1 } from '@data-sources/bff-v1/bff-instance';
 
 const valitadeId = (id: string | undefined) => {
   const localId = localStorage.getItem('vtxorderform');
