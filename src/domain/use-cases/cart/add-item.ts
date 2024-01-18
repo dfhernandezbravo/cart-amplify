@@ -4,6 +4,7 @@ import cartService from '@services/cart';
 import { AxiosError } from 'axios';
 import { CartAction } from '@entities/error/error.entity';
 import dispatchHttpErrors from '@use-cases/error/dispatch-http-errors';
+import getInstanceHttp from './get-instance-http';
 // import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
 
 const addItem = createAsyncThunk(
@@ -13,7 +14,9 @@ const addItem = createAsyncThunk(
     { dispatch, fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      const { data } = await cartService.addItem(dataRequest);
+      const { data } = await cartService(getInstanceHttp()).addItem(
+        dataRequest,
+      );
       // dispatchPayloadErrors(data, dispatch, CartAction.ADD);
       return fulfillWithValue(data);
     } catch (error) {

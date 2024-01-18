@@ -6,6 +6,7 @@ import { CartAction } from '@entities/error/error.entity';
 import { AxiosError } from 'axios';
 // import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
 import dispatchHttpErrors from '@use-cases/error/dispatch-http-errors';
+import getInstanceHttp from './get-instance-http';
 
 const deleteItem = createAsyncThunk(
   '/cart/deleteItem',
@@ -14,7 +15,9 @@ const deleteItem = createAsyncThunk(
     { dispatch, fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      const { data, status } = await cartService.deleteItem(dataRequest);
+      const { data, status } = await cartService(getInstanceHttp()).deleteItem(
+        dataRequest,
+      );
 
       if (status === 204) {
         return {} as Cart;
