@@ -1,4 +1,3 @@
-import { bffWebInstance } from '@data-sources/bbf-web-instance';
 import {
   AddOrderItems,
   AddProductServiceBody,
@@ -6,8 +5,7 @@ import {
 } from '@entities/cart/cart.request';
 import CartService from '@interfaces/cart-service.interface';
 import { CouponCode } from '@entities/cart/cart.entity';
-
-const httpInstance = bffWebInstance;
+import { bffWebInstanceV1 } from '@data-sources/bff-v1/bff-instance';
 
 const valitadeId = (id: string | undefined) => {
   const localId = localStorage.getItem('vtxorderform');
@@ -17,7 +15,7 @@ const valitadeId = (id: string | undefined) => {
   if (id && id?.length > 0) return id;
 };
 
-const cartService: CartService = {
+const cartService = (httpInstance = bffWebInstanceV1): CartService => ({
   getCart: async (data) => {
     const url = `/shoppingcart/${valitadeId(data.cartId)}`;
     return httpInstance.get(url);
@@ -61,6 +59,6 @@ const cartService: CartService = {
     }/options/${data.optionId}`;
     return httpInstance.delete(url);
   },
-};
+});
 
 export default cartService;

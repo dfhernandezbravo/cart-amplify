@@ -6,6 +6,9 @@ import { CartAction } from '@entities/error/error.entity';
 import { AxiosError } from 'axios';
 // import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
 import dispatchHttpErrors from '@use-cases/error/dispatch-http-errors';
+import getInstanceHttp from './get-instance-http';
+import { customDispatchEvent } from '@store/events/dispatchEvents';
+import WindowsEvents from '@events/index';
 
 const deleteItem = createAsyncThunk(
   '/cart/deleteItem',
@@ -14,11 +17,23 @@ const deleteItem = createAsyncThunk(
     { dispatch, fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      const { data, status } = await cartService.deleteItem(dataRequest);
+      const { data, status } = await cartService(getInstanceHttp()).deleteItem(
+        dataRequest,
+      );
 
       if (status === 204) {
+        customDispatchEvent({
+          name: WindowsEvents.DISPATCH_SHOPPING_CART_WITHOUT_ITEMS,
+          detail: {},
+        });
+
         return {} as Cart;
       }
+
+      customDispatchEvent({
+        name: WindowsEvents.UPDATE_SHOPPING_CART,
+        detail: { shoppingCart: data },
+      });
 
       // dispatchPayloadErrors(data, dispatch, CartAction.DELETE);
       return fulfillWithValue(data);

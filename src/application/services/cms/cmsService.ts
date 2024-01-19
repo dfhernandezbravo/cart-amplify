@@ -1,7 +1,7 @@
-import { bffWebInstance } from '@data-sources/bbf-web-instance';
+import { bffWebInstanceV2 } from '@data-sources/bff-v2/bff-instance';
 import CmsService from '@interfaces/cms-service.interface';
 
-const httpInstance = bffWebInstance;
+const httpInstance = bffWebInstanceV2;
 
 export const cmsService: CmsService = {
   getParamData: () => {
