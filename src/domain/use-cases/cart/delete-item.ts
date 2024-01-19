@@ -21,10 +21,7 @@ const deleteItem = createAsyncThunk(
         dataRequest,
       );
 
-      console.log('status', status);
-
       if (status === 204) {
-        console.log('Sin items');
         customDispatchEvent({
           name: WindowsEvents.DISPATCH_SHOPPING_CART_WITHOUT_ITEMS,
           detail: {},
