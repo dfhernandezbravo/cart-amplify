@@ -65,10 +65,10 @@ const CartAsideContainer = () => {
         case HybridationEvents.cookieAuth:
           const cookieAuth = event?.data?.cookieAuth;
           if (cookieAuth) {
-            Cookies.set('token', cookieAuth[0].token, iframeCookieAttributes);
+            Cookies.set('token', cookieAuth.token, iframeCookieAttributes);
             Cookies.set(
               'checkoutAuth',
-              cookieAuth[1].auth,
+              cookieAuth.auth,
               iframeCookieAttributes,
             );
           } else {

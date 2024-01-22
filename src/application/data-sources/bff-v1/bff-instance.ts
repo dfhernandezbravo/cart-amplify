@@ -1,10 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const hasCheckoutAuth = Boolean(Cookies.get('checkoutAuth'));
-const token = Cookies.get('token');
-const checkoutAuth = Cookies.get('checkoutAuth');
-
 export const bffWebInstanceV1 = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BFF_WEB_URL}/v1.1`,
   headers: {
@@ -14,8 +10,13 @@ export const bffWebInstanceV1 = axios.create({
 });
 
 bffWebInstanceV1.interceptors.request.use(function (config) {
-  config.headers.checkoutAuth = hasCheckoutAuth ? checkoutAuth : '';
-  config.headers.Authorization = `Bearer ${token}`;
+  const hasCheckoutAuth = Boolean(Cookies.get('checkoutAuth'));
+  const token = Cookies.get('token');
+  const checkoutAuth = Cookies.get('checkoutAuth');
+  if (hasCheckoutAuth) {
+    config.headers.checkoutAuth = checkoutAuth;
+    config.headers.Authorization = `Bearer ${token}`;
+  }
 
   const channel = Cookies.get('channel');
   if (channel) config.headers['x-channel'] = channel;

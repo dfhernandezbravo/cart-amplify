@@ -1,8 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-const accessToken = Cookies.get('access-token');
-
 export const bffWebInstanceV2 = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BFF_WEB_URL}/v2`,
   headers: {
@@ -12,6 +10,7 @@ export const bffWebInstanceV2 = axios.create({
 });
 
 bffWebInstanceV2.interceptors.request.use(function (config) {
+  const accessToken = Cookies.get('accessToken');
   config.headers.Authorization = `Bearer ${accessToken}`;
 
   return config;
