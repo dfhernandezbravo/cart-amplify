@@ -37,7 +37,6 @@ const PurchaseSummary = () => {
         <SubtotalPrice />
         <ShippinPrice />
         <ServicePrice />
-        <Divider fullWidth={true} className="light" />
         <TotalPriceDiscount />
         <Discounts />
         <Divider fullWidth={true} className="light" />

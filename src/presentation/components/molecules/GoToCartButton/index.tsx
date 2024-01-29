@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import Button from '@components/atoms/Button';
-import { useAppSelector } from '@hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import Link from 'next/link';
 import { environments } from '../../../../configs/env';
+import cartSlice from '@store/cart';
 
 const GoToCartButton = () => {
   const { cartBFF, isHeadless } = useAppSelector((state) => state.cart);
+  const dispatch = useAppDispatch();
+
+  const { setCartAsideIsOpen } = cartSlice.actions;
 
   //TODO: delete this conditional when hybrid is gone
   const [recursiveNumber, setRecursiveNumber] = useState(0);
@@ -36,6 +40,7 @@ const GoToCartButton = () => {
             : `${environments.hostDomain}cart/${cartBFF?.id}`
         }
         target={isHeadless ? '_self' : '_parent'}
+        onClick={() => dispatch(setCartAsideIsOpen(false))}
       >
         <Button className="linkBtn goToCartBtn fullWidth">
           Ir al carro de compras
