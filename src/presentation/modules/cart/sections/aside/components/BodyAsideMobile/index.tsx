@@ -14,6 +14,7 @@ const BodyAsideMobile = ({ openDetails }: StatePropValue) => {
   const servicePrice = totalServicePrice(cartBFF);
   const subtotal = cartBFF?.totals?.subtotal;
   const subtotalPrice = subtotal ? subtotal - servicePrice : 0;
+  const discount = Math.abs(cartBFF?.totals?.discount ?? 0);
 
   return (
     <Container openDetails={openDetails}>
@@ -35,15 +36,18 @@ const BodyAsideMobile = ({ openDetails }: StatePropValue) => {
           </div>
         ) : null}
 
-        <Divider fullWidth={true} />
-
         <div className="price-container cupon-container">
           <Discounts />
         </div>
-        <div className="price-container">
-          <p>Descuentos</p>
-          <span>{formattedCLP(cartBFF?.totals?.discount || 0)}</span>
-        </div>
+        {discount > 0 ? (
+          <>
+            <Divider fullWidth={true} />
+            <div className="price-container">
+              <p>Descuentos</p>
+              <span>-{formattedCLP(discount)}</span>
+            </div>
+          </>
+        ) : null}
         <Divider fullWidth={true} />
       </div>
     </Container>
