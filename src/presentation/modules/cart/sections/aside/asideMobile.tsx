@@ -14,6 +14,7 @@ import cartSlice from '@store/cart';
 import { ContainerMobile, EmptyAsideContainer } from './styles';
 import ProductWithoutStockModal from '@modules/cart/components/organisms/ProductWithoutStockModal';
 import useHandleRedirectEvent from '@hooks/useHandleRedirectEvent';
+import ShippingCostMessage from '@modules/cart/components/molecules/ShippingCostMessage';
 
 const AsideMobile = () => {
   const { openDetailsMobile, cartBFF } = useAppSelector((state) => state.cart);
@@ -63,8 +64,10 @@ const AsideMobile = () => {
               Continuar tu compra
             </Button>
           </div>
+          <ShippingCostMessage />
         </div>
       </ContainerMobile>
+
       <ProductWithoutStockModal
         showModal={showModal}
         handleCloseModal={() => setShowModal(false)}

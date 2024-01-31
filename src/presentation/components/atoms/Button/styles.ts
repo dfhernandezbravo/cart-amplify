@@ -62,16 +62,6 @@ export const ButtonContainer = styled.button<Props>`
     justify-content: center;
   }
 
-  &:disabled {
-    background-color: #f2f2f2;
-    color: #818180;
-    cursor: unset;
-
-    &:hover {
-      border-color: #e3e4e6;
-    }
-  }
-
   &.cartBtn {
     border-radius: 8px;
     font-size: 16px;
@@ -103,5 +93,16 @@ export const ButtonContainer = styled.button<Props>`
 
   &.fullWidth {
     width: 100%;
+  }
+
+  &:disabled {
+    background-color: #f2f2f2;
+    color: #818180;
+    cursor: unset;
+
+    &:hover {
+      border-color: #e3e4e6;
+      background-color: #f2f2f2;
+    }
   }
 `;

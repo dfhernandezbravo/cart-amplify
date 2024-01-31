@@ -3,6 +3,17 @@ import styled from 'styled-components';
 export const ModalContainer = styled.div`
   width: 500px;
 
+  & .modal-title {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  & .modal-content {
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
   & .button-container {
     display: flex;
     justify-content: space-between;

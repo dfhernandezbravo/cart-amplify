@@ -69,6 +69,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
   const handleAddProductEvent = (event: Event) => {
     event.preventDefault();
     const customEvent = event as CustomEvent;
+
     dispatch(addProductInCart(customEvent.detail?.data));
     // const customEventError = customEvent.detail?.data?.messagesErrors;
 
@@ -81,13 +82,16 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     document.addEventListener(WindowsEvents.TOGGLE_CART_ASIDE, handleSetIsOpen);
-    document.addEventListener(
+    window.addEventListener(
       WindowsEvents.SIMULATE_ADD_PRODUCT,
       handleSimulateAddProductEvent,
     );
 
     window.addEventListener(WindowsEvents.GET_CART_ID, handleGetCartId);
-    window.addEventListener('GET_SHOPPING_CART', handleGetShoppingCart);
+    window.addEventListener(
+      WindowsEvents.GET_SHOPPING_CART,
+      handleGetShoppingCart,
+    );
     window.addEventListener(
       WindowsEvents.ADD_PRODUCT_ERROR,
       handleAddProductErrorEvent,
@@ -104,7 +108,10 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
       );
 
       window.removeEventListener(WindowsEvents.GET_CART_ID, handleGetCartId);
-      window.removeEventListener('GET_SHOPPING_CART', handleGetShoppingCart);
+      window.removeEventListener(
+        WindowsEvents.GET_SHOPPING_CART,
+        handleGetShoppingCart,
+      );
 
       window.removeEventListener(
         WindowsEvents.ADD_PRODUCT_ERROR,
