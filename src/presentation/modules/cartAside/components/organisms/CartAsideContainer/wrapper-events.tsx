@@ -69,6 +69,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
   const handleAddProductEvent = (event: Event) => {
     event.preventDefault();
     const customEvent = event as CustomEvent;
+
     dispatch(addProductInCart(customEvent.detail?.data));
     // const customEventError = customEvent.detail?.data?.messagesErrors;
 
@@ -81,7 +82,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     document.addEventListener(WindowsEvents.TOGGLE_CART_ASIDE, handleSetIsOpen);
-    document.addEventListener(
+    window.addEventListener(
       WindowsEvents.SIMULATE_ADD_PRODUCT,
       handleSimulateAddProductEvent,
     );
