@@ -8,11 +8,11 @@ import PurchaseSummaryDisabled from '../PurchaseSummaryDisabled';
 import Discounts from '../../molecules/Discounts';
 import TotalCencopayPrice from '@components/molecules/TotalCencopayPrice';
 import SubtotalPrice from '@components/molecules/SubtotalPrice';
-import ShippinPrice from '@components/molecules/ShippingPrice';
 import TotalPriceDiscount from '@components/molecules/TotalPriceDiscount';
 import ProductWithoutStockModal from '../ProductWithoutStockModal';
 import useHandleRedirectEvent from '@hooks/useHandleRedirectEvent';
 import ServicePrice from '@components/molecules/ServicePrice';
+import ShippingCostMessage from '../../molecules/ShippingCostMessage';
 
 const PurchaseSummary = () => {
   const {
@@ -35,7 +35,6 @@ const PurchaseSummary = () => {
         <h1>Resumen de mi compra</h1>
         <Divider fullWidth={true} />
         <SubtotalPrice />
-        <ShippinPrice />
         <ServicePrice />
         <TotalPriceDiscount />
         <Discounts />
@@ -51,6 +50,7 @@ const PurchaseSummary = () => {
         </Button>
         <PromotionalCode />
       </Container>
+      <ShippingCostMessage />
       <ProductWithoutStockModal
         showModal={showModal}
         handleCloseModal={() => setShowModal(false)}

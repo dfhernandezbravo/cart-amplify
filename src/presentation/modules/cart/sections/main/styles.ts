@@ -14,12 +14,18 @@ export const Container = styled.div`
 export const TotalProductsContainer = styled.div`
   border-bottom: 1px solid #aaa;
   display: flex;
-  align-items: center;
+  align-items: bottom;
   color: #333333;
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 30px;
   padding: 16px;
+
+  span {
+    font-size: 18px;
+    font-weight: 400;
+    margin-left: 8px;
+  }
 `;
 
 export const Loader = styled.div`

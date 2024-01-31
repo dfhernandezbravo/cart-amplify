@@ -13,7 +13,7 @@ const SubtotalPrice = () => {
 
   return (
     <p>
-      Subtotal
+      Costo de tus productos
       {loading ? <Skeleton /> : <span>{formattedCLP(subtotalPrice)}</span>}
     </p>
   );

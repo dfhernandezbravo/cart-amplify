@@ -41,6 +41,9 @@ export const ContainerMobile = styled.div`
     & button {
       width: 90%;
     }
+    & .cartBtn {
+      margin-bottom: 0;
+    }
   }
 `;
 

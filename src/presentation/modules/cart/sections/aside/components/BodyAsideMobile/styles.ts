@@ -11,6 +11,9 @@ export const Container = styled.div<StatePropValue>`
     padding: 0 10px;
   }
 
+  & .price-container {
+    padding: 0 5px;
+  }
   & .price-container p {
     color: #6e8391;
     font-size: 15px;
