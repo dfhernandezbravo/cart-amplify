@@ -1,6 +1,7 @@
 import Modal from '@components/atoms/Modal';
 import { ModalContainer } from './styles';
 import { Divider } from '../PurchaseSummary/styles';
+import useBreakpoints from '@hooks/useBreakpoints';
 
 interface Props {
   showModal: boolean;
@@ -13,20 +14,21 @@ const ProductWithoutStockModal = ({
   handleCloseModal,
   removeUnavailableItem,
 }: Props) => {
+  const { device } = useBreakpoints();
   return (
     <Modal isOpen={showModal} onClose={() => handleCloseModal()}>
       <ModalContainer>
-        <p>Productos Agotados</p>
+        <p className="modal-title">Productos no disponibles</p>
         <Divider fullWidth />
-        <p>
+        <p className="modal-content">
           Algunos productos no están disponibles en tu ubicación. Al continuar
           se eliminará este producto del carro.
         </p>
         <Divider fullWidth />
         <div className="button-container">
-          <button onClick={() => handleCloseModal()}>Volver</button>
+          <button onClick={() => handleCloseModal()}>Cancelar</button>
           <button onClick={() => removeUnavailableItem()}>
-            Continuar mi compra{' '}
+            {device === 'Phone' ? 'Continuar' : 'Continuar mi compra'}
           </button>
         </div>
       </ModalContainer>

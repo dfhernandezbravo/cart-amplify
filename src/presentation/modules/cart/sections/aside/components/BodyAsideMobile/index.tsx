@@ -20,13 +20,8 @@ const BodyAsideMobile = ({ openDetails }: StatePropValue) => {
     <Container openDetails={openDetails}>
       <div className="content-wrapper">
         <div className="price-container">
-          <p>Subtotal</p>
+          <p>Costo de tus productos</p>
           <span>{formattedCLP(subtotalPrice)}</span>
-        </div>
-
-        <div className="price-container">
-          <p>Costo de envío desde</p>
-          <span>{formattedCLP(cartBFF?.totals?.shippingPrice || 0)}</span>
         </div>
 
         {servicePrice > 0 ? (

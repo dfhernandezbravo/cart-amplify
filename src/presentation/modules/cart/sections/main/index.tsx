@@ -21,10 +21,14 @@ const Main = () => {
     cartBFF as Cart,
   );
 
+  const generateTextTotalizer = (total: number) => {
+    return `(${total} ${total > 1 ? 'productos' : 'producto'})`;
+  };
+
   return (
     <Container>
       <TotalProductsContainer>
-        Tu compra {`${totalProducts}`}
+        Tu compra <span>{generateTextTotalizer(totalProducts as number)}</span>
       </TotalProductsContainer>
       {/* <SnackBars description='Los valores fueron cambiados.' horizontal='center' vertical='bottom' open={OpenSnackbars} close={() => setOpenSnackbars(false)}/> */}
       <div className="items-container">

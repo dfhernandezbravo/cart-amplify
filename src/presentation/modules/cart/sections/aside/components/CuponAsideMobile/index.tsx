@@ -8,11 +8,12 @@ import {
 import cartSlice from '@store/cart';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import addCouponCode from '@use-cases/cart/addCouponCode';
-import { Container, InputCuponContainer } from './styles';
+import { Container, IconAndTextContainer, InputCuponContainer } from './styles';
 import {
   couponNoValidToast,
   valueHasChangeToast,
 } from '@components/atoms/ToastContainer/customMessage';
+import { Input } from '@components/atoms/Textfield/Textfield.styles';
 
 type Props = StateCuponProps & StatePropValue;
 
@@ -67,31 +68,35 @@ const CuponAsideMobile = ({
         className="add-cupon--header"
         onClick={() => setIsCuponContainerOpen(!isCuponContainerOpen)}
       >
-        <div>
+        <IconAndTextContainer>
           <Image
             src="/icons/cart/cupon-icon.svg"
             width={25}
             height={25}
             alt="cupon icon"
           />
-          <p>Cupón de descuento</p>
-        </div>
+          <span>Cupón de descuento</span>
+        </IconAndTextContainer>
 
         <div>{renderChevron()}</div>
       </div>
 
       <InputCuponContainer isCuponContainerOpen={isCuponContainerOpen}>
         <div className="add-cupon--input-container">
-          <input
+          <Input
             type="text"
             value={couponCodeValue}
             placeholder="Ingresa tu cupón"
             onChange={(value) => setCouponCodeValue(value.target.value)}
+            style={{
+              border: '1px solid #B4C2CB',
+            }}
           />
         </div>
         <div className="button-container">
           <Button
             className="cartBtn cartBtn--primary fullWidth"
+            disabled={!couponCodeValue}
             onClick={() => {
               handleCouponCode();
             }}
