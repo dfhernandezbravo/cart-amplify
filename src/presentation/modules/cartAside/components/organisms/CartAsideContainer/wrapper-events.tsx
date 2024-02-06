@@ -1,12 +1,13 @@
 import { Cart } from '@entities/cart/cart.entity';
 import { CartAction } from '@entities/error/error.entity';
 import WindowsEvents from '@events/index';
-import { useAppDispatch } from '@hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import cartSlice from '@store/cart';
 import { setError } from '@store/error';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
+import getCart from '@use-cases/cart/get-cart';
 import handleHttpError from '@use-cases/error/handle-http-errors';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 interface Props {
   children: React.ReactNode;
@@ -23,62 +24,77 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
   } = cartSlice.actions;
 
   const dispatch = useAppDispatch();
+  const { cartId, cartBFF } = useAppSelector((state) => state.cart);
 
-  const handleSetIsOpen = (event: Event) => {
-    event.stopImmediatePropagation();
-    const customEvent = event as CustomEvent;
-    dispatch(setCartAsideIsOpen(customEvent.detail?.open));
-  };
+  const handleSetIsOpen = useCallback(
+    (event: Event) => {
+      event.stopImmediatePropagation();
+      const customEvent = event as CustomEvent;
+      dispatch(setCartAsideIsOpen(customEvent.detail?.open));
+    },
+    [dispatch, setCartAsideIsOpen],
+  );
 
-  const handleGetCartId = (event: Event) => {
-    event.preventDefault();
-    const customEvent = event as CustomEvent<{ cartId: string }>;
-    const {
-      detail: { cartId },
-    } = customEvent;
-    dispatch(addCartId(cartId));
-  };
+  const handleGetCartId = useCallback(
+    (event: Event) => {
+      event.preventDefault();
+      const customEvent = event as CustomEvent<{ cartId: string }>;
+      const {
+        detail: { cartId },
+      } = customEvent;
+      dispatch(addCartId(cartId));
+    },
+    [addCartId, dispatch],
+  );
 
-  const handleSimulateAddProductEvent = (event: Event) => {
-    event.preventDefault();
-    const customEvent = event as CustomEvent;
-    dispatch(simulateAddProductHeadless(customEvent.detail?.product));
-    dispatch(setCartAsideIsOpen(true));
-  };
+  const handleSimulateAddProductEvent = useCallback(
+    (event: Event) => {
+      event.stopImmediatePropagation();
+      const customEvent = event as CustomEvent;
+      dispatch(simulateAddProductHeadless(customEvent.detail?.product));
+      dispatch(setCartAsideIsOpen(true));
+    },
+    [dispatch, setCartAsideIsOpen, simulateAddProductHeadless],
+  );
 
-  const handleGetShoppingCart = (event: Event) => {
-    event.preventDefault();
-    const customEvent = event as CustomEvent<{ shoppingCart: Cart }>;
-    const {
-      detail: { shoppingCart },
-    } = customEvent;
-    dispatch(setCart(shoppingCart));
-  };
+  const handleGetShoppingCart = useCallback(
+    (event: Event) => {
+      event.preventDefault();
+      const customEvent = event as CustomEvent<{ shoppingCart: Cart }>;
+      const {
+        detail: { shoppingCart },
+      } = customEvent;
+      dispatch(getCart({ cartId }));
+      // dispatch(addProductInCart(shoppingCart));
+    },
+    [dispatch, cartId],
+  );
 
-  const handleAddProductErrorEvent = (event: Event) => {
-    event.preventDefault();
-    const customEvent = event as CustomEvent;
-    const customEventError = customEvent.detail?.data.error;
-    const cartError = handleHttpError(customEventError, CartAction.ADD);
-    dispatch(setError(cartError));
-    setTimeout(() => {
-      dispatch(simulateRemoveProduct(customEvent.detail?.data?.itemId));
-    }, 4000);
-  };
+  const handleAddProductErrorEvent = useCallback(
+    (event: Event) => {
+      event.preventDefault();
+      const customEvent = event as CustomEvent;
+      const customEventError = customEvent.detail?.data.error;
+      const cartError = handleHttpError(customEventError, CartAction.ADD);
+      dispatch(setError(cartError));
+      setTimeout(() => {
+        dispatch(simulateRemoveProduct(customEvent.detail?.data?.itemId));
+      }, 4000);
+    },
+    [dispatch, simulateRemoveProduct],
+  );
 
-  const handleAddProductEvent = (event: Event) => {
-    event.preventDefault();
-    const customEvent = event as CustomEvent;
+  const handleAddProductEvent = useCallback(
+    (event: Event) => {
+      event.preventDefault();
+      const customEvent = event as CustomEvent;
 
-    dispatch(addProductInCart(customEvent.detail?.data));
-    // const customEventError = customEvent.detail?.data?.messagesErrors;
+      dispatch(addProductInCart(customEvent.detail?.data));
 
-    // if (customEventError.length) {
-    //   const cartError = handlePayloadError(customEventError[0], CartAction.ADD);
-    //   dispatch(setError(cartError));
-    // }
-    dispatch(setCartAsideIsOpen(true));
-  };
+      dispatch(setCartAsideIsOpen(true));
+    },
+    [addProductInCart, dispatch, setCartAsideIsOpen],
+  );
 
   useEffect(() => {
     document.addEventListener(WindowsEvents.TOGGLE_CART_ASIDE, handleSetIsOpen);
@@ -128,18 +144,26 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
     handleAddProductEvent,
     handleAddProductErrorEvent,
     handleGetShoppingCart,
+    handleSetIsOpen,
   ]);
 
   useEffect(() => {
-    customDispatchEvent({
-      name: WindowsEvents.DISPATCH_GET_CART_ID,
-      detail: {},
-    });
-    customDispatchEvent({
-      name: WindowsEvents.DISPATCH_GET_CART,
-      detail: {},
-    });
-  }, []);
+    if (!cartId) {
+      customDispatchEvent({
+        name: WindowsEvents.DISPATCH_GET_CART_ID,
+        detail: {},
+      });
+    }
+  }, [cartId]);
+
+  useEffect(() => {
+    if (!cartBFF) {
+      customDispatchEvent({
+        name: WindowsEvents.DISPATCH_GET_CART,
+        detail: {},
+      });
+    }
+  }, [cartBFF]);
 
   return <>{children}</>;
 };
