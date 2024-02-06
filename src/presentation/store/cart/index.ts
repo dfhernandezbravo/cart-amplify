@@ -82,7 +82,7 @@ const cartSlice = createSlice({
     },
     simulateAddProductHeadless: (state, { payload }) => {
       const productInCart = state.cartBFF?.items?.find(
-        (item) => item.product.id === payload?.productId,
+        (item) => item.product.id === payload?.id,
       );
 
       if (productInCart) {
