@@ -51,7 +51,6 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
     (event: Event) => {
       event.stopImmediatePropagation();
       const customEvent = event as CustomEvent;
-      console.log('event simualdor >>>', customEvent);
       dispatch(simulateAddProductHeadless(customEvent.detail?.product));
       dispatch(setCartAsideIsOpen(true));
     },
@@ -62,7 +61,6 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
     (event: Event) => {
       event.preventDefault();
       const customEvent = event as CustomEvent<{ shoppingCart: Cart }>;
-      console.log('event get ShoppingCart >>>', customEvent);
       const {
         detail: { shoppingCart },
       } = customEvent;
