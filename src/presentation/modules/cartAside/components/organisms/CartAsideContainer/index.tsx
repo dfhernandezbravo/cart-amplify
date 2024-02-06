@@ -175,7 +175,7 @@ const CartAsideContainer = () => {
   }, []);
 
   useEffect(() => {
-    if (cartId) {
+    if (cartId && !isHeadless) {
       const vtexorderform = localStorage.getItem('vtxorderform');
       const cartIdValue = vtexorderform || cartId || '';
       dispatch(getCart({ cartId: cartIdValue }));
