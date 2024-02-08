@@ -5,6 +5,7 @@ export const Container = styled.div`
   border-radius: 8px;
   box-shadow: 0px 4px 12px 0px rgba(37, 39, 39, 0.12);
   width: 100%;
+  margin-bottom: 4rem;
 
   & .items-container {
     position: relative;
