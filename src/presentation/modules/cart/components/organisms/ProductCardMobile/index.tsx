@@ -41,7 +41,7 @@ const ProductCardMobile = (props: ProductCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quantityValue, setQuantityValue] = useState('');
 
-  const hasServices = item.product.options;
+  // const hasServices = item.product.options;
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -161,11 +161,11 @@ const ProductCardMobile = (props: ProductCardProps) => {
             </QuantitySelectorAndDeleteContainer>
           </div>
         </MainContainer>
-        {hasServices?.length
+        {/* {hasServices?.length
           ? hasServices.map((obj) => (
               <ProductService key={obj.id} option={obj} index={index} />
             ))
-          : null}
+          : null} */}
       </Container>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <QuantitySelectorContainer>

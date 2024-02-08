@@ -167,6 +167,10 @@ const cartSlice = createSlice({
     setCartAsideIsOpen: (state, { payload }) => {
       state.cartAsideIsOpen = payload;
     },
+    setParams: (state, { payload }) => {
+      state.hasHybridation = payload?.isEnabledMiniCart;
+      state.isCencopayActive = payload?.isCencopayActive;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -259,13 +263,6 @@ const cartSlice = createSlice({
         localStorage.setItem('cbff', JSON.stringify(payload));
         state.cartBFF = payload;
         state.loading = false;
-      })
-      .addCase(getParamData.fulfilled, (state, { payload }) => {
-        // state.hasHybridation = Boolean(
-        //   payload?.params?.hybridation?.isEnabledMiniCart,
-        // );
-        state.hasHybridation = true;
-        state.isCencopayActive = Boolean(payload?.params?.isCencopayActive);
       })
       .addCase(addProductService.pending, (state) => {
         state.loading = true;

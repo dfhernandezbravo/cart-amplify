@@ -56,11 +56,11 @@ const ProductCard = (props: ProductCardProps) => {
           />
         </ProductInfoContainer>
       </MainContainer>
-      {hasServiceApplied?.length
+      {/* {hasServiceApplied?.length
         ? hasServiceApplied.map((obj) => (
             <ProductService key={obj.id} option={obj} />
           ))
-        : null}
+        : null} */}
     </ProductCardContainer>
   );
 };
