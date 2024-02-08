@@ -30,7 +30,8 @@ const CartContainerProvider = ({ children }: Props) => {
     ['get-cart', cartQuery],
     () => getCartSync({ cartId: cartQuery }),
     {
-      enabled: Boolean(cartQuery),
+      enabled: !!cartQuery,
+      cacheTime: 0,
     },
   );
 

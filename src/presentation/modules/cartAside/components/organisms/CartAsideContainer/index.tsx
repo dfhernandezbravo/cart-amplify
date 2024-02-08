@@ -175,18 +175,14 @@ const CartAsideContainer = () => {
   }, []);
 
   useEffect(() => {
-    console.log('cartId ', cartId);
     if (cartId && !isHeadless) {
       const cartIdValueLS = localStorage.getItem('cartIdValue');
       const vtexorderform = localStorage.getItem('vtxorderform');
       const cartIdValue = vtexorderform || cartId || '';
 
-      console.log({ vtexorderform, cartId, cartIdValueLS });
-
       if (cartIdValue === cartIdValueLS) return;
 
       if (cartIdValue !== cartIdValueLS) {
-        console.log('before dispatch');
         dispatch(getCart({ cartId: cartIdValue }));
         localStorage.setItem('cartIdValue', cartIdValue);
         return;
