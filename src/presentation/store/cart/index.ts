@@ -261,9 +261,10 @@ const cartSlice = createSlice({
         state.loading = false;
       })
       .addCase(getParamData.fulfilled, (state, { payload }) => {
-        state.hasHybridation = Boolean(
-          payload?.params?.hybridation?.isEnabledMiniCart,
-        );
+        // state.hasHybridation = Boolean(
+        //   payload?.params?.hybridation?.isEnabledMiniCart,
+        // );
+        state.hasHybridation = true;
         state.isCencopayActive = Boolean(payload?.params?.isCencopayActive);
       })
       .addCase(addProductService.pending, (state) => {
