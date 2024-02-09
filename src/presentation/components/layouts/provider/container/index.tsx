@@ -20,7 +20,7 @@ interface Props {
 }
 
 const CartContainerProvider = ({ children }: Props) => {
-  const { addCartId, setCart, setLoading } = cartSlice.actions;
+  const { addCartId, setCart, setLoading, setParams } = cartSlice.actions;
   const { query } = useRouter();
   const { cartId, cartBFF } = useAppSelector((state) => state.cart);
   const { cartId: cartQuery } = query as ParsedUrlQueryForPage;
@@ -30,7 +30,8 @@ const CartContainerProvider = ({ children }: Props) => {
     ['get-cart', cartQuery],
     () => getCartSync({ cartId: cartQuery }),
     {
-      enabled: Boolean(cartQuery),
+      enabled: !!cartQuery,
+      cacheTime: 0,
     },
   );
 
@@ -46,9 +47,21 @@ const CartContainerProvider = ({ children }: Props) => {
     updateShippingCart,
   );
 
+  const { data } = useQuery(['get-params'], () => getParamData(), {
+    cacheTime: 0.5 * 60 * 1000,
+  });
+
+  if (data) {
+    dispatch(
+      setParams({
+        isEnabledMiniCart: data?.params?.hybridation?.isEnabledMiniCart,
+        isCencopayActive: data?.params?.isCencopayActive,
+      }),
+    );
+  }
+
   useEffect(() => {
     dispatch(setLoading(false));
-    dispatch(getParamData());
   }, []);
 
   useEffect(() => {
