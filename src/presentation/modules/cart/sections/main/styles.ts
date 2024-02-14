@@ -64,5 +64,5 @@ export const Loader = styled.div`
 
 //Mobile
 export const ContainerMobile = styled.div`
-  margin-bottom: 16rem;
+  margin-bottom: 20rem;
 `;

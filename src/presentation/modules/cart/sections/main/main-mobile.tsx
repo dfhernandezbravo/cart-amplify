@@ -2,7 +2,7 @@ import ProductCardMobile from '@modules/cart/components/organisms/ProductCardMob
 
 //Hooks
 import { Cart, Item } from '@entities/cart/cart.entity';
-import { useAppSelector, useAppDispatch } from '@hooks/storeHooks';
+import { useAppSelector } from '@hooks/storeHooks';
 import useItemWithoutStock from '@hooks/useItemWithoutStock';
 import useProductCardEvent from '@hooks/useProductCardEvent';
 
@@ -12,15 +12,14 @@ import ProductAvailableTitle from '@components/atoms/ProductAvailableTitle';
 import ProductsUnavailable from '@modules/cart/components/organisms/ProductCard/components/ProductsUnavailable';
 
 const MainMobile = () => {
-  const { cartBFF, loading } = useAppSelector((state) => state.cart);
+  const { cartBFF, loading, quantitySelected } = useAppSelector(
+    (state) => state.cart,
+  );
   const { productCannotBeDelivered, productWithoutStock } = useItemWithoutStock(
     cartBFF as Cart,
   );
-  const { methods, updatedIndexItem } = useProductCardEvent(
-    cartBFF?.id as string,
-  );
+  const { methods } = useProductCardEvent(cartBFF?.id as string);
   const itemLength = cartBFF?.items?.length;
-
   return (
     <ContainerMobile>
       {loading && <Loader />}
@@ -36,8 +35,8 @@ const MainMobile = () => {
           key={item?.itemId}
           item={item}
           itemStockModify={
-            index === updatedIndexItem?.index
-              ? (updatedIndexItem.availableQuantity as number)
+            index === quantitySelected?.index
+              ? (quantitySelected.availableQuantity as number)
               : null
           }
           onRemoveFromCart={() => {

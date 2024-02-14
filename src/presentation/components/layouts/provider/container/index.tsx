@@ -3,7 +3,7 @@ import WindowsEvents from '@events/index';
 import useEventListener from '@hooks/eventListenerHooks';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import EmptyBody from '@modules/cart/sections/emptyBody';
-import cartSlice from '@store/cart';
+import cartSlice, { quantitySelected } from '@store/cart';
 import { useQuery } from '@tanstack/react-query';
 import getCart, { getCartSync } from '@use-cases/cart/get-cart';
 import getParamData from '@use-cases/cms/getParamData';
@@ -20,7 +20,8 @@ interface Props {
 }
 
 const CartContainerProvider = ({ children }: Props) => {
-  const { addCartId, setCart, setLoading, setParams } = cartSlice.actions;
+  const { addCartId, setCart, setLoading, setParams, setQuantitySelected } =
+    cartSlice.actions;
   const { query } = useRouter();
   const { cartId, cartBFF } = useAppSelector((state) => state.cart);
   const { cartId: cartQuery } = query as ParsedUrlQueryForPage;
@@ -62,6 +63,7 @@ const CartContainerProvider = ({ children }: Props) => {
 
   useEffect(() => {
     dispatch(setLoading(false));
+    dispatch(setQuantitySelected(quantitySelected));
   }, []);
 
   useEffect(() => {
