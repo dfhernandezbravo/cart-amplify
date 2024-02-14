@@ -36,3 +36,4 @@ next-env.d.ts
 
 # new relic logs
 newrelic_agent.log
+.vscode

@@ -7,6 +7,7 @@ import { setError } from '@store/error';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
 import getCart from '@use-cases/cart/get-cart';
 import handleHttpError from '@use-cases/error/handle-http-errors';
+import _ from 'lodash';
 import React, { useCallback, useEffect } from 'react';
 
 interface Props {
@@ -64,10 +65,13 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
       const {
         detail: { shoppingCart },
       } = customEvent;
+
+      if (_.isEqual(cartBFF, shoppingCart) || !cartId) return;
+
       dispatch(getCart({ cartId }));
       // dispatch(addProductInCart(shoppingCart));
     },
-    [dispatch, cartId],
+    [dispatch, cartId, cartBFF],
   );
 
   const handleAddProductErrorEvent = useCallback(

@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+import { environments } from './../../../configs/env';
 import {
   AddOrderItems,
   AddProductServiceBody,
@@ -8,6 +10,9 @@ import { CouponCode } from '@entities/cart/cart.entity';
 import { bffWebInstanceV1 } from '@data-sources/bff-v1/bff-instance';
 
 const valitadeId = (id: string | undefined) => {
+  const accessToken = Cookies.get('accessToken');
+  if (accessToken) return id;
+
   const localId = localStorage.getItem('vtxorderform');
   if (localId && localId !== 'undefined') {
     return localId;

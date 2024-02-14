@@ -13,19 +13,31 @@ import getCart from '@use-cases/cart/get-cart';
 import updateItem from '@use-cases/cart/update-item';
 import addItem from '@use-cases/cart/add-item';
 import HybridationEvents from '../../../../../hybridationEvents';
-import getParamData from '@use-cases/cms/getParamData';
 import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
 import WrapperEvents from './wrapper-events';
+import { useQuery } from '@tanstack/react-query';
+import getParamData from '@use-cases/cms/getParamData';
 
 const CartAsideContainer = () => {
   // hooks
-  const { cartBFF, hasHybridation, cartId, isHeadless, cartAsideIsOpen } =
-    useAppSelector((state) => state.cart);
+  const {
+    cartBFF,
+    hasHybridation,
+    cartId,
+    isHeadless,
+    cartAsideIsOpen,
+    isCencopayActive,
+  } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
-  const { addCartId, simulateAddProduct, setIsHeadless, setCartAsideIsOpen } =
-    cartSlice.actions;
+  const {
+    addCartId,
+    simulateAddProduct,
+    setIsHeadless,
+    setCartAsideIsOpen,
+    setParams,
+  } = cartSlice.actions;
 
   const setSalesChannelCookie = (
     cartId: string,
@@ -164,9 +176,21 @@ const CartAsideContainer = () => {
     };
   }, []);
 
+  const { data } = useQuery(['get-params'], () => getParamData(), {
+    cacheTime: 0.5 * 60 * 1000,
+  });
+
+  if (data) {
+    dispatch(
+      setParams({
+        isEnabledMiniCart: data?.params?.hybridation?.isEnabledMiniCart,
+        isCencopayActive: data?.params?.isCencopayActive,
+      }),
+    );
+  }
+
   useEffect(() => {
     localStorage.removeItem('cbff');
-    dispatch(getParamData());
     if (typeof window !== 'undefined') {
       const isHeadlessSessionStorage =
         sessionStorage.getItem('isHeadless') === 'true';

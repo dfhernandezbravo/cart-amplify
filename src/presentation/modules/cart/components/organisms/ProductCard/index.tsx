@@ -163,7 +163,6 @@ const ProductCard = (props: ProductCardProps) => {
             </div>
           </QuantitySelectorAndDeleteContainer>
         </>
-
         {/* {hasServices?.length
           ? hasServices.map((obj) => (
               <ProductService key={obj.id} option={obj} index={index} />
