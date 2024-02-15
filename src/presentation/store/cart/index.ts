@@ -20,6 +20,7 @@ import addItem from '@use-cases/cart/add-item';
 import getParamData from '@use-cases/cms/getParamData';
 import addProductService from '@use-cases/cart/add-product-service';
 import deleteProductService from '@use-cases/cart/delete-product-service';
+import { changeOfAmount } from '@components/atoms/ToastContainer/customMessage';
 
 export const quantitySelected = {
   quantity: null,
@@ -216,7 +217,6 @@ const cartSlice = createSlice({
         ) {
           const availableItemNewResponse =
             state.cartBFF.items[index!]?.quantity;
-
           state.quantitySelected = {
             index,
             quantity,
@@ -225,6 +225,10 @@ const cartSlice = createSlice({
                 ? availableItemNewResponse
                 : null,
           };
+
+          if (availableItemNewResponse < (quantity as number)) {
+            changeOfAmount();
+          }
         }
       })
       .addCase(updateItem.rejected, (state) => {
