@@ -21,6 +21,7 @@ const Flag = ({ brandId }: FlagProps) => {
       width={40}
       height={40}
       alt={`icon-${brandId}`}
+      priority
     />
   );
 };

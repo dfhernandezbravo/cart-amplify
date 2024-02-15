@@ -31,6 +31,7 @@ const selectLayout = (
             alt="sucess-icon"
             width={25}
             height={25}
+            priority
           />
         ),
         style: {
@@ -47,6 +48,7 @@ const selectLayout = (
             alt="info-icon"
             width={25}
             height={25}
+            priority
           />
         ),
         style: {
@@ -63,6 +65,7 @@ const selectLayout = (
             alt="warning-icon"
             width={25}
             height={25}
+            priority
           />
         ),
         style: {
@@ -79,6 +82,7 @@ const selectLayout = (
             alt="error-icon"
             width={25}
             height={25}
+            priority
           />
         ),
         style: {

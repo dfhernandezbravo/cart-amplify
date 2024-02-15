@@ -24,6 +24,7 @@ const ProductService = ({ option }: ProductServiceProps) => {
           width={32}
           height={32}
           alt={`icon-${description}`}
+          priority
         />
       </IconContainer>
       <InfoContainer>

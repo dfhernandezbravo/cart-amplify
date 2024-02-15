@@ -56,6 +56,7 @@ const Modal: React.FC<ModalProps> = (props) => {
               width={24}
               height={24}
               alt="close-modal"
+              priority
             />
           </CloseButton>
         </ModalHeader>

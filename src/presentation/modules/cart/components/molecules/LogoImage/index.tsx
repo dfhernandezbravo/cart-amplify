@@ -10,6 +10,7 @@ const LogoImage = () => {
         width={52}
         height={52}
         title="Easy Home"
+        priority
       />
     </Link>
   );
