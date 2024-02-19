@@ -80,6 +80,7 @@ const PromotionalCode = () => {
             alt="promoCode-icon"
             width={24}
             height={24}
+            priority
           />
           <span>Cupón de descuento</span>
         </IconAndTextContainer>

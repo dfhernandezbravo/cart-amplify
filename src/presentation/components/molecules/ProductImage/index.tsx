@@ -12,6 +12,7 @@ const ProductImage = (props: ProductImageProps) => {
         alt={alt ?? 'Imagen del producto'}
         width={width}
         height={height}
+        priority
       />
     </Container>
   );
