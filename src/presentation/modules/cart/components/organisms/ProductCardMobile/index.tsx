@@ -66,7 +66,7 @@ const ProductCardMobile = (props: ProductCardProps) => {
       products: [
         {
           name: item.product.description,
-          id: item.itemId,
+          id: item.product.sku,
           price: item.product.prices.normalPrice.toString(),
           price_tecno: item.product.prices.brandPrice?.toString(),
           brand: item.product.brand,
@@ -93,7 +93,7 @@ const ProductCardMobile = (props: ProductCardProps) => {
       products: [
         {
           name: item.product.description,
-          id: item.itemId,
+          id: item.product.sku,
           price: item.product.prices.normalPrice.toString(),
           price_tecno: item.product.prices.brandPrice?.toString(),
           brand: item.product.brand,
