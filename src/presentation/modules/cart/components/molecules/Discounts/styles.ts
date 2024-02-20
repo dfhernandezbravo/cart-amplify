@@ -1,24 +1,41 @@
 import styled from 'styled-components';
 
-export const CouponCodeWrapper = styled.div`
-  font-family: 'Open Sans';
-
-  display: flex;
-  justify-content: space-between;
-  & .couponCode {
-    color: #147ab8;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-  }
+export const Price = styled.span`
+  color: #363f45;
+  font-weight: 400;
 `;
-export const RemoveCoupon = styled.a`
-  font-family: 'Open Sans';
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  text-decoration: underline;
-  display: block;
-  cursor: pointer;
-  margin-top: -10px;
+
+export const Skeleton = styled.span`
+  font:
+    normal normal 600 0px/24px Roboto,
+    serif;
+  cursor: progress;
+  background: linear-gradient(0.25turn, transparent, #fff, transparent),
+    linear-gradient(#eee, #eee),
+    radial-gradient(38px circle at 19px 19px, #eee 50%, transparent 51%),
+    linear-gradient(#eee, #eee);
+  background-repeat: no-repeat;
+  background-size:
+    315px 250px,
+    315px 180px,
+    100px 100px,
+    225px 30px;
+  background-position:
+    -315px 0,
+    0 0,
+    0px 190px,
+    50px 195px;
+  animation: loading 1.5s infinite;
+  width: 100px;
+  height: 24px;
+
+  @keyframes loading {
+    to {
+      background-position:
+        315px 0,
+        0 0,
+        0 190px,
+        50px 195px;
+    }
+  }
 `;

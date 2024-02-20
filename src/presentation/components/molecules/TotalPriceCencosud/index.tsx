@@ -28,7 +28,11 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
           alt="cencosud-icon"
         />
       </div>
-      {loading ? <Skeleton /> : <span className="totalPrice">{value}</span>}
+      {loading || !cartBFF?.totals?.totalCardPrice ? (
+        <Skeleton />
+      ) : (
+        <span className="totalPrice">{value}</span>
+      )}
     </Container>
   );
 };
