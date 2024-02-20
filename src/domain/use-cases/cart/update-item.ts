@@ -24,7 +24,6 @@ const updateItem = createAsyncThunk(
         name: WindowsEvents.UPDATE_SHOPPING_CART,
         detail: { shoppingCart: data },
       });
-
       return fulfillWithValue(data);
     } catch (error) {
       dispatchHttpErrors(error as AxiosError, dispatch, CartAction.UPDATE);

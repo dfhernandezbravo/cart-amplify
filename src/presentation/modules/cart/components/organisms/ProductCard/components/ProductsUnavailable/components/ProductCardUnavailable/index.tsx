@@ -4,6 +4,7 @@ import {
   ProductInfoContainer,
   ProductInfoAndPriceContainer,
   QuantitySelectorAndDeleteContainer,
+  ImageContainer,
 } from '../../../../styles';
 import ProductImage from '@components/molecules/ProductImage';
 import ProductBrand from '@components/molecules/ProductBrand';
@@ -34,7 +35,9 @@ const ProductCardUnavailable = ({ items }: { items: Item[] }) => {
             <Container key={index} isLastItem={isLastItem}>
               <ProductInfoAndPriceContainer>
                 <ProductInfoContainer>
-                  <ProductImage src={item?.product?.images} alt={''} />
+                  <ImageContainer>
+                    <ProductImage src={item?.product?.images} alt={''} />
+                  </ImageContainer>
                   <div>
                     <ProductBrand brand={item?.product?.brand} />
                     <ProductName

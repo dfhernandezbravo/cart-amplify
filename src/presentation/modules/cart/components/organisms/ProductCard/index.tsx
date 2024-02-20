@@ -21,7 +21,7 @@ import {
 } from './styles';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
-import ProductService from '@modules/cart/components/molecules/ProductService';
+// import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
   const {

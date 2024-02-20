@@ -35,6 +35,7 @@ const CuponAsideMobile = ({
           width={25}
           height={25}
           alt="flecha arriba"
+          priority
         />
       );
     }
@@ -44,6 +45,7 @@ const CuponAsideMobile = ({
         width={20}
         height={20}
         alt="flecha abajo"
+        priority
       />
     );
   };
@@ -74,6 +76,7 @@ const CuponAsideMobile = ({
             width={25}
             height={25}
             alt="cupon icon"
+            priority
           />
           <span>Cupón de descuento</span>
         </IconAndTextContainer>

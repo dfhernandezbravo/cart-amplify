@@ -25,6 +25,7 @@ const WarningProductWithoutStock = ({ messageType }: Props) => {
         width={24}
         height={24}
         alt="warning-icon"
+        priority
       />
       <div className="text-container">
         <p className="title">{textMessage[messageType].title}</p>

@@ -45,6 +45,7 @@ const MinicartError = (props: MinicartErrorProps) => {
             alt="warning-icon"
             width={24}
             height={24}
+            priority
           />
           <TextContainer>
             <Title>{title}</Title>

@@ -34,6 +34,7 @@ const ProductServiceDesktop = (props: ProductServiceDeviceProps) => {
               width={32}
               height={32}
               alt={`icon-${description}`}
+              priority
             />
           </IconContainer>
           <div>

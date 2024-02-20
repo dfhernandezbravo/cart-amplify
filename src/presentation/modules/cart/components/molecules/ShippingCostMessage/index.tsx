@@ -12,6 +12,7 @@ const ShippingCostMessage = () => {
           width={24}
           height={24}
           alt="icon-truck"
+          priority
         />
       )}
       <Text isMobile={device === 'Phone'}>
