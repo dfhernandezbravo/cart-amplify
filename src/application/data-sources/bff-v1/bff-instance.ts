@@ -28,20 +28,15 @@ bffWebInstanceV1.interceptors.response.use(
     return response;
   },
   function (error) {
-    const errorResponse = error?.response?.data?.errorCode;
+    const errorResponse = error?.response?.data;
     if (errorResponse) {
       if (
         errorResponse?.errorCode === 'MSSC0001' &&
         errorResponse?.message === 'orderform not found' &&
         errorResponse?.statusCode === 400
       ) {
-        let iframe = document.getElementById(
-          'minicartHybridation',
-        ) as HTMLIFrameElement;
-        if (iframe) {
-          console.info('::: rld mc ::');
-          iframe?.contentWindow?.location.reload();
-        }
+        console.info('::: rld mc ::');
+        window.location.reload();
       }
     }
   },
