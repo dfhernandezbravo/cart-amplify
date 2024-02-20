@@ -1,6 +1,6 @@
 import { PriceType } from '@entities/cart/promotions';
 import { useAppSelector } from '@hooks/storeHooks';
-import useClusterDiscounts from '@hooks/useDiscounts';
+import useClusterDiscounts from '@hooks/useClusterDiscounts';
 import { formattedCLP } from '@utils/helpers';
 import { Price, Skeleton } from './styles';
 import getCouponCodeId from '@utils/getCouponId';
