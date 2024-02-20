@@ -31,7 +31,7 @@ const cartService = (httpInstance = bffWebInstanceV1): CartService => ({
     return httpInstance.post(url, body);
   },
   updateItem: (data) => {
-    const url = `/shoppingcart/${valitadeId(data.cartId + '123')}/items`;
+    const url = `/shoppingcart/${valitadeId(data.cartId)}/items`;
     const body: UpdateOrderItems = { orderItems: data.items };
     return httpInstance.patch(url, body);
   },
