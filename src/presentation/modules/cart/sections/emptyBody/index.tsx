@@ -27,6 +27,7 @@ const EmptyBody = () => {
         width={98}
         height={94}
         alt="empty-cart"
+        priority
       />
       <Title>Tu carro está vacío</Title>
       <Description>Miles de productos y ofertas te están esperando</Description>

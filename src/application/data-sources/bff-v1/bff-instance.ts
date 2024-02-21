@@ -22,3 +22,22 @@ bffWebInstanceV1.interceptors.request.use(function (config) {
   if (channel) config.headers['x-channel'] = channel;
   return config;
 });
+
+bffWebInstanceV1.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    const errorResponse = error?.response?.data;
+    if (errorResponse) {
+      if (
+        errorResponse?.errorCode === 'MSSC0001' &&
+        errorResponse?.message === 'orderform not found' &&
+        errorResponse?.statusCode === 400
+      ) {
+        console.info('::: rld mc ::');
+        window.location.reload();
+      }
+    }
+  },
+);

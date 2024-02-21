@@ -34,6 +34,7 @@ const SnackBars = ({
         width={10}
         height={10}
         alt="close-icon"
+        priority
       />
     </Button>
   );
