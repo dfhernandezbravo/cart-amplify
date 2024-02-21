@@ -11,6 +11,7 @@ const HeaderAsideMobile = ({ openDetails, setOpenDetails }: StateProps) => {
           alt="carrito"
           width={20}
           height={20}
+          priority
         />
         <p>Resumen de compra</p>
       </div>

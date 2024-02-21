@@ -10,11 +10,11 @@ import useProductCardEvent from '@hooks/useProductCardEvent';
 import ProductAvailableTitle from '@components/atoms/ProductAvailableTitle';
 
 const Main = () => {
-  const { cartBFF, loading } = useAppSelector((state) => state.cart);
-  const totalProducts = useAppSelector(selectTotalProductsInCart);
-  const { methods, updatedIndexItem } = useProductCardEvent(
-    cartBFF?.id as string,
+  const { cartBFF, loading, quantitySelected } = useAppSelector(
+    (state) => state.cart,
   );
+  const totalProducts = useAppSelector(selectTotalProductsInCart);
+  const { methods } = useProductCardEvent(cartBFF?.id as string);
 
   const itemLength = cartBFF?.items?.length;
   const { productCannotBeDelivered, productWithoutStock } = useItemWithoutStock(
@@ -45,8 +45,8 @@ const Main = () => {
             key={index}
             item={item}
             itemStockModify={
-              index === updatedIndexItem?.index
-                ? (updatedIndexItem.availableQuantity as number)
+              index === quantitySelected?.index
+                ? (quantitySelected.availableQuantity as number)
                 : null
             }
             onRemoveFromCart={() => {

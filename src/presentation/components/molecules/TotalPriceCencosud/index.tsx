@@ -26,6 +26,7 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
           width={30}
           height={30}
           alt="cencosud-icon"
+          priority
         />
       </div>
       {loading || !cartBFF?.totals?.totalCardPrice ? (

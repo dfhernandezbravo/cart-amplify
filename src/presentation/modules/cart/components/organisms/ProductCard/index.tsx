@@ -21,7 +21,7 @@ import {
 } from './styles';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
-import ProductService from '@modules/cart/components/molecules/ProductService';
+// import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
   const {
@@ -63,7 +63,7 @@ const ProductCard = (props: ProductCardProps) => {
       products: [
         {
           name: item.product.description,
-          id: item.itemId,
+          id: item.product.sku,
           price: item.product.prices.normalPrice.toString(),
           price_tecno: item.product.prices.brandPrice?.toString(),
           brand: item.product.brand,
@@ -81,6 +81,8 @@ const ProductCard = (props: ProductCardProps) => {
         add: productData,
       },
     });
+
+    console.log(productData, 'productData');
   };
 
   const handleRemoveFromCart = () => {
@@ -90,7 +92,7 @@ const ProductCard = (props: ProductCardProps) => {
       products: [
         {
           name: item.product.description,
-          id: item.itemId,
+          id: item.product.sku,
           price: item.product.prices.normalPrice.toString(),
           price_tecno: item.product.prices.brandPrice?.toString(),
           brand: item.product.brand,

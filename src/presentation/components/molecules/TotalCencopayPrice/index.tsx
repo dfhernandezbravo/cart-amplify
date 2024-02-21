@@ -33,6 +33,7 @@ const TotalCencopayPrice = (props: Props) => {
           width={30}
           height={30}
           alt="cencopay-icon"
+          priority
         />
       </div>
       {loading ||

@@ -38,7 +38,6 @@ const QuantitySelector = ({ quantitySelected, quantity }: Props) => {
   return (
     <Select
       name="select"
-      id="select"
       value={quantity}
       onChange={(event) => quantitySelected(event.target.value)}
     >
