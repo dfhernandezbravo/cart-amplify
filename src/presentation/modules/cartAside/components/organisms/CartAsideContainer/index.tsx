@@ -132,7 +132,11 @@ const CartAsideContainer = () => {
               (item: any) => item.product.id === productReference,
             );
 
-            if (productIndex !== undefined && productIndex !== -1) {
+            if (
+              productIndex &&
+              productIndex !== undefined &&
+              productIndex !== -1
+            ) {
               dispatch(
                 updateItem({
                   cartId,
