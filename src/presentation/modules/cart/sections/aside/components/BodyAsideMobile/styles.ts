@@ -21,7 +21,7 @@ export const Container = styled.div<StatePropValue>`
   & .price-container span {
     color: #333333;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 400;
   }
 
   & .cupon-container {
@@ -29,5 +29,24 @@ export const Container = styled.div<StatePropValue>`
     & a {
       margin-top: 0;
     }
+  }
+`;
+
+export const DiscountsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  span {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  p {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+    color: #6e8391;
+    font-size: 15px;
+    margin: 3px 0;
   }
 `;

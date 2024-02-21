@@ -12,8 +12,8 @@ export const Container = styled.div`
   }
 
   & .totalPrice {
-    color: #000000de;
-    font-weight: 400;
+    color: #363f45;
+    font-weight: 600;
   }
 
   &.cartAside {

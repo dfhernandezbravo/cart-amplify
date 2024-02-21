@@ -29,7 +29,11 @@ const TotalPriceCencosud = (props: TotalPriceCencosudProps) => {
           priority
         />
       </div>
-      {loading ? <Skeleton /> : <span className="totalPrice">{value}</span>}
+      {loading || !cartBFF?.totals?.totalCardPrice ? (
+        <Skeleton />
+      ) : (
+        <span className="totalPrice">{value}</span>
+      )}
     </Container>
   );
 };

@@ -171,6 +171,7 @@ const Body = () => {
           index={index}
           onRemoveFromCart={() => {
             methods.handleRemoveFromCart(index);
+            methods.sendRemoveFromCart(item, index);
           }}
           onIncrementQuantity={() => {
             dispatch(incrementProductQuantity(index));
