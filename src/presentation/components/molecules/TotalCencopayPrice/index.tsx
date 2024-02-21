@@ -36,7 +36,13 @@ const TotalCencopayPrice = (props: Props) => {
           priority
         />
       </div>
-      {loading ? <Skeleton /> : <span className="value-price">{value}</span>}
+      {loading ||
+      !cartBFF?.totals?.totalCencoPay ||
+      cartBFF?.totals?.totalCencoPay === -1 ? (
+        <Skeleton />
+      ) : (
+        <span className="value-price">{value}</span>
+      )}
     </Container>
   );
 };
