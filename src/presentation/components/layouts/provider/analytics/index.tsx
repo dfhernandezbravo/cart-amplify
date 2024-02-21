@@ -25,7 +25,7 @@ const AnalyticsProvider = ({ children }: Props) => {
     const data: ProductAnalytics[] = cartBFF.items.map(
       ({ product }, index) => ({
         name: product.description,
-        id: product.id,
+        id: product.sku,
         price: product.prices.normalPrice.toString(),
         brand: product.brand,
         category: product.category,
