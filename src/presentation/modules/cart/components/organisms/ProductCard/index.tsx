@@ -1,15 +1,12 @@
 import { useState } from 'react';
-
 import ProductImage from '@components/molecules/ProductImage';
-
 import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
 import ProductPrice from '@components/molecules/ProductPrice';
+import ProductSku from '@components/molecules/ProductSku';
 import DeleteButton from '@components/molecules/DeleteButton';
 import QuantitySelector from '@components/atoms/CartQuantitySelector';
-import ProductSku from '@components/molecules/ProductSku';
 import AvailableQuantity from './components/AvailableQuantity';
-import Modal from '@components/atoms/Modal';
 import { ProductCardProps } from './types';
 import {
   Container,
@@ -17,10 +14,12 @@ import {
   ProductInfoAndPriceContainer,
   QuantitySelectorAndDeleteContainer,
   ImageContainer,
-  QuantitySelectorContainer,
+  PriceContainer,
+  BrandProductNameContainer,
 } from './styles';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
+import ModalQuantity from '../ModalQuantity';
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
@@ -127,41 +126,42 @@ const ProductCard = (props: ProductCardProps) => {
               <ImageContainer>
                 <ProductImage src={item?.product?.images} alt={''} />
               </ImageContainer>
-              <div>
+              <BrandProductNameContainer>
                 <ProductBrand brand={item?.product?.brand} />
                 <ProductName
                   productName={item?.product?.description}
                   productUrl={item?.product?.detailUrl}
                 />
                 <ProductSku id={item?.product.sku} />
-              </div>
+              </BrandProductNameContainer>
             </ProductInfoContainer>
-            <div>
-              <ProductPrice
-                prices={item?.product.prices}
-                quantity={item?.quantity ?? 0}
-                adjustment={item?.adjustment}
-              />
-            </div>
+            <PriceContainer>
+              <div>
+                <ProductPrice
+                  prices={item?.product.prices}
+                  quantity={item?.quantity ?? 0}
+                  adjustment={item?.adjustment}
+                />
+              </div>
+              <QuantitySelectorAndDeleteContainer>
+                {itemStockModify && (
+                  <AvailableQuantity quantity={itemStockModify as number} />
+                )}
+                <div className="quantity-container">
+                  <QuantitySelector
+                    quantitySelected={(value: string) =>
+                      handleSelectedQuantity(value)
+                    }
+                    quantity={item?.quantity}
+                  />
+                  <DeleteButton
+                    hasIcon={true}
+                    onRemoveFromCart={handleRemoveFromCart}
+                  />
+                </div>
+              </QuantitySelectorAndDeleteContainer>
+            </PriceContainer>
           </ProductInfoAndPriceContainer>
-
-          <QuantitySelectorAndDeleteContainer>
-            {itemStockModify && (
-              <AvailableQuantity quantity={itemStockModify as number} />
-            )}
-            <div className="quantity-container">
-              <QuantitySelector
-                quantitySelected={(value: string) =>
-                  handleSelectedQuantity(value)
-                }
-                quantity={item?.quantity}
-              />
-              <DeleteButton
-                hasIcon={true}
-                onRemoveFromCart={handleRemoveFromCart}
-              />
-            </div>
-          </QuantitySelectorAndDeleteContainer>
         </>
         {/* {hasServices?.length
           ? hasServices.map((obj) => (
@@ -170,18 +170,13 @@ const ProductCard = (props: ProductCardProps) => {
           : null} */}
       </Container>
 
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <QuantitySelectorContainer>
-          <p>Elige cantidad</p>
-          <input
-            type="number"
-            value={quantityValue}
-            placeholder="Ingresa la cantidad"
-            onChange={(value) => setQuantityValue(value.target.value)}
-          />
-          <button onClick={() => handleOnClickQuantity()}>Aplicar</button>
-        </QuantitySelectorContainer>
-      </Modal>
+      <ModalQuantity
+        quantityValue={quantityValue}
+        isModalOpen={isModalOpen}
+        handleQuantityValue={(value) => setQuantityValue(value)}
+        handleCloseModal={handleCloseModal}
+        handleOnClick={handleOnClickQuantity}
+      />
     </>
   );
 };
