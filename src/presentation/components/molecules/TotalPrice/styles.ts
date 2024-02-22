@@ -20,7 +20,7 @@ export const Container = styled.div`
     span:first-child {
       font-size: 14px;
       font-weight: 400;
-      color: #6e8391;
+      color: #363f45;
     }
   }
 
@@ -35,6 +35,6 @@ export const Container = styled.div`
 
 export const Title = styled.span`
   font-size: 14px;
-  color: #6e8391;
+  color: #363f45;
   font-weight: 400;
 `;

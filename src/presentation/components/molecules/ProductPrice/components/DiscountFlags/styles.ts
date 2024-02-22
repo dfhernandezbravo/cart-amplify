@@ -72,7 +72,7 @@ export const WrapperClusterPrice = styled.div<ClusterProps>`
   }
 
   & .text-promotion {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     color: ${({ cluster }) =>
       cluster === 'EXPERTO' || cluster === 'EXPERTO_PREFERENTE'
@@ -80,11 +80,5 @@ export const WrapperClusterPrice = styled.div<ClusterProps>`
         : cluster === 'COLABORADOR'
         ? '#df6f1a'
         : '#178ad1'};
-  }
-
-  @media only screen and (max-width: 320px) {
-    & .text-promotion {
-      font-size: 12px;
-    }
   }
 `;
