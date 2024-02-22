@@ -23,7 +23,7 @@ const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
   const isCluster =
     offerId === PromotionType.EXPERTO_PREFERENTE ||
     offerId === PromotionType.EXPERTO ||
-    offerId === PromotionType.COLABOLADOR;
+    offerId === PromotionType.COLABORADOR;
 
   const NormalPrice = () => {
     return <FullPrice>{formattedCLP(prices.normalPrice * quantity)}</FullPrice>;

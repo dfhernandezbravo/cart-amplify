@@ -1,44 +1,79 @@
-import { useAppSelector, useAppDispatch } from '@hooks/storeHooks';
-import useBreakpoints from '@hooks/useBreakpoints';
-import { valueHasChangeToast } from '@components/atoms/ToastContainer/customMessage';
-
-import removeCouponCode from '@use-cases/cart/removeCouponCode';
-
-import { CouponCodeWrapper, RemoveCoupon } from './styles';
+import { PriceType } from '@entities/cart/promotions';
+import { useAppSelector } from '@hooks/storeHooks';
+import useClusterDiscounts from '@hooks/useClusterDiscounts';
+import { formattedCLP } from '@utils/helpers';
+import { Price, Skeleton } from './styles';
 import getCouponCodeId from '@utils/getCouponId';
-import { Adjustments, Cart } from '@entities/cart/cart.entity';
+import { Cart } from '@entities/cart/cart.entity';
+import CouponDiscounts from '../CouponDiscounts';
+import { Divider } from '../../organisms/PurchaseSummary/styles';
+
+const TMP_DISCOUNT_NAME = 'Descuentos';
 
 const Discounts = () => {
-  const { isXs, isMd } = useBreakpoints();
-  const isMobile = isXs || isMd;
+  const { cartBFF, loading } = useAppSelector((state) => state.cart);
+  const { colaboradorDiscount, expertoDiscount } = useClusterDiscounts();
 
-  const { cartBFF, cartId } = useAppSelector((state) => state.cart);
+  const adjustments = cartBFF?.items.flatMap((item) => item.adjustment);
+  const clusters = adjustments?.filter(
+    (promotion) => promotion.priceType === PriceType.offer,
+  );
+  const tmpDiscount = Math.abs(cartBFF?.totals?.discount ?? 0);
+
   const couponCode = getCouponCodeId(cartBFF as Cart);
+  const couponValue =
+    couponCode && couponCode[0]?.value ? Math.abs(couponCode[0].value) : 0;
+  const couponId = couponCode && couponCode[0]?.id ? couponCode[0]?.id : '';
 
-  const dispatch = useAppDispatch();
-
-  const removeCoupon = async (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    await dispatch(
-      removeCouponCode({
-        couponCode: (couponCode as Adjustments[])[0].id,
-        cartId,
-      }),
+  const DiscountComponent = (total: number, name: string) => {
+    return (
+      <>
+        {total > 0 ? (
+          <p>
+            {name}
+            {loading ? <Skeleton /> : <Price>-{formattedCLP(total)}</Price>}
+          </p>
+        ) : null}
+      </>
     );
-    if (isMobile) return valueHasChangeToast({ position: 'top-center' });
-    valueHasChangeToast();
   };
+
+  if (!clusters) {
+    const total = tmpDiscount - couponValue;
+    return (
+      <>
+        {couponValue > 0 ? (
+          <CouponDiscounts couponId={couponId} couponValue={couponValue} />
+        ) : null}
+        {DiscountComponent(total, TMP_DISCOUNT_NAME)}
+        {couponValue > 0 || total > 0 ? (
+          <Divider fullWidth={true} className="light" />
+        ) : null}
+      </>
+    );
+  }
+
+  const { total: colaboradorTotal, name: colaboradorClusterName } =
+    colaboradorDiscount({ clusters });
+  const { total: expertoTotal, name: expertoClusterName } = expertoDiscount({
+    clusters,
+  });
+  const tmpTotal =
+    tmpDiscount - (colaboradorTotal + expertoTotal + couponValue);
 
   return (
     <>
-      {couponCode?.length ? (
-        <>
-          <CouponCodeWrapper>
-            <p className="couponCode">{couponCode[0].id}</p>
-            <p>${Math.abs(couponCode[0].value)}</p>
-          </CouponCodeWrapper>
-          <RemoveCoupon onClick={removeCoupon}>Eliminar cupón</RemoveCoupon>
-        </>
+      {couponValue > 0 ? (
+        <CouponDiscounts couponId={couponId} couponValue={couponValue} />
+      ) : null}
+      {DiscountComponent(tmpTotal, TMP_DISCOUNT_NAME)}
+      {DiscountComponent(expertoTotal, expertoClusterName)}
+      {DiscountComponent(colaboradorTotal, colaboradorClusterName)}
+      {couponValue > 0 ||
+      tmpTotal > 0 ||
+      expertoTotal > 0 ||
+      colaboradorTotal > 0 ? (
+        <Divider fullWidth={true} className="light" />
       ) : null}
     </>
   );

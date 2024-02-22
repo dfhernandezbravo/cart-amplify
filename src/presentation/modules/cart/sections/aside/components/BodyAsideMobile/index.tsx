@@ -3,9 +3,9 @@ import { StatePropValue } from '../HaderAsideMobile/HeaderAsideMobile.types';
 import { formattedCLP } from '@utils/helpers';
 import { useAppSelector } from '@hooks/storeHooks';
 
-import { Container } from './styles';
-import Discounts from '@modules/cart/components/molecules/Discounts';
+import { Container, DiscountsContainer } from './styles';
 import useProductServices from '@hooks/useProductServices';
+import Discounts from '@modules/cart/components/molecules/Discounts';
 
 const BodyAsideMobile = ({ openDetails }: StatePropValue) => {
   const { cartBFF } = useAppSelector((state) => state.cart);
@@ -30,20 +30,13 @@ const BodyAsideMobile = ({ openDetails }: StatePropValue) => {
             <span>{formattedCLP(servicePrice)}</span>
           </div>
         ) : null}
+        <Divider fullWidth={true} className="light" />
 
-        <div className="price-container cupon-container">
-          <Discounts />
-        </div>
         {discount > 0 ? (
-          <>
-            <Divider fullWidth={true} />
-            <div className="price-container">
-              <p>Descuentos</p>
-              <span>-{formattedCLP(discount)}</span>
-            </div>
-          </>
+          <DiscountsContainer>
+            <Discounts />
+          </DiscountsContainer>
         ) : null}
-        <Divider fullWidth={true} />
       </div>
     </Container>
   );

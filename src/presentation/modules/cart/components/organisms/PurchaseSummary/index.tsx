@@ -5,14 +5,14 @@ import PromotionalCode from '@modules/cart/components/molecules/PromotionalCode'
 import { useAppSelector } from '@hooks/storeHooks';
 import { Container, Divider } from './styles';
 import PurchaseSummaryDisabled from '../PurchaseSummaryDisabled';
-import Discounts from '../../molecules/Discounts';
+import CouponDiscounts from '../../molecules/CouponDiscounts';
 import TotalCencopayPrice from '@components/molecules/TotalCencopayPrice';
 import SubtotalPrice from '@components/molecules/SubtotalPrice';
-import TotalPriceDiscount from '@components/molecules/TotalPriceDiscount';
 import ProductWithoutStockModal from '../ProductWithoutStockModal';
 import useHandleRedirectEvent from '@hooks/useHandleRedirectEvent';
 import ServicePrice from '@components/molecules/ServicePrice';
 import ShippingCostMessage from '../../molecules/ShippingCostMessage';
+import Discounts from '@modules/cart/components/molecules/Discounts';
 
 const PurchaseSummary = () => {
   const {
@@ -35,10 +35,7 @@ const PurchaseSummary = () => {
         <h1>Resumen de mi compra</h1>
         <Divider fullWidth={true} />
         <SubtotalPrice />
-        <ServicePrice />
-        <TotalPriceDiscount />
         <Discounts />
-        <Divider fullWidth={true} className="light" />
         <TotalCencopayPrice />
         <TotalPriceCencosud className="purchaseSummary" />
         <TotalPrice className="purchaseSummary" />
