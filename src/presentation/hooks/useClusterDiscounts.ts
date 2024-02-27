@@ -6,7 +6,7 @@ type Props = {
 };
 
 const EXPERTO_CLUSTER_NAME = 'Mundo experto';
-const COLABORADOR_CLUSTER_NAME = 'Mundo colaborador';
+const COLABORADOR_CLUSTER_NAME = 'Descuento colaborador';
 
 const useClusterDiscounts = () => {
   const expertoDiscount = ({ clusters }: Props) => {

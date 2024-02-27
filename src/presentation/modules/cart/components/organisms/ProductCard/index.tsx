@@ -80,8 +80,6 @@ const ProductCard = (props: ProductCardProps) => {
         add: productData,
       },
     });
-
-    console.log(productData, 'productData');
   };
 
   const handleRemoveFromCart = () => {
