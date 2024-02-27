@@ -1,13 +1,18 @@
 import { useState } from 'react';
-
-//Styles
 import ProductImage from '@components/molecules/ProductImage';
-import { ProductCardProps } from '../ProductCard/types';
 import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
 import ProductPrice from '@components/molecules/ProductPrice';
 import QuantitySelector from '@components/atoms/CartQuantitySelector';
 
+import DeleteButton from '@components/molecules/DeleteButton';
+import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
+import ProductSku from '@components/molecules/ProductSku';
+import useAnalytics from '@hooks/useAnalytics';
+import { AnalyticsEvents } from '@entities/analytics';
+import ProductService from '@modules/cart/components/molecules/ProductService';
+import ModalQuantity from '../ModalQuantity';
+import { ProductCardProps } from '../ProductCard/types';
 //Styles
 import {
   Container,
@@ -15,14 +20,6 @@ import {
   QuantitySelectorAndDeleteContainer,
   MainContainer,
 } from './styles';
-import DeleteButton from '@components/molecules/DeleteButton';
-import Modal from '@components/atoms/Modal';
-import { QuantitySelectorContainer } from '../ProductCard/styles';
-import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
-import ProductSku from '@components/molecules/ProductSku';
-import useAnalytics from '@hooks/useAnalytics';
-import { AnalyticsEvents } from '@entities/analytics';
-import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCardMobile = (props: ProductCardProps) => {
   const {
@@ -167,18 +164,13 @@ const ProductCardMobile = (props: ProductCardProps) => {
             ))
           : null} */}
       </Container>
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <QuantitySelectorContainer>
-          <p>Elige cantidad</p>
-          <input
-            type="number"
-            value={quantityValue}
-            placeholder="Ingresa la cantidad"
-            onChange={(value) => setQuantityValue(value.target.value)}
-          />
-          <button onClick={() => handleOnClickQuantity()}>Aplicar</button>
-        </QuantitySelectorContainer>
-      </Modal>
+      <ModalQuantity
+        quantityValue={quantityValue}
+        isModalOpen={isModalOpen}
+        handleQuantityValue={(value) => setQuantityValue(value)}
+        handleCloseModal={handleCloseModal}
+        handleOnClick={handleOnClickQuantity}
+      />
     </>
   );
 };

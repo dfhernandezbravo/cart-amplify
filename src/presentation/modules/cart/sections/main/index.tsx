@@ -1,9 +1,9 @@
 import { useAppSelector } from '@hooks/storeHooks';
-import SnackBars from '@components/atoms/SnackBars';
+// import SnackBars from '@components/atoms/SnackBars';
 import { selectTotalProductsInCart } from '@store/cart';
 import ProductCard from '@modules/cart/components/organisms/ProductCard';
 import ProductsUnavailable from '@modules/cart/components/organisms/ProductCard/components/ProductsUnavailable';
-import { Cart, Item } from '@entities/cart/cart.entity';
+import { Cart, Item, ProductAvailability } from '@entities/cart/cart.entity';
 import { Container, TotalProductsContainer, Loader } from './styles';
 import useItemWithoutStock from '../../../../hooks/useItemWithoutStock';
 import useProductCardEvent from '@hooks/useProductCardEvent';
@@ -19,6 +19,10 @@ const Main = () => {
   const itemLength = cartBFF?.items?.length;
   const { productCannotBeDelivered, productWithoutStock } = useItemWithoutStock(
     cartBFF as Cart,
+  );
+
+  const existProductAvailable = cartBFF?.items?.some(
+    (item) => item.product.availability === ProductAvailability.AVAILABLE,
   );
 
   const generateTextTotalizer = (total: number) => {
@@ -37,7 +41,8 @@ const Main = () => {
           <ProductsUnavailable />
         ) : null}
 
-        {productWithoutStock?.length || productCannotBeDelivered?.length ? (
+        {(productWithoutStock?.length || productCannotBeDelivered?.length) &&
+        existProductAvailable ? (
           <ProductAvailableTitle />
         ) : null}
         {cartBFF?.items?.map((item: Item, index: number) => (
