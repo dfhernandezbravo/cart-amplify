@@ -1,11 +1,4 @@
 import React from 'react';
-import {
-  Container,
-  ProductInfoContainer,
-  ProductInfoAndPriceContainer,
-  QuantitySelectorAndDeleteContainer,
-  ImageContainer,
-} from '../../../../styles';
 import ProductImage from '@components/molecules/ProductImage';
 import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
@@ -14,6 +7,14 @@ import DeleteButton from '@components/molecules/DeleteButton';
 import useProductCardEvent from '@hooks/useProductCardEvent';
 import { useAppSelector } from '@hooks/storeHooks';
 import WarningProductWithoutStock from '@components/atoms/WarningProductWithoutStock';
+import {
+  ProductInfoContainer,
+  ProductInfoAndPriceContainer,
+  ImageContainer,
+  ButtonContainer,
+  ProductUnavailableContainer,
+  BrandProductNameContainer,
+} from '../../../../styles';
 
 const ProductCardUnavailable = ({ items }: { items: Item[] }) => {
   const { cartBFF } = useAppSelector((state) => state.cart);
@@ -29,31 +30,37 @@ const ProductCardUnavailable = ({ items }: { items: Item[] }) => {
     <>
       <WarningProductWithoutStock messageType={productAvailabilityType} />
       {items.map((item, index) => {
-        const isLastItem = items.length === index + 1;
         return (
           <>
-            <Container key={index} isLastItem={isLastItem}>
+            <ProductUnavailableContainer key={index}>
               <ProductInfoAndPriceContainer>
                 <ProductInfoContainer>
                   <ImageContainer>
-                    <ProductImage src={item?.product?.images} alt={''} />
+                    <ProductImage
+                      src={item?.product?.images}
+                      alt={''}
+                      width={60}
+                      height={60}
+                    />
                   </ImageContainer>
-                  <div>
+                  <BrandProductNameContainer>
                     <ProductBrand brand={item?.product?.brand} />
                     <ProductName
                       productName={item?.product?.description}
                       productUrl={item?.product?.detailUrl}
                     />
-                  </div>
+                  </BrandProductNameContainer>
                 </ProductInfoContainer>
-                <DeleteButton
-                  hasIcon={true}
-                  onRemoveFromCart={() =>
-                    handleRemoveFromCart(item.index as number)
-                  }
-                />
+                <ButtonContainer>
+                  <DeleteButton
+                    hasIcon={true}
+                    onRemoveFromCart={() =>
+                      handleRemoveFromCart(item.index as number)
+                    }
+                  />
+                </ButtonContainer>
               </ProductInfoAndPriceContainer>
-            </Container>
+            </ProductUnavailableContainer>
           </>
         );
       })}

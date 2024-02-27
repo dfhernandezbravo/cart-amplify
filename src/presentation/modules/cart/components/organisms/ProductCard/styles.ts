@@ -52,32 +52,26 @@ export const ImageContainer = styled.div`
   position: relative;
 `;
 
-export const QuantitySelectorContainer = styled.div`
+export const ProductUnavailableContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  width: 350px;
-  & p {
-    font-size: 18px;
-    font-weight: 700;
+  padding: 16px 0;
+  background-color: #fff;
+`;
+
+export const ButtonContainer = styled.div`
+  @media only screen and (min-width: 1024px) {
+    margin-right: 12rem;
   }
-  & input {
-    padding: 16px;
-    margin: 1rem 0;
-    border: 1px solid #aaaaaa;
-    border-radius: 5px;
-  }
-  & input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
-  }
-  & button {
-    border: 1px solid #af1211;
-    border-radius: 8px;
-    background-color: #af1211;
-    padding: 16px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #ffffff;
+`;
+
+export const PriceContainer = styled.div`
+  margin-right: 0.6rem;
+`;
+
+export const BrandProductNameContainer = styled.div`
+  & .product-name--container {
+    max-width: 350px;
   }
 `;
