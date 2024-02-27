@@ -20,14 +20,8 @@ import getParamData from '@use-cases/cms/getParamData';
 
 const CartAsideContainer = () => {
   // hooks
-  const {
-    cartBFF,
-    hasHybridation,
-    cartId,
-    isHeadless,
-    cartAsideIsOpen,
-    isCencopayActive,
-  } = useAppSelector((state) => state.cart);
+  const { cartBFF, hasHybridation, cartId, isHeadless, cartAsideIsOpen } =
+    useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
@@ -37,6 +31,7 @@ const CartAsideContainer = () => {
     setIsHeadless,
     setCartAsideIsOpen,
     setParams,
+    resetSelectedQuantityMinicart,
   } = cartSlice.actions;
 
   const setSalesChannelCookie = (
@@ -102,7 +97,7 @@ const CartAsideContainer = () => {
             salesChannel,
             orderFormVtex,
           } = event?.data?.VTEX_PRODUCT_ADD_TO_CART;
-
+          dispatch(resetSelectedQuantityMinicart());
           dispatch(simulateAddProduct({ ...product, quantityValue }));
           const cartBFFfromLocalStorage = getCartFromLocalStorage(cartBFF);
           const productInCart = getCartFromLocalStorage(cartBFF)?.items?.find(

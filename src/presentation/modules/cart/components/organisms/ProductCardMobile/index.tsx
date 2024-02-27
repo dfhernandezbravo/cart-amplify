@@ -22,7 +22,7 @@ import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
 import ProductSku from '@components/molecules/ProductSku';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
-import ProductService from '@modules/cart/components/molecules/ProductService';
+// import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCardMobile = (props: ProductCardProps) => {
   const {

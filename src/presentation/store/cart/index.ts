@@ -17,10 +17,9 @@ import deleteItem from '@use-cases/cart/delete-item';
 import { RootState } from '@hooks/storeHooks';
 import { Cart, Item } from '@entities/cart/cart.entity';
 import addItem from '@use-cases/cart/add-item';
-import getParamData from '@use-cases/cms/getParamData';
 import addProductService from '@use-cases/cart/add-product-service';
 import deleteProductService from '@use-cases/cart/delete-product-service';
-import { changeOfAmount } from '@components/atoms/ToastContainer/customMessage';
+// import { changeOfAmount } from '@components/atoms/ToastContainer/customMessage';
 
 export const quantitySelected = {
   quantity: null,
@@ -38,6 +37,7 @@ const initialValue: InitialState = {
   isCencopayActive: false,
   isHeadless: false,
   cartAsideIsOpen: false,
+  selectedQuantityMinicart: { index: null, quantity: null },
 };
 
 const cartSlice = createSlice({
@@ -172,6 +172,18 @@ const cartSlice = createSlice({
       state.hasHybridation = payload?.isEnabledMiniCart;
       state.isCencopayActive = payload?.isCencopayActive;
     },
+    setSelectedQuantityMinicart: (state, { payload }) => {
+      state.selectedQuantityMinicart = {
+        index: payload.index,
+        quantity: payload.quantity,
+      };
+    },
+    resetSelectedQuantityMinicart: (state) => {
+      state.selectedQuantityMinicart = {
+        index: null,
+        quantity: null,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -226,9 +238,9 @@ const cartSlice = createSlice({
                 : null,
           };
 
-          if (availableItemNewResponse < (quantity as number)) {
-            changeOfAmount();
-          }
+          // if (availableItemNewResponse < (quantity as number)) {
+          //   changeOfAmount();
+          // }
         }
       })
       .addCase(updateItem.rejected, (state) => {

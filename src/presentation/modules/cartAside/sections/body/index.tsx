@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import _ from 'lodash';
 import cartSlice from '@store/cart';
-import { selectError } from '@store/error';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import ProductCard from '@modules/cartAside/components/organisms/ProductCard';
 import MinicartError from '@modules/cart/components/molecules/MinicartError';
@@ -17,10 +16,13 @@ const Body = () => {
   // Hooks
   const { cartId, cartBFF } = useAppSelector((state) => state.cart);
   const { joinProductUnavailable } = useItemWithoutStock(cartBFF as Cart);
-  const { error } = useAppSelector(selectError);
   const dispatch = useAppDispatch();
-  const { decrementProductQuantity, incrementProductQuantity, removeProduct } =
-    cartSlice.actions;
+  const {
+    decrementProductQuantity,
+    incrementProductQuantity,
+    removeProduct,
+    resetSelectedQuantityMinicart,
+  } = cartSlice.actions;
 
   const {
     methods: { sendQuantityClickEvent },
@@ -160,8 +162,7 @@ const Body = () => {
 
   return (
     <BodyContainer>
-      {error ? <MinicartError title={error.message} /> : null}
-
+      <MinicartError />
       {joinProductUnavailable?.length ? renderProductWithoutStock() : null}
 
       {cartBFF?.items?.map((item: Item, index: number) => (
@@ -175,10 +176,12 @@ const Body = () => {
           }}
           onIncrementQuantity={() => {
             dispatch(incrementProductQuantity(index));
+            dispatch(resetSelectedQuantityMinicart());
             methods.handleIncrementQuantity(item, index);
           }}
           onDecrementQuantity={() => {
             dispatch(decrementProductQuantity(index));
+            dispatch(resetSelectedQuantityMinicart());
             methods.handleDecrementQuantity(item, index);
           }}
         />
