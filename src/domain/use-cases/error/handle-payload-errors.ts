@@ -16,8 +16,6 @@ const handlePayloadError = (errors: MessagesError[]): AppError | null => {
   );
   const warningMessages = errors.filter((error) => error.status === 'warning');
 
-  console.log({ errorsMessages, warningMessages });
-
   if (errorsMessages.length) {
     genericPayloadError(); // cart toast
 

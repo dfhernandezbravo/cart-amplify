@@ -13,21 +13,10 @@ const dispatchPayloadErrors = (
 
   if (messagesError?.length) {
     const cartError = handlePayloadError(messagesError);
-
-    console.log('dispatchPayloadErrors ', { cartError, data });
-
     if (cartError) {
       if (cartError?.ean) {
         const productIndex = data?.items.findIndex(
           (item) => item.product.ean === cartError.ean,
-        );
-
-        console.log('dispatchPayloadErrors productIndex', productIndex);
-        console.log(
-          'dispatchPayloadErrors productIndex',
-          productIndex !== undefined && productIndex !== -1
-            ? data?.items[productIndex]
-            : null,
         );
 
         if (

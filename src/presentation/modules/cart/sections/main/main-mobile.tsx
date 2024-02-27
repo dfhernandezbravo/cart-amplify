@@ -1,7 +1,7 @@
 import ProductCardMobile from '@modules/cart/components/organisms/ProductCardMobile';
 
 //Hooks
-import { Cart, Item } from '@entities/cart/cart.entity';
+import { Cart, Item, ProductAvailability } from '@entities/cart/cart.entity';
 import { useAppSelector } from '@hooks/storeHooks';
 import useItemWithoutStock from '@hooks/useItemWithoutStock';
 import useProductCardEvent from '@hooks/useProductCardEvent';
@@ -20,6 +20,10 @@ const MainMobile = () => {
   );
   const { methods } = useProductCardEvent(cartBFF?.id as string);
   const itemLength = cartBFF?.items?.length;
+  const existProductAvailable = cartBFF?.items?.some(
+    (item) => item.product.availability === ProductAvailability.AVAILABLE,
+  );
+
   return (
     <ContainerMobile>
       {loading && <Loader />}
@@ -27,7 +31,8 @@ const MainMobile = () => {
         <ProductsUnavailable />
       ) : null}
 
-      {productWithoutStock?.length || productCannotBeDelivered?.length ? (
+      {productWithoutStock?.length ||
+      (productCannotBeDelivered?.length && existProductAvailable) ? (
         <ProductAvailableTitle />
       ) : null}
       {cartBFF?.items?.map((item: Item, index: number) => (

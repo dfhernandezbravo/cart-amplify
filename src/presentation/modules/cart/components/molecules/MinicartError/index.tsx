@@ -19,8 +19,6 @@ const MinicartError = () => {
   const { cartBFF, isHeadless } = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
-  console.log('MinicartError error ', error);
-
   const { addProductInCart } = cartSlice.actions;
 
   const handleOnClose = () => {

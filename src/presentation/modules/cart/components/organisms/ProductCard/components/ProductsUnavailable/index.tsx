@@ -1,6 +1,5 @@
 import { useAppSelector } from '@hooks/storeHooks';
 import { Cart } from '@entities/cart/cart.entity';
-import useProductCardEvent from '@hooks/useProductCardEvent';
 import useItemWithoutStock from '@hooks/useItemWithoutStock';
 import ProductCardUnavailable from './components/ProductCardUnavailable';
 
@@ -10,9 +9,6 @@ const ProductsUnavailable = () => {
   const { productCannotBeDelivered, productWithoutStock } = useItemWithoutStock(
     cartBFF as Cart,
   );
-  const {
-    methods: { handleRemoveFromCart },
-  } = useProductCardEvent(cartBFF?.id as string);
 
   return (
     <>

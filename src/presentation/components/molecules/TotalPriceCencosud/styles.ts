@@ -25,7 +25,7 @@ export const Container = styled.div`
     span:first-child {
       font-size: 14px;
       font-weight: 400;
-      color: #6e8391;
+      color: #363f45;
     }
 
     .totalPrice {
@@ -80,7 +80,7 @@ export const Skeleton = styled.span`
 export const Title = styled.span`
   font-size: 14px;
   font-weight: 400;
-  color: #6e8391;
+  color: #363f45;
 
   /* @media screen and (max-width: 767px) {
     max-width: 209px;

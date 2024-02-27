@@ -13,7 +13,7 @@ const ProductName = (props: ProductNameProps) => {
   const { productName, productUrl } = props;
 
   return (
-    <Container>
+    <Container className="product-name--container">
       <Link
         href={
           productUrl

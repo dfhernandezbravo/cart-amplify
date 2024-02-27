@@ -1,6 +1,6 @@
 //Hooks
 import { useAppDispatch } from './storeHooks';
-import cartSlice from '@store/cart';
+import cartSlice, { quantitySelected } from '@store/cart';
 
 import updateItem from '@use-cases/cart/update-item';
 import deleteItem from '@use-cases/cart/delete-item';
@@ -24,6 +24,7 @@ const useProductCardEvent = (cartId: string) => {
       dispatch(updateItem(productToUpdate));
     },
     handleRemoveFromCart: (index: number) => {
+      dispatch(setQuantitySelected(quantitySelected));
       dispatch(deleteItem({ cartId: cartId ?? '', itemIndex: index }));
     },
   };

@@ -9,10 +9,11 @@ export const Container = styled.div`
   border: 1px solid #bfbfbf;
   border-radius: 8px;
   padding: 16px;
+  color: #363f45;
 
   h1 {
     font-size: 18px;
-    color: #485760;
+    color: #363f45;
     font-weight: 600;
     line-height: 30px;
   }
@@ -22,7 +23,6 @@ export const Container = styled.div`
     align-items: center;
     justify-content: space-between;
     font-size: 14px;
-    color: #6e8391;
     margin: 10px 0;
 
     span {
