@@ -1,9 +1,12 @@
-type HttpError = 'HttpException' | 'InternalServerError';
-type PayloadError = 'Error';
+export type ErrorType = 'http' | 'payload';
+export type StatusError = 'error' | 'warning';
 
 export type AppError = {
-  error: HttpError | PayloadError;
-  message: string;
+  errorType: ErrorType;
+  status: StatusError;
+  title?: string;
+  content?: string;
+  ean?: string;
 };
 
 export type ResponseError = {
@@ -11,17 +14,6 @@ export type ResponseError = {
   errorCode: string;
   message: string;
   statusCode: number;
-};
-
-type Fields = {
-  id: string;
-};
-
-export type MessagesError = {
-  code: string;
-  fields: Fields;
-  status: string;
-  text: string;
 };
 
 export enum CartAction {

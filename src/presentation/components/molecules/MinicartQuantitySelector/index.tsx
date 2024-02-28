@@ -18,7 +18,8 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   // hooks
   const dispatch = useAppDispatch();
   const { cartId, loading } = useAppSelector((state) => state.cart);
-  const { updateProductQuantity } = cartSlice.actions;
+  const { updateProductQuantity, resetSelectedQuantityMinicart } =
+    cartSlice.actions;
   const {
     methods: { sendQuantityClickEvent },
   } = useAnalytics();
@@ -29,6 +30,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   // methods
   const methods = {
     updateQuantityInput: () => {
+      dispatch(resetSelectedQuantityMinicart());
       const newQuantity = Number(quantityInput);
       if (newQuantity === quantity) return;
 

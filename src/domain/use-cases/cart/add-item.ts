@@ -7,7 +7,7 @@ import dispatchHttpErrors from '@use-cases/error/dispatch-http-errors';
 import getInstanceHttp from './get-instance-http';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
 import WindowsEvents from '@events/index';
-// import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
+import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
 
 const addItem = createAsyncThunk(
   '/cart/addItem',
@@ -23,7 +23,7 @@ const addItem = createAsyncThunk(
         name: WindowsEvents.UPDATE_SHOPPING_CART,
         detail: { shoppingCart: data },
       });
-      // dispatchPayloadErrors(data, dispatch, CartAction.ADD);
+      dispatchPayloadErrors(data, dispatch);
       return fulfillWithValue(data);
     } catch (error) {
       dispatchHttpErrors(error as AxiosError, dispatch, CartAction.ADD);

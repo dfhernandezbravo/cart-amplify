@@ -1,8 +1,11 @@
+import { httpOrPayloadError } from '@components/atoms/ToastContainer/customMessage';
 import {
   AppError,
   CartAction,
   ResponseError,
 } from '@entities/error/error.entity';
+
+const ERROR_HTTP_CONTENT = 'Intenta nuevamente';
 
 const handleHttpError = (
   error: ResponseError,
@@ -10,15 +13,31 @@ const handleHttpError = (
 ): AppError => {
   switch (error.statusCode) {
     case 400:
+      httpOrPayloadError({
+        title: `Error al ${action} producto`,
+        content: ERROR_HTTP_CONTENT,
+        status: 'error',
+        type: 'http',
+      }); // cart toast
       return {
-        error: 'HttpException',
-        message: `Error al ${action} producto`,
+        errorType: 'http',
+        status: 'error',
+        title: `Error al ${action} producto`,
+        content: ERROR_HTTP_CONTENT,
       };
 
     default:
+      httpOrPayloadError({
+        title: `Error al ${action} producto`,
+        content: ERROR_HTTP_CONTENT,
+        status: 'error',
+        type: 'http',
+      }); // cart toast
       return {
-        error: 'InternalServerError',
-        message: `Error al ${action} producto`,
+        errorType: 'http',
+        status: 'error',
+        title: `Error al ${action} producto`,
+        content: ERROR_HTTP_CONTENT,
       };
   }
 };
