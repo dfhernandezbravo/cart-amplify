@@ -6,7 +6,7 @@ interface FullPriceProps {
 
 export const Container = styled.div`
   margin: 5px 0;
-  width: 260px;
+  /* width: 260px; */
 `;
 
 export const OfferPriceContainer = styled.div`
