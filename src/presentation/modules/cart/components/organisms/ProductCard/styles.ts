@@ -17,6 +17,13 @@ export const Container = styled.div<Props>`
 export const ProductInfoContainer = styled.div`
   display: flex;
   column-gap: 16px;
+  /* @media (min-width: 1440px) {
+    width: 50rem;
+  }
+
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    width: 30rem;
+  } */
 
   & p {
     color: #485760;
@@ -43,7 +50,10 @@ export const QuantitySelectorAndDeleteContainer = styled.div`
 
   & .quantity-container {
     display: flex;
-    margin-right: 106px;
+    /* margin-right: 106px; */
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
   }
 `;
 
@@ -61,13 +71,36 @@ export const ProductUnavailableContainer = styled.div`
 `;
 
 export const ButtonContainer = styled.div`
-  @media only screen and (min-width: 1024px) {
-    margin-right: 12rem;
+  /* width: 100%; */
+  margin-right: 0.6rem;
+
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    min-width: 15rem;
+  }
+
+  @media (min-width: 1440px) {
+    min-width: 20rem;
   }
 `;
 
 export const PriceContainer = styled.div`
   margin-right: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  @media (max-width: 1023px) {
+    min-width: 12rem;
+  }
+
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    min-width: 15rem;
+  }
+
+  @media (min-width: 1440px) {
+    min-width: 20rem;
+  }
 `;
 
 export const BrandProductNameContainer = styled.div`

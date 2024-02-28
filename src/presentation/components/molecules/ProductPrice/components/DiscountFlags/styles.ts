@@ -68,6 +68,7 @@ export const WrapperClusterPrice = styled.div<ClusterProps>`
     font-size: 0.8rem;
     font-weight: 600;
     width: 40px;
+    height: 100%;
     text-align: center;
   }
 
