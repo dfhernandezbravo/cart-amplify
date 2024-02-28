@@ -7,3 +7,4 @@ jobs:
     secrets: inherit
     with:
       dry-run: 'false'
+      environment: ${{(github.ref_name == 'master' && 'production') || (github.ref_name == 'uat' && 'uat') || 'staging'}}
