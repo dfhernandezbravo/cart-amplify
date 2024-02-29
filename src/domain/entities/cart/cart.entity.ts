@@ -232,4 +232,5 @@ export enum ProductAvailability {
   WITHOUTSTOCK = 'withoutStock',
   CANNOTBEDELIVERED = 'cannotBeDelivered',
   ITEM_QUANTITY_NOT_AVAILABLE = 'itemQuantityNotAvailable',
+  UNAVAILABLE_ITEM_FULFILLMENT = 'unavailableItemFulfillment',
 }
