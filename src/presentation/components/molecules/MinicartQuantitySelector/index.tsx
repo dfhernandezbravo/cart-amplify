@@ -45,11 +45,11 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
             add: {
               products: [
                 {
-                  name: item.product.description,
-                  id: item.itemId,
-                  price: item.product.prices.normalPrice.toString(),
-                  brand: item.product.brand,
-                  category: item.product.category,
+                  name: item?.product?.description,
+                  id: item?.itemId,
+                  price: item?.product?.prices?.normalPrice?.toString(),
+                  brand: item?.product?.brand,
+                  category: item?.product?.category,
                   variant: '',
                   quantity: Math.abs(quantity - newQuantity),
                 },
