@@ -4,13 +4,6 @@ import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
 import ProductPrice from '@components/molecules/ProductPrice';
 import QuantitySelector from '@components/atoms/CartQuantitySelector';
-
-import DeleteButton from '@components/molecules/DeleteButton';
-import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
-import ProductSku from '@components/molecules/ProductSku';
-import useAnalytics from '@hooks/useAnalytics';
-import { AnalyticsEvents } from '@entities/analytics';
-import ProductService from '@modules/cart/components/molecules/ProductService';
 import ModalQuantity from '../ModalQuantity';
 import { ProductCardProps } from '../ProductCard/types';
 //Styles
@@ -20,6 +13,12 @@ import {
   QuantitySelectorAndDeleteContainer,
   MainContainer,
 } from './styles';
+import DeleteButton from '@components/molecules/DeleteButton';
+import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
+import ProductSku from '@components/molecules/ProductSku';
+import useAnalytics from '@hooks/useAnalytics';
+import { AnalyticsEvents } from '@entities/analytics';
+// import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCardMobile = (props: ProductCardProps) => {
   const {
@@ -62,12 +61,12 @@ const ProductCardMobile = (props: ProductCardProps) => {
     const productData = {
       products: [
         {
-          name: item.product.description,
-          id: item.product.sku,
-          price: item.product.prices.normalPrice.toString(),
-          price_tecno: item.product.prices.brandPrice?.toString(),
-          brand: item.product.brand,
-          category: item.product.category,
+          name: item?.product?.description,
+          id: item?.product?.sku,
+          price: item?.product?.prices?.normalPrice?.toString(),
+          price_tecno: item?.product?.prices?.brandPrice?.toString(),
+          brand: item?.product?.brand,
+          category: item?.product?.category,
           variant: '',
           quantity: Math.abs(parseInt(quantity) - item.quantity),
         },
@@ -89,14 +88,14 @@ const ProductCardMobile = (props: ProductCardProps) => {
     const productData = {
       products: [
         {
-          name: item.product.description,
-          id: item.product.sku,
-          price: item.product.prices.normalPrice.toString(),
-          price_tecno: item.product.prices.brandPrice?.toString(),
-          brand: item.product.brand,
-          category: item.product.category,
+          name: item?.product?.description,
+          id: item?.product?.sku,
+          price: item?.product?.prices?.normalPrice?.toString(),
+          price_tecno: item?.product?.prices?.brandPrice?.toString(),
+          brand: item?.product?.brand,
+          category: item?.product?.category,
           variant: '',
-          quantity: item.quantity,
+          quantity: item?.quantity,
         },
       ],
     };

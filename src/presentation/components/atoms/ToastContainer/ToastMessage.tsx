@@ -86,7 +86,7 @@ const selectLayout = (
           />
         ),
         style: {
-          background: '#70110e',
+          background: '#79110D',
           color: '#ffffff',
         },
       };

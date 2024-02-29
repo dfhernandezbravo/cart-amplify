@@ -83,7 +83,7 @@ export enum PriceType {
   totalCencoPay = 'totalCencoPay',
 }
 
-interface MessagesError {
+export interface MessagesError {
   code: string;
   text: string;
   status: string;
@@ -94,6 +94,7 @@ interface Fields {
   ean: string;
   itemIndex: string;
   skuName: string;
+  id: string;
 }
 
 export const enum OperationStatus {
@@ -230,4 +231,5 @@ export enum ProductAvailability {
   AVAILABLE = 'available',
   WITHOUTSTOCK = 'withoutStock',
   CANNOTBEDELIVERED = 'cannotBeDelivered',
+  ITEM_QUANTITY_NOT_AVAILABLE = 'itemQuantityNotAvailable',
 }

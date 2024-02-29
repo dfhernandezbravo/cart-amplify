@@ -11,9 +11,12 @@ import {
   ImageAndDeleteContainer,
   MainContainer,
 } from './styles';
-import ProductService from '@modules/cartAside/components/molecules/ProductService';
+// import ProductService from '@modules/cartAside/components/molecules/ProductService';
+import AvailableQuantity from '@modules/cart/components/organisms/ProductCard/components/AvailableQuantity';
+import { useAppSelector } from '@hooks/storeHooks';
 
 const ProductCard = (props: ProductCardProps) => {
+  const { selectedQuantityMinicart } = useAppSelector((state) => state.cart);
   const {
     item,
     index,
@@ -24,9 +27,9 @@ const ProductCard = (props: ProductCardProps) => {
 
   if (item.product.availability !== 'available') return null;
 
-  const hasServiceApplied = item.product.options?.filter(
-    (obj) => obj.isApplied === true,
-  );
+  // const hasServiceApplied = item.product.options?.filter(
+  //   (obj) => obj.isApplied === true,
+  // );
 
   return (
     <ProductCardContainer>
@@ -47,6 +50,11 @@ const ProductCard = (props: ProductCardProps) => {
             quantity={item?.quantity ?? 0}
             adjustment={item?.adjustment}
           />
+          {selectedQuantityMinicart.index === index &&
+          selectedQuantityMinicart.quantity &&
+          item?.quantity < selectedQuantityMinicart.quantity ? (
+            <AvailableQuantity quantity={item?.quantity} />
+          ) : null}
           <QuantitySelector
             index={index}
             onIncrementQuantity={onIncrementQuantity}

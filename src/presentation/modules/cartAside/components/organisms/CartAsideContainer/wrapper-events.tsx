@@ -1,4 +1,4 @@
-import { Cart } from '@entities/cart/cart.entity';
+import { Cart, ProductAvailability } from '@entities/cart/cart.entity';
 import { CartAction } from '@entities/error/error.entity';
 import WindowsEvents from '@events/index';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
@@ -7,6 +7,7 @@ import { setError } from '@store/error';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
 import getCart from '@use-cases/cart/get-cart';
 import handleHttpError from '@use-cases/error/handle-http-errors';
+import handlePayloadError from '@use-cases/error/handle-payload-errors';
 import _ from 'lodash';
 import React, { useCallback, useEffect } from 'react';
 
@@ -21,7 +22,8 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
     simulateAddProductHeadless,
     simulateRemoveProduct,
     setCartAsideIsOpen,
-    setCart,
+    setSelectedQuantityMinicart,
+    resetSelectedQuantityMinicart,
   } = cartSlice.actions;
 
   const dispatch = useAppDispatch();
@@ -66,6 +68,35 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
         detail: { shoppingCart },
       } = customEvent;
 
+      dispatch(resetSelectedQuantityMinicart());
+      const messagesError = shoppingCart.messagesErrors;
+
+      if (messagesError?.length) {
+        const cartError = handlePayloadError(messagesError);
+
+        if (cartError) {
+          if (cartError?.ean) {
+            const productIndex = cartBFF?.items.findIndex(
+              (item) => item.product.ean === cartError.ean,
+            );
+
+            if (
+              productIndex !== undefined &&
+              productIndex !== -1 &&
+              cartBFF?.items[productIndex]?.quantity
+            ) {
+              dispatch(
+                setSelectedQuantityMinicart({
+                  quantity: cartBFF.items[productIndex].quantity,
+                  index: productIndex,
+                }),
+              );
+            }
+          }
+          dispatch(setError(cartError));
+        }
+      }
+
       if (_.isEqual(cartBFF, shoppingCart) || !cartId) return;
 
       dispatch(getCart({ cartId }));
@@ -78,12 +109,18 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
     (event: Event) => {
       event.preventDefault();
       const customEvent = event as CustomEvent;
-      const customEventError = customEvent.detail?.data.error;
-      const cartError = handleHttpError(customEventError, CartAction.ADD);
-      dispatch(setError(cartError));
-      setTimeout(() => {
-        dispatch(simulateRemoveProduct(customEvent.detail?.data?.itemId));
-      }, 4000);
+      const customEventError = customEvent.detail?.error;
+
+      if (customEventError) {
+        const cartError = handleHttpError(customEventError, CartAction.ADD);
+        dispatch(setError(cartError));
+        setTimeout(() => {
+          customDispatchEvent({
+            name: WindowsEvents.DISPATCH_GET_CART,
+            detail: {},
+          });
+        }, 4000);
+      }
     },
     [dispatch, simulateRemoveProduct],
   );
@@ -94,7 +131,6 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
       const customEvent = event as CustomEvent;
 
       dispatch(addProductInCart(customEvent.detail?.data));
-
       dispatch(setCartAsideIsOpen(true));
     },
     [addProductInCart, dispatch, setCartAsideIsOpen],
@@ -113,7 +149,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
       handleGetShoppingCart,
     );
     window.addEventListener(
-      WindowsEvents.ADD_PRODUCT_ERROR,
+      WindowsEvents.GET_SHOPPING_CART_ERROR,
       handleAddProductErrorEvent,
     );
     window.addEventListener(
@@ -134,7 +170,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
       );
 
       window.removeEventListener(
-        WindowsEvents.ADD_PRODUCT_ERROR,
+        WindowsEvents.GET_SHOPPING_CART_ERROR,
         handleAddProductErrorEvent,
       );
       window.removeEventListener(

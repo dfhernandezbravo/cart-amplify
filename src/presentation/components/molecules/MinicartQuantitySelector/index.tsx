@@ -18,7 +18,8 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   // hooks
   const dispatch = useAppDispatch();
   const { cartId, loading } = useAppSelector((state) => state.cart);
-  const { updateProductQuantity } = cartSlice.actions;
+  const { updateProductQuantity, resetSelectedQuantityMinicart } =
+    cartSlice.actions;
   const {
     methods: { sendQuantityClickEvent },
   } = useAnalytics();
@@ -29,6 +30,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   // methods
   const methods = {
     updateQuantityInput: () => {
+      dispatch(resetSelectedQuantityMinicart());
       const newQuantity = Number(quantityInput);
       if (newQuantity === quantity) return;
 
@@ -43,11 +45,11 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
             add: {
               products: [
                 {
-                  name: item.product.description,
-                  id: item.itemId,
-                  price: item.product.prices.normalPrice.toString(),
-                  brand: item.product.brand,
-                  category: item.product.category,
+                  name: item?.product?.description,
+                  id: item?.itemId,
+                  price: item?.product?.prices?.normalPrice?.toString(),
+                  brand: item?.product?.brand,
+                  category: item?.product?.category,
                   variant: '',
                   quantity: Math.abs(quantity - newQuantity),
                 },
