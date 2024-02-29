@@ -30,23 +30,33 @@ const CuponAsideMobile = ({
   const renderChevron = () => {
     if (isCuponContainerOpen) {
       return (
-        <Image
-          src="/icons/general/chevron-up-m.svg"
-          width={25}
-          height={25}
-          alt="flecha arriba"
-          priority
-        />
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12.0002 10.828L7.05023 15.778L5.63623 14.364L12.0002 8L18.3642 14.364L16.9502 15.778L12.0002 10.828Z"
+            fill="#1A1A1A"
+          />
+        </svg>
       );
     }
     return (
-      <Image
-        src="/icons/general/chevron-down.svg"
-        width={20}
-        height={20}
-        alt="flecha abajo"
-        priority
-      />
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 -10 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6.99999 5.17192L11.95 0.221924L13.364 1.63592L6.99999 7.99992L0.635986 1.63592L2.04999 0.221924L6.99999 5.17192Z"
+          fill="#333333"
+        />
+      </svg>
     );
   };
 
