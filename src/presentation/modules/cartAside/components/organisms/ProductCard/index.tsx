@@ -14,6 +14,7 @@ import {
 // import ProductService from '@modules/cartAside/components/molecules/ProductService';
 import AvailableQuantity from '@modules/cart/components/organisms/ProductCard/components/AvailableQuantity';
 import { useAppSelector } from '@hooks/storeHooks';
+import Tintometric from '@components/molecules/Tintometric';
 
 const ProductCard = (props: ProductCardProps) => {
   const { selectedQuantityMinicart } = useAppSelector((state) => state.cart);
@@ -50,6 +51,7 @@ const ProductCard = (props: ProductCardProps) => {
             quantity={item?.quantity ?? 0}
             adjustment={item?.adjustment}
           />
+          <Tintometric />
           {selectedQuantityMinicart.index === index &&
           selectedQuantityMinicart.quantity &&
           item?.quantity < selectedQuantityMinicart.quantity ? (
