@@ -14,7 +14,13 @@ const handlePayloadError = (errors: MessagesError[]): AppError | null => {
       error.status === 'error' &&
       error.code !== ProductAvailability.CANNOTBEDELIVERED,
   );
-  const warningMessages = errors.filter((error) => error.status === 'warning');
+
+  // only show warning quantity not available
+  const warningMessages = errors.filter(
+    (error) =>
+      error.status === 'warning' &&
+      error.code === ProductAvailability.ITEM_QUANTITY_NOT_AVAILABLE,
+  );
 
   if (errorsMessages.length) {
     genericPayloadError(); // cart toast
@@ -39,11 +45,9 @@ const handlePayloadError = (errors: MessagesError[]): AppError | null => {
       status: 'warning',
       title: WARNING_PAYLOAD_TITLE,
       content: `${warningMessages[0].text}`,
-      ean:
-        warningMessages[0].code ===
-        ProductAvailability.ITEM_QUANTITY_NOT_AVAILABLE
-          ? `${warningMessages[0].fields?.ean}`
-          : undefined,
+      ean: warningMessages[0].fields?.ean
+        ? `${warningMessages[0].fields?.ean}`
+        : undefined,
     };
   }
 
