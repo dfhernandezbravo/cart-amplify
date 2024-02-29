@@ -39,11 +39,11 @@ const Body = () => {
           add: {
             products: [
               {
-                name: item.product.description,
-                id: item.product.sku,
-                price: item.product.prices.normalPrice.toString(),
-                brand: item.product.brand,
-                category: item.product.category,
+                name: item?.product?.description,
+                id: item?.product?.sku,
+                price: item?.product?.prices?.normalPrice?.toString(),
+                brand: item?.product?.brand,
+                category: item?.product?.category,
                 variant: '',
                 quantity: 1,
               },
@@ -70,11 +70,11 @@ const Body = () => {
             add: {
               products: [
                 {
-                  name: item.product.description,
-                  id: item.product.sku,
-                  price: item.product.prices.normalPrice.toString(),
-                  brand: item.product.brand,
-                  category: item.product.category,
+                  name: item?.product?.description,
+                  id: item?.product?.sku,
+                  price: item?.product?.prices?.normalPrice?.toString(),
+                  brand: item?.product?.brand,
+                  category: item?.product?.category,
                   variant: '',
                   quantity: 1,
                 },
@@ -102,11 +102,11 @@ const Body = () => {
             remove: {
               products: [
                 {
-                  name: item.product.description,
-                  id: item.product.sku,
-                  price: item.product.prices.normalPrice.toString(),
-                  brand: item.product.brand,
-                  category: item.product.category,
+                  name: item?.product?.description,
+                  id: item?.product?.sku,
+                  price: item?.product?.prices.normalPrice?.toString(),
+                  brand: item?.product?.brand,
+                  category: item?.product?.category,
                   variant: '',
                   quantity: 1,
                 },
@@ -131,13 +131,13 @@ const Body = () => {
           remove: {
             products: [
               {
-                name: item.product.description,
-                id: item.product.sku,
-                price: item.product.prices.normalPrice.toString(),
-                brand: item.product.brand,
-                category: item.product.category,
+                name: item?.product?.description,
+                id: item?.product?.sku,
+                price: item?.product?.prices.normalPrice?.toString(),
+                brand: item?.product?.brand,
+                category: item?.product?.category,
                 variant: '',
-                quantity: item.quantity,
+                quantity: item?.quantity,
               },
             ],
           },

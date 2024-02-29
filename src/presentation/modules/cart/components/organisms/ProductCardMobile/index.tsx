@@ -61,12 +61,12 @@ const ProductCardMobile = (props: ProductCardProps) => {
     const productData = {
       products: [
         {
-          name: item.product.description,
-          id: item.product.sku,
-          price: item.product.prices.normalPrice.toString(),
-          price_tecno: item.product.prices.brandPrice?.toString(),
-          brand: item.product.brand,
-          category: item.product.category,
+          name: item?.product?.description,
+          id: item?.product?.sku,
+          price: item?.product?.prices?.normalPrice?.toString(),
+          price_tecno: item?.product?.prices?.brandPrice?.toString(),
+          brand: item?.product?.brand,
+          category: item?.product?.category,
           variant: '',
           quantity: Math.abs(parseInt(quantity) - item.quantity),
         },
@@ -88,14 +88,14 @@ const ProductCardMobile = (props: ProductCardProps) => {
     const productData = {
       products: [
         {
-          name: item.product.description,
-          id: item.product.sku,
-          price: item.product.prices.normalPrice.toString(),
-          price_tecno: item.product.prices.brandPrice?.toString(),
-          brand: item.product.brand,
-          category: item.product.category,
+          name: item?.product?.description,
+          id: item?.product?.sku,
+          price: item?.product?.prices?.normalPrice?.toString(),
+          price_tecno: item?.product?.prices?.brandPrice?.toString(),
+          brand: item?.product?.brand,
+          category: item?.product?.category,
           variant: '',
-          quantity: item.quantity,
+          quantity: item?.quantity,
         },
       ],
     };
