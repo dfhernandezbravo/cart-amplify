@@ -9,7 +9,6 @@ export const Container = styled.div`
   display: flex;
   &:before {
     content: '';
-    background-image: url('/icons/cart/warning-orange.svg');
     background-repeat: no-repeat;
     display: block;
     width: 25px;
