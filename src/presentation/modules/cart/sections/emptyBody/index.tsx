@@ -16,7 +16,7 @@ const EmptyBody = () => {
     } else if (!isHeadless && !isProduction()) {
       router.push('https://site.qa.easy.cl');
     } else {
-      router.push('/');
+      router.back();
     }
   };
 
