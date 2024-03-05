@@ -21,7 +21,7 @@ const addItem = createAsyncThunk(
       );
       customDispatchEvent({
         name: WindowsEvents.UPDATE_SHOPPING_CART,
-        detail: { shoppingCart: data },
+        detail: { shoppingCart: data, origin: 'CART' },
       });
       dispatchPayloadErrors(data, dispatch);
       return fulfillWithValue(data);
