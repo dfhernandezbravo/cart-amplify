@@ -22,7 +22,7 @@ const updateItem = createAsyncThunk(
       dispatchPayloadErrors(data, dispatch);
       customDispatchEvent({
         name: WindowsEvents.UPDATE_SHOPPING_CART,
-        detail: { shoppingCart: data },
+        detail: { shoppingCart: data, origin: 'CART' },
       });
       return fulfillWithValue(data);
     } catch (error) {

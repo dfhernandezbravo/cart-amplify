@@ -117,7 +117,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
         setTimeout(() => {
           customDispatchEvent({
             name: WindowsEvents.DISPATCH_GET_CART,
-            detail: {},
+            detail: { origin: 'CART' },
           });
         }, 4000);
       }
@@ -145,7 +145,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
 
     window.addEventListener(WindowsEvents.GET_CART_ID, handleGetCartId);
     window.addEventListener(
-      WindowsEvents.GET_SHOPPING_CART,
+      WindowsEvents.UPDATE_MINI_CART,
       handleGetShoppingCart,
     );
     window.addEventListener(
@@ -165,7 +165,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
 
       window.removeEventListener(WindowsEvents.GET_CART_ID, handleGetCartId);
       window.removeEventListener(
-        WindowsEvents.GET_SHOPPING_CART,
+        WindowsEvents.UPDATE_MINI_CART,
         handleGetShoppingCart,
       );
 
@@ -191,7 +191,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
     if (!cartId) {
       customDispatchEvent({
         name: WindowsEvents.DISPATCH_GET_CART_ID,
-        detail: {},
+        detail: { origin: 'CART' },
       });
     }
   }, [cartId]);
@@ -200,7 +200,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
     if (!cartBFF) {
       customDispatchEvent({
         name: WindowsEvents.DISPATCH_GET_CART,
-        detail: {},
+        detail: { origin: 'CART' },
       });
     }
   }, [cartBFF]);
