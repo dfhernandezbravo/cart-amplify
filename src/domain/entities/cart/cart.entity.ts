@@ -103,6 +103,12 @@ export const enum OperationStatus {
   PENDING,
 }
 
+interface ColorCode {
+  code: string;
+  hexColor: string;
+  quantity: number;
+}
+
 interface Product {
   id: string;
   sku: string;
@@ -122,6 +128,7 @@ interface Product {
   ean: string;
   productId?: string;
   detailUrl: string;
+  colorCodes?: ColorCode[];
 }
 
 export interface WithdrawalThird {

@@ -8,9 +8,15 @@ export type UpdateItemRequest = { cartId: string; items: UpdateBodyItem[] };
 
 export type DeleteItemRequest = { cartId: string; itemIndex: number };
 
+type PaintingCode = {
+  code: string;
+  hexColor: string;
+};
+
 export type AddBodyItem = {
   quantity: number;
   id: string;
+  paintingCode?: PaintingCode;
 };
 
 export type AddOrderItems = {
@@ -20,6 +26,7 @@ export type AddOrderItems = {
 export type UpdateBodyItem = {
   quantity: number;
   index: number;
+  paintingCode?: PaintingCode;
 };
 
 export type UpdateOrderItems = {

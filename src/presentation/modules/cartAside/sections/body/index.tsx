@@ -28,6 +28,18 @@ const Body = () => {
     methods: { sendQuantityClickEvent },
   } = useAnalytics();
 
+  const getLastPaintingCode = (item: Item) => {
+    const colorCodes = item.product?.colorCodes;
+    if (!colorCodes || colorCodes.length === 0) return null;
+
+    const lastColorCode = colorCodes[colorCodes.length - 1];
+
+    return {
+      code: lastColorCode.code,
+      hexColor: lastColorCode.hexColor,
+    };
+  };
+
   // Methods
   const methods = {
     incrementQuantity: (item: Item, index: number) => {
@@ -56,10 +68,17 @@ const Body = () => {
     handleIncrementQuantity: useCallback(
       _.debounce((item: Item, index: number) => {
         const quantity = item.quantity ?? 0;
+        const lastPaintingCode = getLastPaintingCode(item);
         dispatch(
           updateItem({
             cartId: cartId ?? '',
-            items: [{ quantity: quantity + 1, index: index }],
+            items: [
+              {
+                quantity: quantity + 1,
+                index: index,
+                paintingCode: lastPaintingCode ? lastPaintingCode : undefined,
+              },
+            ],
           }),
         );
         sendQuantityClickEvent({
@@ -88,10 +107,17 @@ const Body = () => {
     handleDecrementQuantity: useCallback(
       _.debounce((item: Item, index: number) => {
         const quantity = item.quantity ?? 0;
+        const lastPaintingCode = getLastPaintingCode(item);
         dispatch(
           updateItem({
             cartId: cartId ?? '',
-            items: [{ quantity: quantity - 1, index: index }],
+            items: [
+              {
+                quantity: quantity - 1,
+                index: index,
+                paintingCode: lastPaintingCode ? lastPaintingCode : undefined,
+              },
+            ],
           }),
         );
         sendQuantityClickEvent({

@@ -51,7 +51,7 @@ const ProductCard = (props: ProductCardProps) => {
             quantity={item?.quantity ?? 0}
             adjustment={item?.adjustment}
           />
-          <Tintometric />
+          <Tintometric item={item} />
           {selectedQuantityMinicart.index === index &&
           selectedQuantityMinicart.quantity &&
           item?.quantity < selectedQuantityMinicart.quantity ? (

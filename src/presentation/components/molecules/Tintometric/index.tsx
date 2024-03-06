@@ -1,29 +1,22 @@
+import { Fragment } from 'react';
 import { Container, Color, ColorContainer } from './styles';
+import { TintometricProps } from './types';
 
-const Tintometric = () => {
-  // example of data that will be received from the API
-  const tintometric = [
-    {
-      refId: '1061522', //skuVariant easy
-      code: 'M120-1',
-      hexColor: '#F1E0E8',
-    },
-    {
-      refId: '1061523', //skuVariant easy
-      code: 'M120-2',
-      hexColor: '#cc4b88',
-    },
-  ];
+const Tintometric = ({ item }: TintometricProps) => {
+  const colorCodes = item.product.colorCodes;
+  if (!colorCodes || colorCodes.length === 0) return null;
 
   return (
     <Container>
-      {tintometric.length
-        ? tintometric.map((item) => (
-            <ColorContainer key={item.refId}>
+      {colorCodes.map((item, i) => (
+        <Fragment key={`${item.code}-${i}`}>
+          {Array.from({ length: item.quantity }).map((_, index) => (
+            <ColorContainer key={`${item.code}-${i}-${index}`}>
               <Color color={item.hexColor}></Color>
             </ColorContainer>
-          ))
-        : null}
+          ))}
+        </Fragment>
+      ))}
     </Container>
   );
 };

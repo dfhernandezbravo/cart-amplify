@@ -8,6 +8,7 @@ export const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin: 13px 0;
 `;
 
 export const ColorContainer = styled.div`
