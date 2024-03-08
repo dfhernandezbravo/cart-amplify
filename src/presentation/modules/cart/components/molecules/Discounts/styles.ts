@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Price = styled.span`
   color: #363f45;
-  font-weight: 400;
+  font-weight: 600;
+  font-size: 16px;
 `;
 
 export const Skeleton = styled.span`
