@@ -24,7 +24,7 @@ const deleteItem = createAsyncThunk(
       if (status === 204) {
         customDispatchEvent({
           name: WindowsEvents.DISPATCH_SHOPPING_CART_WITHOUT_ITEMS,
-          detail: {},
+          detail: { origin: 'CART' },
         });
 
         return {} as Cart;
@@ -32,7 +32,7 @@ const deleteItem = createAsyncThunk(
 
       customDispatchEvent({
         name: WindowsEvents.UPDATE_SHOPPING_CART,
-        detail: { shoppingCart: data },
+        detail: { shoppingCart: data, origin: 'CART' },
       });
 
       dispatchPayloadErrors(data, dispatch);

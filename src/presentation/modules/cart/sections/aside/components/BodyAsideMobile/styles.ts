@@ -15,13 +15,14 @@ export const Container = styled.div<StatePropValue>`
     padding: 0 5px;
   }
   & .price-container p {
-    color: #6e8391;
-    font-size: 15px;
+    color: #363f45;
+    font-size: 14px;
+    font-weight: 400;
   }
   & .price-container span {
-    color: #333333;
-    font-size: 15px;
-    font-weight: 400;
+    color: #363f45;
+    font-size: 16px;
+    font-weight: 600;
   }
 
   & .cupon-container {
