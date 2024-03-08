@@ -143,6 +143,7 @@ const CartAsideContainer = () => {
                         : productInCart.quantity + 1,
                     },
                   ],
+                  sentFrom: 'MINICART',
                 }),
               );
               return;
@@ -157,6 +158,7 @@ const CartAsideContainer = () => {
                     id: productReference,
                   },
                 ],
+                sentFrom: 'MINICART',
               }),
             );
             return;

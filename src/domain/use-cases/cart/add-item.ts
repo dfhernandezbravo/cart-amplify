@@ -23,10 +23,20 @@ const addItem = createAsyncThunk(
         name: WindowsEvents.UPDATE_SHOPPING_CART,
         detail: { shoppingCart: data, origin: 'CART' },
       });
-      dispatchPayloadErrors(data, dispatch);
+      dispatchPayloadErrors(
+        data,
+        dispatch,
+        dataRequest.sentFrom,
+        dataRequest.items[0].quantity,
+      );
       return fulfillWithValue(data);
     } catch (error) {
-      dispatchHttpErrors(error as AxiosError, dispatch, CartAction.ADD);
+      dispatchHttpErrors(
+        error as AxiosError,
+        dispatch,
+        CartAction.ADD,
+        dataRequest.sentFrom,
+      );
       return rejectWithValue(error);
     }
   },

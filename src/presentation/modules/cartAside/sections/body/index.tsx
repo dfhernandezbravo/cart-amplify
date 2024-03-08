@@ -60,6 +60,7 @@ const Body = () => {
           updateItem({
             cartId: cartId ?? '',
             items: [{ quantity: quantity + 1, index: index }],
+            sentFrom: 'MINICART',
           }),
         );
         sendQuantityClickEvent({
@@ -92,6 +93,7 @@ const Body = () => {
           updateItem({
             cartId: cartId ?? '',
             items: [{ quantity: quantity - 1, index: index }],
+            sentFrom: 'MINICART',
           }),
         );
         sendQuantityClickEvent({
@@ -120,7 +122,13 @@ const Body = () => {
 
     handleRemoveFromCart: (index: number) => {
       dispatch(removeProduct(index));
-      dispatch(deleteItem({ cartId: cartId ?? '', itemIndex: index }));
+      dispatch(
+        deleteItem({
+          cartId: cartId ?? '',
+          itemIndex: index,
+          sentFrom: 'MINICART',
+        }),
+      );
     },
     sendRemoveFromCart: (item: Item, index: number) => {
       sendQuantityClickEvent({
