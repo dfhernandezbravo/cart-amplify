@@ -11,6 +11,7 @@ export type DeleteItemRequest = { cartId: string; itemIndex: number };
 type PaintingCode = {
   code: string;
   hexColor: string;
+  quantity: number;
 };
 
 export type AddBodyItem = {

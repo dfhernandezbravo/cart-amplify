@@ -28,15 +28,22 @@ const Body = () => {
     methods: { sendQuantityClickEvent },
   } = useAnalytics();
 
-  const getLastPaintingCode = (item: Item) => {
+  const getLastPaintingCode = (item: Item, action: number) => {
     const colorCodes = item.product?.colorCodes;
-    if (!colorCodes || colorCodes.length === 0) return null;
+    if (!colorCodes || colorCodes.length === 0) return undefined;
+
+    const prevTotalQuantity = colorCodes.reduce((acc, colorCode) => {
+      return acc + colorCode.quantity;
+    }, 0);
 
     const lastColorCode = colorCodes[colorCodes.length - 1];
+    const newQuantity =
+      item.quantity + action - prevTotalQuantity + lastColorCode.quantity;
 
     return {
       code: lastColorCode.code,
       hexColor: lastColorCode.hexColor,
+      quantity: newQuantity,
     };
   };
 
@@ -68,7 +75,7 @@ const Body = () => {
     handleIncrementQuantity: useCallback(
       _.debounce((item: Item, index: number) => {
         const quantity = item.quantity ?? 0;
-        const lastPaintingCode = getLastPaintingCode(item);
+        const lastPaintingCode = getLastPaintingCode(item, 1);
         dispatch(
           updateItem({
             cartId: cartId ?? '',
@@ -76,7 +83,7 @@ const Body = () => {
               {
                 quantity: quantity + 1,
                 index: index,
-                paintingCode: lastPaintingCode ? lastPaintingCode : undefined,
+                paintingCode: lastPaintingCode,
               },
             ],
           }),
@@ -107,7 +114,7 @@ const Body = () => {
     handleDecrementQuantity: useCallback(
       _.debounce((item: Item, index: number) => {
         const quantity = item.quantity ?? 0;
-        const lastPaintingCode = getLastPaintingCode(item);
+        const lastPaintingCode = getLastPaintingCode(item, -1);
         dispatch(
           updateItem({
             cartId: cartId ?? '',
@@ -115,7 +122,7 @@ const Body = () => {
               {
                 quantity: quantity - 1,
                 index: index,
-                paintingCode: lastPaintingCode ? lastPaintingCode : undefined,
+                paintingCode: lastPaintingCode,
               },
             ],
           }),
