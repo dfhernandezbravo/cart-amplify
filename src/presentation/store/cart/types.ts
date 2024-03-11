@@ -7,8 +7,9 @@ export type QuantitySelectedProps = {
 };
 
 export type SelectedQuantityMinicart = {
-  quantity: number | null;
+  availableQuantity: number | null;
   index: number | null;
+  sentQuantity: number | null;
 };
 
 export type InitialState = {
