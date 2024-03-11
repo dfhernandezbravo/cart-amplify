@@ -24,7 +24,8 @@ const ProductCardUnavailable = ({ items }: { items: Item[] }) => {
 
   const productAvailabilityType = items[0].product.availability as
     | ProductAvailability.CANNOTBEDELIVERED
-    | ProductAvailability.WITHOUTSTOCK;
+    | ProductAvailability.WITHOUTSTOCK
+    | ProductAvailability.UNAVAILABLE_ITEM_FULFILLMENT;
 
   return (
     <>

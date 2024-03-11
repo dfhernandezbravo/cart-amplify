@@ -37,7 +37,7 @@ const Main = () => {
       {/* <SnackBars description='Los valores fueron cambiados.' horizontal='center' vertical='bottom' open={OpenSnackbars} close={() => setOpenSnackbars(false)}/> */}
       <div className="items-container">
         {loading && <Loader />}
-        {productWithoutStock || productCannotBeDelivered?.length ? (
+        {productWithoutStock?.length || productCannotBeDelivered?.length ? (
           <ProductsUnavailable />
         ) : null}
 
