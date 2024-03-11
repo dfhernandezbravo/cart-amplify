@@ -6,10 +6,9 @@ export const getUnavailableProduct = (cart: Cart) => {
 
   cart?.items?.forEach((item, index) => {
     const availability = item.product.availability;
-
     if (
       availability === ProductAvailability.CANNOTBEDELIVERED ||
-      ProductAvailability.UNAVAILABLE_ITEM_FULFILLMENT
+      availability === ProductAvailability.UNAVAILABLE_ITEM_FULFILLMENT
     ) {
       const product = {
         ...item,
