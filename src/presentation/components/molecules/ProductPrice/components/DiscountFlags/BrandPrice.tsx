@@ -38,7 +38,7 @@ const BrandPrice = ({ brandPrice, brandDiscount, quantity }: Props) => {
 
   return (
     <PriceContainer>
-      <Price>{formattedCLP(brandPrice * quantity)}</Price>
+      <Price data-id="brand-price">{formattedCLP(brandPrice * quantity)}</Price>
       <DiscountPercent>{porcentage}</DiscountPercent>
       <Flags brandId={brandDiscount[0].id as ValidBrandValue} />
     </PriceContainer>

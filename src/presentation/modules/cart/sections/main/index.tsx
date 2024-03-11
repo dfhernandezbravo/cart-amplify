@@ -9,6 +9,10 @@ import useItemWithoutStock from '../../../../hooks/useItemWithoutStock';
 import useProductCardEvent from '@hooks/useProductCardEvent';
 import ProductAvailableTitle from '@components/atoms/ProductAvailableTitle';
 
+const generateTextTotalizer = (total: number) => {
+  return `(${total} ${total > 1 ? 'productos' : 'producto'})`;
+};
+
 const Main = () => {
   const { cartBFF, loading, quantitySelected } = useAppSelector(
     (state) => state.cart,
@@ -25,16 +29,12 @@ const Main = () => {
     (item) => item.product.availability === ProductAvailability.AVAILABLE,
   );
 
-  const generateTextTotalizer = (total: number) => {
-    return `(${total} ${total > 1 ? 'productos' : 'producto'})`;
-  };
-
   return (
     <Container>
       <TotalProductsContainer>
         Tu compra <span>{generateTextTotalizer(totalProducts as number)}</span>
       </TotalProductsContainer>
-      {/* <SnackBars description='Los valores fueron cambiados.' horizontal='center' vertical='bottom' open={OpenSnackbars} close={() => setOpenSnackbars(false)}/> */}
+
       <div className="items-container">
         {loading && <Loader />}
         {productWithoutStock?.length || productCannotBeDelivered?.length ? (

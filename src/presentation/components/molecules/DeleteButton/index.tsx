@@ -7,7 +7,11 @@ const DeleteButton = (props: DeleteButtonProps) => {
   const { hasIcon = false, onRemoveFromCart } = props;
 
   return (
-    <Button className="linkBtn" onClick={onRemoveFromCart}>
+    <Button
+      dataId="delete-container-btn"
+      className="linkBtn"
+      onClick={onRemoveFromCart}
+    >
       <IconAndTextContainer>
         {hasIcon ? <RiDeleteBinLine size={'18px'} /> : null}{' '}
         <span>Eliminar</span>

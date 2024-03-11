@@ -16,7 +16,11 @@ const PriceWithoutDiscount = ({
     return <FullPrice isFree={true}>Gratis</FullPrice>;
   }
 
-  return <FullPrice>{formattedCLP(prices.normalPrice * quantity)}</FullPrice>;
+  return (
+    <FullPrice data-id="normal-price">
+      {formattedCLP(prices.normalPrice * quantity)}
+    </FullPrice>
+  );
 };
 
 export default PriceWithoutDiscount;
