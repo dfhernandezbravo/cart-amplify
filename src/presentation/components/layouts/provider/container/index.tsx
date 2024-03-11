@@ -28,11 +28,11 @@ type OrderTrace = {
 const enviromentSource = (enviroment: string) => {
   switch (enviroment) {
     case 'PRODUCTION':
-      return 'cl_easy_trace_prd';
+      return 'easy_custom_events';
     case 'DEVELOPMENT':
-      return 'cl_easy_trace_stg';
+      return 'easy_custom_events_stg';
     case 'UAT':
-      return 'cl_easy_trace_uat';
+      return 'easy_custom_events_uat';
     default:
       return enviroment;
   }
