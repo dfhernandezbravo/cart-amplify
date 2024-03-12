@@ -1,4 +1,4 @@
-import { Cart, ProductAvailability } from '@entities/cart/cart.entity';
+import { Cart } from '@entities/cart/cart.entity';
 import { CartAction } from '@entities/error/error.entity';
 import WindowsEvents from '@events/index';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
@@ -72,7 +72,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
       const messagesError = shoppingCart.messagesErrors;
 
       if (messagesError?.length) {
-        const cartError = handlePayloadError(messagesError);
+        const cartError = handlePayloadError(messagesError, 'MINICART');
 
         if (cartError) {
           if (cartError?.ean) {
@@ -112,14 +112,20 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
       const customEventError = customEvent.detail?.error;
 
       if (customEventError) {
-        const cartError = handleHttpError(customEventError, CartAction.ADD);
-        dispatch(setError(cartError));
-        setTimeout(() => {
-          customDispatchEvent({
-            name: WindowsEvents.DISPATCH_GET_CART,
-            detail: { origin: 'CART' },
-          });
-        }, 4000);
+        const cartError = handleHttpError(
+          customEventError,
+          CartAction.ADD,
+          'MINICART',
+        );
+        if (cartError) {
+          dispatch(setError(cartError));
+          setTimeout(() => {
+            customDispatchEvent({
+              name: WindowsEvents.DISPATCH_GET_CART,
+              detail: { origin: 'CART' },
+            });
+          }, 4000);
+        }
       }
     },
     [dispatch, simulateRemoveProduct],

@@ -45,6 +45,7 @@ const useHandleRedirectEvent = () => {
         deleteItem({
           cartId: cartBFF?.id ?? '',
           itemIndex: joinProductUnavailable[0].index as number,
+          sentFrom: 'CART',
         }),
       );
       const updatedCart = validateItemWithoutStock(response.payload);

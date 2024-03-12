@@ -19,14 +19,24 @@ const updateItem = createAsyncThunk(
       const { data } = await cartService(getInstanceHttp()).updateItem(
         dataRequest,
       );
-      dispatchPayloadErrors(data, dispatch);
+      dispatchPayloadErrors(
+        data,
+        dispatch,
+        dataRequest.sentFrom,
+        dataRequest.items[0].quantity,
+      );
       customDispatchEvent({
         name: WindowsEvents.UPDATE_SHOPPING_CART,
         detail: { shoppingCart: data, origin: 'CART' },
       });
       return fulfillWithValue(data);
     } catch (error) {
-      dispatchHttpErrors(error as AxiosError, dispatch, CartAction.UPDATE);
+      dispatchHttpErrors(
+        error as AxiosError,
+        dispatch,
+        CartAction.UPDATE,
+        dataRequest.sentFrom,
+      );
       return rejectWithValue(error);
     }
   },
