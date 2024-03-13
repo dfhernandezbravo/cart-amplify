@@ -29,7 +29,7 @@ const enviromentSource = (enviroment: string) => {
   switch (enviroment) {
     case 'PRODUCTION':
       return 'easy_custom_events';
-    case 'DEVELOPMENT':
+    case 'STAGING':
       return 'easy_custom_events_stg';
     case 'UAT':
       return 'easy_custom_events_uat';
