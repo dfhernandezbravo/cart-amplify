@@ -11,10 +11,11 @@ import { AvailableProductText, BodyContainer } from './styles';
 import ProductCardWithouthStock from '@modules/cartAside/components/organisms/ProductCardWithoutStock';
 import useItemWithoutStock from '@hooks/useItemWithoutStock';
 import { useAnalytics } from '@hooks/useAnalytics';
+import { Loader } from '@modules/cart/sections/main/styles';
 
 const Body = () => {
   // Hooks
-  const { cartId, cartBFF } = useAppSelector((state) => state.cart);
+  const { cartId, cartBFF, loading } = useAppSelector((state) => state.cart);
   const { joinProductUnavailable } = useItemWithoutStock(cartBFF as Cart);
   const dispatch = useAppDispatch();
   const {
@@ -170,6 +171,7 @@ const Body = () => {
 
   return (
     <BodyContainer>
+      {loading && <Loader />}
       <MinicartError />
       {joinProductUnavailable?.length ? renderProductWithoutStock() : null}
 
