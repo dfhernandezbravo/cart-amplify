@@ -35,10 +35,15 @@ const deleteItem = createAsyncThunk(
         detail: { shoppingCart: data, origin: 'CART' },
       });
 
-      dispatchPayloadErrors(data, dispatch);
+      dispatchPayloadErrors(data, dispatch, dataRequest.sentFrom);
       return fulfillWithValue(data);
     } catch (error) {
-      dispatchHttpErrors(error as AxiosError, dispatch, CartAction.DELETE);
+      dispatchHttpErrors(
+        error as AxiosError,
+        dispatch,
+        CartAction.DELETE,
+        dataRequest.sentFrom,
+      );
       return rejectWithValue(error);
     }
   },

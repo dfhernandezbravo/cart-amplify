@@ -2,15 +2,21 @@ import Image from 'next/image';
 import { Container } from './styles';
 import { ProductAvailability } from '@entities/cart/cart.entity';
 
+type MessageType =
+  | ProductAvailability.CANNOTBEDELIVERED
+  | ProductAvailability.WITHOUTSTOCK
+  | ProductAvailability.UNAVAILABLE_ITEM_FULFILLMENT;
+
 interface Props {
-  messageType:
-    | ProductAvailability.CANNOTBEDELIVERED
-    | ProductAvailability.WITHOUTSTOCK;
+  messageType: MessageType;
 }
 
 const WarningProductWithoutStock = ({ messageType }: Props) => {
   const textMessage = {
     [ProductAvailability.CANNOTBEDELIVERED]: {
+      title: 'Productos no disponibles para tu ubicación',
+    },
+    [ProductAvailability.UNAVAILABLE_ITEM_FULFILLMENT]: {
       title: 'Productos no disponibles para tu ubicación',
     },
     [ProductAvailability.WITHOUTSTOCK]: {

@@ -65,6 +65,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
           updateItem({
             cartId: cartId ?? '',
             items: [{ quantity: newQuantity, index: index }],
+            sentFrom: 'MINICART',
           }),
         );
       }

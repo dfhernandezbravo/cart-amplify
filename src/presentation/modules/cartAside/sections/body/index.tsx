@@ -11,10 +11,11 @@ import { AvailableProductText, BodyContainer } from './styles';
 import ProductCardWithouthStock from '@modules/cartAside/components/organisms/ProductCardWithoutStock';
 import useItemWithoutStock from '@hooks/useItemWithoutStock';
 import { useAnalytics } from '@hooks/useAnalytics';
+import { Loader } from '@modules/cart/sections/main/styles';
 
 const Body = () => {
   // Hooks
-  const { cartId, cartBFF } = useAppSelector((state) => state.cart);
+  const { cartId, cartBFF, loading } = useAppSelector((state) => state.cart);
   const { joinProductUnavailable } = useItemWithoutStock(cartBFF as Cart);
   const dispatch = useAppDispatch();
   const {
@@ -60,6 +61,7 @@ const Body = () => {
           updateItem({
             cartId: cartId ?? '',
             items: [{ quantity: quantity + 1, index: index }],
+            sentFrom: 'MINICART',
           }),
         );
         sendQuantityClickEvent({
@@ -92,6 +94,7 @@ const Body = () => {
           updateItem({
             cartId: cartId ?? '',
             items: [{ quantity: quantity - 1, index: index }],
+            sentFrom: 'MINICART',
           }),
         );
         sendQuantityClickEvent({
@@ -120,7 +123,13 @@ const Body = () => {
 
     handleRemoveFromCart: (index: number) => {
       dispatch(removeProduct(index));
-      dispatch(deleteItem({ cartId: cartId ?? '', itemIndex: index }));
+      dispatch(
+        deleteItem({
+          cartId: cartId ?? '',
+          itemIndex: index,
+          sentFrom: 'MINICART',
+        }),
+      );
     },
     sendRemoveFromCart: (item: Item, index: number) => {
       sendQuantityClickEvent({
@@ -162,6 +171,7 @@ const Body = () => {
 
   return (
     <BodyContainer>
+      {loading && <Loader />}
       <MinicartError />
       {joinProductUnavailable?.length ? renderProductWithoutStock() : null}
 
