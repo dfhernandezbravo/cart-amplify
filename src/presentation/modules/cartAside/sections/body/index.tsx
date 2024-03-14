@@ -37,6 +37,16 @@ const Body = () => {
     }, 0);
 
     const lastColorCode = colorCodes[colorCodes.length - 1];
+
+    // update with quantity 0 --> remove the last color
+    if (action === -1 && lastColorCode.quantity === 1) {
+      return {
+        code: lastColorCode.code,
+        hexColor: lastColorCode.hexColor,
+        quantity: 0,
+      };
+    }
+
     const newQuantity =
       item.quantity + action - prevTotalQuantity + lastColorCode.quantity;
 
