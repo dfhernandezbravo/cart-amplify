@@ -3,12 +3,16 @@ import {
   httpOrPayloadError,
 } from '@components/atoms/ToastContainer/customMessage';
 import { MessagesError, ProductAvailability } from '@entities/cart/cart.entity';
+import { SentFrom } from '@entities/cart/cart.request';
 import { AppError } from '@entities/error/error.entity';
 
 const ERROR_PAYLOAD_CONTENT = 'Lo sentimos, no pudimos completar la acción.';
 const WARNING_PAYLOAD_TITLE = 'Hubo un cambio en tus productos';
 
-const handlePayloadError = (errors: MessagesError[]): AppError | null => {
+const handlePayloadError = (
+  errors: MessagesError[],
+  sentFrom: SentFrom,
+): AppError | null => {
   const errorsMessages = errors.filter(
     (error) =>
       error.status === 'error' &&
@@ -23,7 +27,10 @@ const handlePayloadError = (errors: MessagesError[]): AppError | null => {
   );
 
   if (errorsMessages.length) {
-    genericPayloadError(); // cart toast
+    if (sentFrom === 'CART') {
+      genericPayloadError();
+      return null;
+    }
 
     return {
       errorType: 'payload',
@@ -33,12 +40,15 @@ const handlePayloadError = (errors: MessagesError[]): AppError | null => {
   }
 
   if (warningMessages.length) {
-    httpOrPayloadError({
-      title: WARNING_PAYLOAD_TITLE,
-      content: warningMessages[0].text,
-      status: 'warning',
-      type: 'payload',
-    }); // cart toast
+    if (sentFrom === 'CART') {
+      httpOrPayloadError({
+        title: WARNING_PAYLOAD_TITLE,
+        content: warningMessages[0].text,
+        status: 'warning',
+        type: 'payload',
+      });
+      return null;
+    }
 
     return {
       errorType: 'payload',

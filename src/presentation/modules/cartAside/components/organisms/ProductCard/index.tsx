@@ -32,6 +32,14 @@ const ProductCard = (props: ProductCardProps) => {
   //   (obj) => obj.isApplied === true,
   // );
 
+  const showMaxAvailableQuantityMessage =
+    selectedQuantityMinicart.index !== null &&
+    selectedQuantityMinicart.availableQuantity !== null &&
+    selectedQuantityMinicart.sentQuantity !== null &&
+    selectedQuantityMinicart.index === index &&
+    selectedQuantityMinicart.sentQuantity >
+      selectedQuantityMinicart.availableQuantity;
+
   return (
     <ProductCardContainer>
       <MainContainer>
@@ -52,10 +60,11 @@ const ProductCard = (props: ProductCardProps) => {
             adjustment={item?.adjustment}
           />
           <Tintometric item={item} />
-          {selectedQuantityMinicart.index === index &&
-          selectedQuantityMinicart.quantity &&
-          item?.quantity < selectedQuantityMinicart.quantity ? (
-            <AvailableQuantity quantity={item?.quantity} />
+          {showMaxAvailableQuantityMessage &&
+          selectedQuantityMinicart.availableQuantity !== null ? (
+            <AvailableQuantity
+              quantity={selectedQuantityMinicart.availableQuantity}
+            />
           ) : null}
           <QuantitySelector
             index={index}

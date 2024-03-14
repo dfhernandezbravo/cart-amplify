@@ -2,11 +2,25 @@ export type GetCartRequest = {
   cartId: string;
 };
 
-export type AddItemRequest = { cartId: string; items: AddBodyItem[] };
+export type SentFrom = 'MINICART' | 'CART';
 
-export type UpdateItemRequest = { cartId: string; items: UpdateBodyItem[] };
+export type AddItemRequest = {
+  cartId: string;
+  items: AddBodyItem[];
+  sentFrom: SentFrom;
+};
 
-export type DeleteItemRequest = { cartId: string; itemIndex: number };
+export type UpdateItemRequest = {
+  cartId: string;
+  items: UpdateBodyItem[];
+  sentFrom: SentFrom;
+};
+
+export type DeleteItemRequest = {
+  cartId: string;
+  itemIndex: number;
+  sentFrom: SentFrom;
+};
 
 type PaintingCode = {
   code: string;

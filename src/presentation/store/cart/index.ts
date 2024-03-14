@@ -37,7 +37,11 @@ const initialValue: InitialState = {
   isCencopayActive: false,
   isHeadless: false,
   cartAsideIsOpen: false,
-  selectedQuantityMinicart: { index: null, quantity: null },
+  selectedQuantityMinicart: {
+    index: null,
+    availableQuantity: null,
+    sentQuantity: null,
+  },
 };
 
 const cartSlice = createSlice({
@@ -175,13 +179,15 @@ const cartSlice = createSlice({
     setSelectedQuantityMinicart: (state, { payload }) => {
       state.selectedQuantityMinicart = {
         index: payload.index,
-        quantity: payload.quantity,
+        availableQuantity: payload.availableQuantity,
+        sentQuantity: payload.sentQuantity,
       };
     },
     resetSelectedQuantityMinicart: (state) => {
       state.selectedQuantityMinicart = {
         index: null,
-        quantity: null,
+        availableQuantity: null,
+        sentQuantity: null,
       };
     },
   },
