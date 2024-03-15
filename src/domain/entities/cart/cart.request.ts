@@ -1,3 +1,5 @@
+import { ColorCode } from './cart.entity';
+
 export type GetCartRequest = {
   cartId: string;
 };
@@ -22,16 +24,10 @@ export type DeleteItemRequest = {
   sentFrom: SentFrom;
 };
 
-type PaintingCode = {
-  code: string;
-  hexColor: string;
-  quantity: number;
-};
-
 export type AddBodyItem = {
   quantity: number;
   id: string;
-  paintingCode?: PaintingCode;
+  paintingCode?: ColorCode;
 };
 
 export type AddOrderItems = {
@@ -41,7 +37,7 @@ export type AddOrderItems = {
 export type UpdateBodyItem = {
   quantity: number;
   index: number;
-  paintingCode?: PaintingCode;
+  paintingCode?: ColorCode;
 };
 
 export type UpdateOrderItems = {

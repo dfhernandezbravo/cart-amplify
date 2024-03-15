@@ -103,7 +103,7 @@ export const enum OperationStatus {
   PENDING,
 }
 
-interface ColorCode {
+export interface ColorCode {
   code: string;
   hexColor: string;
   quantity: number;
