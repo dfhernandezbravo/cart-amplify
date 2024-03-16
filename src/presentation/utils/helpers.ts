@@ -1,4 +1,9 @@
-import { Cart, Item, ProductAvailability } from '@entities/cart/cart.entity';
+import {
+  Cart,
+  Item,
+  Product,
+  ProductAvailability,
+} from '@entities/cart/cart.entity';
 import { CartItemModel } from '@store/cart/types';
 import { environments } from '../../configs/env';
 
@@ -80,35 +85,15 @@ export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
   return newItem;
 };
 
-export const createNewItemHeadless = (data: CartItemModel) => {
+export const createNewItemHeadless = (
+  data: CartItemModel & { product: Product },
+) => {
   const newItem = {
     itemId: data.productId,
     quantity: 1,
     adjustment: [],
     priceAfterDiscount: 1,
-    product: {
-      id: data.productId,
-      sku: '',
-      description: data.productName,
-      unit: '',
-      unitValue: 1,
-      size: '',
-      color: '',
-      prices: {
-        brandPrice: null,
-        currency: '',
-        normalPrice: data.prices?.normalPrice ? data.prices?.normalPrice : 0,
-        offerPrice: null,
-      },
-      images: data.imageUrl,
-      brand: data?.brand,
-      seller: { id: '' },
-      availability: 'available',
-      availableQuantity: 0,
-      category: '',
-      ean: '',
-      detailUrl: '',
-    },
+    product: { ...data?.product },
   };
 
   return newItem;
