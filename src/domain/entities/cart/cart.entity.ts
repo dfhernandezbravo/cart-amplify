@@ -103,7 +103,7 @@ export const enum OperationStatus {
   PENDING,
 }
 
-interface Product {
+export interface Product {
   id: string;
   sku: string;
   description: string;
