@@ -209,9 +209,22 @@ const CartAsideContainer = () => {
 
   return (
     <>
-      {hasHybridation && !isHeadless ? (
-        <>
-          <Header />
+      <SwipeableDrawer
+        anchor="right"
+        open={cartAsideIsOpen}
+        onClose={() => dispatch(setCartAsideIsOpen(false))}
+        onOpen={() => dispatch(setCartAsideIsOpen(true))}
+        transitionDuration={300}
+        PaperProps={{
+          sx: {
+            minWidth: '280px',
+            width: '90%',
+            maxWidth: '400px',
+          },
+        }}
+      >
+        <Header />
+        <WrapperEvents>
           {totalProducts > 0 ? (
             <>
               <Body />
@@ -220,35 +233,8 @@ const CartAsideContainer = () => {
           ) : (
             <EmptyBody />
           )}
-        </>
-      ) : (
-        <SwipeableDrawer
-          anchor="right"
-          open={cartAsideIsOpen}
-          onClose={() => dispatch(setCartAsideIsOpen(false))}
-          onOpen={() => dispatch(setCartAsideIsOpen(true))}
-          transitionDuration={300}
-          PaperProps={{
-            sx: {
-              minWidth: '280px',
-              width: '90%',
-              maxWidth: '400px',
-            },
-          }}
-        >
-          <Header />
-          <WrapperEvents>
-            {totalProducts > 0 ? (
-              <>
-                <Body />
-                <Footer />
-              </>
-            ) : (
-              <EmptyBody />
-            )}
-          </WrapperEvents>
-        </SwipeableDrawer>
-      )}
+        </WrapperEvents>
+      </SwipeableDrawer>
     </>
   );
 };
