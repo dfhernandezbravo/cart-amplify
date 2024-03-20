@@ -38,23 +38,24 @@ const Body = () => {
     }, 0);
 
     const lastColorCode = colorCodes[colorCodes.length - 1];
+    const newQuantity =
+      item.quantity + action - prevTotalQuantity + lastColorCode.quantity;
 
     // update with quantity 0 --> remove the last color
-    if (action === -1 && lastColorCode.quantity === 1) {
+    if (action === -1 && newQuantity <= 0) {
       return {
         code: lastColorCode.code,
         hexColor: lastColorCode.hexColor,
         quantity: 0,
+        itemQuantity: prevTotalQuantity - lastColorCode.quantity,
       };
     }
-
-    const newQuantity =
-      item.quantity + action - prevTotalQuantity + lastColorCode.quantity;
 
     return {
       code: lastColorCode.code,
       hexColor: lastColorCode.hexColor,
       quantity: newQuantity,
+      itemQuantity: item.quantity + action,
     };
   };
 
@@ -87,14 +88,19 @@ const Body = () => {
       _.debounce((item: Item, index: number) => {
         const quantity = item.quantity ?? 0;
         const lastPaintingCode = getLastPaintingCode(item, 1);
+
         dispatch(
           updateItem({
             cartId: cartId ?? '',
             items: [
               {
-                quantity: quantity + 1,
+                quantity: lastPaintingCode
+                  ? lastPaintingCode.itemQuantity
+                  : quantity + 1,
                 index: index,
-                paintingCode: lastPaintingCode,
+                paintingCode: lastPaintingCode
+                  ? _.omit(lastPaintingCode, ['itemQuantity'])
+                  : undefined,
               },
             ],
             sentFrom: 'MINICART',
@@ -132,9 +138,13 @@ const Body = () => {
             cartId: cartId ?? '',
             items: [
               {
-                quantity: quantity - 1,
+                quantity: lastPaintingCode
+                  ? lastPaintingCode.itemQuantity
+                  : quantity - 1,
                 index: index,
-                paintingCode: lastPaintingCode,
+                paintingCode: lastPaintingCode
+                  ? _.omit(lastPaintingCode, ['itemQuantity'])
+                  : undefined,
               },
             ],
             sentFrom: 'MINICART',
