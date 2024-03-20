@@ -109,7 +109,7 @@ export interface ColorCode {
   quantity: number;
 }
 
-interface Product {
+export interface Product {
   id: string;
   sku: string;
   description: string;
