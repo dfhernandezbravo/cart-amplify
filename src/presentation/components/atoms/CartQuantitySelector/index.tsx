@@ -3,9 +3,10 @@ import { Select } from './styles';
 type Props = {
   quantity: number;
   quantitySelected: (value: string) => void;
+  className?: string;
 };
 
-const QuantitySelector = ({ quantitySelected, quantity }: Props) => {
+const QuantitySelector = ({ quantitySelected, quantity, className }: Props) => {
   const incrementalNumber = ['1', '2', '3', '4', '5'];
   const additionalNumber = ['6 +'];
 
@@ -40,6 +41,7 @@ const QuantitySelector = ({ quantitySelected, quantity }: Props) => {
       name="select"
       value={quantity}
       onChange={(event) => quantitySelected(event.target.value)}
+      className={className}
     >
       {optionsConditional()}
     </Select>

@@ -4,15 +4,11 @@ type Props = {
   color: string;
 };
 
-export const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const Container = styled.div`
+export const Container = styled.li`
   display: flex;
   align-items: center;
   margin: 6px 0;
+  gap: 16px;
 `;
 
 export const ColorContainer = styled.div`
@@ -28,4 +24,9 @@ export const Color = styled.div<Props>`
   background-color: ${(props) => (props.color ? props.color : '#fff')};
   width: 71px;
   height: 24px;
+`;
+
+export const ColorCode = styled.span`
+  font-size: 13px;
+  color: #485760;
 `;

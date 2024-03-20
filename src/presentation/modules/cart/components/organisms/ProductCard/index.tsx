@@ -138,9 +138,7 @@ const ProductCard = (props: ProductCardProps) => {
                   productUrl={item?.product?.detailUrl}
                 />
                 <ProductSku id={item?.product.sku} />
-                {hasTintometric ? (
-                  <TintometricColors item={item} index={index} />
-                ) : null}
+                <TintometricColors item={item} index={index} />
               </BrandProductNameContainer>
             </ProductInfoContainer>
             <PriceContainer>
@@ -151,11 +149,12 @@ const ProductCard = (props: ProductCardProps) => {
                   adjustment={item?.adjustment}
                 />
               </div>
-              {!hasTintometric ? (
-                <QuantitySelectorAndDeleteContainer>
-                  {itemStockModify && (
-                    <AvailableQuantity quantity={itemStockModify as number} />
-                  )}
+
+              <QuantitySelectorAndDeleteContainer>
+                {itemStockModify && (
+                  <AvailableQuantity quantity={itemStockModify as number} />
+                )}
+                {!hasTintometric ? (
                   <div className="quantity-container">
                     <QuantitySelector
                       quantitySelected={(value: string) =>
@@ -168,8 +167,8 @@ const ProductCard = (props: ProductCardProps) => {
                       onRemoveFromCart={handleRemoveFromCart}
                     />
                   </div>
-                </QuantitySelectorAndDeleteContainer>
-              ) : null}
+                ) : null}
+              </QuantitySelectorAndDeleteContainer>
             </PriceContainer>
           </ProductInfoAndPriceContainer>
         </>
