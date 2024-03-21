@@ -7,7 +7,7 @@ export const MainContainer = styled.div`
   overflow: hidden;
   transition: max-height 0.5s ease-out;
 
-  &.showAll {
+  &.showMore {
     max-height: none;
   }
 

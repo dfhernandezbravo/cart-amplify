@@ -60,22 +60,20 @@ const Tintometric = ({ colorCode, itemIndex, prevTotalQuantity }: Props) => {
   };
 
   return (
-    <>
-      <Container>
-        <ColorContainer>
-          <Color color={colorCode.hexColor}></Color>
-          <ColorCode>{colorCode.code}</ColorCode>
-        </ColorContainer>
-        <TintometricQuantitySelector
-          quantity={colorCode.quantity}
-          handleChangeQuantity={handleChangeQuantity}
-        />
-        <DeleteButton
-          hasIcon={true}
-          onRemoveFromCart={() => handleRemoveFromCart()}
-        />
-      </Container>
-    </>
+    <Container>
+      <ColorContainer>
+        <Color color={colorCode.hexColor}></Color>
+        <ColorCode>{colorCode.code}</ColorCode>
+      </ColorContainer>
+      <TintometricQuantitySelector
+        quantity={colorCode.quantity}
+        handleChangeQuantity={handleChangeQuantity}
+      />
+      <DeleteButton
+        hasIcon={true}
+        onRemoveFromCart={() => handleRemoveFromCart()}
+      />
+    </Container>
   );
 };
 

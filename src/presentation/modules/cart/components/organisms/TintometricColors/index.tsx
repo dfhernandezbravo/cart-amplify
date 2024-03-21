@@ -4,7 +4,7 @@ import { LinkButton, MainContainer } from './styles';
 import { useState } from 'react';
 
 const TintometricColors = ({ item, index }: Props) => {
-  const [showAll, setShowAll] = useState(true);
+  const [showMore, setShowMore] = useState(true);
 
   const colorCodes = item.product.colorCodes;
   if (!colorCodes || colorCodes.length === 0) return null;
@@ -14,9 +14,9 @@ const TintometricColors = ({ item, index }: Props) => {
   }, 0);
 
   return (
-    <MainContainer className={showAll ? 'showAll' : ''}>
+    <MainContainer className={showMore ? 'showMore' : ''}>
       {colorCodes.map((colorCode, i) => {
-        if (showAll && i > 4) return null;
+        if (showMore && i > 4) return null;
 
         return (
           <Tintometric
@@ -29,8 +29,8 @@ const TintometricColors = ({ item, index }: Props) => {
       })}
 
       {colorCodes.length > 5 && (
-        <LinkButton onClick={() => setShowAll(!showAll)}>
-          {showAll ? 'Mostrar más' : 'Mostrar menos'}
+        <LinkButton onClick={() => setShowMore(!showMore)}>
+          {showMore ? 'Mostrar más' : 'Mostrar menos'}
         </LinkButton>
       )}
     </MainContainer>
