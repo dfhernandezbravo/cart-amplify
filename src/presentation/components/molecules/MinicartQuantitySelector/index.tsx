@@ -80,6 +80,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   return (
     <QuantitySelectorContainer>
       <Button
+        dataId="decrease-quantity"
         className="quantitySelectorBtn quantitySelectorBtn--minus"
         onClick={onDecrementQuantity}
         disabled={quantity === 1}
@@ -98,8 +99,10 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
         value={loading || isEditing ? quantityInput : quantity}
         className="quantityInput"
         disabled={loading}
+        dataId="quantity-selector"
       />
       <Button
+        dataId="increase-quantity"
         className="quantitySelectorBtn quantitySelectorBtn--plus"
         onClick={onIncrementQuantity}
       >

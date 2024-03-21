@@ -170,7 +170,7 @@ const Body = () => {
   };
 
   return (
-    <BodyContainer>
+    <BodyContainer data-id="cart-aside">
       {loading && <Loader />}
       <MinicartError />
       {joinProductUnavailable?.length ? renderProductWithoutStock() : null}
