@@ -11,6 +11,7 @@ export const Select = styled.select`
     appearance: none;
     padding: 7px;
     font-size: 13px;
+    font-weight: 700;
     color: #485760;
     background-image: url(/icons/general/chevron-down.svg);
     background-repeat: no-repeat;

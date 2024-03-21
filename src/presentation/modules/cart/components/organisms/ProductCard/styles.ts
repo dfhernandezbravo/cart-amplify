@@ -38,7 +38,7 @@ export const ProductInfoContainer = styled.div`
 export const ProductInfoAndPriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
 `;
 

@@ -1,6 +1,6 @@
 import Tintometric from './components/Tintometric';
 import { Props } from './types';
-import { MainContainer } from './styles';
+import { LinkButton, MainContainer } from './styles';
 import { useState } from 'react';
 
 const TintometricColors = ({ item, index }: Props) => {
@@ -28,10 +28,10 @@ const TintometricColors = ({ item, index }: Props) => {
         );
       })}
 
-      {colorCodes.length > 4 && (
-        <button onClick={() => setShowAll(!showAll)}>
+      {colorCodes.length > 5 && (
+        <LinkButton onClick={() => setShowAll(!showAll)}>
           {showAll ? 'Mostrar más' : 'Mostrar menos'}
-        </button>
+        </LinkButton>
       )}
     </MainContainer>
   );
