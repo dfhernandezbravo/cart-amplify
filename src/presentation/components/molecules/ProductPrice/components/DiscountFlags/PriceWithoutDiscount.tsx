@@ -17,7 +17,7 @@ const PriceWithoutDiscount = ({
   }
 
   return (
-    <FullPrice data-id="normal-price">
+    <FullPrice data-id="normal-price-per-quantity">
       {formattedCLP(prices.normalPrice * quantity)}
     </FullPrice>
   );

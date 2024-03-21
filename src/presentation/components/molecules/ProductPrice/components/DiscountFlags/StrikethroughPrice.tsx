@@ -11,7 +11,7 @@ const StrikethroughPrice = ({ prices, quantity }: Props) => {
   return (
     <NormalPrice>
       Normal:{' '}
-      <span data-id="total-product-amount">
+      <span data-id="normal-price-per-quantity">
         {formattedCLP(prices.normalPrice * quantity)}
       </span>
     </NormalPrice>
