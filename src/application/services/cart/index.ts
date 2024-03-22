@@ -69,6 +69,10 @@ const cartService = (httpInstance = bffWebInstanceV1): CartService => ({
     const url = `/observability/custom-events`;
     return httpInstance.post(url, data);
   },
+  getProductsRibbons: (data) => {
+    const url = `/products/list?productIds=${encodeURIComponent(data)}`;
+    return httpInstance.get(url);
+  },
 });
 
 export default cartService;

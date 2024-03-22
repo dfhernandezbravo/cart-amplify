@@ -12,12 +12,16 @@ import {
   ImageContainer,
   QuantitySelectorAndDeleteContainer,
   MainContainer,
+  RibbonsLogisticContainer,
 } from './styles';
 import DeleteButton from '@components/molecules/DeleteButton';
 import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
 import ProductSku from '@components/molecules/ProductSku';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
+import { Ribbon, RibbonType } from '@ccom-easy-design-system/atoms.ribbon';
+import { Product } from '@entities/cart/cart.entity';
+
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCardMobile = (props: ProductCardProps) => {
@@ -116,6 +120,8 @@ const ProductCardMobile = (props: ProductCardProps) => {
   };
 
   if (item.product.availability !== 'available') return null;
+  const ribbons = (item?.product as Product)?.ribbons;
+
   return (
     <>
       <Container isLastItem={itemLength === index + 1}>
@@ -140,6 +146,25 @@ const ProductCardMobile = (props: ProductCardProps) => {
                 adjustment={item?.adjustment}
               />
             </div>
+            {ribbons &&
+              ribbons.some(
+                (obj: RibbonType) =>
+                  obj.group === 'logistic' &&
+                  (obj.value.toLowerCase().includes('recibe') ||
+                    obj.value.toLowerCase().includes('retira')),
+              ) &&
+              ribbons
+                .filter(
+                  (obj: RibbonType) =>
+                    obj.group === 'logistic' &&
+                    (obj.value.toLowerCase().includes('recibe') ||
+                      obj.value.toLowerCase().includes('retira')),
+                )
+                .map((obj: RibbonType) => (
+                  <RibbonsLogisticContainer key={obj.value}>
+                    <Ribbon ribbon={obj} />
+                  </RibbonsLogisticContainer>
+                ))}
             {itemStockModify && (
               <AvailableQuantity quantity={itemStockModify as number} />
             )}

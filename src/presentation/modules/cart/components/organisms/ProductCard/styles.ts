@@ -108,3 +108,10 @@ export const BrandProductNameContainer = styled.div`
     max-width: 350px;
   }
 `;
+
+export const RibbonsLogisticContainer = styled.div`
+  padding-bottom: 8px;
+  & span {
+    font-size: 11px;
+  }
+`;

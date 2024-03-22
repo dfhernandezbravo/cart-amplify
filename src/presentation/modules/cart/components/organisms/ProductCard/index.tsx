@@ -16,10 +16,13 @@ import {
   ImageContainer,
   PriceContainer,
   BrandProductNameContainer,
+  RibbonsLogisticContainer,
 } from './styles';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
 import ModalQuantity from '../ModalQuantity';
+import { Ribbon, RibbonType } from '@ccom-easy-design-system/atoms.ribbon';
+import { Product } from '@entities/cart/cart.entity';
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
@@ -116,6 +119,7 @@ const ProductCard = (props: ProductCardProps) => {
   };
 
   if (item.product.availability !== 'available') return null;
+  const ribbons = item?.product?.ribbons;
 
   return (
     <>
@@ -143,6 +147,25 @@ const ProductCard = (props: ProductCardProps) => {
                   adjustment={item?.adjustment}
                 />
               </div>
+              {ribbons &&
+                ribbons.some(
+                  (obj: RibbonType) =>
+                    obj?.group === 'logistic' &&
+                    (obj.value.toLowerCase().includes('recibe') ||
+                      obj.value.toLowerCase().includes('retira')),
+                ) &&
+                ribbons
+                  .filter(
+                    (obj: RibbonType) =>
+                      obj?.group === 'logistic' &&
+                      (obj.value.toLowerCase().includes('recibe') ||
+                        obj.value.toLowerCase().includes('retira')),
+                  )
+                  .map((obj: RibbonType) => (
+                    <RibbonsLogisticContainer key={obj?.value}>
+                      <Ribbon ribbon={obj} />
+                    </RibbonsLogisticContainer>
+                  ))}
               <QuantitySelectorAndDeleteContainer>
                 {itemStockModify && (
                   <AvailableQuantity quantity={itemStockModify as number} />

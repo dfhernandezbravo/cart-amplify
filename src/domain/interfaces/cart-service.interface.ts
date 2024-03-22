@@ -9,6 +9,7 @@ import {
   DeleteProductServiceRequest,
 } from '@entities/cart/cart.request';
 import { Observability } from '@entities/cart/observability';
+import { Product } from '@cencosud-ds/easy-design-system';
 
 export default interface CartService {
   getCart(data: GetCartRequest): Promise<AxiosResponse<Cart>>;
@@ -24,4 +25,5 @@ export default interface CartService {
     data: DeleteProductServiceRequest,
   ): Promise<AxiosResponse<Cart>>;
   observability(info: Observability): Promise<void>;
+  getProductsRibbons(data: string): Promise<AxiosResponse<Product[] | any>>;
 }

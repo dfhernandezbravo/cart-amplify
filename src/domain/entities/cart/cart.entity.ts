@@ -1,3 +1,4 @@
+import { RibbonType } from '@ccom-easy-design-system/atoms.ribbon';
 export interface Cart {
   id: string;
   currencyCode: string;
@@ -122,6 +123,7 @@ export interface Product {
   ean: string;
   productId?: string;
   detailUrl: string;
+  ribbons: RibbonType[];
 }
 
 export interface WithdrawalThird {
