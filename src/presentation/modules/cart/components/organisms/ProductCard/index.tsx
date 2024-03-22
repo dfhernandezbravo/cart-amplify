@@ -21,7 +21,7 @@ import {
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
 import ModalQuantity from '../ModalQuantity';
-import { Ribbon, RibbonType } from '@ccom-easy-design-system/atoms.ribbon';
+import { Ribbon } from '@ccom-easy-design-system/atoms.ribbon';
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
@@ -148,19 +148,19 @@ const ProductCard = (props: ProductCardProps) => {
               </div>
               {ribbons &&
                 ribbons.some(
-                  (obj: RibbonType) =>
+                  (obj) =>
                     obj?.group === 'logistic' &&
                     (obj.value.toLowerCase().includes('recibe') ||
                       obj.value.toLowerCase().includes('retira')),
                 ) &&
                 ribbons
                   .filter(
-                    (obj: RibbonType) =>
+                    (obj) =>
                       obj?.group === 'logistic' &&
                       (obj.value.toLowerCase().includes('recibe') ||
                         obj.value.toLowerCase().includes('retira')),
                   )
-                  .map((obj: RibbonType) => (
+                  .map((obj) => (
                     <RibbonsLogisticContainer key={obj?.value}>
                       <Ribbon ribbon={obj} />
                     </RibbonsLogisticContainer>
