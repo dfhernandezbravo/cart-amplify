@@ -5,4 +5,5 @@ export type ButtonProps = {
   className?: string;
   onClick?: (arg: any) => void;
   disabled?: boolean;
+  dataId?: string;
 };
