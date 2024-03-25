@@ -3,7 +3,7 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import ThemeProvider from '@components/atoms/theme-provider';
+import ThemeProvider from '@components/theme/theme-provider';
 
 type Props = {
   children: React.ReactNode;

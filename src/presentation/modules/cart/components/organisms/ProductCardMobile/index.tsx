@@ -120,7 +120,13 @@ const ProductCardMobile = (props: ProductCardProps) => {
   };
 
   if (item.product.availability !== 'available') return null;
-  const ribbons = (item?.product as Product)?.ribbons;
+  const ribbons = item?.product?.ribbons;
+  const logisticRibbons = ribbons?.filter(
+    (obj) =>
+      obj.group === 'logistic' &&
+      (obj.value.toLowerCase().includes('recibe') ||
+        obj.value.toLowerCase().includes('retira')),
+  );
 
   return (
     <>
@@ -146,25 +152,12 @@ const ProductCardMobile = (props: ProductCardProps) => {
                 adjustment={item?.adjustment}
               />
             </div>
-            {ribbons &&
-              ribbons.some(
-                (obj) =>
-                  obj.group === 'logistic' &&
-                  (obj.value.toLowerCase().includes('recibe') ||
-                    obj.value.toLowerCase().includes('retira')),
-              ) &&
-              ribbons
-                .filter(
-                  (obj) =>
-                    obj.group === 'logistic' &&
-                    (obj.value.toLowerCase().includes('recibe') ||
-                      obj.value.toLowerCase().includes('retira')),
-                )
-                .map((obj) => (
-                  <RibbonsLogisticContainer key={obj.value}>
-                    <Ribbon ribbon={obj} />
-                  </RibbonsLogisticContainer>
-                ))}
+            {logisticRibbons?.length > 0 &&
+              logisticRibbons.map((obj) => (
+                <RibbonsLogisticContainer key={obj.value}>
+                  <Ribbon ribbon={obj} />
+                </RibbonsLogisticContainer>
+              ))}
             {itemStockModify && (
               <AvailableQuantity quantity={itemStockModify as number} />
             )}

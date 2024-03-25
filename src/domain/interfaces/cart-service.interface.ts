@@ -25,5 +25,4 @@ export default interface CartService {
     data: DeleteProductServiceRequest,
   ): Promise<AxiosResponse<Cart>>;
   observability(info: Observability): Promise<void>;
-  getProductsRibbons(data: string): Promise<AxiosResponse<Product[] | any>>;
 }

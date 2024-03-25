@@ -1,7 +1,6 @@
 import type { AppProps } from 'next/app';
 import '@assets/styles/globals.css';
 import { Open_Sans } from 'next/font/google';
-import { ThemeProvider } from '@cencosud-ds/easy-design-system';
 
 const openSans = Open_Sans({
   subsets: ['latin'],
@@ -10,10 +9,8 @@ const openSans = Open_Sans({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider>
-      <main className={openSans.className}>
-        <Component {...pageProps} />
-      </main>
-    </ThemeProvider>
+    <main className={openSans.className}>
+      <Component {...pageProps} />
+    </main>
   );
 }
