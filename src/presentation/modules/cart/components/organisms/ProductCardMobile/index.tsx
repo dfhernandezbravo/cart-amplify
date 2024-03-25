@@ -18,6 +18,7 @@ import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
 import ProductSku from '@components/molecules/ProductSku';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
+import TintometricColors from '../TintometricColors';
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCardMobile = (props: ProductCardProps) => {
@@ -115,6 +116,10 @@ const ProductCardMobile = (props: ProductCardProps) => {
     setIsModalOpen(false);
   };
 
+  const hasTintometric = item.product.colorCodes
+    ? item.product.colorCodes.length > 0
+    : false;
+
   if (item.product.availability !== 'available') return null;
   return (
     <>
@@ -143,18 +148,20 @@ const ProductCardMobile = (props: ProductCardProps) => {
             {itemStockModify && (
               <AvailableQuantity quantity={itemStockModify as number} />
             )}
-            <QuantitySelectorAndDeleteContainer>
-              <QuantitySelector
-                quantitySelected={(value: string) =>
-                  handleSelectedQuantity(value)
-                }
-                quantity={item?.quantity}
-              />
-              <DeleteButton
-                hasIcon={true}
-                onRemoveFromCart={handleRemoveFromCart}
-              />
-            </QuantitySelectorAndDeleteContainer>
+            {!hasTintometric ? (
+              <QuantitySelectorAndDeleteContainer>
+                <QuantitySelector
+                  quantitySelected={(value: string) =>
+                    handleSelectedQuantity(value)
+                  }
+                  quantity={item?.quantity}
+                />
+                <DeleteButton
+                  hasIcon={true}
+                  onRemoveFromCart={handleRemoveFromCart}
+                />
+              </QuantitySelectorAndDeleteContainer>
+            ) : null}
           </div>
         </MainContainer>
         {/* {hasServices?.length
@@ -162,6 +169,7 @@ const ProductCardMobile = (props: ProductCardProps) => {
               <ProductService key={obj.id} option={obj} index={index} />
             ))
           : null} */}
+        <TintometricColors item={item} index={index} />
       </Container>
       <ModalQuantity
         quantityValue={quantityValue}
