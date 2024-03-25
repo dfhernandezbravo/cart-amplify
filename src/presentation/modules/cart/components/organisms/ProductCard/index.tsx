@@ -122,7 +122,10 @@ const ProductCard = (props: ProductCardProps) => {
 
   return (
     <>
-      <Container isLastItem={itemLength === index + 1}>
+      <Container
+        data-id={`product-card-${item.product.productId}`}
+        isLastItem={itemLength === index + 1}
+      >
         <>
           <ProductInfoAndPriceContainer>
             <ProductInfoContainer>
