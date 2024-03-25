@@ -10,7 +10,10 @@ interface Props {
 const StrikethroughPrice = ({ prices, quantity }: Props) => {
   return (
     <NormalPrice>
-      Normal: {formattedCLP(prices.normalPrice * quantity)}
+      Normal:{' '}
+      <span data-id="normal-price-per-quantity">
+        {formattedCLP(prices.normalPrice * quantity)}
+      </span>
     </NormalPrice>
   );
 };

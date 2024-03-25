@@ -7,4 +7,5 @@ export interface TextfieldProps extends InputHTMLAttributes<HTMLInputElement> {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
   onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
+  dataId?: string;
 }

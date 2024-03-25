@@ -11,7 +11,7 @@ const OfferPrice = ({ offerDiscount, quantity, offerPrice }: DiscountProps) => {
   );
   return (
     <PriceContainer>
-      <Price>{formattedCLP(offerPrice * quantity)}</Price>
+      <Price data-id="offer-price">{formattedCLP(offerPrice * quantity)}</Price>
       <DiscountPercent>{porcentage}</DiscountPercent>
     </PriceContainer>
   );
