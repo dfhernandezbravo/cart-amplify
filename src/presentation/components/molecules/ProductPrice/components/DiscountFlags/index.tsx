@@ -26,7 +26,11 @@ const DiscountFlags = ({ prices, adjustment, quantity }: ProductPriceProps) => {
     offerId === PromotionType.COLABORADOR;
 
   const NormalPrice = () => {
-    return <FullPrice>{formattedCLP(prices.normalPrice * quantity)}</FullPrice>;
+    return (
+      <FullPrice data-id="normal-price-per-quantity">
+        {formattedCLP(prices.normalPrice * quantity)}
+      </FullPrice>
+    );
   };
 
   if (offerPrice && brandPrice && offerPrice <= brandPrice) {
