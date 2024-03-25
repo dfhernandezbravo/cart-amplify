@@ -17,7 +17,6 @@ const getCart = createAsyncThunk(
         getInstanceHttp(),
       ).getProductsRibbons(productIds);
       const newCart = cartWithRibbons(data, productsWithRibbons.data);
-      console.log('newCart', newCart);
       return newCart;
     } catch (error) {
       console.error(error);
@@ -33,7 +32,6 @@ export const getCartSync = async (dataRequest: GetCartRequest) => {
       getInstanceHttp(),
     ).getProductsRibbons(productIds);
     const newCart = cartWithRibbons(data, productsWithRibbons.data);
-    console.log('newCart', newCart);
     return newCart;
   } catch (error) {
     throw new Error('Error al cargar el carro');
