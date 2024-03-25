@@ -21,7 +21,7 @@ import {
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
 import ModalQuantity from '../ModalQuantity';
-import { Ribbon } from '@ccom-easy-design-system/atoms.ribbon';
+import Ribbon from '@components/atoms/Ribbon';
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {

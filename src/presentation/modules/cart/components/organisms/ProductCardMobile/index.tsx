@@ -19,7 +19,7 @@ import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
 import ProductSku from '@components/molecules/ProductSku';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
-import { Ribbon } from '@ccom-easy-design-system/atoms.ribbon';
+import Ribbon from '@components/atoms/Ribbon';
 import { Product } from '@entities/cart/cart.entity';
 
 // import ProductService from '@modules/cart/components/molecules/ProductService';
