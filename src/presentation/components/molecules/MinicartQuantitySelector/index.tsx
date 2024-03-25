@@ -84,6 +84,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   return (
     <QuantitySelectorContainer>
       <Button
+        dataId="decrease-quantity"
         className="quantitySelectorBtn quantitySelectorBtn--minus"
         onClick={onDecrementQuantity}
         disabled={quantity === 1}
@@ -104,6 +105,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
         disabled={loading || hasTintometric}
       />
       <Button
+        dataId="increase-quantity"
         className="quantitySelectorBtn quantitySelectorBtn--plus"
         onClick={onIncrementQuantity}
       >

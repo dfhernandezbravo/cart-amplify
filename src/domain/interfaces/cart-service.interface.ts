@@ -8,7 +8,7 @@ import {
   UpdateItemRequest,
   DeleteProductServiceRequest,
 } from '@entities/cart/cart.request';
-import { Observability } from '@entities/cart/observability';
+import { ObservabilityCart } from '@entities/cart/observability';
 
 export default interface CartService {
   getCart(data: GetCartRequest): Promise<AxiosResponse<Cart>>;
@@ -23,5 +23,5 @@ export default interface CartService {
   deleteProductService(
     data: DeleteProductServiceRequest,
   ): Promise<AxiosResponse<Cart>>;
-  observability(info: Observability): Promise<void>;
+  observability(info: ObservabilityCart): Promise<void>;
 }

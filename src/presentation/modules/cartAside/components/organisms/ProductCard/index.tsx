@@ -41,7 +41,7 @@ const ProductCard = (props: ProductCardProps) => {
       selectedQuantityMinicart.availableQuantity;
 
   return (
-    <ProductCardContainer>
+    <ProductCardContainer data-id={`product-card-${item.product.productId}`}>
       <MainContainer>
         <ImageAndDeleteContainer>
           <ProductImage src={item.product.images} alt="" />

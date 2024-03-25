@@ -25,7 +25,9 @@ const TotalPrice = (props: TotalPriceProps) => {
       {loading || !cartBFF?.totals?.totalPrice ? (
         <Skeleton />
       ) : (
-        <span className="totalPrice">{value}</span>
+        <span data-id="sub-total-without-discounts" className="totalPrice">
+          {value}
+        </span>
       )}
     </Container>
   );

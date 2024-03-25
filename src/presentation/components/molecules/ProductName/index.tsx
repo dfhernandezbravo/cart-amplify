@@ -15,6 +15,7 @@ const ProductName = (props: ProductNameProps) => {
   return (
     <Container className="product-name--container">
       <Link
+        data-id="product-name"
         href={
           productUrl
             ? isHeadless
