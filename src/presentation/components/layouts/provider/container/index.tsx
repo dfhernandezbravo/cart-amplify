@@ -25,19 +25,6 @@ type OrderTrace = {
   amount: number;
 };
 
-const enviromentSource = (enviroment: string) => {
-  switch (enviroment) {
-    case 'PRODUCTION':
-      return 'easy_custom_events';
-    case 'STAGING':
-      return 'easy_custom_events_stg';
-    case 'UAT':
-      return 'easy_custom_events_uat';
-    default:
-      return enviroment;
-  }
-};
-
 const CartContainerProvider = ({ children }: Props) => {
   const { addCartId, setCart, setLoading, setParams, setQuantitySelected } =
     cartSlice.actions;
@@ -93,14 +80,11 @@ const CartContainerProvider = ({ children }: Props) => {
         const totalAmount = cartBFF?.totals?.totalPrice as number;
         const cartId = cartBFF?.id as string;
         const infoTrace = {
-          eventType: enviromentSource(process.env.NEXT_PUBLIC_ENV as string),
-          orderId: cartId,
-          totalAmount: totalAmount,
-          origin: 'cart-page-storefront',
-          orderNumber: '',
-          datetime: '',
-          channel: '',
-          paymentMethod: '',
+          eventName: 'cart',
+          data: {
+            orderId: cartId,
+            totalAmount: totalAmount,
+          },
         };
         await observability(infoTrace);
         localStorage.setItem(
