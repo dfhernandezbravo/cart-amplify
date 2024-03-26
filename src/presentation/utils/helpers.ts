@@ -79,6 +79,7 @@ export const createNewItem = (data: CartItemModel, quantityValue?: number) => {
       category: '',
       ean: '',
       detailUrl: '',
+      ribbons: [],
     },
   };
 

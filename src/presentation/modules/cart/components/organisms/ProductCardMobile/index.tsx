@@ -12,12 +12,14 @@ import {
   ImageContainer,
   QuantitySelectorAndDeleteContainer,
   MainContainer,
+  RibbonsLogisticContainer,
 } from './styles';
 import DeleteButton from '@components/molecules/DeleteButton';
 import AvailableQuantity from '../ProductCard/components/AvailableQuantity';
 import ProductSku from '@components/molecules/ProductSku';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
+import Ribbon from '@components/atoms/Ribbon';
 import TintometricColors from '../TintometricColors';
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
@@ -121,6 +123,14 @@ const ProductCardMobile = (props: ProductCardProps) => {
     : false;
 
   if (item.product.availability !== 'available') return null;
+  const ribbons = item?.product?.ribbons;
+  const logisticRibbons = ribbons?.filter(
+    (obj) =>
+      obj.group === 'logistic' &&
+      (obj.value.toLowerCase().includes('recibe') ||
+        obj.value.toLowerCase().includes('retira')),
+  );
+
   return (
     <>
       <Container isLastItem={itemLength === index + 1}>
@@ -145,6 +155,12 @@ const ProductCardMobile = (props: ProductCardProps) => {
                 adjustment={item?.adjustment}
               />
             </div>
+            {logisticRibbons?.length > 0 &&
+              logisticRibbons.map((obj) => (
+                <RibbonsLogisticContainer key={obj.value}>
+                  <Ribbon ribbon={obj} />
+                </RibbonsLogisticContainer>
+              ))}
             {itemStockModify && (
               <AvailableQuantity quantity={itemStockModify as number} />
             )}
