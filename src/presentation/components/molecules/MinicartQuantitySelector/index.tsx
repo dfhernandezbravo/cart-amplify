@@ -27,6 +27,10 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   const [quantityInput, setQuantityInput] = useState(`${quantity}`);
   const [isEditing, setIsEditing] = useState(false);
 
+  const hasTintometric = item.product.colorCodes
+    ? item.product.colorCodes.length > 0
+    : false;
+
   // methods
   const methods = {
     updateQuantityInput: () => {
@@ -98,8 +102,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
         onChange={(e) => setQuantityInput(e.target.value)}
         value={loading || isEditing ? quantityInput : quantity}
         className="quantityInput"
-        disabled={loading}
-        dataId="quantity-selector"
+        disabled={loading || hasTintometric}
       />
       <Button
         dataId="increase-quantity"

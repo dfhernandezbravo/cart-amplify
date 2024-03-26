@@ -105,4 +105,8 @@ export const ButtonContainer = styled.button<Props>`
       background-color: #f2f2f2;
     }
   }
+
+  &.deleteBtn {
+    color: #485760;
+  }
 `;

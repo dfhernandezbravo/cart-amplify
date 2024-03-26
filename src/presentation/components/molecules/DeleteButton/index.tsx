@@ -9,7 +9,7 @@ const DeleteButton = (props: DeleteButtonProps) => {
   return (
     <Button
       dataId="delete-container-btn"
-      className="linkBtn"
+      className="linkBtn deleteBtn"
       onClick={onRemoveFromCart}
     >
       <IconAndTextContainer>

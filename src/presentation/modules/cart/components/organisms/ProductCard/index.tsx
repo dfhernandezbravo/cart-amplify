@@ -22,6 +22,7 @@ import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
 import ModalQuantity from '../ModalQuantity';
 import Ribbon from '@components/atoms/Ribbon';
+import TintometricColors from '../TintometricColors';
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
@@ -117,6 +118,10 @@ const ProductCard = (props: ProductCardProps) => {
     setIsModalOpen(false);
   };
 
+  const hasTintometric = item.product.colorCodes
+    ? item.product.colorCodes.length > 0
+    : false;
+
   if (item.product.availability !== 'available') return null;
   const ribbons = item?.product?.ribbons;
   const logisticRibbons = ribbons?.filter(
@@ -145,6 +150,7 @@ const ProductCard = (props: ProductCardProps) => {
                   productUrl={item?.product?.detailUrl}
                 />
                 <ProductSku id={item?.product.sku} />
+                <TintometricColors item={item} index={index} />
               </BrandProductNameContainer>
             </ProductInfoContainer>
             <PriceContainer>
@@ -165,18 +171,20 @@ const ProductCard = (props: ProductCardProps) => {
                 {itemStockModify && (
                   <AvailableQuantity quantity={itemStockModify as number} />
                 )}
-                <div className="quantity-container">
-                  <QuantitySelector
-                    quantitySelected={(value: string) =>
-                      handleSelectedQuantity(value)
-                    }
-                    quantity={item?.quantity}
-                  />
-                  <DeleteButton
-                    hasIcon={true}
-                    onRemoveFromCart={handleRemoveFromCart}
-                  />
-                </div>
+                {!hasTintometric ? (
+                  <div className="quantity-container">
+                    <QuantitySelector
+                      quantitySelected={(value: string) =>
+                        handleSelectedQuantity(value)
+                      }
+                      quantity={item?.quantity}
+                    />
+                    <DeleteButton
+                      hasIcon={true}
+                      onRemoveFromCart={handleRemoveFromCart}
+                    />
+                  </div>
+                ) : null}
               </QuantitySelectorAndDeleteContainer>
             </PriceContainer>
           </ProductInfoAndPriceContainer>
