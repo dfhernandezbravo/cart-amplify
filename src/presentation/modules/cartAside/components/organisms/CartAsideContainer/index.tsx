@@ -17,6 +17,7 @@ import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
 import WrapperEvents from './wrapper-events';
 import { useQuery } from '@tanstack/react-query';
 import getParamData from '@use-cases/cms/getParamData';
+import MinicartError from '@modules/cart/components/molecules/MinicartError';
 
 const CartAsideContainer = () => {
   // hooks
@@ -227,6 +228,7 @@ const CartAsideContainer = () => {
         <WrapperEvents>
           {totalProducts > 0 ? (
             <>
+              <MinicartError />
               <Body />
               <Footer />
             </>

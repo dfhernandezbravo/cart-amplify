@@ -3,7 +3,6 @@ import _ from 'lodash';
 import cartSlice from '@store/cart';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import ProductCard from '@modules/cartAside/components/organisms/ProductCard';
-import MinicartError from '@modules/cart/components/molecules/MinicartError';
 import { Cart, Item } from '@entities/cart/cart.entity';
 import updateItem from '@use-cases/cart/update-item';
 import deleteItem from '@use-cases/cart/delete-item';
@@ -225,7 +224,6 @@ const Body = () => {
   return (
     <BodyContainer data-id="cart-aside">
       {loading && <Loader />}
-      <MinicartError />
       {joinProductUnavailable?.length ? renderProductWithoutStock() : null}
 
       {cartBFF?.items?.map((item: Item, index: number) => (
