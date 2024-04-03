@@ -38,7 +38,7 @@ export const ProductInfoContainer = styled.div`
 export const ProductInfoAndPriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
 `;
 
@@ -106,5 +106,12 @@ export const PriceContainer = styled.div`
 export const BrandProductNameContainer = styled.div`
   & .product-name--container {
     max-width: 350px;
+  }
+`;
+
+export const RibbonsLogisticContainer = styled.div`
+  padding-bottom: 8px;
+  & span {
+    font-size: 11px;
   }
 `;

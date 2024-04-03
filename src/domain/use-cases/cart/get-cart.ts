@@ -1,7 +1,10 @@
 import { GetCartRequest } from '@entities/cart/cart.request';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import cartService from '@services/cart';
+import productsService from '@services/products';
 import getInstanceHttp from './get-instance-http';
+import { getProductIds } from './get-product-ids';
+import { cartWithRibbons } from './cart-with-ribbons';
 
 const getCart = createAsyncThunk(
   '/cart/getCart',
@@ -10,7 +13,12 @@ const getCart = createAsyncThunk(
       const { data } = await cartService(getInstanceHttp()).getCart(
         dataRequest,
       );
-      return data;
+      const productIds = getProductIds(data);
+      const productsWithRibbons = await productsService(
+        getInstanceHttp(),
+      ).getProductsByIds(productIds);
+      const newCart = cartWithRibbons(data, productsWithRibbons.data);
+      return newCart;
     } catch (error) {
       console.error(error);
     }
@@ -20,7 +28,12 @@ const getCart = createAsyncThunk(
 export const getCartSync = async (dataRequest: GetCartRequest) => {
   try {
     const { data } = await cartService(getInstanceHttp()).getCart(dataRequest);
-    return data;
+    const productIds = getProductIds(data);
+    const productsWithRibbons = await productsService(
+      getInstanceHttp(),
+    ).getProductsByIds(productIds);
+    const newCart = cartWithRibbons(data, productsWithRibbons.data);
+    return newCart;
   } catch (error) {
     throw new Error('Error al cargar el carro');
   }

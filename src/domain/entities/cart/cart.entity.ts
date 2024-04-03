@@ -1,3 +1,4 @@
+import { RibbonType } from '@ccom-easy-design-system/atoms.ribbon';
 export interface Cart {
   id: string;
   currencyCode: string;
@@ -103,6 +104,12 @@ export const enum OperationStatus {
   PENDING,
 }
 
+export interface ColorCode {
+  code: string;
+  hexColor: string;
+  quantity: number;
+}
+
 export interface Product {
   id: string;
   sku: string;
@@ -122,6 +129,8 @@ export interface Product {
   ean: string;
   productId?: string;
   detailUrl: string;
+  ribbons: RibbonType[];
+  colorCodes?: ColorCode[];
 }
 
 export interface WithdrawalThird {

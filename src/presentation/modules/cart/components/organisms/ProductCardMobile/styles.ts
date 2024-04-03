@@ -25,3 +25,9 @@ export const QuantitySelectorAndDeleteContainer = styled.div`
 export const MainContainer = styled.div`
   display: flex;
 `;
+export const RibbonsLogisticContainer = styled.div`
+  padding-bottom: 8px;
+  & span {
+    font-size: 11px;
+  }
+`;

@@ -17,6 +17,7 @@ import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
 import WrapperEvents from './wrapper-events';
 import { useQuery } from '@tanstack/react-query';
 import getParamData from '@use-cases/cms/getParamData';
+import MinicartError from '@modules/cart/components/molecules/MinicartError';
 
 const CartAsideContainer = () => {
   // hooks
@@ -209,46 +210,33 @@ const CartAsideContainer = () => {
 
   return (
     <>
-      {hasHybridation && !isHeadless ? (
-        <>
-          <Header />
+      <SwipeableDrawer
+        anchor="right"
+        open={cartAsideIsOpen}
+        onClose={() => dispatch(setCartAsideIsOpen(false))}
+        onOpen={() => dispatch(setCartAsideIsOpen(true))}
+        transitionDuration={300}
+        PaperProps={{
+          sx: {
+            minWidth: '280px',
+            width: '90%',
+            maxWidth: '400px',
+          },
+        }}
+      >
+        <Header />
+        <WrapperEvents>
           {totalProducts > 0 ? (
             <>
+              <MinicartError />
               <Body />
               <Footer />
             </>
           ) : (
             <EmptyBody />
           )}
-        </>
-      ) : (
-        <SwipeableDrawer
-          anchor="right"
-          open={cartAsideIsOpen}
-          onClose={() => dispatch(setCartAsideIsOpen(false))}
-          onOpen={() => dispatch(setCartAsideIsOpen(true))}
-          transitionDuration={300}
-          PaperProps={{
-            sx: {
-              minWidth: '280px',
-              width: '90%',
-              maxWidth: '400px',
-            },
-          }}
-        >
-          <Header />
-          <WrapperEvents>
-            {totalProducts > 0 ? (
-              <>
-                <Body />
-                <Footer />
-              </>
-            ) : (
-              <EmptyBody />
-            )}
-          </WrapperEvents>
-        </SwipeableDrawer>
-      )}
+        </WrapperEvents>
+      </SwipeableDrawer>
     </>
   );
 };
