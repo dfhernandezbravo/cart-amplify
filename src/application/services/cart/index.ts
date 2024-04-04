@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie';
-import { environments } from './../../../configs/env';
 import {
   AddOrderItems,
   AddProductServiceBody,
@@ -8,6 +7,7 @@ import {
 import CartService from '@interfaces/cart-service.interface';
 import { CouponCode } from '@entities/cart/cart.entity';
 import { bffWebInstanceV1 } from '@data-sources/bff-v1/bff-instance';
+import { ObservabilityCart } from '@entities/cart/observability';
 
 const valitadeId = (id: string | undefined) => {
   const accessToken = Cookies.get('accessToken');
@@ -63,6 +63,10 @@ const cartService = (httpInstance = bffWebInstanceV1): CartService => ({
       data.itemIndex
     }/options/${data.optionId}`;
     return httpInstance.delete(url);
+  },
+  observability: (data: ObservabilityCart) => {
+    const url = `/observability/custom-events`;
+    return httpInstance.post(url, data);
   },
 });
 

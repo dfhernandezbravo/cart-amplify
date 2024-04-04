@@ -6,6 +6,12 @@ export type QuantitySelectedProps = {
   availableQuantity: number | null;
 };
 
+export type SelectedQuantityMinicart = {
+  availableQuantity: number | null;
+  index: number | null;
+  sentQuantity: number | null;
+};
+
 export type InitialState = {
   cartBFF: Cart | undefined;
   cartId: string;
@@ -16,6 +22,7 @@ export type InitialState = {
   isCencopayActive: boolean;
   isHeadless: boolean;
   cartAsideIsOpen: boolean;
+  selectedQuantityMinicart: SelectedQuantityMinicart;
 };
 
 export interface CartItemModel {

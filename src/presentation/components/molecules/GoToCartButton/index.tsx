@@ -25,7 +25,7 @@ const GoToCartButton = () => {
   if (!cartBFF?.id) {
     return (
       <Button className="linkBtn goToCartBtn fullWidth">
-        Ir al carro de comprass
+        Ir al carro de compras
       </Button>
     );
   }

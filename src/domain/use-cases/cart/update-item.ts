@@ -3,7 +3,7 @@ import { CartAction } from '@entities/error/error.entity';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import cartService from '@services/cart';
 import dispatchHttpErrors from '@use-cases/error/dispatch-http-errors';
-// import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
+import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
 import { AxiosError } from 'axios';
 import getInstanceHttp from './get-instance-http';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
@@ -19,14 +19,24 @@ const updateItem = createAsyncThunk(
       const { data } = await cartService(getInstanceHttp()).updateItem(
         dataRequest,
       );
-      // dispatchPayloadErrors(data, dispatch, CartAction.UPDATE);
+      dispatchPayloadErrors(
+        data,
+        dispatch,
+        dataRequest.sentFrom,
+        dataRequest.items[0].quantity,
+      );
       customDispatchEvent({
         name: WindowsEvents.UPDATE_SHOPPING_CART,
-        detail: { shoppingCart: data },
+        detail: { shoppingCart: data, origin: 'CART' },
       });
       return fulfillWithValue(data);
     } catch (error) {
-      dispatchHttpErrors(error as AxiosError, dispatch, CartAction.UPDATE);
+      dispatchHttpErrors(
+        error as AxiosError,
+        dispatch,
+        CartAction.UPDATE,
+        dataRequest.sentFrom,
+      );
       return rejectWithValue(error);
     }
   },

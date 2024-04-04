@@ -106,7 +106,7 @@ const selectLayout = (
           </svg>
         ),
         style: {
-          background: '#70110e',
+          background: '#79110D',
           color: '#ffffff',
         },
       };

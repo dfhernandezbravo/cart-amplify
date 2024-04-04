@@ -1,15 +1,12 @@
 import { useState } from 'react';
-
 import ProductImage from '@components/molecules/ProductImage';
-
 import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
 import ProductPrice from '@components/molecules/ProductPrice';
+import ProductSku from '@components/molecules/ProductSku';
 import DeleteButton from '@components/molecules/DeleteButton';
 import QuantitySelector from '@components/atoms/CartQuantitySelector';
-import ProductSku from '@components/molecules/ProductSku';
 import AvailableQuantity from './components/AvailableQuantity';
-import Modal from '@components/atoms/Modal';
 import { ProductCardProps } from './types';
 import {
   Container,
@@ -17,10 +14,15 @@ import {
   ProductInfoAndPriceContainer,
   QuantitySelectorAndDeleteContainer,
   ImageContainer,
-  QuantitySelectorContainer,
+  PriceContainer,
+  BrandProductNameContainer,
+  RibbonsLogisticContainer,
 } from './styles';
 import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
+import ModalQuantity from '../ModalQuantity';
+import Ribbon from '@components/atoms/Ribbon';
+import TintometricColors from '../TintometricColors';
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
@@ -62,12 +64,12 @@ const ProductCard = (props: ProductCardProps) => {
     const productData = {
       products: [
         {
-          name: item.product.description,
-          id: item.product.sku,
-          price: item.product.prices.normalPrice.toString(),
-          price_tecno: item.product.prices.brandPrice?.toString(),
-          brand: item.product.brand,
-          category: item.product.category,
+          name: item?.product?.description,
+          id: item?.product?.sku,
+          price: item?.product?.prices?.normalPrice?.toString(),
+          price_tecno: item?.product?.prices?.brandPrice?.toString(),
+          brand: item?.product?.brand,
+          category: item?.product?.category,
           variant: '',
           quantity: Math.abs(parseInt(quantity) - item.quantity),
         },
@@ -81,8 +83,6 @@ const ProductCard = (props: ProductCardProps) => {
         add: productData,
       },
     });
-
-    console.log(productData, 'productData');
   };
 
   const handleRemoveFromCart = () => {
@@ -91,14 +91,14 @@ const ProductCard = (props: ProductCardProps) => {
     const productData = {
       products: [
         {
-          name: item.product.description,
-          id: item.product.sku,
-          price: item.product.prices.normalPrice.toString(),
-          price_tecno: item.product.prices.brandPrice?.toString(),
-          brand: item.product.brand,
-          category: item.product.category,
+          name: item?.product?.description,
+          id: item?.product?.sku,
+          price: item?.product?.prices?.normalPrice?.toString(),
+          price_tecno: item?.product?.prices?.brandPrice?.toString(),
+          brand: item?.product?.brand,
+          category: item?.product?.category,
           variant: '',
-          quantity: item.quantity,
+          quantity: item?.quantity,
         },
       ],
     };
@@ -118,52 +118,76 @@ const ProductCard = (props: ProductCardProps) => {
     setIsModalOpen(false);
   };
 
+  const hasTintometric = item.product.colorCodes
+    ? item.product.colorCodes.length > 0
+    : false;
+
   if (item.product.availability !== 'available') return null;
+  const ribbons = item?.product?.ribbons;
+  const logisticRibbons = ribbons?.filter(
+    (obj) =>
+      obj.group === 'logistic' &&
+      (obj.value.toLowerCase().includes('recibe') ||
+        obj.value.toLowerCase().includes('retira')),
+  );
 
   return (
     <>
-      <Container isLastItem={itemLength === index + 1}>
+      <Container
+        data-id={`product-card-${item.product.productId}`}
+        isLastItem={itemLength === index + 1}
+      >
         <>
           <ProductInfoAndPriceContainer>
             <ProductInfoContainer>
               <ImageContainer>
                 <ProductImage src={item?.product?.images} alt={''} />
               </ImageContainer>
-              <div>
+              <BrandProductNameContainer>
                 <ProductBrand brand={item?.product?.brand} />
                 <ProductName
                   productName={item?.product?.description}
                   productUrl={item?.product?.detailUrl}
                 />
                 <ProductSku id={item?.product.sku} />
-              </div>
+                <TintometricColors item={item} index={index} />
+              </BrandProductNameContainer>
             </ProductInfoContainer>
-            <div>
-              <ProductPrice
-                prices={item?.product.prices}
-                quantity={item?.quantity ?? 0}
-                adjustment={item?.adjustment}
-              />
-            </div>
+            <PriceContainer>
+              <div>
+                <ProductPrice
+                  prices={item?.product.prices}
+                  quantity={item?.quantity ?? 0}
+                  adjustment={item?.adjustment}
+                />
+              </div>
+              {logisticRibbons?.length > 0 &&
+                logisticRibbons.map((obj) => (
+                  <RibbonsLogisticContainer key={obj?.value}>
+                    <Ribbon ribbon={obj} />
+                  </RibbonsLogisticContainer>
+                ))}
+              <QuantitySelectorAndDeleteContainer>
+                {itemStockModify && (
+                  <AvailableQuantity quantity={itemStockModify as number} />
+                )}
+                {!hasTintometric ? (
+                  <div className="quantity-container">
+                    <QuantitySelector
+                      quantitySelected={(value: string) =>
+                        handleSelectedQuantity(value)
+                      }
+                      quantity={item?.quantity}
+                    />
+                    <DeleteButton
+                      hasIcon={true}
+                      onRemoveFromCart={handleRemoveFromCart}
+                    />
+                  </div>
+                ) : null}
+              </QuantitySelectorAndDeleteContainer>
+            </PriceContainer>
           </ProductInfoAndPriceContainer>
-
-          <QuantitySelectorAndDeleteContainer>
-            {itemStockModify && (
-              <AvailableQuantity quantity={itemStockModify as number} />
-            )}
-            <div className="quantity-container">
-              <QuantitySelector
-                quantitySelected={(value: string) =>
-                  handleSelectedQuantity(value)
-                }
-                quantity={item?.quantity}
-              />
-              <DeleteButton
-                hasIcon={true}
-                onRemoveFromCart={handleRemoveFromCart}
-              />
-            </div>
-          </QuantitySelectorAndDeleteContainer>
         </>
         {/* {hasServices?.length
           ? hasServices.map((obj) => (
@@ -172,18 +196,13 @@ const ProductCard = (props: ProductCardProps) => {
           : null} */}
       </Container>
 
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <QuantitySelectorContainer>
-          <p>Elige cantidad</p>
-          <input
-            type="number"
-            value={quantityValue}
-            placeholder="Ingresa la cantidad"
-            onChange={(value) => setQuantityValue(value.target.value)}
-          />
-          <button onClick={() => handleOnClickQuantity()}>Aplicar</button>
-        </QuantitySelectorContainer>
-      </Modal>
+      <ModalQuantity
+        quantityValue={quantityValue}
+        isModalOpen={isModalOpen}
+        handleQuantityValue={(value) => setQuantityValue(value)}
+        handleCloseModal={handleCloseModal}
+        handleOnClick={handleOnClickQuantity}
+      />
     </>
   );
 };

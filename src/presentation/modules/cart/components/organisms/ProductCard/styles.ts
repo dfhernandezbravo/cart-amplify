@@ -17,6 +17,13 @@ export const Container = styled.div<Props>`
 export const ProductInfoContainer = styled.div`
   display: flex;
   column-gap: 16px;
+  /* @media (min-width: 1440px) {
+    width: 50rem;
+  }
+
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    width: 30rem;
+  } */
 
   & p {
     color: #485760;
@@ -31,7 +38,7 @@ export const ProductInfoContainer = styled.div`
 export const ProductInfoAndPriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
 `;
 
@@ -43,7 +50,10 @@ export const QuantitySelectorAndDeleteContainer = styled.div`
 
   & .quantity-container {
     display: flex;
-    margin-right: 106px;
+    /* margin-right: 106px; */
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
   }
 `;
 
@@ -52,32 +62,56 @@ export const ImageContainer = styled.div`
   position: relative;
 `;
 
-export const QuantitySelectorContainer = styled.div`
+export const ProductUnavailableContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  width: 350px;
-  & p {
-    font-size: 18px;
-    font-weight: 700;
+  padding: 16px 0;
+  background-color: #fff;
+`;
+
+export const ButtonContainer = styled.div`
+  /* width: 100%; */
+  margin-right: 0.6rem;
+
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    min-width: 15rem;
   }
-  & input {
-    padding: 16px;
-    margin: 1rem 0;
-    border: 1px solid #aaaaaa;
-    border-radius: 5px;
+
+  @media (min-width: 1440px) {
+    min-width: 20rem;
   }
-  & input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
+`;
+
+export const PriceContainer = styled.div`
+  margin-right: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  @media (max-width: 1023px) {
+    min-width: 12rem;
   }
-  & button {
-    border: 1px solid #af1211;
-    border-radius: 8px;
-    background-color: #af1211;
-    padding: 16px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #ffffff;
+
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    min-width: 15rem;
+  }
+
+  @media (min-width: 1440px) {
+    min-width: 20rem;
+  }
+`;
+
+export const BrandProductNameContainer = styled.div`
+  & .product-name--container {
+    max-width: 350px;
+  }
+`;
+
+export const RibbonsLogisticContainer = styled.div`
+  padding-bottom: 8px;
+  & span {
+    font-size: 11px;
   }
 `;

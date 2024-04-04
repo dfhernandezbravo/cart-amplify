@@ -17,17 +17,12 @@ import { getCartFromLocalStorage } from '@utils/getCartFromLocalStorage';
 import WrapperEvents from './wrapper-events';
 import { useQuery } from '@tanstack/react-query';
 import getParamData from '@use-cases/cms/getParamData';
+import MinicartError from '@modules/cart/components/molecules/MinicartError';
 
 const CartAsideContainer = () => {
   // hooks
-  const {
-    cartBFF,
-    hasHybridation,
-    cartId,
-    isHeadless,
-    cartAsideIsOpen,
-    isCencopayActive,
-  } = useAppSelector((state) => state.cart);
+  const { cartBFF, hasHybridation, cartId, isHeadless, cartAsideIsOpen } =
+    useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
   const totalProducts = useAppSelector(selectTotalProductsInCart);
@@ -37,6 +32,7 @@ const CartAsideContainer = () => {
     setIsHeadless,
     setCartAsideIsOpen,
     setParams,
+    resetSelectedQuantityMinicart,
   } = cartSlice.actions;
 
   const setSalesChannelCookie = (
@@ -102,7 +98,7 @@ const CartAsideContainer = () => {
             salesChannel,
             orderFormVtex,
           } = event?.data?.VTEX_PRODUCT_ADD_TO_CART;
-
+          dispatch(resetSelectedQuantityMinicart());
           dispatch(simulateAddProduct({ ...product, quantityValue }));
           const cartBFFfromLocalStorage = getCartFromLocalStorage(cartBFF);
           const productInCart = getCartFromLocalStorage(cartBFF)?.items?.find(
@@ -148,6 +144,7 @@ const CartAsideContainer = () => {
                         : productInCart.quantity + 1,
                     },
                   ],
+                  sentFrom: 'MINICART',
                 }),
               );
               return;
@@ -162,6 +159,7 @@ const CartAsideContainer = () => {
                     id: productReference,
                   },
                 ],
+                sentFrom: 'MINICART',
               }),
             );
             return;
@@ -212,46 +210,33 @@ const CartAsideContainer = () => {
 
   return (
     <>
-      {hasHybridation && !isHeadless ? (
-        <>
-          <Header />
+      <SwipeableDrawer
+        anchor="right"
+        open={cartAsideIsOpen}
+        onClose={() => dispatch(setCartAsideIsOpen(false))}
+        onOpen={() => dispatch(setCartAsideIsOpen(true))}
+        transitionDuration={300}
+        PaperProps={{
+          sx: {
+            minWidth: '280px',
+            width: '90%',
+            maxWidth: '400px',
+          },
+        }}
+      >
+        <Header />
+        <WrapperEvents>
           {totalProducts > 0 ? (
             <>
+              <MinicartError />
               <Body />
               <Footer />
             </>
           ) : (
             <EmptyBody />
           )}
-        </>
-      ) : (
-        <SwipeableDrawer
-          anchor="right"
-          open={cartAsideIsOpen}
-          onClose={() => dispatch(setCartAsideIsOpen(false))}
-          onOpen={() => dispatch(setCartAsideIsOpen(true))}
-          transitionDuration={300}
-          PaperProps={{
-            sx: {
-              minWidth: '280px',
-              width: '90%',
-              maxWidth: '400px',
-            },
-          }}
-        >
-          <Header />
-          <WrapperEvents>
-            {totalProducts > 0 ? (
-              <>
-                <Body />
-                <Footer />
-              </>
-            ) : (
-              <EmptyBody />
-            )}
-          </WrapperEvents>
-        </SwipeableDrawer>
-      )}
+        </WrapperEvents>
+      </SwipeableDrawer>
     </>
   );
 };

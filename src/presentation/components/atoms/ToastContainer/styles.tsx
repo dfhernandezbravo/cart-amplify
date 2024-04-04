@@ -33,5 +33,10 @@ export const MessageContainer = styled.div`
   }
   & p:last-child {
     font-size: 12px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;

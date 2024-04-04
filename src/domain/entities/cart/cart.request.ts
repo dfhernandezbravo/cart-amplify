@@ -1,16 +1,33 @@
+import { ColorCode } from './cart.entity';
+
 export type GetCartRequest = {
   cartId: string;
 };
 
-export type AddItemRequest = { cartId: string; items: AddBodyItem[] };
+export type SentFrom = 'MINICART' | 'CART';
 
-export type UpdateItemRequest = { cartId: string; items: UpdateBodyItem[] };
+export type AddItemRequest = {
+  cartId: string;
+  items: AddBodyItem[];
+  sentFrom: SentFrom;
+};
 
-export type DeleteItemRequest = { cartId: string; itemIndex: number };
+export type UpdateItemRequest = {
+  cartId: string;
+  items: UpdateBodyItem[];
+  sentFrom: SentFrom;
+};
+
+export type DeleteItemRequest = {
+  cartId: string;
+  itemIndex: number;
+  sentFrom: SentFrom;
+};
 
 export type AddBodyItem = {
   quantity: number;
   id: string;
+  paintingCode?: ColorCode;
 };
 
 export type AddOrderItems = {
@@ -20,6 +37,7 @@ export type AddOrderItems = {
 export type UpdateBodyItem = {
   quantity: number;
   index: number;
+  paintingCode?: ColorCode;
 };
 
 export type UpdateOrderItems = {

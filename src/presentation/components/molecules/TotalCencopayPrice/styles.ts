@@ -5,6 +5,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 7px;
+  color: #363f45;
 
   & .cencopay-total-container {
     display: flex;
@@ -13,7 +14,6 @@ export const Container = styled.div`
   }
 
   & .value-price {
-    color: #363f45;
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -29,5 +29,5 @@ export const Container = styled.div`
 export const Title = styled.span`
   font-size: 14px;
   font-weight: 400;
-  color: #6e8391;
+  color: #363f45;
 `;

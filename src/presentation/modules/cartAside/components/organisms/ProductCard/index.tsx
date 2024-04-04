@@ -11,9 +11,13 @@ import {
   ImageAndDeleteContainer,
   MainContainer,
 } from './styles';
-import ProductService from '@modules/cartAside/components/molecules/ProductService';
+// import ProductService from '@modules/cartAside/components/molecules/ProductService';
+import AvailableQuantity from '@modules/cart/components/organisms/ProductCard/components/AvailableQuantity';
+import { useAppSelector } from '@hooks/storeHooks';
+import Tintometric from '@components/molecules/Tintometric';
 
 const ProductCard = (props: ProductCardProps) => {
+  const { selectedQuantityMinicart } = useAppSelector((state) => state.cart);
   const {
     item,
     index,
@@ -24,12 +28,20 @@ const ProductCard = (props: ProductCardProps) => {
 
   if (item.product.availability !== 'available') return null;
 
-  const hasServiceApplied = item.product.options?.filter(
-    (obj) => obj.isApplied === true,
-  );
+  // const hasServiceApplied = item.product.options?.filter(
+  //   (obj) => obj.isApplied === true,
+  // );
+
+  const showMaxAvailableQuantityMessage =
+    selectedQuantityMinicart.index !== null &&
+    selectedQuantityMinicart.availableQuantity !== null &&
+    selectedQuantityMinicart.sentQuantity !== null &&
+    selectedQuantityMinicart.index === index &&
+    selectedQuantityMinicart.sentQuantity >
+      selectedQuantityMinicart.availableQuantity;
 
   return (
-    <ProductCardContainer>
+    <ProductCardContainer data-id={`product-card-${item.product.productId}`}>
       <MainContainer>
         <ImageAndDeleteContainer>
           <ProductImage src={item.product.images} alt="" />
@@ -47,6 +59,13 @@ const ProductCard = (props: ProductCardProps) => {
             quantity={item?.quantity ?? 0}
             adjustment={item?.adjustment}
           />
+          <Tintometric item={item} />
+          {showMaxAvailableQuantityMessage &&
+          selectedQuantityMinicart.availableQuantity !== null ? (
+            <AvailableQuantity
+              quantity={selectedQuantityMinicart.availableQuantity}
+            />
+          ) : null}
           <QuantitySelector
             index={index}
             onIncrementQuantity={onIncrementQuantity}

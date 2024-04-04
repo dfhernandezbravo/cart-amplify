@@ -18,7 +18,8 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   // hooks
   const dispatch = useAppDispatch();
   const { cartId, loading } = useAppSelector((state) => state.cart);
-  const { updateProductQuantity } = cartSlice.actions;
+  const { updateProductQuantity, resetSelectedQuantityMinicart } =
+    cartSlice.actions;
   const {
     methods: { sendQuantityClickEvent },
   } = useAnalytics();
@@ -26,9 +27,14 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   const [quantityInput, setQuantityInput] = useState(`${quantity}`);
   const [isEditing, setIsEditing] = useState(false);
 
+  const hasTintometric = item.product.colorCodes
+    ? item.product.colorCodes.length > 0
+    : false;
+
   // methods
   const methods = {
     updateQuantityInput: () => {
+      dispatch(resetSelectedQuantityMinicart());
       const newQuantity = Number(quantityInput);
       if (newQuantity === quantity) return;
 
@@ -43,11 +49,11 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
             add: {
               products: [
                 {
-                  name: item.product.description,
-                  id: item.itemId,
-                  price: item.product.prices.normalPrice.toString(),
-                  brand: item.product.brand,
-                  category: item.product.category,
+                  name: item?.product?.description,
+                  id: item?.itemId,
+                  price: item?.product?.prices?.normalPrice?.toString(),
+                  brand: item?.product?.brand,
+                  category: item?.product?.category,
                   variant: '',
                   quantity: Math.abs(quantity - newQuantity),
                 },
@@ -63,6 +69,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
           updateItem({
             cartId: cartId ?? '',
             items: [{ quantity: newQuantity, index: index }],
+            sentFrom: 'MINICART',
           }),
         );
       }
@@ -77,6 +84,7 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
   return (
     <QuantitySelectorContainer>
       <Button
+        dataId="decrease-quantity"
         className="quantitySelectorBtn quantitySelectorBtn--minus"
         onClick={onDecrementQuantity}
         disabled={quantity === 1}
@@ -94,9 +102,10 @@ const QuantitySelector = (props: QuantitySelectorProps) => {
         onChange={(e) => setQuantityInput(e.target.value)}
         value={loading || isEditing ? quantityInput : quantity}
         className="quantityInput"
-        disabled={loading}
+        disabled={loading || hasTintometric}
       />
       <Button
+        dataId="increase-quantity"
         className="quantitySelectorBtn quantitySelectorBtn--plus"
         onClick={onIncrementQuantity}
       >

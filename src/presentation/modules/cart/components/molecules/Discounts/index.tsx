@@ -29,7 +29,7 @@ const Discounts = () => {
     return (
       <>
         {total > 0 ? (
-          <p>
+          <p style={{ fontSize: '14px', fontWeight: 400, color: '#363f45' }}>
             {name}
             {loading ? <Skeleton /> : <Price>-{formattedCLP(total)}</Price>}
           </p>

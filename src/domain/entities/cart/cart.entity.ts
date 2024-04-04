@@ -1,3 +1,4 @@
+import { RibbonType } from '@ccom-easy-design-system/atoms.ribbon';
 export interface Cart {
   id: string;
   currencyCode: string;
@@ -83,7 +84,7 @@ export enum PriceType {
   totalCencoPay = 'totalCencoPay',
 }
 
-interface MessagesError {
+export interface MessagesError {
   code: string;
   text: string;
   status: string;
@@ -94,6 +95,7 @@ interface Fields {
   ean: string;
   itemIndex: string;
   skuName: string;
+  id: string;
 }
 
 export const enum OperationStatus {
@@ -102,7 +104,13 @@ export const enum OperationStatus {
   PENDING,
 }
 
-interface Product {
+export interface ColorCode {
+  code: string;
+  hexColor: string;
+  quantity: number;
+}
+
+export interface Product {
   id: string;
   sku: string;
   description: string;
@@ -121,6 +129,8 @@ interface Product {
   ean: string;
   productId?: string;
   detailUrl: string;
+  ribbons: RibbonType[];
+  colorCodes?: ColorCode[];
 }
 
 export interface WithdrawalThird {
@@ -230,4 +240,6 @@ export enum ProductAvailability {
   AVAILABLE = 'available',
   WITHOUTSTOCK = 'withoutStock',
   CANNOTBEDELIVERED = 'cannotBeDelivered',
+  ITEM_QUANTITY_NOT_AVAILABLE = 'itemQuantityNotAvailable',
+  UNAVAILABLE_ITEM_FULFILLMENT = 'unavailableItemFulfillment',
 }

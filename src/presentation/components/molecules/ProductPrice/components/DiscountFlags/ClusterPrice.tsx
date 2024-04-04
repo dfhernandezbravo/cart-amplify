@@ -14,8 +14,8 @@ const ClusterPrice = ({
   quantity,
 }: DiscountProps) => {
   const hashLabel = {
-    EXPERTO: 'M. Experto',
-    EXPERTO_PREFERENTE: 'M. Experto',
+    EXPERTO: 'Mundo Experto',
+    EXPERTO_PREFERENTE: 'Mundo Experto',
     COLABORADOR: 'Colaborador',
   };
 
@@ -28,7 +28,9 @@ const ClusterPrice = ({
   return (
     <PricesContainer>
       <div className="cluster-container">
-        <Price>{formattedCLP(offerPrice * quantity)}</Price>
+        <Price data-id="cluster-price">
+          {formattedCLP(offerPrice * quantity)}
+        </Price>
         <WrapperClusterPrice cluster={offerDiscount[0].id as clusterValues}>
           <div className="cluster-percent">{porcentage}</div>
           <p className="text-promotion">
