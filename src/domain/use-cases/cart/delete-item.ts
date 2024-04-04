@@ -9,6 +9,7 @@ import dispatchHttpErrors from '@use-cases/error/dispatch-http-errors';
 import getInstanceHttp from './get-instance-http';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
 import WindowsEvents from '@events/index';
+import AddRibbonsToItems from './add-ribbons';
 
 const deleteItem = createAsyncThunk(
   '/cart/deleteItem',
@@ -20,6 +21,7 @@ const deleteItem = createAsyncThunk(
       const { data, status } = await cartService(getInstanceHttp()).deleteItem(
         dataRequest,
       );
+      const itemWithRibbons = await AddRibbonsToItems(data);
 
       if (status === 204) {
         customDispatchEvent({
@@ -36,7 +38,7 @@ const deleteItem = createAsyncThunk(
       });
 
       dispatchPayloadErrors(data, dispatch, dataRequest.sentFrom);
-      return fulfillWithValue(data);
+      return fulfillWithValue(itemWithRibbons);
     } catch (error) {
       dispatchHttpErrors(
         error as AxiosError,
