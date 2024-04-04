@@ -8,6 +8,7 @@ import { AxiosError } from 'axios';
 import getInstanceHttp from './get-instance-http';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
 import WindowsEvents from '@events/index';
+import AddRibbonsToItems from './add-ribbons';
 
 const updateItem = createAsyncThunk(
   '/cart/updateItem',
@@ -29,7 +30,8 @@ const updateItem = createAsyncThunk(
         name: WindowsEvents.UPDATE_SHOPPING_CART,
         detail: { shoppingCart: data, origin: 'CART' },
       });
-      return fulfillWithValue(data);
+      const itemWithRibbons = await AddRibbonsToItems(data);
+      return fulfillWithValue(itemWithRibbons);
     } catch (error) {
       dispatchHttpErrors(
         error as AxiosError,
