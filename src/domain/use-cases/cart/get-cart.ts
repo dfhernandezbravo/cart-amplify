@@ -14,11 +14,14 @@ const getCart = createAsyncThunk(
         dataRequest,
       );
       const productIds = getProductIds(data);
-      const productsWithRibbons = await productsService(
-        getInstanceHttp(),
-      ).getProductsByIds(productIds);
-      const newCart = cartWithRibbons(data, productsWithRibbons.data);
-      return newCart;
+      let cartWithRibbonsAdded = data;
+      if (productIds) {
+        const productsWithRibbons = await productsService(
+          getInstanceHttp(),
+        ).getProductsByIds(productIds);
+        cartWithRibbonsAdded = cartWithRibbons(data, productsWithRibbons.data);
+      }
+      return cartWithRibbonsAdded;
     } catch (error) {
       console.error(error);
     }
@@ -29,11 +32,14 @@ export const getCartSync = async (dataRequest: GetCartRequest) => {
   try {
     const { data } = await cartService(getInstanceHttp()).getCart(dataRequest);
     const productIds = getProductIds(data);
-    const productsWithRibbons = await productsService(
-      getInstanceHttp(),
-    ).getProductsByIds(productIds);
-    const newCart = cartWithRibbons(data, productsWithRibbons.data);
-    return newCart;
+    let cartWithRibbonsAdded = data;
+    if (productIds) {
+      const productsWithRibbons = await productsService(
+        getInstanceHttp(),
+      ).getProductsByIds(productIds);
+      cartWithRibbonsAdded = cartWithRibbons(data, productsWithRibbons.data);
+    }
+    return cartWithRibbonsAdded;
   } catch (error) {
     throw new Error('Error al cargar el carro');
   }
