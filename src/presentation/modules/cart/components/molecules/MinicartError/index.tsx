@@ -67,6 +67,7 @@ const MinicartError = () => {
       <ErrorContainer errorType={error.errorType} status={error.status}>
         <IconAndTextContainer>
           {ErrorIcon()}
+
           <TextContainer>
             {error.title ? <Title>{error.title}</Title> : null}
             {error.content ? <Content>{error.content}</Content> : null}

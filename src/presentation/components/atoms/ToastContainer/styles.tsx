@@ -14,9 +14,8 @@ export const Container = styled.div`
     align-self: center;
   }
   & .Toastify__close-button:before {
-    content: '';
-
-    background-image: url('/icons/cart/close-icon.svg');
+    content: 'x';
+    color: rgb(255, 255, 255);
     background-repeat: no-repeat;
     fill: #ffffff;
     display: block;

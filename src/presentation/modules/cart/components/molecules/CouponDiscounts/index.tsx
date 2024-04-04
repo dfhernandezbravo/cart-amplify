@@ -46,12 +46,21 @@ const CouponDiscounts = ({ couponId, couponValue }: CouponProps) => {
             <CouponNameContainer>
               <CouponName>{couponId}</CouponName>
               <RemoveButton onClick={removeCoupon}>
-                <Image
-                  src="/icons/cart/close-line.svg"
-                  width={18}
-                  height={18}
-                  alt="close-line"
-                />
+                <svg
+                  width="25"
+                  height="25"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="close-line">
+                    <path
+                      id="Vector"
+                      d="M12.765 10.4725L18.9875 4.25L20.765 6.0275L14.5425 12.25L20.765 18.4725L18.9875 20.25L12.765 14.0275L6.54251 20.25L4.76501 18.4725L10.9875 12.25L4.76501 6.0275L6.54251 4.25L12.765 10.4725Z"
+                      fill="#485760"
+                    />
+                  </g>
+                </svg>
               </RemoveButton>
             </CouponNameContainer>
             <CouponPrice>-{formattedCLP(couponValue)}</CouponPrice>
