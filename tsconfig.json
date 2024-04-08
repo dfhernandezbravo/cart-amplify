@@ -28,7 +28,7 @@
       "@interfaces/*": ["./src/domain/interfaces/*"],
       "@use-cases/*": ["./src/domain/use-cases/*"],
       "@data-sources/*": ["./src/application/data-sources/*"],
-      "@services/*": ["./src/application/services/*"]
+      "@services/*": ["./src/application/services/*"],
       // "@repositories/*": ["./src/application/repositories/*"]
     }
   },
