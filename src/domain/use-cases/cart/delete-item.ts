@@ -21,7 +21,6 @@ const deleteItem = createAsyncThunk(
       const { data, status } = await cartService(getInstanceHttp()).deleteItem(
         dataRequest,
       );
-      const itemWithRibbons = await AddRibbonsToItems(data);
 
       if (status === 204) {
         customDispatchEvent({
@@ -31,6 +30,8 @@ const deleteItem = createAsyncThunk(
 
         return {} as Cart;
       }
+
+      const itemWithRibbons = await AddRibbonsToItems(data);
 
       customDispatchEvent({
         name: WindowsEvents.UPDATE_SHOPPING_CART,

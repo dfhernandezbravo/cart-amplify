@@ -7,5 +7,5 @@ export const getProductIds = (cart: Cart) => {
         return item.product.productId;
     })
     .map((item) => item.product.productId);
-  return productIds.toString();
+  if (productIds) return productIds.toString();
 };
