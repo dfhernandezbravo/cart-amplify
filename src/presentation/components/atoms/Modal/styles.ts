@@ -18,6 +18,7 @@ export const ModalWrapper = styled.div<ModalProps>`
   background-color: rgba(0, 0, 0, 0.5);
   overflow: hidden;
   z-index: 99999;
+  padding: 0 1rem;
 `;
 
 export const ModalContent = styled.div<ModalProps>`
