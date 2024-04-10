@@ -12,7 +12,9 @@
     "format": "prettier --write . --config .prettierrc"
   },
   "dependencies": {
+    "@ccom-easy-design-system/atoms.button": "0.0.10",
     "@ccom-easy-design-system/atoms.ribbon": "^0.0.11",
+    "@ccom-easy-design-system/modules.product-carousel-module": "^0.0.22",
     "@ccom-easy-design-system/theme.theme-provider": "^0.0.15",
     "@cencosud-ds/easy-design-system": "^1.1.17",
     "@emotion/react": "^11.11.1",
@@ -29,7 +31,7 @@
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "newrelic": "^11.12.0",
-    "next": "13.3.4",
+    "next": "13.3.1",
     "prettier": "^3.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -37,13 +39,14 @@
     "react-icons": "^4.8.0",
     "react-is": "^18.2.0",
     "react-modal": "^3.16.1",
+    "react-query": "^3.39.3",
     "react-redux": "^8.0.5",
     "react-toastify": "^9.1.3",
     "redux-persist": "6.0.0",
     "sharp": "^0.32.1",
     "styled-components": "^6.1.8",
     "typescript": "5.0.4",
-    "webpack": "^5.82.0"
+    "webpack": "5.80.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",
