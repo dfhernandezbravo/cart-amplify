@@ -1,17 +1,9 @@
 import MinicartError from '@modules/cart/components/molecules/MinicartError';
 import { EmptyBodyContainer, Container, Title, Description } from './styles';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import { useAppDispatch } from '@hooks/storeHooks';
 import cartSlice from '@store/cart';
-
-const Button = dynamic(
-  () =>
-    import('@ccom-easy-design-system/atoms.button').then(
-      (module) => module.Button,
-    ),
-  { ssr: false },
-);
+import Button from '@components/atoms/BitButton';
 
 const EmptyBody = () => {
   const dispatch = useAppDispatch();

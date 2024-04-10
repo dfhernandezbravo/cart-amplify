@@ -5,18 +5,10 @@ import useEventListener from '@hooks/eventListenerHooks';
 import WindowsEvents from '@events/index';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
 import { AddItemShoppingCartEvent } from '@entities/events/add-to-cart-event';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '@hooks/storeHooks';
 import { ShowcaseContainer } from './styles';
-
-const Showcase = dynamic(
-  () =>
-    import('@ccom-easy-design-system/modules.product-carousel-module').then(
-      (module) => module.ProductCarouselModule,
-    ),
-  { ssr: false },
-);
+import Showcase from '@components/molecules/BitShowcase';
 
 const RecommendedProducts = () => {
   const router = useRouter();

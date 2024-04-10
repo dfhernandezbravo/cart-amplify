@@ -9,16 +9,8 @@ import {
   BottomContainer,
 } from './styles';
 import { isProduction } from '@utils/helpers';
-import dynamic from 'next/dynamic';
 import RecommendedProducts from './components/recommended-products';
-
-const Button = dynamic(
-  () =>
-    import('@ccom-easy-design-system/atoms.button').then(
-      (module) => module.Button,
-    ),
-  { ssr: false },
-);
+import Button from '@components/atoms/BitButton';
 
 const EmptyBody = () => {
   const { isHeadless } = useAppSelector((state) => state.cart);
