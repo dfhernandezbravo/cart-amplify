@@ -1,21 +1,44 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  height: 100dvh;
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  justify-content: center;
+  padding: 0 1rem;
+  margin: 5rem 0 3rem;
+`;
+
+export const TopContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 2.5rem;
   max-width: 283px;
 `;
 
+export const BottomContainer = styled.div`
+  width: 100dvw;
+  background-color: #e1e6ea;
+  margin-top: auto;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+
+  h2 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+`;
+
 export const Title = styled.p`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
-  line-height: 23px;
-  color: #485760;
+  line-height: 20px;
+  color: #363f45;
   margin: 8px 0;
 `;
 
