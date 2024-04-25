@@ -25,7 +25,7 @@ type ValidBrandValue = {
 const BrandPrice = ({ brandPrice, brandDiscount, quantity }: Props) => {
   const { isCencopayActive } = useAppSelector((state) => state.cart);
 
-  if (!brandPrice) return null;
+  if (!brandPrice || !brandDiscount.length) return null;
   const isCencoPay = validateCencopayId(brandDiscount[0].id);
 
   if (isCencoPay && !isCencopayActive) return null;
