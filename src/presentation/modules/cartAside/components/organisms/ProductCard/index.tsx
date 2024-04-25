@@ -44,7 +44,10 @@ const ProductCard = (props: ProductCardProps) => {
     <ProductCardContainer data-id={`product-card-${item.product.productId}`}>
       <MainContainer>
         <ImageAndDeleteContainer>
-          <ProductImage src={item.product.images} alt="" />
+          <ProductImage
+            src={item.product.imageUrl || item.product.images}
+            alt=""
+          />
           <DeleteButton onRemoveFromCart={onRemoveFromCart} />
         </ImageAndDeleteContainer>
 

@@ -1,4 +1,4 @@
-import { Cart } from '@entities/cart/cart.entity';
+import { Cart, Product } from '@entities/cart/cart.entity';
 import { CartAction } from '@entities/error/error.entity';
 import WindowsEvents from '@events/index';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
@@ -6,6 +6,7 @@ import cartSlice from '@store/cart';
 import { setError } from '@store/error';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
 import getCart from '@use-cases/cart/get-cart';
+import { useSimulateAddProduct } from '@use-cases/cart/simulate-add-product';
 import handleHttpError from '@use-cases/error/handle-http-errors';
 import handlePayloadError from '@use-cases/error/handle-payload-errors';
 import _ from 'lodash';
@@ -28,6 +29,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
 
   const dispatch = useAppDispatch();
   const { cartId, cartBFF } = useAppSelector((state) => state.cart);
+  const { simulateAddProduct } = useSimulateAddProduct();
 
   const handleSetIsOpen = useCallback(
     (event: Event) => {
@@ -53,11 +55,11 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
   const handleSimulateAddProductEvent = useCallback(
     (event: Event) => {
       event.stopImmediatePropagation();
-      const customEvent = event as CustomEvent;
-      dispatch(simulateAddProductHeadless(customEvent.detail?.product));
+      const customEvent = event as CustomEvent<{ product: Product }>;
+      simulateAddProduct(customEvent.detail.product);
       dispatch(setCartAsideIsOpen(true));
     },
-    [dispatch, setCartAsideIsOpen, simulateAddProductHeadless],
+    [dispatch, setCartAsideIsOpen, simulateAddProduct],
   );
 
   const handleGetShoppingCart = useCallback(
@@ -164,7 +166,7 @@ const WrapperEvents: React.FC<Props> = ({ children }) => {
     );
 
     return () => {
-      document.removeEventListener(
+      window.removeEventListener(
         WindowsEvents.SIMULATE_ADD_PRODUCT,
         handleSimulateAddProductEvent,
       );

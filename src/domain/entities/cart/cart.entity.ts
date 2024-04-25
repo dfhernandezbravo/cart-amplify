@@ -120,6 +120,7 @@ export interface Product {
   color: string;
   prices: Prices;
   images: string;
+  imageUrl?: string;
   brand: string;
   seller: Seller;
   options?: Option[];
