@@ -89,6 +89,7 @@ export const PriceContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  padding-left: 0.5rem;
 
   @media (max-width: 1023px) {
     min-width: 12rem;

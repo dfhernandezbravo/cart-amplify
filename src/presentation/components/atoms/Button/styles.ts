@@ -68,9 +68,8 @@ export const ButtonContainer = styled.button<Props>`
     font-weight: 700;
     justify-content: center;
     line-height: 20px;
-    padding: 14px 24px;
+    padding: 14px 23px;
     width: 280px;
-    height: 48px;
     margin-bottom: 16px;
   }
 

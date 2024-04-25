@@ -1,7 +1,6 @@
 import DeleteButton from '@components/molecules/DeleteButton';
 import QuantitySelector from '@components/molecules/MinicartQuantitySelector';
 import ProductImage from '@components/molecules/ProductImage';
-import ProductPrice from '@components/molecules//ProductPrice';
 import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
 import { ProductCardProps } from './types';
@@ -15,6 +14,9 @@ import {
 import AvailableQuantity from '@modules/cart/components/organisms/ProductCard/components/AvailableQuantity';
 import { useAppSelector } from '@hooks/storeHooks';
 import Tintometric from '@components/molecules/Tintometric';
+import Price from '@components/atoms/BitPrice';
+import calculatePrices from '@use-cases/cart/calculate-prices';
+import { formatAdjustments } from '@use-cases/cart/format-adjustments';
 
 const ProductCard = (props: ProductCardProps) => {
   const { selectedQuantityMinicart } = useAppSelector((state) => state.cart);
@@ -57,10 +59,9 @@ const ProductCard = (props: ProductCardProps) => {
             productName={item?.product?.description}
             productUrl={item?.product?.detailUrl}
           />
-          <ProductPrice
-            prices={item?.product?.prices}
-            quantity={item?.quantity ?? 0}
-            adjustment={item?.adjustment}
+          <Price
+            price={calculatePrices(item?.product?.prices, item?.quantity)}
+            adjustments={formatAdjustments(item?.adjustment)}
           />
           <Tintometric item={item} />
           {showMaxAvailableQuantityMessage &&

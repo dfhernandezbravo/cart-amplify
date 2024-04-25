@@ -40,7 +40,7 @@ export interface Adjustments {
   value: number;
   type: string;
   name: string;
-  percentDiscount: string;
+  percentageDiscount: string;
   priceType: string;
 }
 

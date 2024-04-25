@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@ccom-easy-design-system/atoms.button": "0.0.10",
+    "@ccom-easy-design-system/atoms.price": "^0.0.60",
     "@ccom-easy-design-system/atoms.ribbon": "^0.0.11",
     "@ccom-easy-design-system/modules.product-carousel-module": "^0.0.22",
     "@ccom-easy-design-system/theme.theme-provider": "^0.0.15",
