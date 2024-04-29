@@ -10,7 +10,9 @@ import { Cart } from '@entities/cart/cart.entity';
 const useHandleRedirectEvent = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const { cartBFF, cartId } = useAppSelector((state) => state.cart);
+  const { cartBFF, cartId, isEnabledCheckoutV1 } = useAppSelector(
+    (state) => state.cart,
+  );
   const {
     joinProductUnavailable,
     productCannotBeDelivered,
@@ -23,9 +25,13 @@ const useHandleRedirectEvent = () => {
   const validateItemWithoutStock = (cart: any) => {
     return getUnavailableProduct(cart);
   };
-
-  const goToCheckout = () =>
-    router.push(`${environments.checkoutDomain}/${cartId}`);
+  console.log('isEnabledCheckoutV1', isEnabledCheckoutV1);
+  const goToCheckout = () => {
+    const checkoutUrl = isEnabledCheckoutV1
+      ? environments.checkoutDomain
+      : environments.checkoutDomainV2;
+    router.push(`${checkoutUrl}/${cartId}`);
+  };
 
   const handleState = () => {
     setShowModal(false);

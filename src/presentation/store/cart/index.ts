@@ -35,6 +35,7 @@ const initialValue: InitialState = {
   openDetailsMobile: false,
   hasHybridation: false,
   isCencopayActive: false,
+  isEnabledCheckoutV1: false,
   isHeadless: false,
   cartAsideIsOpen: false,
   selectedQuantityMinicart: {
@@ -175,6 +176,7 @@ const cartSlice = createSlice({
     setParams: (state, { payload }) => {
       state.hasHybridation = payload?.isEnabledMiniCart;
       state.isCencopayActive = payload?.isCencopayActive;
+      state.isEnabledCheckoutV1 = payload?.isEnabledCheckoutV1;
     },
     setSelectedQuantityMinicart: (state, { payload }) => {
       state.selectedQuantityMinicart = {
