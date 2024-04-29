@@ -25,7 +25,6 @@ const useHandleRedirectEvent = () => {
   const validateItemWithoutStock = (cart: any) => {
     return getUnavailableProduct(cart);
   };
-  console.log('isEnabledCheckoutV1', isEnabledCheckoutV1);
   const goToCheckout = () => {
     const checkoutUrl = isEnabledCheckoutV1
       ? environments.checkoutDomain
