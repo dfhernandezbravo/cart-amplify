@@ -187,6 +187,7 @@ const CartAsideContainer = () => {
       setParams({
         isEnabledMiniCart: data?.params?.hybridation?.isEnabledMiniCart,
         isCencopayActive: data?.params?.isCencopayActive,
+        isEnabledCheckoutV1: data?.params?.isEnabledCheckoutV1,
       }),
     );
   }

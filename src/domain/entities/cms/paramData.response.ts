@@ -4,5 +4,6 @@ export interface ParamDataResponse {
       isEnabledMiniCart: boolean;
     };
     isCencopayActive: boolean;
+    isEnabledCheckoutV1: boolean;
   };
 }
