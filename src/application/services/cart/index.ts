@@ -6,8 +6,8 @@ import {
 } from '@entities/cart/cart.request';
 import CartService from '@interfaces/cart-service.interface';
 import { CouponCode } from '@entities/cart/cart.entity';
-import { bffWebInstanceV1 } from '@data-sources/bff-v1/bff-instance';
 import { ObservabilityCart } from '@entities/cart/observability';
+import { bffWebInstanceV2 as httpInstance } from '@data-sources/bff-v2/bff-instance';
 
 const valitadeId = (id: string | undefined) => {
   const accessToken = Cookies.get('accessToken');
@@ -20,7 +20,7 @@ const valitadeId = (id: string | undefined) => {
   if (id && id?.length > 0) return id;
 };
 
-const cartService = (httpInstance = bffWebInstanceV1): CartService => ({
+const cartService: CartService = {
   getCart: async (data) => {
     const url = `/shoppingcart/${valitadeId(data.cartId)}`;
     return httpInstance.get(url);
@@ -64,10 +64,14 @@ const cartService = (httpInstance = bffWebInstanceV1): CartService => ({
     }/options/${data.optionId}`;
     return httpInstance.delete(url);
   },
+  getAccessToken: () => {
+    const url = `/auth/guests/signIn`;
+    return httpInstance.post(url);
+  },
   observability: (data: ObservabilityCart) => {
     const url = `/observability/custom-events`;
     return httpInstance.post(url, data);
   },
-});
+};
 
 export default cartService;

@@ -9,6 +9,7 @@ import {
   DeleteProductServiceRequest,
 } from '@entities/cart/cart.request';
 import { ObservabilityCart } from '@entities/cart/observability';
+import { AccesTokenProps } from '@entities/cart/access-token-response';
 
 export default interface CartService {
   getCart(data: GetCartRequest): Promise<AxiosResponse<Cart>>;
@@ -24,4 +25,5 @@ export default interface CartService {
     data: DeleteProductServiceRequest,
   ): Promise<AxiosResponse<Cart>>;
   observability(info: ObservabilityCart): Promise<void>;
+  getAccessToken(): Promise<AxiosResponse<AccesTokenProps>>;
 }

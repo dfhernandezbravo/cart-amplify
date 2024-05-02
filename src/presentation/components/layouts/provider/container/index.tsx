@@ -1,16 +1,18 @@
 import SkeletonCartPage from '@components/molecules/skeleton-container';
 import WindowsEvents from '@events/index';
+import Cookies from 'js-cookie';
 import useEventListener from '@hooks/eventListenerHooks';
 import { useAppDispatch, useAppSelector } from '@hooks/storeHooks';
 import EmptyBody from '@modules/cart/sections/emptyBody';
 import cartSlice, { quantitySelected } from '@store/cart';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import getCart, { getCartSync } from '@use-cases/cart/get-cart';
 import observability from '@use-cases/cart/obsevability';
 import getParamData from '@use-cases/cms/getParamData';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import React, { useEffect } from 'react';
+import { getAccessToken } from '@use-cases/cart/get-access-token';
 
 interface ParsedUrlQueryForPage extends ParsedUrlQuery {
   cartId: string;
@@ -29,6 +31,8 @@ const CartContainerProvider = ({ children }: Props) => {
   const { addCartId, setCart, setLoading, setParams, setQuantitySelected } =
     cartSlice.actions;
   const { query } = useRouter();
+  const { mutate: retrieveAccessToken } = useMutation(getAccessToken);
+  const existAccessToken = Cookies.get('accessToken');
   const { cartId, cartBFF } = useAppSelector((state) => state.cart);
   const { cartId: cartQuery } = query as ParsedUrlQueryForPage;
   const dispatch = useAppDispatch();
@@ -37,10 +41,15 @@ const CartContainerProvider = ({ children }: Props) => {
     ['get-cart', cartQuery],
     () => getCartSync({ cartId: cartQuery }),
     {
-      enabled: !!cartQuery,
+      enabled: !!cartQuery && !!existAccessToken,
       cacheTime: 0,
     },
   );
+
+  useEffect(() => {
+    if (existAccessToken) return;
+    retrieveAccessToken();
+  }, []);
 
   const updateShippingCart = () => {
     if (cartId) {
