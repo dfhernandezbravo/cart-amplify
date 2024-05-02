@@ -20,6 +20,7 @@ export type InitialState = {
   openDetailsMobile: boolean;
   hasHybridation: boolean;
   isCencopayActive: boolean;
+  isEnabledCheckoutV1: boolean;
   isHeadless: boolean;
   cartAsideIsOpen: boolean;
   selectedQuantityMinicart: SelectedQuantityMinicart;
