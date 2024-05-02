@@ -2,7 +2,6 @@ import { useState } from 'react';
 import ProductImage from '@components/molecules/ProductImage';
 import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
-import ProductPrice from '@components/molecules/ProductPrice';
 import QuantitySelector from '@components/atoms/CartQuantitySelector';
 import ModalQuantity from '../ModalQuantity';
 import { ProductCardProps } from '../ProductCard/types';
@@ -21,7 +20,9 @@ import useAnalytics from '@hooks/useAnalytics';
 import { AnalyticsEvents } from '@entities/analytics';
 import Ribbon from '@components/atoms/Ribbon';
 import TintometricColors from '../TintometricColors';
-// import ProductService from '@modules/cart/components/molecules/ProductService';
+import Price from '@components/atoms/BitPrice';
+import calculatePrices from '@use-cases/cart/calculate-prices';
+import { formatAdjustments } from '@use-cases/cart/format-adjustments';
 
 const ProductCardMobile = (props: ProductCardProps) => {
   const {
@@ -149,10 +150,9 @@ const ProductCardMobile = (props: ProductCardProps) => {
             />
             <ProductSku id={item?.product.sku} />
             <div>
-              <ProductPrice
-                prices={item?.product?.prices}
-                quantity={item?.quantity ?? 0}
-                adjustment={item?.adjustment}
+              <Price
+                price={calculatePrices(item?.product?.prices, item?.quantity)}
+                adjustments={formatAdjustments(item?.adjustment)}
               />
             </div>
             {logisticRibbons?.length > 0 &&

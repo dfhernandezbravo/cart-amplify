@@ -85,6 +85,11 @@
   resolved "https://node-registry.bit.cloud/@ccom-easy-design-system/atoms.icons/-/atoms.icons-0.0.5.tgz#ab31a7342ac7d0b673c42c4ddfdad3dda52d118d"
   integrity sha512-OblhosOZp8VrywOTLx6jEGoMxtoFHWalb1+ZeiEzfJui19wY6tL0mcV/24F+5q9ZkJS6frp2X3reWU9YCIu1tw==
 
+"@ccom-easy-design-system/atoms.icons@0.0.6":
+  version "0.0.6"
+  resolved "https://node-registry.bit.cloud/@ccom-easy-design-system/atoms.icons/-/atoms.icons-0.0.6.tgz#979be3924e4efac02428a88ee1cfeba4e5f4bb8d"
+  integrity sha512-89xFZmj6TosqmDUQJaPK/EyuGVd8Y/rbRQ4h7o4dP9ku7khVP+ISMrByrvdXvg8s3rvyUQHYxWVCYBH7Hd1S9w==
+
 "@ccom-easy-design-system/atoms.layout@0.0.8":
   version "0.0.8"
   resolved "https://node-registry.bit.cloud/@ccom-easy-design-system/atoms.layout/-/atoms.layout-0.0.8.tgz#a474f6a3365a5081905da25ce9ce63530b211369"
@@ -99,6 +104,16 @@
   dependencies:
     "@ccom-easy-design-system/atoms.icons" "0.0.5"
     "@ccom-easy-design-system/theme.easy" "0.0.9"
+    "@ccom-easy-design-system/utils.format-currency" "0.0.7"
+    styled-components "^6.1.6"
+
+"@ccom-easy-design-system/atoms.price@^0.0.60":
+  version "0.0.60"
+  resolved "https://node-registry.bit.cloud/@ccom-easy-design-system/atoms.price/-/atoms.price-0.0.60.tgz#de607965a6e1a9387319b6211717af13e98b2ba2"
+  integrity sha512-a10hL0wx4d2VlIUfATFn959j4SAv5+AihN0GZlSalDApXKw3OErLRfBd2Ew+VvSKltWC8diVhR3axM0bmuTbJw==
+  dependencies:
+    "@ccom-easy-design-system/atoms.icons" "0.0.6"
+    "@ccom-easy-design-system/theme.easy" "0.0.11"
     "@ccom-easy-design-system/utils.format-currency" "0.0.7"
     styled-components "^6.1.6"
 
@@ -214,6 +229,13 @@
     "@ccom-easy-design-system/hooks.use-dispatch-event" "0.0.5"
     "@ccom-easy-design-system/molecules.product-card" "0.0.76"
     "@ccom-easy-design-system/molecules.swiper" "0.0.29"
+    styled-components "^6.1.6"
+
+"@ccom-easy-design-system/theme.easy@0.0.11":
+  version "0.0.11"
+  resolved "https://node-registry.bit.cloud/@ccom-easy-design-system/theme.easy/-/theme.easy-0.0.11.tgz#e3d1d6b3e9cc2984d962c3aad0d90ff4c48133fe"
+  integrity sha512-E0r/kyxWY5+9jF0ee95H4OISXRPiynKaYgeYQkQ0psYu6JSVUh/gi3nH+5O/D3rNf3hKxnrglVVIIbtdtJ2ErA==
+  dependencies:
     styled-components "^6.1.6"
 
 "@ccom-easy-design-system/theme.easy@0.0.8":

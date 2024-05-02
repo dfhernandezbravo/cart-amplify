@@ -2,7 +2,6 @@ import { useState } from 'react';
 import ProductImage from '@components/molecules/ProductImage';
 import ProductBrand from '@components/molecules/ProductBrand';
 import ProductName from '@components/molecules/ProductName';
-import ProductPrice from '@components/molecules/ProductPrice';
 import ProductSku from '@components/molecules/ProductSku';
 import DeleteButton from '@components/molecules/DeleteButton';
 import QuantitySelector from '@components/atoms/CartQuantitySelector';
@@ -23,6 +22,9 @@ import { AnalyticsEvents } from '@entities/analytics';
 import ModalQuantity from '../ModalQuantity';
 import Ribbon from '@components/atoms/Ribbon';
 import TintometricColors from '../TintometricColors';
+import Price from '@components/atoms/BitPrice';
+import calculatePrices from '@use-cases/cart/calculate-prices';
+import { formatAdjustments } from '@use-cases/cart/format-adjustments';
 // import ProductService from '@modules/cart/components/molecules/ProductService';
 
 const ProductCard = (props: ProductCardProps) => {
@@ -155,10 +157,9 @@ const ProductCard = (props: ProductCardProps) => {
             </ProductInfoContainer>
             <PriceContainer>
               <div>
-                <ProductPrice
-                  prices={item?.product.prices}
-                  quantity={item?.quantity ?? 0}
-                  adjustment={item?.adjustment}
+                <Price
+                  price={calculatePrices(item?.product?.prices, item?.quantity)}
+                  adjustments={formatAdjustments(item?.adjustment)}
                 />
               </div>
               {logisticRibbons?.length > 0 &&
