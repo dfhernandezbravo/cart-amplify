@@ -32,7 +32,8 @@ const CartContainerProvider = ({ children }: Props) => {
     cartSlice.actions;
   const { query } = useRouter();
   const { mutate: retrieveAccessToken } = useMutation(getAccessToken);
-  const existAccessToken = Cookies.get('accessToken');
+  const tokenName = process.env['NEXT_PUBLIC_TOKEN_COOKIE_NAME'] || '';
+  const existAccessToken = Cookies.get(tokenName);
   const { cartId, cartBFF } = useAppSelector((state) => state.cart);
   const { cartId: cartQuery } = query as ParsedUrlQueryForPage;
   const dispatch = useAppDispatch();

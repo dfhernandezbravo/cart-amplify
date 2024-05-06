@@ -10,7 +10,8 @@ import { ObservabilityCart } from '@entities/cart/observability';
 import { bffWebInstanceV2 as httpInstance } from '@data-sources/bff-v2/bff-instance';
 
 const valitadeId = (id: string | undefined) => {
-  const accessToken = Cookies.get('accessToken');
+  const tokenName = process.env['NEXT_PUBLIC_TOKEN_COOKIE_NAME'] || '';
+  const accessToken = Cookies.get(tokenName);
   if (accessToken) return id;
 
   const localId = localStorage.getItem('vtxorderform');
