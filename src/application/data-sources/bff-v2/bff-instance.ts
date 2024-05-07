@@ -10,7 +10,8 @@ export const bffWebInstanceV2 = axios.create({
 });
 
 bffWebInstanceV2.interceptors.request.use(function (config) {
-  const accessToken = Cookies.get('accessToken');
+  const tokenName = process.env['NEXT_PUBLIC_TOKEN_COOKIE_NAME'] || '';
+  const accessToken = Cookies.get(tokenName);
   config.headers.Authorization = `Bearer ${accessToken}`;
 
   return config;

@@ -5,7 +5,6 @@ import cartService from '@services/cart';
 import dispatchHttpErrors from '@use-cases/error/dispatch-http-errors';
 import dispatchPayloadErrors from '@use-cases/error/dispatch-payload-errors';
 import { AxiosError } from 'axios';
-import getInstanceHttp from './get-instance-http';
 import { customDispatchEvent } from '@store/events/dispatchEvents';
 import WindowsEvents from '@events/index';
 import AddRibbonsToItems from './add-ribbons';
@@ -17,9 +16,7 @@ const updateItem = createAsyncThunk(
     { dispatch, fulfillWithValue, rejectWithValue },
   ) => {
     try {
-      const { data } = await cartService(getInstanceHttp()).updateItem(
-        dataRequest,
-      );
+      const { data } = await cartService.updateItem(dataRequest);
       dispatchPayloadErrors(
         data,
         dispatch,
